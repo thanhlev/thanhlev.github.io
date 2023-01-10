@@ -1,0 +1,11 @@
+title: Work - Learn - Share
+description: "Lê Quang Thành : quangthanh010290@gmail.com"
+show_downloads: false
+google_analytics:
+theme: jekyll-theme-slate
+plugins:
+  - jekyll-redirect-from
+collections_dir: pages
+collections:
+  linux_general:
+    output: true
