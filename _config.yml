@@ -15,3 +15,5 @@ collections:
     output: true
   embedded:
     output: true
+  personal:
+    output: true

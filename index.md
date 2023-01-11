@@ -27,7 +27,8 @@ Trang web này được tạo ra để giúp mình note lại những cái từn
         {% endif %}
       </td>
       <td>
-        <a target="_blank" href="{{ page.url }}"><strong>{{ page.title }}</strong></a>
+        <a target="_blank" href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
+        (<a target="_blank" href="{{ page.url }}">{{ page.short_description }}</a>)
       </td>
       <td>{{ page.latest_release }}</td>
       <td>{{ page.status }}</td>
@@ -57,7 +58,8 @@ Trang web này được tạo ra để giúp mình note lại những cái từn
         {% endif %}
       </td>
       <td>
-        <a target="_blank" href="{{ page.url }}"><strong>{{ page.title }}</strong></a>
+        <a target="_blank" href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
+        (<a target="_blank" href="{{ page.url }}">{{ page.short_description }}</a>)
       </td>
       <td>{{ page.latest_release }}</td>
       <td>{{ page.status }}</td>
@@ -86,7 +88,8 @@ Trang web này được tạo ra để giúp mình note lại những cái từn
         {% endif %}
       </td>
       <td>
-        <a target="_blank" href="{{ page.url }}"><strong>{{ page.title }}</strong></a>
+        <a target="_blank" href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
+        (<a target="_blank" href="{{ page.url }}">{{ page.short_description }}</a>)
       </td>
       <td>{{ page.latest_release }}</td>
       <td>{{ page.status }}</td>

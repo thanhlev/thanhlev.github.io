@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Linux Wi-Fi Driver có gì đặc biệt?"
-short_description: "(Thiết kế của Wi-Fi driver trên Linux)"
+short_description: "Thiết kế của Wi-Fi driver trên Linux"
 status: "InProgress"
 picture: "assets/images/intel_wifi_module.png"
 latest_release: "Viết tới Control Path thời kì đồ đá"
