@@ -1,7 +1,7 @@
 ---
 layout: default
 title: MBR Partition Table
-short_description: Infomation about the MBR partition
+short_description: Information about the MBR partition
 status: "Done"
 picture: "assets/images/MBR_usecase_partitions.jpg"
 latest_release: "Unknown"

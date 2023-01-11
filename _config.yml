@@ -11,3 +11,7 @@ collections_dir: pages
 collections:
   linux_general:
     output: true
+  linux_networking:
+    output: true
+  embedded:
+    output: true
