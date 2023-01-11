@@ -33,7 +33,7 @@ Welcome to my website, where I write about Linux, Embedded, Networking, IoT, Rob
         <td><a target="_blank" href="https://www.linkedin.com/in/thanhledotme/">ThanhLe</a></td>
     </tr>
     <tr>
-        <td>🌎 Website</td>
+        <td>🍻 Github </td>
         <td><a target="_blank" href="https://github.com/quangthanh010290">Github</a></td>
     </tr>
   </tbody>
