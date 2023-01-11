@@ -3,7 +3,7 @@ title: Work - Learn - Share
 description: "Lê Quang Thành : quangthanh010290@gmail.com"
 url: https://quangthanh010290.github.io/
 show_downloads: false
-google_analytics:
+google_analytics: UA-121634256-1
 theme: jekyll-theme-slate
 plugins:
   - jekyll-redirect-from
