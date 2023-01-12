@@ -11,9 +11,9 @@ videos: []
 # Esp8266 Bootup Sequence
 ## 1. Giới thiệu
 
-Trong vài viết [Esp8266 Partition Table](flash_map.md), mình đã giới thiệu về bảng partition table và thông tin cơ bản ROM, RAM và Flash của SoC Esp8266. Trong bài viết này mình sẽ bắt đầu giới thiệu về cách thức boot up của SoC Esp8266.
+Trong vài viết [Esp8266 Partition Table](esp8266_flash_map.html), mình đã giới thiệu về bảng partition table và thông tin cơ bản ROM, RAM và Flash của SoC Esp8266. Trong bài viết này mình sẽ bắt đầu giới thiệu về cách thức boot up của SoC Esp8266.
 
-Có 2 thông tin ở bài [Esp8266 Partition Table](flash_map.md) sẽ làm tiền đề cho bài viết này
+Có 2 thông tin ở bài [Esp8266 Partition Table](esp8266_flash_map.html) sẽ làm tiền đề cho bài viết này
 
 > 1. ESP8266 có ROM, nhưng không phải ROM <span style="color:blue">có thể  ghi xóa</span>, cần gắn bộ nhớ ngoài để chứa mã ứng dụng.
 

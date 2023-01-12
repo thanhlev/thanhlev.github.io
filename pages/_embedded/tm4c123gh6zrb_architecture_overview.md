@@ -1,14 +1,14 @@
 ---
 layout: default
-title: "Tiva ™ TM4C123GH6ZRB Microcontroller"
-short_description: "(Thiết kế của Wi-Fi driver trên Linux)"
-status: "Pending"
+title: "Tiva ™ TM4C123GH6ZRB Microcontroller [phần 1]"
+short_description: "Thông tin về kiến trúc, RAM, ROM, Flash, Bootloader"
+status: "Done"
 picture: "assets/images/TM4C123GH6ZRB_cpu_block_diagram.png"
 latest_release: "Copy từ repo cũ qua"
 videos: []
 ---
 
-# Tiva ™ TM4C123GH6ZRB Microcontroller
+# Tiva ™ TM4C123GH6ZRB Microcontroller [phần 1]
 
 {: .no_toc }
 
