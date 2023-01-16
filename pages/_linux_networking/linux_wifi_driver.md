@@ -4,12 +4,12 @@ title: "Lịch sử của Linux Wi-Fi Driver"
 short_description: "Thiết kế của Wi-Fi driver trên Linux"
 status: "In Progress"
 picture: "assets/images/intel_wifi_module.png"
-latest_release: "Viết tới Control Path thời kì đồ đá"
+commit1: Cập nhật Control Path
+latest_release: "Cập nhật Control path ngày nay và  Flow hoạt động của driver đời mới"
 videos: []
 ---
 
 # Linux Wi-Fi Driver có gì đặc biệt?
-
 {: .no_toc }
 
 ## Table of contents
@@ -23,7 +23,8 @@ videos: []
 
 | Revision | Date          | Remark      |
 |:---------|:------------- |:------------|
-| 0.1      | Jan-12-2023   | Cập nhật Control Path |
+| 0.1      | Jan-12-2023   | {{page.commit1}} |
+| 0.2      | Jan-16-2023   | {{page.latest_release}}|
 
 ## Giới thiệu
 
@@ -163,15 +164,7 @@ Khó khăn nhất là ở phần 3 vì các hãng luôn muốn độc quyền s�
 ##### /proc/net/wireless
 - Để lấy thông tin về tình trạng hoạt động của Wi-Fi module, [Jean Tourrilhes](https://www.hpl.hp.com/personal/Jean_Tourrilhes/) đã tạo một nhân bản từ file `/proc/net/dev`, nó là `/proc/net/wireless`, file này chỉ chứa các thông tin liên quan đến Wi-Fi Link mà device ethernet tiêu chuẩn không có.
 
-```shell
-cat /proc/net/wireless
-Inter- | sta-|   Quality        |   Discarded packets               | Missed | WE
- face  | tus | link level noise |  nwid  crypt   frag  retry   misc | beacon | 22
- wlan0: 0000   76.  -61.   -256.       0      0      0      0      0        0
- wlan1: 0000    0.  -256.  -256.       0      0      0      0      0        0
- wlan2: 0000    0.  -256.  -256.       0      0      0      0      0        0
- wlan3: 0000    1.  -99.   -256.       0      0      0      0      0        0
-```
+
 
 - Như đã đề cập, Wi-Fi driver là một network driver cho nên interface mà nó tạo ra có đầy đủ thuộc tính của một net device.
 
@@ -188,6 +181,8 @@ Inter-|   Receive                                                |  Transmit
  wlan4:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
 docker0:      0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
 ```
+
+
 
 ##### iwconfig
 
@@ -235,9 +230,416 @@ wlan0     IEEE 802.11  ESSID:"home_ssid"
           Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
           Tx excessive retries:0  Invalid misc:597   Missed beacon:0
 ```
-- Ngày nay (2023) thì lệnh `iwconfig` vẫn còn được dùng, tuy nhiên nó là "Bình cũ, rượu mới" rồi, dùng để chiều lòng các anh em hoài cổ thôi, phần giao tiếp bên dưới đã được thay đổi bằng siêu anh hùng `nl80211` rồi.
+- Ngày nay (2023) thì lệnh `iwconfig` vẫn còn được dùng, tuy nhiên nó là "Bình cũ, rượu mới" rồi, dùng để chiều lòng các anh em hoài cổ thôi, phần giao tiếp bên dưới
+đã được thay đổi bằng siêu anh hùng `nl80211` rồi.
+
+> <span style="color:blue">Linux quản lý network stack bằng cách dùng một cấu trúc (device structure) để  kiểm soát mỗi net device trong hệ thống. Phần đầu tiên của structure này là tiêu chuẩn và chứa các thông số như địa chỉ base I/O của thiết bị, địa chỉ IP..., các callback (start device, gửi-nhận packets...)</span>
+
+[Jean Tourrilhes](https://www.hpl.hp.com/personal/Jean_Tourrilhes/) đã thêm một callback khác `get_wireless_stats` để  lấy các thông số wireless cho file `/proc/net/wireless`. Khi Linux tạo thư muc `/proc`, nó sẽ gọi callback này trên tất cả các net device đang hiện diện trong hệ thống. Nếu một device không đăng ký callback này thì sẽ được bỏ qua (không ảnh hưởng đến hoạt động của các ethernet device)
+
+Khi được gọi, driver có nhiệm vụ giao tiếp với firmware trên Wi-Fi module để lấy thông tin và trả về cho Kernel thông tin thông qua struct `iw_statistics`
+
+```c++
+/* ------------------------ WIRELESS STATS ------------------------ */
+/*
+ * Wireless statistics (used for /proc/net/wireless)
+ */
+struct iw_statistics {
+	__u16		status;		/* Status
+					 * - device dependent for now */
+
+	struct iw_quality	qual;		/* Quality of the link
+						 * (instant/mean/max) */
+	struct iw_discarded	discard;	/* Packet discarded counts */
+	struct iw_missed	miss;		/* Packet missed counts */
+};
+```
+
+Ví dụ trên Ubuntu Desktop 22.04
+
+```shell
+cat /proc/net/wireless
+Inter- | sta-|   Quality        |   Discarded packets               | Missed | WE
+ face  | tus | link level noise |  nwid  crypt   frag  retry   misc | beacon | 22
+ wlan0: 0000   76.  -61.   -256.       0      0      0      0      0        0
+ wlan1: 0000    0.  -256.  -256.       0      0      0      0      0        0
+ wlan2: 0000    0.  -256.  -256.       0      0      0      0      0        0
+ wlan3: 0000    1.  -99.   -256.       0      0      0      0      0        0
+```
 
 ##### iwpriv
-- Trong khi `iwconfig` yêu cầu các driver cần phải hỗ trợ để làm việc được với nhau thì `iwprive` giúp mỗi hãng có cách để cấu hình riêng cho driver của mình mà có thể không xuất hiện trên các driver của hảng khác hoặc dòng chip khác.
 
-### Control path thời kì văn minh (TBD)
+Trong khi `iwconfig` yêu cầu các driver cần phải hỗ trợ để làm việc được với nhau thì `iwprive` giúp mỗi hãng có cách để cấu hình riêng cho driver của mình mà có thể không xuất hiện trên các driver của hảng khác hoặc dòng chip khác.
+
+##### ioctl
+
+`ioctl` thông thường được dùng để `user-space` giao tiếp với Kernel thông qua file descriptor, tuy nhiên vẫn có thể áp dụng với network socket. Công cụ `ifconfig` đang sử dụng phương pháp này để giao tiếp với Kernel
+
+Ví dụ để thay đổi địa chỉ IP trên interface eth2, `ifconfig` có thể tạo ra 1 ioctl với các tham số sau:
+
+```
+"eth2", SIOCSIFADDR, new address
+```
+
+Cấu trúc dữ liệu cho lời gọi trên nằm ở `/usr/include/linux/if.h`. Các option cho các chức năng khác: vlan, routing, arp, bonding, bridge nằm trong file `/usr/include/linux/sockios.h`
+
+
+```c++
+/* Routing table calls. */
+/* Socket configuration         controls. */
+/* ARP cache control calls. */
+/* RARP cache control calls. */
+/* Driver configuration calls */
+/* DLCI configuration calls */
+/* bonding calls */
+/* bridge calls */
+```
+
+[Jean Tourrilhes](https://www.hpl.hp.com/personal/Jean_Tourrilhes/) đã thêm các IOCTL sau (/usr/include/linux/wireless.h):
+
+```c++
+/* -------------------------- IOCTL LIST -------------------------- */
+
+/* Wireless Identification */
+/* Basic operations */
+/* Informative stuff */
+/* Spy support (statistics per MAC address - used for Mobile IP support) */
+/* Access Point manipulation */
+/* 802.11 specific support */
+/* Other parameters useful in 802.11 and some other devices */
+/* Encoding stuff (scrambling, hardware security, WEP...) */
+/* Power saving stuff (power management, unicast and multicast) */
+/* WPA : IEEE 802.11 MLME requests */
+/* WPA : Authentication mode parameters */
+/* WPA : Extended version of encoding configuration */
+/* WPA2 : PMKSA cache management */
+```
+
+### Control path ngày nay (TBD)
+
+Nhu cầu sử dụng Wi-Fi là cực kì lớn, hầu như xuất hiện ở mỗi gia đình, mỗi thiết bị. Kéo theo nó là nhiều công nghệ, nhiều tiêu chuẩn được sinh ra. Điều này cũng tạo ra áp lực cho các nhà phát triển phần mềm, với số lượng tính năng ngày càng nhiều, nhiều doanh nghiệp sử dụng. Họ cần đãm bảo ít lỗi nhất trong các bản release.
+
+Nhìn vào prototype chung của giao tiếp ioctl
+
+```c++
+    int ioctl(int fd, unsigned long cmd, ...);
+```
+Đặc điểm của hàm này làm người review sẽ không biết hàm đó làm gì, không biết rõ có bao nhiêu tham số, kiểu dữ liệu của mỗi tham số. Điều này gây khó khăn cho việc kiểm lỗi quá trình biên dịch và tạo document.
+
+Ngoài ra prototype trên cũng khó hiểu. Các kỹ sư đã cho ra đời 1 thiết kế mới `nl80211`, đọc là netlink 80211
+
+
+![](/assets/images/nl80211_block_diagram.png)
+
+### nl80211
+
+Đặt ra các tiêu chuẩn để giao tiếp giữa user-space và kernel(thay thế cách dùng ioctl của wireless-extension). Các "khách hàng" nổi tiếng đang sử dụng tiêu chuẩn nl80211 có thể kể tên như: **iw, hostapd, wpa_supplicant, Network Manager, iwd...**
+### cfg8021
+
+Thiết kế mới của driver theo chuẩn của nl80211
+**cfg80211_ops** là các operation struct dùng cho việc giao tiếp giữa protocol cfg80211 và application code.
+
+### mac80211
+
+
+Các module Wi-Fi hiện nay có 2 loại hardware:
+* Full-MAC Wi-FI là lớp Media Access Controll (L2) được implement trực tiếp trên firmware của module. Loại này ít tốn tài nguyên của CPU chính và thường thấy trên các Wi-Fi chipset của broadcom
+* Soft-MAC, Lớp MAC của hardware loại này được implement trên driver (mac80211), thường thấy trên driver của Intel Wi-Fi chipset
+
+mac80211 là một Kernel module hỗ trợ cho các Wi-Fi module không có khả thực hiện L2 Routing. Nghĩa là bất kì dữ liệu gì nó nhận được đều chuyển đến cho driver thực hiện bóc tách, filter ...
+
+mac80211 thực hiện đăng ký nó với cfg80211 thông qua `struct cfg80211_ops`
+
+> <span style="color:blue">Ví dụ về HW driver đăng ký với mac80211: `drivers/net/wireless/iwlwifi/mvm/mac80211.c`</span>
+
+## Flow hoạt động của driver đời mới
+
+|Bước     | Giải thích|
+|:---------|:----------|
+|1. Probing the HW|Kiểm tra xem Thiết bị Wi-Fi sử dụng hardware nào để chọn driver phù hợp, phổ biến USB và PCI|
+|2. Khởi tạo mac80211| Sau khi chọn được driver, driver gọi hàm `ieee80211_allow_hw()` để đăng ký mac80211 với cfg80211|
+|3. Khởi tạo wiphy| Driver gọi hàm `cfg80211_wiphy_new()` để đăng ký một physical device cho Wi-Fi|
+
+Với tiêu chuẩn nl80211 mới này, các thông tin, mode hỗ trợ, băng tần ... driver cần phải hỗ trợ để cung cấp thông tin đầy đủ để user-space application thực hiện cấu hình.
+
+Ví dụ:
+
+```shell
+thanhle@thanhle ~
+└──▶ iw phy0 info
+Wiphy phy0
+        wiphy index: 0
+        max # scan SSIDs: 20
+        max scan IEs length: 422 bytes
+        max # sched scan SSIDs: 20
+        max # match sets: 11
+        Retry short limit: 7
+        Retry long limit: 4
+        Coverage class: 0 (up to 0m)
+        Device supports RSN-IBSS.
+        Device supports AP-side u-APSD.
+        Supported Ciphers:
+                * WEP40 (00-0f-ac:1)
+                * WEP104 (00-0f-ac:5)
+                * TKIP (00-0f-ac:2)
+                * CCMP-128 (00-0f-ac:4)
+                * CMAC (00-0f-ac:6)
+        Available Antennas: TX 0x3 RX 0x3
+        Configured Antennas: TX 0x3 RX 0x3
+        Supported interface modes:
+                 * IBSS
+                 * managed
+                 * AP
+                 * AP/VLAN
+                 * monitor
+                 * P2P-client
+                 * P2P-GO
+                 * P2P-device
+        Band 1:
+                Capabilities: 0x11ef
+                        RX LDPC
+                        HT20/HT40
+                        SM Power Save disabled
+                        RX HT20 SGI
+                        RX HT40 SGI
+                        TX STBC
+                        RX STBC 1-stream
+                        Max AMSDU length: 3839 bytes
+                        DSSS/CCK HT40
+                Maximum RX AMPDU length 65535 bytes (exponent: 0x003)
+                Minimum RX AMPDU time spacing: 4 usec (0x05)
+                HT Max RX data rate: 300 Mbps
+                HT TX/RX MCS rate indexes supported: 0-15
+                Bitrates (non-HT):
+                        * 1.0 Mbps
+                        * 2.0 Mbps (short preamble supported)
+                        * 5.5 Mbps (short preamble supported)
+                        * 11.0 Mbps (short preamble supported)
+                        * 6.0 Mbps
+                        * 9.0 Mbps
+                        * 12.0 Mbps
+                        * 18.0 Mbps
+                        * 24.0 Mbps
+                        * 36.0 Mbps
+                        * 48.0 Mbps
+                        * 54.0 Mbps
+                Frequencies:
+                        * 2412 MHz [1] (22.0 dBm)
+                        * 2417 MHz [2] (22.0 dBm)
+                        * 2422 MHz [3] (22.0 dBm)
+                        * 2427 MHz [4] (22.0 dBm)
+                        * 2432 MHz [5] (22.0 dBm)
+                        * 2437 MHz [6] (22.0 dBm)
+                        * 2442 MHz [7] (22.0 dBm)
+                        * 2447 MHz [8] (22.0 dBm)
+                        * 2452 MHz [9] (22.0 dBm)
+                        * 2457 MHz [10] (22.0 dBm)
+                        * 2462 MHz [11] (22.0 dBm)
+                        * 2467 MHz [12] (22.0 dBm)
+                        * 2472 MHz [13] (22.0 dBm)
+                        * 2484 MHz [14] (disabled)
+        Band 2:
+                Capabilities: 0x11ef
+                        RX LDPC
+                        HT20/HT40
+                        SM Power Save disabled
+                        RX HT20 SGI
+                        RX HT40 SGI
+                        TX STBC
+                        RX STBC 1-stream
+                        Max AMSDU length: 3839 bytes
+                        DSSS/CCK HT40
+                Maximum RX AMPDU length 65535 bytes (exponent: 0x003)
+                Minimum RX AMPDU time spacing: 4 usec (0x05)
+                HT Max RX data rate: 300 Mbps
+                HT TX/RX MCS rate indexes supported: 0-15
+                VHT Capabilities (0x038071b0):
+                        Max MPDU length: 3895
+                        Supported Channel Width: neither 160 nor 80+80
+                        RX LDPC
+                        short GI (80 MHz)
+                        TX STBC
+                        SU Beamformee
+                VHT RX MCS set:
+                        1 streams: MCS 0-9
+                        2 streams: MCS 0-9
+                        3 streams: not supported
+                        4 streams: not supported
+                        5 streams: not supported
+                        6 streams: not supported
+                        7 streams: not supported
+                        8 streams: not supported
+                VHT RX highest supported: 0 Mbps
+                VHT TX MCS set:
+                        1 streams: MCS 0-9
+                        2 streams: MCS 0-9
+                        3 streams: not supported
+                        4 streams: not supported
+                        5 streams: not supported
+                        6 streams: not supported
+                        7 streams: not supported
+                        8 streams: not supported
+                VHT TX highest supported: 0 Mbps
+                Bitrates (non-HT):
+                        * 6.0 Mbps
+                        * 9.0 Mbps
+                        * 12.0 Mbps
+                        * 18.0 Mbps
+                        * 24.0 Mbps
+                        * 36.0 Mbps
+                        * 48.0 Mbps
+                        * 54.0 Mbps
+                Frequencies:
+                        * 5180 MHz [36] (22.0 dBm)
+                        * 5200 MHz [40] (22.0 dBm)
+                        * 5220 MHz [44] (22.0 dBm)
+                        * 5240 MHz [48] (22.0 dBm)
+                        * 5260 MHz [52] (22.0 dBm) (no IR, radar detection)
+                        * 5280 MHz [56] (22.0 dBm) (no IR, radar detection)
+                        * 5300 MHz [60] (22.0 dBm) (no IR, radar detection)
+                        * 5320 MHz [64] (22.0 dBm) (no IR, radar detection)
+                        * 5340 MHz [68] (disabled)
+                        * 5360 MHz [72] (disabled)
+                        * 5380 MHz [76] (disabled)
+                        * 5400 MHz [80] (disabled)
+                        * 5420 MHz [84] (disabled)
+                        * 5440 MHz [88] (disabled)
+                        * 5460 MHz [92] (disabled)
+                        * 5480 MHz [96] (disabled)
+                        * 5500 MHz [100] (22.0 dBm) (no IR, radar detection)
+                        * 5520 MHz [104] (22.0 dBm) (no IR, radar detection)
+                        * 5540 MHz [108] (22.0 dBm) (no IR, radar detection)
+                        * 5560 MHz [112] (22.0 dBm) (no IR, radar detection)
+                        * 5580 MHz [116] (22.0 dBm) (no IR, radar detection)
+                        * 5600 MHz [120] (22.0 dBm) (no IR, radar detection)
+                        * 5620 MHz [124] (22.0 dBm) (no IR, radar detection)
+                        * 5640 MHz [128] (22.0 dBm) (no IR, radar detection)
+                        * 5660 MHz [132] (22.0 dBm) (no IR, radar detection)
+                        * 5680 MHz [136] (22.0 dBm) (no IR, radar detection)
+                        * 5700 MHz [140] (22.0 dBm) (no IR, radar detection)
+                        * 5720 MHz [144] (22.0 dBm) (no IR, radar detection)
+                        * 5745 MHz [149] (22.0 dBm)
+                        * 5765 MHz [153] (22.0 dBm)
+                        * 5785 MHz [157] (22.0 dBm)
+                        * 5805 MHz [161] (22.0 dBm)
+                        * 5825 MHz [165] (22.0 dBm)
+                        * 5845 MHz [169] (disabled)
+                        * 5865 MHz [173] (disabled)
+                        * 5885 MHz [177] (disabled)
+                        * 5905 MHz [181] (disabled)
+        Supported commands:
+                 * new_interface
+                 * set_interface
+                 * new_key
+                 * start_ap
+                 * new_station
+                 * new_mpath
+                 * set_mesh_config
+                 * set_bss
+                 * authenticate
+                 * associate
+                 * deauthenticate
+                 * disassociate
+                 * join_ibss
+                 * join_mesh
+                 * remain_on_channel
+                 * set_tx_bitrate_mask
+                 * frame
+                 * frame_wait_cancel
+                 * set_wiphy_netns
+                 * set_channel
+                 * start_sched_scan
+                 * probe_client
+                 * set_noack_map
+                 * register_beacons
+                 * start_p2p_device
+                 * set_mcast_rate
+                 * connect
+                 * disconnect
+                 * channel_switch
+                 * set_qos_map
+                 * add_tx_ts
+                 * set_multicast_to_unicast
+        WoWLAN support:
+                 * wake up on disconnect
+                 * wake up on magic packet
+                 * wake up on pattern match, up to 20 patterns of 16-128 bytes,
+                   maximum packet offset 0 bytes
+                 * can do GTK rekeying
+                 * wake up on GTK rekey failure
+                 * wake up on EAP identity request
+                 * wake up on 4-way handshake
+                 * wake up on rfkill release
+                 * wake up on network detection, up to 11 match sets
+        software interface modes (can always be added):
+                 * AP/VLAN
+                 * monitor
+        valid interface combinations:
+                 * #{ managed } <= 1, #{ AP, P2P-client, P2P-GO } <= 1, #{ P2P-device } <= 1,
+                   total <= 3, #channels <= 2
+        HT Capability overrides:
+                 * MCS: ff ff ff ff ff ff ff ff ff ff
+                 * maximum A-MSDU length
+                 * supported channel width
+                 * short GI for 40 MHz
+                 * max A-MPDU length exponent
+                 * min MPDU start spacing
+        Device supports TX status socket option.
+        Device supports HT-IBSS.
+        Device supports SAE with AUTHENTICATE command
+        Device supports low priority scan.
+        Device supports scan flush.
+        Device supports per-vif TX power setting
+        P2P GO supports CT window setting
+        P2P GO supports opportunistic powersave setting
+        Driver supports full state transitions for AP/GO clients
+        Driver supports a userspace MPM
+        Driver/device bandwidth changes during BSS lifetime (AP/GO mode)
+        Device adds DS IE to probe requests
+        Device can update TPC Report IE
+        Device supports static SMPS
+        Device supports dynamic SMPS
+        Device supports WMM-AC admission (TSPECs)
+        Device supports configuring vdev MAC-addr on create.
+        Device supports randomizing MAC-addr in scans.
+        Device supports randomizing MAC-addr in sched scans.
+        Device supports randomizing MAC-addr in net-detect scans.
+        max # scan plans: 2
+        max scan plan interval: 65535
+        max scan plan iterations: 254
+        Supported TX frame types:
+                 * IBSS: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+                 * managed: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+                 * AP: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+                 * AP/VLAN: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+                 * mesh point: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+                 * P2P-client: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+                 * P2P-GO: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+                 * P2P-device: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
+        Supported RX frame types:
+                 * IBSS: 0x40 0xb0 0xc0 0xd0
+                 * managed: 0x40 0xb0 0xd0
+                 * AP: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
+                 * AP/VLAN: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
+                 * mesh point: 0xb0 0xc0 0xd0
+                 * P2P-client: 0x40 0xd0
+                 * P2P-GO: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
+                 * P2P-device: 0x40 0xd0
+        Supported extended features:
+                * [ VHT_IBSS ]: VHT-IBSS
+                * [ RRM ]: RRM
+                * [ SCAN_START_TIME ]: scan start timestamp
+                * [ BSS_PARENT_TSF ]: BSS last beacon/probe TSF
+                * [ FILS_STA ]: STA FILS (Fast Initial Link Setup)
+                * [ FILS_MAX_CHANNEL_TIME ]: FILS max channel attribute override with dwell time
+                * [ ACCEPT_BCAST_PROBE_RESP ]: accepts broadcast probe response
+                * [ OCE_PROBE_REQ_HIGH_TX_RATE ]: probe request TX at high rate (at least 5.5Mbps)
+                * [ OCE_PROBE_REQ_DEFERRAL_SUPPRESSION ]: probe request tx deferral and suppression
+                * [ CONTROL_PORT_OVER_NL80211 ]: control port over nl80211
+                * [ TXQS ]: FQ-CoDel-enabled intermediate TXQs
+                * [ EXT_KEY_ID ]: Extended Key ID support
+                * [ CONTROL_PORT_NO_PREAUTH ]: disable pre-auth over nl80211 control port support
+                * [ DEL_IBSS_STA ]: deletion of IBSS station support
+                * [ SCAN_FREQ_KHZ ]: scan on kHz frequency support
+                * [ CONTROL_PORT_OVER_NL80211_TX_STATUS ]: tx status for nl80211 control port support
+```
