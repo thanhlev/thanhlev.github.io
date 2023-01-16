@@ -315,7 +315,7 @@ Cấu trúc dữ liệu cho lời gọi trên nằm ở `/usr/include/linux/if.h
 /* WPA2 : PMKSA cache management */
 ```
 
-### Control path ngày nay (TBD)
+### Control path ngày nay
 
 Nhu cầu sử dụng Wi-Fi là cực kì lớn, hầu như xuất hiện ở mỗi gia đình, mỗi thiết bị. Kéo theo nó là nhiều công nghệ, nhiều tiêu chuẩn được sinh ra. Điều này cũng tạo ra áp lực cho các nhà phát triển phần mềm, với số lượng tính năng ngày càng nhiều, nhiều doanh nghiệp sử dụng. Họ cần đãm bảo ít lỗi nhất trong các bản release.
 
@@ -336,8 +336,14 @@ Ngoài ra prototype trên cũng khó hiểu. Các kỹ sư đã cho ra đời 1 
 Đặt ra các tiêu chuẩn để giao tiếp giữa user-space và kernel(thay thế cách dùng ioctl của wireless-extension). Các "khách hàng" nổi tiếng đang sử dụng tiêu chuẩn nl80211 có thể kể tên như: **iw, hostapd, wpa_supplicant, Network Manager, iwd...**
 ### cfg8021
 
-Thiết kế mới của driver theo chuẩn của nl80211
-**cfg80211_ops** là các operation struct dùng cho việc giao tiếp giữa protocol cfg80211 và application code.
+Thiết kế mới của driver theo chuẩn của nl80211, chứa các API phục vụ cho việc config Linux 802.11, cfg802.11 thay thế các Wireless extension.
+<a target="_blank" href="https://elixir.bootlin.com/linux/v6.0/source/include/net/cfg80211.h">cfg80211</a>
+
+
+### cfg80211_ops
+
+Là các operation struct dùng cho việc giao tiếp giữa protocol cfg80211 và application code. <a target="_blank" href="https://elixir.bootlin.com/linux/v6.0.19/source/include/net/cfg80211.h#L4271">cfg80211_ops</a>
+
 
 ### mac80211
 
@@ -346,11 +352,13 @@ Các module Wi-Fi hiện nay có 2 loại hardware:
 * Full-MAC Wi-FI là lớp Media Access Controll (L2) được implement trực tiếp trên firmware của module. Loại này ít tốn tài nguyên của CPU chính và thường thấy trên các Wi-Fi chipset của broadcom
 * Soft-MAC, Lớp MAC của hardware loại này được implement trên driver (mac80211), thường thấy trên driver của Intel Wi-Fi chipset
 
-mac80211 là một Kernel module hỗ trợ cho các Wi-Fi module không có khả thực hiện L2 Routing. Nghĩa là bất kì dữ liệu gì nó nhận được đều chuyển đến cho driver thực hiện bóc tách, filter ...
+mac80211 là một Kernel module hỗ trợ cho các Wi-Fi module không có khả thực hiện L2 Routing, bất kì dữ liệu gì nó nhận được đều chuyển đến cho driver thực hiện bóc tách, filter ...
 
 mac80211 thực hiện đăng ký nó với cfg80211 thông qua `struct cfg80211_ops`
 
 > <span style="color:blue">Ví dụ về HW driver đăng ký với mac80211: `drivers/net/wireless/iwlwifi/mvm/mac80211.c`</span>
+
+Driver đăng ký sử dụng mac80211 thông qua struct <a target="_blank" href="https://elixir.bootlin.com/linux/v6.0.19/source/include/net/mac80211.h#L4117">ieee80211_ops</a>
 
 ## Flow hoạt động của driver đời mới
 
@@ -368,24 +376,7 @@ Ví dụ:
 thanhle@thanhle ~
 └──▶ iw phy0 info
 Wiphy phy0
-        wiphy index: 0
-        max # scan SSIDs: 20
-        max scan IEs length: 422 bytes
-        max # sched scan SSIDs: 20
-        max # match sets: 11
-        Retry short limit: 7
-        Retry long limit: 4
-        Coverage class: 0 (up to 0m)
-        Device supports RSN-IBSS.
-        Device supports AP-side u-APSD.
-        Supported Ciphers:
-                * WEP40 (00-0f-ac:1)
-                * WEP104 (00-0f-ac:5)
-                * TKIP (00-0f-ac:2)
-                * CCMP-128 (00-0f-ac:4)
-                * CMAC (00-0f-ac:6)
-        Available Antennas: TX 0x3 RX 0x3
-        Configured Antennas: TX 0x3 RX 0x3
+        ...
         Supported interface modes:
                  * IBSS
                  * managed
@@ -395,138 +386,7 @@ Wiphy phy0
                  * P2P-client
                  * P2P-GO
                  * P2P-device
-        Band 1:
-                Capabilities: 0x11ef
-                        RX LDPC
-                        HT20/HT40
-                        SM Power Save disabled
-                        RX HT20 SGI
-                        RX HT40 SGI
-                        TX STBC
-                        RX STBC 1-stream
-                        Max AMSDU length: 3839 bytes
-                        DSSS/CCK HT40
-                Maximum RX AMPDU length 65535 bytes (exponent: 0x003)
-                Minimum RX AMPDU time spacing: 4 usec (0x05)
-                HT Max RX data rate: 300 Mbps
-                HT TX/RX MCS rate indexes supported: 0-15
-                Bitrates (non-HT):
-                        * 1.0 Mbps
-                        * 2.0 Mbps (short preamble supported)
-                        * 5.5 Mbps (short preamble supported)
-                        * 11.0 Mbps (short preamble supported)
-                        * 6.0 Mbps
-                        * 9.0 Mbps
-                        * 12.0 Mbps
-                        * 18.0 Mbps
-                        * 24.0 Mbps
-                        * 36.0 Mbps
-                        * 48.0 Mbps
-                        * 54.0 Mbps
-                Frequencies:
-                        * 2412 MHz [1] (22.0 dBm)
-                        * 2417 MHz [2] (22.0 dBm)
-                        * 2422 MHz [3] (22.0 dBm)
-                        * 2427 MHz [4] (22.0 dBm)
-                        * 2432 MHz [5] (22.0 dBm)
-                        * 2437 MHz [6] (22.0 dBm)
-                        * 2442 MHz [7] (22.0 dBm)
-                        * 2447 MHz [8] (22.0 dBm)
-                        * 2452 MHz [9] (22.0 dBm)
-                        * 2457 MHz [10] (22.0 dBm)
-                        * 2462 MHz [11] (22.0 dBm)
-                        * 2467 MHz [12] (22.0 dBm)
-                        * 2472 MHz [13] (22.0 dBm)
-                        * 2484 MHz [14] (disabled)
-        Band 2:
-                Capabilities: 0x11ef
-                        RX LDPC
-                        HT20/HT40
-                        SM Power Save disabled
-                        RX HT20 SGI
-                        RX HT40 SGI
-                        TX STBC
-                        RX STBC 1-stream
-                        Max AMSDU length: 3839 bytes
-                        DSSS/CCK HT40
-                Maximum RX AMPDU length 65535 bytes (exponent: 0x003)
-                Minimum RX AMPDU time spacing: 4 usec (0x05)
-                HT Max RX data rate: 300 Mbps
-                HT TX/RX MCS rate indexes supported: 0-15
-                VHT Capabilities (0x038071b0):
-                        Max MPDU length: 3895
-                        Supported Channel Width: neither 160 nor 80+80
-                        RX LDPC
-                        short GI (80 MHz)
-                        TX STBC
-                        SU Beamformee
-                VHT RX MCS set:
-                        1 streams: MCS 0-9
-                        2 streams: MCS 0-9
-                        3 streams: not supported
-                        4 streams: not supported
-                        5 streams: not supported
-                        6 streams: not supported
-                        7 streams: not supported
-                        8 streams: not supported
-                VHT RX highest supported: 0 Mbps
-                VHT TX MCS set:
-                        1 streams: MCS 0-9
-                        2 streams: MCS 0-9
-                        3 streams: not supported
-                        4 streams: not supported
-                        5 streams: not supported
-                        6 streams: not supported
-                        7 streams: not supported
-                        8 streams: not supported
-                VHT TX highest supported: 0 Mbps
-                Bitrates (non-HT):
-                        * 6.0 Mbps
-                        * 9.0 Mbps
-                        * 12.0 Mbps
-                        * 18.0 Mbps
-                        * 24.0 Mbps
-                        * 36.0 Mbps
-                        * 48.0 Mbps
-                        * 54.0 Mbps
-                Frequencies:
-                        * 5180 MHz [36] (22.0 dBm)
-                        * 5200 MHz [40] (22.0 dBm)
-                        * 5220 MHz [44] (22.0 dBm)
-                        * 5240 MHz [48] (22.0 dBm)
-                        * 5260 MHz [52] (22.0 dBm) (no IR, radar detection)
-                        * 5280 MHz [56] (22.0 dBm) (no IR, radar detection)
-                        * 5300 MHz [60] (22.0 dBm) (no IR, radar detection)
-                        * 5320 MHz [64] (22.0 dBm) (no IR, radar detection)
-                        * 5340 MHz [68] (disabled)
-                        * 5360 MHz [72] (disabled)
-                        * 5380 MHz [76] (disabled)
-                        * 5400 MHz [80] (disabled)
-                        * 5420 MHz [84] (disabled)
-                        * 5440 MHz [88] (disabled)
-                        * 5460 MHz [92] (disabled)
-                        * 5480 MHz [96] (disabled)
-                        * 5500 MHz [100] (22.0 dBm) (no IR, radar detection)
-                        * 5520 MHz [104] (22.0 dBm) (no IR, radar detection)
-                        * 5540 MHz [108] (22.0 dBm) (no IR, radar detection)
-                        * 5560 MHz [112] (22.0 dBm) (no IR, radar detection)
-                        * 5580 MHz [116] (22.0 dBm) (no IR, radar detection)
-                        * 5600 MHz [120] (22.0 dBm) (no IR, radar detection)
-                        * 5620 MHz [124] (22.0 dBm) (no IR, radar detection)
-                        * 5640 MHz [128] (22.0 dBm) (no IR, radar detection)
-                        * 5660 MHz [132] (22.0 dBm) (no IR, radar detection)
-                        * 5680 MHz [136] (22.0 dBm) (no IR, radar detection)
-                        * 5700 MHz [140] (22.0 dBm) (no IR, radar detection)
-                        * 5720 MHz [144] (22.0 dBm) (no IR, radar detection)
-                        * 5745 MHz [149] (22.0 dBm)
-                        * 5765 MHz [153] (22.0 dBm)
-                        * 5785 MHz [157] (22.0 dBm)
-                        * 5805 MHz [161] (22.0 dBm)
-                        * 5825 MHz [165] (22.0 dBm)
-                        * 5845 MHz [169] (disabled)
-                        * 5865 MHz [173] (disabled)
-                        * 5885 MHz [177] (disabled)
-                        * 5905 MHz [181] (disabled)
+        ...
         Supported commands:
                  * new_interface
                  * set_interface
@@ -560,20 +420,7 @@ Wiphy phy0
                  * set_qos_map
                  * add_tx_ts
                  * set_multicast_to_unicast
-        WoWLAN support:
-                 * wake up on disconnect
-                 * wake up on magic packet
-                 * wake up on pattern match, up to 20 patterns of 16-128 bytes,
-                   maximum packet offset 0 bytes
-                 * can do GTK rekeying
-                 * wake up on GTK rekey failure
-                 * wake up on EAP identity request
-                 * wake up on 4-way handshake
-                 * wake up on rfkill release
-                 * wake up on network detection, up to 11 match sets
-        software interface modes (can always be added):
-                 * AP/VLAN
-                 * monitor
+       ...
         valid interface combinations:
                  * #{ managed } <= 1, #{ AP, P2P-client, P2P-GO } <= 1, #{ P2P-device } <= 1,
                    total <= 3, #channels <= 2
@@ -584,62 +431,4 @@ Wiphy phy0
                  * short GI for 40 MHz
                  * max A-MPDU length exponent
                  * min MPDU start spacing
-        Device supports TX status socket option.
-        Device supports HT-IBSS.
-        Device supports SAE with AUTHENTICATE command
-        Device supports low priority scan.
-        Device supports scan flush.
-        Device supports per-vif TX power setting
-        P2P GO supports CT window setting
-        P2P GO supports opportunistic powersave setting
-        Driver supports full state transitions for AP/GO clients
-        Driver supports a userspace MPM
-        Driver/device bandwidth changes during BSS lifetime (AP/GO mode)
-        Device adds DS IE to probe requests
-        Device can update TPC Report IE
-        Device supports static SMPS
-        Device supports dynamic SMPS
-        Device supports WMM-AC admission (TSPECs)
-        Device supports configuring vdev MAC-addr on create.
-        Device supports randomizing MAC-addr in scans.
-        Device supports randomizing MAC-addr in sched scans.
-        Device supports randomizing MAC-addr in net-detect scans.
-        max # scan plans: 2
-        max scan plan interval: 65535
-        max scan plan iterations: 254
-        Supported TX frame types:
-                 * IBSS: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-                 * managed: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-                 * AP: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-                 * AP/VLAN: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-                 * mesh point: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-                 * P2P-client: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-                 * P2P-GO: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-                 * P2P-device: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
-        Supported RX frame types:
-                 * IBSS: 0x40 0xb0 0xc0 0xd0
-                 * managed: 0x40 0xb0 0xd0
-                 * AP: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
-                 * AP/VLAN: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
-                 * mesh point: 0xb0 0xc0 0xd0
-                 * P2P-client: 0x40 0xd0
-                 * P2P-GO: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
-                 * P2P-device: 0x40 0xd0
-        Supported extended features:
-                * [ VHT_IBSS ]: VHT-IBSS
-                * [ RRM ]: RRM
-                * [ SCAN_START_TIME ]: scan start timestamp
-                * [ BSS_PARENT_TSF ]: BSS last beacon/probe TSF
-                * [ FILS_STA ]: STA FILS (Fast Initial Link Setup)
-                * [ FILS_MAX_CHANNEL_TIME ]: FILS max channel attribute override with dwell time
-                * [ ACCEPT_BCAST_PROBE_RESP ]: accepts broadcast probe response
-                * [ OCE_PROBE_REQ_HIGH_TX_RATE ]: probe request TX at high rate (at least 5.5Mbps)
-                * [ OCE_PROBE_REQ_DEFERRAL_SUPPRESSION ]: probe request tx deferral and suppression
-                * [ CONTROL_PORT_OVER_NL80211 ]: control port over nl80211
-                * [ TXQS ]: FQ-CoDel-enabled intermediate TXQs
-                * [ EXT_KEY_ID ]: Extended Key ID support
-                * [ CONTROL_PORT_NO_PREAUTH ]: disable pre-auth over nl80211 control port support
-                * [ DEL_IBSS_STA ]: deletion of IBSS station support
-                * [ SCAN_FREQ_KHZ ]: scan on kHz frequency support
-                * [ CONTROL_PORT_OVER_NL80211_TX_STATUS ]: tx status for nl80211 control port support
 ```
