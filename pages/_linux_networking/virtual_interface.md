@@ -4,7 +4,8 @@ title: "Virtual Interfaces in Linux"
 short_description: "Ý nghĩa và cách tạo các loại virtual interface trên Linux"
 status: "In Progress"
 picture: "assets/images/4port_ethernet_card.webp"
-latest_release: "Add Document"
+commit1: "Add Document"
+latest_release: "Thêm mô tả docker dùng VETH"
 videos: []
 ---
 
@@ -23,7 +24,8 @@ videos: []
 
 | Revision | Date          | Remark      |
 |:---------|:------------- |:------------|
-| 0.1      | Feb-02-2023   | {{page.latest_release}} |
+| 0.1      | Feb-02-2023   | {{page.commit1}} |
+| 0.2      | Feb-02-2023   | {{page.latest_release}} |
 
 ## Ý nghĩa và cách tạo các loại virtual interface trên Linux
 
@@ -96,7 +98,15 @@ videos: []
           <p><b>Tạo interface</b></p>
             <code>ip link add veth1 type veth peer name veth2</code><br><br>
         </td>
-        <td>Tạo ra 1 cặp interface ảo có link connection với nhau</td>
+        <td>- Tạo ra 1 cặp interface ảo có link connection với nhau<br>
+        - Docker bridge mode dùng config này, veth0 được bind vào container,<br>
+        veth1 được add vào member của bridge <code>docker0</code><br>
+          <pre>
+            thanh@pc:~$ brctl show docker0
+            bridge name bridge id         STP enabled interfaces
+            docker0     8000.024229a2ad65 no  veth09f2569 <=== HERE
+          </pre>
+        </td>
     </tr>
   </tbody>
 </table>
