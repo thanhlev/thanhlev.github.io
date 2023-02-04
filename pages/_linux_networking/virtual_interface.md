@@ -2,10 +2,11 @@
 layout: default
 title: "Virtual Interfaces in Linux"
 short_description: "Ý nghĩa và cách tạo các loại virtual interface trên Linux"
-status: "In Progress"
+status: "Done"
 picture: "assets/images/4port_ethernet_card.webp"
 commit1: "Add Document"
-latest_release: "Thêm mô tả docker dùng VETH"
+commit2: "Thêm mô tả docker dùng VETH"
+latest_release: "Add tunnel interface"
 videos: []
 ---
 
@@ -25,7 +26,8 @@ videos: []
 | Revision | Date          | Remark      |
 |:---------|:------------- |:------------|
 | 0.1      | Feb-02-2023   | {{page.commit1}} |
-| 0.2      | Feb-02-2023   | {{page.latest_release}} |
+| 0.2      | Feb-02-2023   | {{page.commit2}} |
+| 0.3      | Feb-02-2023   | {{page.latest_release}} |
 
 ## Ý nghĩa và cách tạo các loại virtual interface trên Linux
 
@@ -106,6 +108,18 @@ videos: []
             bridge name bridge id         STP enabled interfaces
             docker0     8000.024229a2ad65 no  veth09f2569 <=== HERE
           </pre>
+        </td>
+    </tr>
+    <tr>
+        <td>TUNNEL</td>
+        <td>
+          <p><b>Tạo interface</b></p>
+            <code>ip tunnel add tunnel0 mode sit ttl $TUNTTL remote $ISPBRIP local $WAN4IP</code><br><br>
+          <p><b>Xóa interface</b></p>
+            <code>ip tunnel del tunnel0</code><br><br>
+        </td>
+        <td>- Tạo tunnel interface, các mode: ipip | gre | sit | isatap | vti | ip6ip6 | ipip6 |
+               ip6gre | vti6 | any<br>
         </td>
     </tr>
   </tbody>
