@@ -3,7 +3,8 @@ layout: default
 title: "Pytest"
 short_description: "Pytest và cách sử dụng"
 picture: "assets/images/pytest_diagram.png"
-latest_release: "Init document"
+commit1: "Init document"
+latest_release: "Add marks"
 status: "Inprogress"
 ---
 
@@ -21,7 +22,8 @@ status: "Inprogress"
 
 | Revision | Date          | Remark      |
 |:---------|:------------- |:------------|
-| 0.1      | Feb-07-2023   | {{page.latest_release}}|
+| 0.1      | Feb-07-2023   | {{page.commit1}}|
+| 0.2      | Feb-08-2023   | {{page.latest_release}}|
 
 ## Giới thiệu
 
@@ -284,6 +286,77 @@ def receiving_user(mail_admin, request):
 <div class="warning">
   <p><strong>Warning!</strong> finalizer được gọi lúc khỏi tạo fixture và nếu có lỗi gì trong quá trình thêm này thì test vẫn tiếp tục chạy.</p>
 </div>
+
+## Sử dụng marks
+
+- Fixture đã cung cấp khả năng khởi tạo resource cho test rất thành công. Tiếp theo `mark` cung cấp các tùy biến cho các test function bên trong mỗi test file. Sau đây là các ví dụ sử dụng `mark` để  tùy biến cho test function.
+
+### Dùng mark để cung cấp input thay cho fixture
+
+- Sử dụng built-in mark `parametrize` để cung cấp input cho hàm test.
+```python
+# content of test_expectation.py
+import pytest
+@pytest.mark.parametrize("test_input,expected", [("3+5", 8), ("2+4", 6), ("6*9", 42)])
+def test_eval(test_input, expected):
+    assert eval(test_input) == expected
+```
+- Khai báo toàn cục
+
+```python
+import pytest
+pytestmark = pytest.mark.parametrize("n,expected", [(1, 2), (3, 4)])
+class TestClass:
+    def test_simple_case(self, n, expected):
+        assert n + 1 == expected
+    def test_weird_simple_case(self, n, expected):
+        assert (n * 1) + 1 == expected
+
+```
+- Matrix
+
+```python
+import pytest
+@pytest.mark.parametrize("x", [0, 1])
+@pytest.mark.parametrize("y", [2, 3])
+# Các cặp input được tạo ra: x=0/y=2, x=1/y=2, x=0/y=3, và x=1/y=3
+def test_foo(x, y):
+    pass
+
+```
+
+
+### Chỉ chạy test khi mark tồn tại
+
+- Thay vì luôn luôn chạy một test, có thể dùng mark để chỉ chạy một test khi mark name tồn tại.
+
+```python
+import pytest
+
+@pytest.fixture
+def a_val():
+    return 10
+
+def test_answer1(a_val):
+    tmp = a_val
+    print("a_val", a_val)
+    a_val = a_val + 1
+    assert a_val == tmp + 12
+
+@pytest.mark.thanhle
+def test_answer2(a_val):
+    assert a_val == 10
+
+```
+- Trong ví dụ trên, pytest sẽ kiểm tra mark name `thanhle` có tồn tại hay không trước khi chạy `test_answer2`.
+- Vì mark `thanhle` là một custom mark nên cần khai báo. Cần tạo một file `pytest.ini` tại thư mục cần chạy test, và khai báo custom mark như sau
+
+```yaml
+[pytest]
+markers =
+  thanhle: test mark
+
+```
 
 ## Tham khảo
 - Reference [docs.pytest.org](https://docs.pytest.org/en/latest/contents.html)
