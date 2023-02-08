@@ -37,7 +37,7 @@ status: "Inprogress"
 ```python
 # content of demo/test_sample.py
 def sumOf(a,b):
-    return x + 1
+    return a + b
 
 
 def test_answer1():
