@@ -4,7 +4,8 @@ title: "Pytest"
 short_description: "Pytest và cách sử dụng"
 picture: "assets/images/pytest_diagram.png"
 commit1: "Init document"
-latest_release: "Add marks"
+commit2: "Add marks"
+latest_release: "Add configuration example"
 status: "Inprogress"
 ---
 
@@ -23,7 +24,8 @@ status: "Inprogress"
 | Revision | Date          | Remark      |
 |:---------|:------------- |:------------|
 | 0.1      | Feb-07-2023   | {{page.commit1}}|
-| 0.2      | Feb-08-2023   | {{page.latest_release}}|
+| 0.2      | Feb-08-2023   | {{page.commit2}}|
+| 0.3      | Feb-08-2023   | {{page.latest_release}}|
 
 ## Giới thiệu
 
@@ -357,6 +359,74 @@ markers =
   thanhle: test mark
 
 ```
+## Các cấu hình cho pytest
+
+- Các thiết lập cho pytest được ghi ở file `pytest.ini`
+- Nếu muốn thay đổi các option trong file này thì có thể overide nó bằng cách dùng option `-o/--override-ini`
+
+```shell
+pytest -o console_output_style=classic -o cache_dir=/tmp/mycache
+
+```
+
+```yaml
+# content of pytest.ini
+[pytest]
+
+# Test file to scan
+python_files =
+    test_*.py
+    check_*.py
+    example_*.py
+
+# App options
+addopts =
+  -s
+  --embedded-services esp,idf
+  --tb short
+  --skip-check-coredump y
+  --maxfail=2 -rf # exit after 2 failures, report fail info
+console_output_style =
+    classic: classic pytest output.
+    progress: like classic pytest output, but with a progress indicator
+    count: like progress, but shows progress as the number of tests completed instead of a percent
+# ignore DeprecationWarning
+filterwarnings =
+  ignore::DeprecationWarning:matplotlib.*:
+  ignore::DeprecationWarning:google.protobuf.*:
+  ignore::_pytest.warning_types.PytestExperimentalApiWarning
+
+# log related
+
+log_cli = True # Enable log display during test run (also known as “live logging”). The default is False.
+log_cli_level = INFO
+log_cli_format = %(asctime)s %(levelname)s %(message)s
+log_cli_date_format = %Y-%m-%d %H:%M:%S
+log_file = logs/pytest-logs.txt
+
+# junit related
+# xunit1 produces old style output, compatible with the xunit 1.0 format
+# xunit2 produces xunit 2.0 style output, which should be more compatible with latest Jenkins versions
+
+junit_family = xunit1
+
+## log all to `system-out` when case fail
+# log: write only logging captured output.
+# system-out: write captured stdout contents.
+# system-err: write captured stderr contents.
+# out-err: write both captured stdout and stderr contents.
+# all: write captured logging, stdout and stderr contents.
+# no (the default): no captured output is written.
+
+# Write captured log messages to JUnit report: one of no|log|system-out|system-err|out-err|all
+junit_logging = log
+# Capture log information for passing tests to JUnit report
+junit_log_passing_tests = True
+
+
+```
+
+
 
 ## Tham khảo
 - Reference [docs.pytest.org](https://docs.pytest.org/en/latest/contents.html)
