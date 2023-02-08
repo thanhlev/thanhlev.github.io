@@ -49,7 +49,7 @@ videos: []
             <div style="width:450px;overflow:auto">
 <pre><code>systemctl restart docker</code></pre>
             </div>
-          <p>- Các container mới tạo sẽ được lưu vào vị trí mới, các container cũ vẫn được lưu ở: <code>/etc/default/docker</code></p>
+          <p>- Các container mới tạo sẽ được lưu vào vị trí mới, các container cũ vẫn được lưu ở: <code>/var/lib/docker</code></p>
         </td>
     </tr>
   </tbody>
