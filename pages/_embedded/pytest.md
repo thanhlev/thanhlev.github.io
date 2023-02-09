@@ -5,7 +5,8 @@ short_description: "Pytest và cách sử dụng"
 picture: "assets/images/pytest_diagram.png"
 commit1: "Init document"
 commit2: "Add marks"
-latest_release: "Add configuration example"
+commit3: "Add configuration example"
+latest_release: "Add plugin"
 status: "Inprogress"
 ---
 
@@ -25,7 +26,8 @@ status: "Inprogress"
 |:---------|:------------- |:------------|
 | 0.1      | Feb-07-2023   | {{page.commit1}}|
 | 0.2      | Feb-08-2023   | {{page.commit2}}|
-| 0.3      | Feb-08-2023   | {{page.latest_release}}|
+| 0.3      | Feb-08-2023   | {{page.commit3}}|
+| 0.4      | Feb-09-2023   | {{page.latest_release}}|
 
 ## Giới thiệu
 
@@ -271,6 +273,39 @@ def sending_user(mail_admin):
   <p><strong>Info!</strong> Thứ tự cleanup fixture sẽ ngược lại với thứ tự khởi tạo fixture</p>
 </div>
 
+### Override fixtures
+
+- Fixtures được cung cấp bới các pluggin khác nhau, có thể override lại fixtures ở file `conftest.py`
+Ví dụ
+
+```python
+tests/
+    conftest.py
+    # content of tests/conftest.py
+        import pytest
+        @pytest.fixture
+            def username():
+                return 'username'
+
+    test_something.py
+        # content of tests/test_something.py
+        def test_username(username):
+            assert username == 'username'
+    subfolder/
+        conftest.py
+            # content of tests/subfolder/conftest.py
+            import pytest
+            @pytest.fixture
+            def username(username):
+                return 'overridden-' + username
+        test_something_else.py
+            # content of tests/subfolder/test_something_else.py
+            def test_username(username):
+                assert username == 'overridden-username'
+```
+- fixture `username` được xây dựng khác nhau ở mỗi level.
+
+
 #### Dùng finalizer
 
 - Cần thêm param `request` vào cho mỗi fixture muốn dùng cleanup.
@@ -425,8 +460,18 @@ junit_log_passing_tests = True
 
 
 ```
+## Plugin
+- Pytest đã cung cấp một frame work hỗ trợ việc test, tạo các resource cho việc test. Các dự án khác nhau sẽ có các nhu cầu test khác nhau, ví dụ test cho web app, mobile app, embedded, backend, frontend ...
+- Plugin giúp tạo công cụ chuyên biệt cho từng loại ứng dụng. Một vài ví dụ
 
+| Tên | Chức năng          |
+|:---------|:------------- |
+| pytest-django      | write tests for django apps, using pytest integration.   |
+| pytest-cov      | coverage reporting, compatible with distributed testing   |
+| pytest-embedded      | A pytest plugin that has multiple services available for various functionalities. Designed for embedded testing.|
 
-
+<div class="success">
+  <strong>Info! </strong> Xem thêm bài viết về <a href="pytest-embedded.html"><strong>pytest-embedded</strong></a>
+</div>
 ## Tham khảo
 - Reference [docs.pytest.org](https://docs.pytest.org/en/latest/contents.html)

@@ -14,23 +14,26 @@
 .danger {
   background-color: #ffdddd;
   border-left: 3px solid #f44336;
+  padding: 20px;
 }
 
 .success {
   background-color: #ddffdd;
   border-left: 3px solid #04AA6D;
+  padding: 20px;
 }
 
 .info {
   background-color: #e7f3fe;
   border-left: 3px solid #2196F3;
-  padding: 1px;
+  padding: 20px;
 }
 
 
 .warning {
   background-color: #ffffcc;
-  border-left: 3px solid #ffeb3b;
+  border-left: 3px solid #f17034;
+  padding: 20px;
 }
 #sponsor_banner {
   display: block;
