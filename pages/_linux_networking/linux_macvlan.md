@@ -8,7 +8,7 @@ latest_release: "Initialized"
 videos: []
 ---
 
-# Linux Wi-Fi Driver có gì đặc biệt?
+# Linux MacVLAN interface
 {: .no_toc }
 
 ## Table of contents
