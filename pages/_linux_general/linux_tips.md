@@ -35,7 +35,7 @@ videos: []
     </tr>
   </thead>
 
-  <tbody>
+<tbody>
     <tr>
         <td >
         <h6>Auto mount SSD at bootup</h6>
