@@ -273,4 +273,5 @@ PASSED
 
 ================================================================================================= 1 passed in 5.01s ==================================================================================================
 ```
-- Nguồn: https://github.com/espressif/pytest-embedded/tree/main/examples/esp-idf
+
+- Nguồn: [https://github.com/espressif/pytest-embedded/tree/main/examples/esp-idf](https://github.com/espressif/pytest-embedded/tree/main/examples/esp-idf)
