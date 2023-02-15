@@ -18,15 +18,6 @@ videos: []
 {:toc}
 
 -----------------------------------
-
-## Revision history
-
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-11-2023   | {{page.latest_release}} |
-
-
-
 <table>
   <thead>
     <tr>
@@ -53,6 +44,17 @@ ls -al /dev/disk/by-uuid/</code></pre>
           <h6>Test the fstab file</h6>
             <div style="width:650px;overflow:auto">
 <pre><code>findmnt --verify</code></pre>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td >
+        <h6>Replace sub string</h6>
+        </td>
+        <td>
+            <div style="width:650px;overflow:auto">
+<pre><code>a="\"$1\""
+sed -i -e "s/\(ssid=\).*/\1$a/" /etc/wpa_supplicant/wpa_supplicant.conf</code></pre>
             </div>
         </td>
     </tr>
