@@ -5,7 +5,7 @@ short_description: "Thông tin về kiến trúc, RAM, ROM, Flash, Bootloader"
 status: "Done"
 picture: "assets/images/TM4C123GH6ZRB_cpu_block_diagram.png"
 latest_release: "Copy từ repo cũ qua"
-videos: []
+index: 7
 ---
 
 # Tiva ™ TM4C123GH6ZRB Microcontroller [phần 1]

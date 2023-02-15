@@ -5,7 +5,7 @@ short_description: Memory map and boot-up information
 status: "Done"
 picture: "assets/images/tiny210v2_i.jpg"
 latest_release: "Unknown"
-videos: []
+index: 6
 ---
 
 # Tiny210 Information for development

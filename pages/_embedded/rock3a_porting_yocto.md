@@ -5,6 +5,7 @@ short_description: Porting from bsp to Yocto
 picture: "assets/images/rock-3a.jpg"
 latest_release: "Unknown"
 status: "Done"
+index: 3
 ---
 
 # Porting Rock-3A rockchip-bsp to Yocto Project

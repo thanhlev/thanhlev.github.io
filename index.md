@@ -19,7 +19,8 @@ Trang web này được tạo ra để giúp mình note lại những cái từn
     </tr>
   </thead>
   <tbody>
-{% for page in site.linux_networking %}
+{% assign sorted = site.linux_networking | sort: 'index' %}
+{% for page in sorted %}
     <tr>
       <td class="page_picture_td">
         {% if page.picture %}
@@ -50,7 +51,8 @@ Trang web này được tạo ra để giúp mình note lại những cái từn
     </tr>
   </thead>
   <tbody>
-{% for page in site.linux_general %}
+{% assign sorted = site.linux_general | sort: 'index' %}
+{% for page in sorted %}
     <tr>
       <td class="page_picture_td">
         {% if page.picture %}
@@ -80,7 +82,8 @@ Trang web này được tạo ra để giúp mình note lại những cái từn
     </tr>
   </thead>
   <tbody>
-{% for page in site.embedded %}
+{% assign sorted = site.embedded | sort: 'index' %}
+{% for page in sorted %}
     <tr>
       <td class="page_picture_td">
         {% if page.picture %}

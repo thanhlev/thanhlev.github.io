@@ -2,11 +2,11 @@
 layout: default
 title: "Lịch sử của Linux Wi-Fi Driver"
 short_description: "Thiết kế của Wi-Fi driver trên Linux"
-status: "In Progress"
+status: "Done"
 picture: "assets/images/intel_wifi_module.png"
 commit1: Cập nhật Control Path
 latest_release: "Cập nhật Control path ngày nay và  Flow hoạt động của driver đời mới"
-videos: []
+index: 2
 ---
 
 # Linux Wi-Fi Driver có gì đặc biệt?

@@ -5,7 +5,7 @@ short_description: "Các lệnh Docker thường dùng"
 status: "In Progress"
 picture: "assets/images/docker-banner.png"
 latest_release: "Init document"
-videos: []
+index: 5
 ---
 
 # Docker Snippet

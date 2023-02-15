@@ -5,7 +5,7 @@ short_description: "Thu Ethernet Phát Wi-Fi"
 status: "Pending"
 picture: "assets/images/raspberry_pi4.png"
 latest_release: "Nothings"
-videos: []
+index: 5
 ---
 
 # Setup PPPoE server trên board Raspberry Pi

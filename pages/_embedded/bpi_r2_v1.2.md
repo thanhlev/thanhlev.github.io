@@ -5,7 +5,7 @@ short_description: Customize OpenWrt for Banana Pi R2
 status: "Pending"
 picture: "assets/images/bpi_r2_v1.2.jpg"
 latest_release: "Unknown"
-videos: []
+index: 10
 ---
 
 # Build OpenWrt for BPI-R2

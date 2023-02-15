@@ -5,7 +5,7 @@ short_description: "Các task hay dùng với Linux"
 status: "In Progress"
 picture: "assets/images/linux_tips.jpg"
 latest_release: "Init document"
-videos: []
+index: 2
 ---
 
 # Linux tips

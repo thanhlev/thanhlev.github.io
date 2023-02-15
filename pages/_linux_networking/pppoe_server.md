@@ -5,7 +5,7 @@ short_description: "Setup PPPoE server trên board Raspberry Pi"
 status: "Pending"
 picture: "assets/images/pppoe_server.png"
 latest_release: "Nothings"
-videos: []
+index: 7
 ---
 
 # Setup PPPoE server trên board Raspberry Pi

@@ -5,7 +5,7 @@ short_description: "Esp8266 Flash map và Partition Table"
 status: "Done"
 picture: "assets/images/esp8266_block_diagram.png"
 latest_release: "Unknown"
-videos: []
+index: 5
 ---
 
 # Giới thiệu

@@ -2,10 +2,10 @@
 layout: default
 title: "Linux MacVLAN"
 short_description: "Thông tin về  macvlan interface trên Linux"
-status: "In Progress"
+status: "Done"
 picture: "assets/images/linux-macvlan.png"
-latest_release: "Initialized"
-videos: []
+latest_release: "Initialize document"
+index: 3
 ---
 
 # Linux MacVLAN interface

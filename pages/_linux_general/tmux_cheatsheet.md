@@ -5,7 +5,7 @@ short_description: "Các lệnh hay dùng với tmux"
 status: "In Progress"
 picture: "assets/images/TMUX-Cheatsheet-Cover-Image.001.jpeg"
 latest_release: "Init document"
-videos: []
+index: 3
 ---
 
 # Linux tips

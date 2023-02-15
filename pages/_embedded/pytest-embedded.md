@@ -2,15 +2,15 @@
 layout: default
 title: "Pytest-Embedded"
 short_description: "Khái niệm và cách dùng pluggin này cho embedded project"
-picture: "assets/images/pytest_diagram.png"
+picture: "assets/images/pytest-embedded.png"
 commit1: "Init document"
 latest_release: "Add description and example"
-status: "Inprogress"
+status: "Done"
+index: 2
 ---
 
 # Pytest-Embedded
 {: .no_toc }
-![](../../../assets/images/pytest_diagram.png)
 ## Table of contents
 {: .no_toc }
 

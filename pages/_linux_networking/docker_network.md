@@ -2,10 +2,10 @@
 layout: default
 title: "Docker Networking"
 short_description: "Các loại network khác nhau của Docker"
-status: "Pending"
+status: "Done"
 picture: "assets/images/docker_network.png"
-latest_release: "Nothings"
-videos: []
+latest_release: "Initialize document"
+index: 4
 ---
 
 # Các loại network khác nhau của Docker

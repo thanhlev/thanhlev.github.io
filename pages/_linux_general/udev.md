@@ -2,10 +2,10 @@
 layout: default
 title: "Udev Quick Reference"
 short_description: "Udev Quick Reference"
-status: "In Progress"
+status: "Done"
 picture: "assets/images/udev_Kernel.JPG"
 latest_release: "Init document"
-videos: []
+index: 4
 ---
 
 # Linux tips

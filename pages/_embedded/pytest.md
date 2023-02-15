@@ -7,7 +7,8 @@ commit1: "Init document"
 commit2: "Add marks"
 commit3: "Add configuration example"
 latest_release: "Add plugin"
-status: "Inprogress"
+status: "Done"
+index: 1
 ---
 
 # Pytest và cách sử dụng

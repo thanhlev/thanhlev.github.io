@@ -5,7 +5,7 @@ short_description: "Trình tự bootup trên Wireless MCU ESP8266"
 status: "Done"
 picture: "assets/images/esp8266_block_diagram.png"
 latest_release: "Unknown"
-videos: []
+index: 4
 ---
 
 # Esp8266 Bootup Sequence
