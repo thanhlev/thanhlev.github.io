@@ -111,6 +111,18 @@ xrandr --addmode VIRTUAL1 1920x1080_60.00</code></pre>
             </div>
         </td>
     </tr>
+     <!-- Row 5 -->
+    <tr>
+        <td >
+        <h6>Calculation</h6>
+        </td>
+        <td>
+            <div style="width:650px;overflow:auto">
+<pre><code>val=$(expr "$val" + 256)
+</code></pre>
+            </div>
+        </td>
+    </tr>
   </tbody>
 </table>
 
