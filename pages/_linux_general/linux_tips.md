@@ -111,6 +111,19 @@ xrandr --addmode VIRTUAL1 1920x1080_60.00</code></pre>
             </div>
         </td>
     </tr>
+    <!-- Row 5 -->
+    <tr>
+        <td >
+        <h6>Network Manager skip managing device</h6>
+        </td>
+        <td>
+            <div style="width:650px;overflow:auto">
+<pre><code># file: /etc/NetworkManager/NetworkManager.conf
+[keyfile]
+unmanaged-devices=interface-name:interface_1;interface-name:interface_2;...</code></pre>
+            </div>
+        </td>
+    </tr>
   </tbody>
 </table>
 
