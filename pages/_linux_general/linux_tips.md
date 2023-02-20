@@ -154,6 +154,23 @@ sudo apt-get remove --purge $(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | s
             </div>
         </td>
     </tr>
+    <!-- Row 8 -->
+    <tr>
+        <td >
+        <h6>Set timezone</h6>
+        </td>
+        <td>
+            <div style="width:650px;overflow:auto">
+<pre><code># get timezone name
+timedatectl list-timezones | grep "Ho"
+
+# set timezone
+timedatectl set-timezone Asia/Ho_Chi_Minh
+</code></pre>
+            </div>
+        </td>
+    </tr>
   </tbody>
 </table>
 
+Asia/Ho_Chi_Minh

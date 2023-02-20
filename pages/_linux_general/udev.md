@@ -8,7 +8,7 @@ latest_release: "Init document"
 index: 4
 ---
 
-# Linux tips
+# Udev Quick Reference
 {: .no_toc }
 
 ## Table of contents
