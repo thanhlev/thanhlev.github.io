@@ -133,6 +133,23 @@ unmanaged-devices=interface-name:interface_1;interface-name:interface_2;...</cod
             </div>
         </td>
     </tr>
+    <!-- Row 7 -->
+    <tr>
+        <td >
+        <h6>Set timezone</h6>
+        </td>
+        <td>
+            <div style="width:650px;overflow:auto">
+<pre><code># get timezone name
+timedatectl list-timezones | grep "Ho"
+
+# set timezone
+timedatectl set-timezone Asia/Ho_Chi_Minh
+</code></pre>
+            </div>
+        </td>
+    </tr>
   </tbody>
 </table>
 
+Asia/Ho_Chi_Minh
