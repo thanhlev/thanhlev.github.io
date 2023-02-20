@@ -133,6 +133,27 @@ unmanaged-devices=interface-name:interface_1;interface-name:interface_2;...</cod
             </div>
         </td>
     </tr>
+    <!-- Row 7 -->
+    <tr>
+        <td >
+        <h6>Cleanup Disk</h6>
+        </td>
+        <td>
+            <div style="width:650px;overflow:auto">
+<pre><code># Clear systemd journal logs
+sudo journalctl --vacuum-time=3d # clear log older 3 days
+# Clean snap
+set -eu
+snap list --all | awk '/disabled/{print $1, $3}' |
+    while read snapname revision; do
+        snap remove "$snapname" --revision="$revision"
+    done
+# remove old kernel
+sudo apt-get remove --purge $(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')
+</code></pre>
+            </div>
+        </td>
+    </tr>
   </tbody>
 </table>
 
