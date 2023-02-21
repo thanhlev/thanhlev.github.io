@@ -2,10 +2,11 @@
 layout: default
 title: "Linux Packet Filtering"
 short_description: "Đường đi của gói tin trong Linux Kernel"
-status: "Done"
+status: "In progress"
 picture: "assets/images/traversing_table_chain.png"
 latest_release: "Initial Document"
-index: 1
+index: 9
+publish: false
 ---
 
 # Linux Table Chain

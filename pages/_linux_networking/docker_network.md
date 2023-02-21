@@ -6,6 +6,7 @@ status: "Done"
 picture: "assets/images/docker_network.png"
 latest_release: "Initialize document"
 index: 4
+publish: true
 ---
 
 # Các loại network khác nhau của Docker

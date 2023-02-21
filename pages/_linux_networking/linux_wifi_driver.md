@@ -7,6 +7,7 @@ picture: "assets/images/intel_wifi_module.png"
 commit1: Cập nhật Control Path
 latest_release: "Cập nhật Control path ngày nay và  Flow hoạt động của driver đời mới"
 index: 2
+publish: true
 ---
 
 # Linux Wi-Fi Driver có gì đặc biệt?

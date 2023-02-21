@@ -9,6 +9,7 @@ commit2: "Thêm mô tả docker dùng VETH"
 commit3: "Add tunnel interface"
 latest_release: "Add ipvlan interface"
 index: 1
+publish: true
 ---
 
 # Virtual Interfaces in Linux

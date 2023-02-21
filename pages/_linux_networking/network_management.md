@@ -5,6 +5,8 @@ short_description: "Các loại hình quản lý network trên Linux"
 picture: "assets/images/linux_network_management.png"
 status: "Done"
 index: 1
+latest_release: "add Ifupdown"
+publish: true
 ---
 
 # Linux Network Management

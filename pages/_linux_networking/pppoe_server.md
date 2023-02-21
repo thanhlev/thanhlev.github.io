@@ -6,6 +6,7 @@ status: "Pending"
 picture: "assets/images/pppoe_server.png"
 latest_release: "Nothings"
 index: 7
+publish: false
 ---
 
 # Setup PPPoE server trên board Raspberry Pi
