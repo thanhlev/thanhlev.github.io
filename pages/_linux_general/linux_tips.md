@@ -134,15 +134,7 @@ unmanaged-devices=interface-name:interface_1;interface-name:interface_2;...</cod
       <td>
         <div style="width:650px;overflow:auto">
           <pre><code># Clear systemd journal logs
-sudo journalctl --vacuum-time=3d # clear log older 3 days
-# Clean snap
-set -eu
-snap list --all | awk '/disabled/{print $1, $3}' |
-while read snapname revision; do
-    snap remove "$snapname" --revision="$revision"
-done
-# remove old kernel
-sudo apt-get remove --purge $(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')
+docker ps | awk '{print $NF}' | natsort
 </code></pre>
         </div>
       </td>
@@ -170,6 +162,22 @@ timedatectl set-timezone Asia/Ho_Chi_Minh
       <td>
         <div style="width:650px;overflow:auto">
           <pre><code>- $0: tên file script đang chạy
+- $#: tổng số tham số truyền vào ( = 0 nếu không truyền tham số nào)
+- $*: for val in $*; do echo "val: $val"; done : dồn các biến thành 1 biến
+- $@: for val in $@; do echo "val: $val"; done : là array của các biến <br> có thể truy cập bằng index
+- ${@:2}: lấy từ index thứ 2 cho đến hết
+</code></pre>
+        </div>
+      </td>
+    </tr>
+    <!-- Row 10 -->
+    <tr>
+      <td>
+        <h6>Natural sort</h6>
+      </td>
+      <td>
+        <div style="width:650px;overflow:auto">
+          <pre><code>apt install python3-natsort
 - $#: tổng số tham số truyền vào ( = 0 nếu không truyền tham số nào)
 - $*: for val in $*; do echo "val: $val"; done : dồn các biến thành 1 biến
 - $@: for val in $@; do echo "val: $val"; done : là array của các biến <br> có thể truy cập bằng index
