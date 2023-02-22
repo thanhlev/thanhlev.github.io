@@ -166,6 +166,17 @@ beep.beep(10)
                 </div>
             </td>
         </tr>
+        <!-- Row 8 -->
+        <tr>
+            <td>
+                <h6>trim string white space</h6>
+            </td>
+            <td>
+                <div style="width:1000px;overflow:auto">
+                    <pre><code>str("   hello    ").strip()</code></pre>
+                </div>
+            </td>
+        </tr>
     </tbody>
 </table>
 
