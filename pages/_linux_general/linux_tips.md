@@ -38,18 +38,6 @@ ls -al /dev/disk/by-uuid/</code></pre>
         </div>
       </td>
     </tr>
-    <!-- Row 2 -->
-    <tr>
-      <td>
-        <h6>Replace sub string</h6>
-      </td>
-      <td>
-        <div style="width:1000px;overflow:auto">
-          <pre><code>a="\"$1\""
-sed -i -e "s/\(ssid=\).*/\1$a/" /etc/wpa_supplicant/wpa_supplicant.conf</code></pre>
-        </div>
-      </td>
-    </tr>
     <!-- Row 3 -->
     <tr>
       <td>
@@ -191,7 +179,44 @@ docker ps | awk '{print $NF}' | natsort</code></pre>
     </tr>
   </tbody>
 </table>
+<!-- sed -->
+<h2>sed</h2>
+<table class="project_table">
+  <thead>
+    <tr>
+      <th>Items</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Row -->
+    <tr>
+      <td>
+        <h6>Replace sub string</h6>
+      </td>
+      <td>
+        <div style="width:1000px;overflow:auto">
+          <pre><code>a="\"$1\""
+sed -i -e "s/\(ssid=\).*/\1$a/" /etc/wpa_supplicant/wpa_supplicant.conf</code></pre>
+        </div>
+      </td>
+    </tr>
+    <!-- Row -->
+    <tr>
+      <td>
+        <h6>remove a line</h6>
+      </td>
+      <td>
+        <div style="width:1000px;overflow:auto">
+          <pre><code>sed -i /${filter}/d ${FILE}</code></pre>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+
+<!-- AWK -->
 <h2>awk</h2>
 - Phần bên trong dấu ngoặc nhọn là action, phần bên ngoài là pattern
 <table class="project_table">
