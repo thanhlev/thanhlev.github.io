@@ -61,3 +61,6 @@ Một thư mục được đánh dấu opaque bằng cách set thuộc tính xat
 ## Factory reset
 Factory reset thực hiện đơn giản bằng cách xóa toàn bộ dữ liệu trên Upper file system
 
+## Reference
+
+- [https://docs.kernel.org/filesystems/overlayfs.html](https://docs.kernel.org/filesystems/overlayfs.html)
