@@ -97,8 +97,13 @@ xrandr --addmode VIRTUAL1 1920x1080_60.00</code></pre>
       <td>
         <div style="width:1000px;overflow:auto">
           <pre><code># file: /etc/NetworkManager/NetworkManager.conf
+# filter by name
 [keyfile]
-unmanaged-devices=interface-name:interface_1;interface-name:interface_2;...</code></pre>
+unmanaged-devices=interface-name:interface_1;interface-name:interface_2
+
+# fileter by mac
+[keyfile]
+unmanaged-devices=mac:00:11:22:33:44:55;mac:66:77:88:99:00:aa</code></pre>
           <!-- Row 6 -->
         </div>
       </td>
