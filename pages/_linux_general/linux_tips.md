@@ -155,6 +155,26 @@ timedatectl set-timezone Asia/Ho_Chi_Minh
         </div>
       </td>
     </tr>
+    <!-- Row 8.1 -->
+    <tr>
+      <td>
+        <h6>Update hardware clock time</h6>
+      </td>
+      <td>
+        <div style="width:1000px;overflow:auto">
+          <pre><code># read the Hardware Clock
+hwclock -r or hwclock --show or hwclock --show --verbose
+or hwclock --show --utc
+
+# set data and time
+date -s "Fri Mar  3 04:10:53 PM +07 2023" # giá trị lấy từ date command
+
+# Set the Hardware Clock to the current System Time
+hwclock --systohc or hwclock -w
+</code></pre>
+        </div>
+      </td>
+    </tr>
     <!-- Row 9 -->
     <tr>
       <td>
