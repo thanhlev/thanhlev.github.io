@@ -177,6 +177,38 @@ beep.beep(10)
                 </div>
             </td>
         </tr>
+        <!-- Row 9 -->
+        <tr>
+            <td>
+                <h6>Date and time</h6>
+            </td>
+            <td>
+                <div style="width:1000px;overflow:auto">
+                    <pre><code>from datetime import datetime, date
+
+datetime.utcnow()
+datetime.utcnow().hour
+datetime.utcnow().minute
+datetime.utcnow().second
+datetime.utcnow().timetuple().tm_yday // day of year
+datetime.utcnow().timetuple().tm_year
+datetime.utcnow().timetuple().tm_mon
+datetime.utcnow().timetuple().tm_mday
+datetime.utcnow().timetuple().tm_hour
+datetime.utcnow().timetuple().tm_min
+datetime.utcnow().timetuple().tm_sec
+datetime.utcnow().timetuple().tm_wday
+import calendar
+today = date.today()
+weekday = today.weekday()
+day_name = calendar.day_name[today.weekday()]
+current_day = today.strftime("%b-%d-%Y")
+current_day_object = datetime.strptime(current_day, '%b-%d-%Y')
+current_day_utc = current_day_object.utcnow().strftime("%b-%d-%Y")
+</code></pre>
+                </div>
+            </td>
+        </tr>
     </tbody>
 </table>
 
