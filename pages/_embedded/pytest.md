@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Pytest"
+title: "[🔥] - Pytest"
 short_description: "Pytest và cách sử dụng"
 picture: "assets/images/pytest_diagram.png"
 commit1: "Init document"
