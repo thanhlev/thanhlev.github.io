@@ -17,7 +17,20 @@ index: 2
     </tr>
   </thead>
   <tbody>
-    <!-- Row 1 -->
+      <!-- Row 1 -->
+    <tr>
+      <td>
+        <h6>Shell count number of lines</h6>
+      </td>
+      <td>
+        <div style="width:1000px;overflow:auto">
+          <pre><code>ps -A|wc -l # count all processes
+ps -LA|wc -l # count all threads
+ps aux|awk '{print $11}'|grep "^\["|wc -l # count all kernel threads</code></pre>
+        </div>
+      </td>
+    </tr>
+    <!-- Row 1.1 -->
     <tr>
       <td>
         <h6>Auto mount SSD at bootup</h6>

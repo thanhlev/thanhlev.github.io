@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Add Yocto support for Rock-3A Single Board Computer"
+title: "[🔥] - Add Yocto support for Rock-3A Single Board Computer"
 short_description: Porting from bsp to Yocto
 picture: "assets/images/rock-3a.jpg"
 latest_release: "Unknown"

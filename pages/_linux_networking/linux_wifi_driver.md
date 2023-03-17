@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Lịch sử của Linux Wi-Fi Driver"
+title: "[🔥] - Lịch sử của Linux Wi-Fi Driver"
 short_description: "Thiết kế của Wi-Fi driver trên Linux"
 status: "Done"
 picture: "assets/images/intel_wifi_module.png"

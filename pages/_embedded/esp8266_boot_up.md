@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Trình tự bootup trên Wireless MCU ESP8266"
+title: "[🔥] - Trình tự bootup trên Wireless MCU ESP8266"
 short_description: "Trình tự bootup trên Wireless MCU ESP8266"
 status: "Done"
 picture: "assets/images/esp8266_block_diagram.png"
