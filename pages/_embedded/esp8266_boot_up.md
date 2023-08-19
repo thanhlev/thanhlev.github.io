@@ -15,28 +15,27 @@ Trong vài viết [Esp8266 Partition Table](esp8266_flash_map.html), mình đã 
 
 Có 2 thông tin ở bài [Esp8266 Partition Table](esp8266_flash_map.html) sẽ làm tiền đề cho bài viết này
 
-> 1. ESP8266 có ROM, nhưng không phải ROM <span style="color:blue">có thể  ghi xóa</span>, cần gắn bộ nhớ ngoài để chứa mã ứng dụng.
+<div class="info">
+  <p>ESP8266 có ROM, nhưng không phải ROM <span style="color:blue">có thể  ghi xóa</span>, cần gắn bộ nhớ ngoài để chứa mã ứng dụng.</p>
+</div>
 
-- ROM sẽ chứa một chương trình thực thi (BL0) và một số thông tin riêng của nhà sản xuất ( ví dụ Mac address).
-- BL0 được Espressif nạp sẵn vào ROM
+ROM sẽ chứa một chương trình thực thi (BL0) và một số thông tin riêng của nhà sản xuất ( ví dụ Mac address).
 
-> 2. Một bộ nhớ flash duy nhất trên ESP8266 có thể chứa nhiều ứng dụng và nhiều loại dữ liệu khác nhau. (calibration data, files systems, parameter storage). Vì lý do này mà một <span style="color:blue">bảng phân vùng (partition tables)</span>. sẽ được ghi vào offset 0x8000 trong bộ nhớ.
-
-Để trả lời cho câu hỏi tại tao không ghi bảng phân vùng ở một địa chỉ nào khác mà phải là 0x8000 trên external flask thì mình cần phải dẫn dắt khá dài và sâu về thiết kế của SoC, nếu bạn chỉ quan tâm về tầng ứng dụng thì có thể chuyển qua tìm đọc các bài viết khác, tránh mất thời gian mà còn dễ tẩu hỏa !!
+Một bộ nhớ flash duy nhất trên ESP8266 có thể chứa nhiều ứng dụng và nhiều loại dữ liệu khác nhau. (calibration data, files systems, parameter storage). Vì lý do này mà một <span style="color:blue">bảng phân vùng (partition tables)</span>. sẽ được ghi vào offset 0x8000 (có thể thay đổi tùy kích thước bootloader) trong bộ nhớ.
 
 ## 2. Ôn lại một chút về CPU
 
 CPU (Central Processing Unit), với cái tên `bộ xử lý` nghe rất chung chung không biết là nó xử lý cái gì.
 
-Xử lý ở đây là thực hiện các lệnh như: cộng, trừ, nhân, chia, dịch bít, đảo bít, clear, nghịch đảo, gán, copy ... Số lượng lệnh và mức độ tối ưu tùy thuộc vào kiến trúc mà CPU này dùng. Kiến trúc để xây dựng ra CPU thì rất nhiều, một vài cái tên tiêu biểu: Arm, x86, x64, RISC... chi tiết hơn tham khảo link này [https://en-academic.com/dic.nsf/enwiki/11834151](https://en-academic.com/dic.nsf/enwiki/11834151)
+Xử lý ở đây là thực hiện các lệnh như: cộng, trừ, nhân, chia, dịch bít, đảo bít, clear, nghịch đảo, gán, copy ... Số lượng lệnh và mức độ tối ưu tùy thuộc vào kiến trúc mà CPU này dùng. Kiến trúc để xây dựng ra CPU thì rất nhiều, một vài cái tên tiêu biểu: Arm, x86, x64, RISC-V... chi tiết hơn tham khảo link này [https://en-academic.com/dic.nsf/enwiki/11834151](https://en-academic.com/dic.nsf/enwiki/11834151)
 
 CPU có khả năng tính toán, nhưng nó biết tính toán cái gì bây giờ, nó cần chúng ta ra lệnh cho nó. Vậy thì lấy cái gì đó để chứa lệnh của chúng ta đi rồi kêu nó vào đó đọc hướng dẫn và làm theo. Vậy là người ta thiết kế ra ROM (Read Only Memory) để chứa chướng trình hướng dẫn CPU cần làm gì.
 
-Nhưng mà sao phải là ROM ? dùng SD Card(MMC), eMMC, USB, SSD hay eSSD gì được không. Những thiết bị liệt kê ở trên cần cos controller mới hoạt động, cần khởi tạo trước, nếu để BL0 ở đây thì gặp bài toán quả trứng và con gà.
+Nhưng mà sao phải là ROM ? dùng SD Card(MMC), eMMC, USB, SSD hay eSSD gì được không. Những thiết bị liệt kê ở trên cần có controller mới hoạt động, cần khởi tạo trước, nếu để BL0 ở đây thì gặp bài toán quả trứng và con gà.
 
-Làm thể nào để kết nối ROM với CPU? - Người ta dùng BUS (này là bus ở lớp physical), không chỉ có ROM mà các ngoại vi khác cũng nối chung vào BUS. Lúc này các ngoại vi nối vào BUS sẽ có địa chỉ. Vấn đề đã được giải quyêt rồi, CPU sẽ giao tiếp với các ngoạị vi thông qua địa chỉ của ngoại vi trên BUS (các địa chỉ này là physical address)
+Làm thể nào để kết nối ROM với CPU? - Người ta dùng BUS (này là bus ở lớp physical), không chỉ có ROM mà các ngoại vi khác cũng nối chung vào BUS. Lúc này các ngoại vi nối vào BUS sẽ có địa chỉ. Vấn đề đã được giải quyêt rồi, CPU sẽ giao tiếp với các ngoại vi thông qua địa chỉ của ngoại vi trên BUS (các địa chỉ này là physical address)
 
-Vậy thì khi thiết kế CPU, ngay sau khi CPU thoát ra khỏi sự kiện POR (Power Of Reset) Hãy nhảy ngay đến đia chỉ của ROM (trên bus) để  thực thi lệnh, và địa chỉ này có tên là Reset Vector.
+Vậy thì khi thiết kế CPU, ngay sau khi CPU thoát ra khỏi sự kiện POR (Power On Reset) Hãy nhảy ngay đến đia chỉ của ROM (trên bus) để  thực thi lệnh, và địa chỉ này có tên là Reset Vector.
 
 Và mỗi hãng sản xuất CPU cũng chọn cho riêng mình một địa chỉ, chi tiết coi ở đây nè [https://en.wikipedia.org/wiki/Reset_vector](https://en.wikipedia.org/wiki/Reset_vector#:~:text=The%20reset%20vector%20is%20a,the%20system%20containing%20the%20CPU.)
 
@@ -46,7 +45,9 @@ Và mỗi hãng sản xuất CPU cũng chọn cho riêng mình một địa ch�
 
 Với dẫn dắt ở trên bạn sẽ dễ dàng đón nhận với thông tin mình cung cấp bên dưới:
 
-> Reset vector is 0x40000080
+<div class="info">
+  <p>Reset vector is 0x40000080</p>
+</div>
 
 Vậy là ta biết ngay địa chỉ internal ROM trên bus là 0x40000080, Để lục lại spec của ESP8266 xem nó có những ngoại vi gì nữa nào.
 
@@ -134,7 +135,7 @@ usage: esptool [-h] [--chip {auto,esp8266,esp32}] [--port PORT] [--baud BAUD] [-
 
 #### **3.3.1 First Stage Bootloader là gì ?**
 
-First Stage bootloader cũng là mã thực thi để  yêu cầu CPU thực hiện các công việc mà chúng ta mong muốn.
+First Stage bootloader cũng là mã thực thi để yêu cầu CPU thực hiện các công việc mà chúng ta mong muốn.
 
 #### **3.3.2 Tại sao lại cần First Stage Bootloader?**
 
@@ -165,7 +166,7 @@ ESP8266 OTA Partition Table
 |ota_0      |0      | ota_0   | 0x10000  | 0xF0000 |
 |ota_1      |0      | ota_1   | 0x110000 | 0xF0000 |
 
-- Quá rõ ràng, First Stage Bootloader khi được thực thi sẽ kiểm tra xem user đang muốn load file thực thi ở đâu (đọc dữ liệu tại địa chỉ `otadata (0xd000)` trên flash). Chỉ có 2 chỗ (`ota_0` và `ota_1`), load vào SRAM  sau đó yêu cầu CPU chạy instruction từ địa chỉ vừa load.
+- First Stage Bootloader khi được thực thi sẽ kiểm tra xem user đang muốn load file thực thi ở đâu (đọc dữ liệu tại địa chỉ `otadata (0xd000)` trên flash). Chỉ có 2 chỗ (`ota_0` và `ota_1`), load vào SRAM  sau đó yêu cầu CPU chạy instruction từ địa chỉ vừa load.
 
 ```js
 ets Jan  8 2013,rst cause:2, boot mode:(3,6)
@@ -206,6 +207,10 @@ Hello world!
 #### **3.3.4 First Stage Bootloader được lưu ở đâu trên flash ?**
 
 Ngay tại địa chỉ 0x00 của flash
+
+<div class="info">
+  <p>Đối với ESP32 - khi bật chức năng secure boot v1, bootloader sẽ được lưu ở địa chỉ khác.</p>
+</div>
 
 ### **3.4 First được thực thi như thế nào trên ESP8266?**
 
