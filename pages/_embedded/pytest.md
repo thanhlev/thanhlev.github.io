@@ -33,10 +33,11 @@ index: 1
 ## Giới thiệu
 
 - Pytest là một công cụ test code miễn phí được cộng đồng phát triển.
-- Với các plugins mở rộng, được dùng cho các công CI để test tự động.
+- Với các plugins mở rộng, được dùng bởi các hệ thống CI để test tự động.
 
 ## Hoạt động
 
+User và pytest framework giao tiếp với nhau thông qua các test file, bên dưới là một ví dụ:
 ### Ví dụ
 
 - tạo file test: `test_sample.py`
@@ -52,7 +53,7 @@ def test_answer1():
 def test_answer2():
     assert sumOf(3,1) == 4
 ```
-- Chạy test
+- Chạy test bằng cách chạy lệnh `pytest` tại thư mục có chứa các test file.
 
 ```shell
 cd demo
