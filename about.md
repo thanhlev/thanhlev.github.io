@@ -4,9 +4,6 @@ title: About
 permalink: /about/
 ---
 
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-<div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="dark" data-type="VERTICAL" data-vanity="thanhledotme" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/thanhledotme/"></a></div>
-
 Hi, I’m Thanh Le (Lê Quang Thành) 🍻!
 
 Welcome to my website, where I write about Linux, Embedded, Networking, IoT, Robotic, optimization, and more!
@@ -31,11 +28,11 @@ Welcome to my website, where I write about Linux, Embedded, Networking, IoT, Rob
     </tr>
     <tr>
         <td>💼 LinkedIn</td>
-        <td><a target="_blank" href="https://www.linkedin.com/in/thanhledotme/">ThanhLe</a></td>
+        <td><a target="_blank" href="https://www.linkedin.com/in/thanhlev">ThanhLe</a></td>
     </tr>
     <tr>
         <td>🍻 Github </td>
-        <td><a target="_blank" href="https://github.com/quangthanh010290">Github</a></td>
+        <td><a target="_blank" href="https://github.com/thanhlev">Github</a></td>
     </tr>
   </tbody>
 </table>

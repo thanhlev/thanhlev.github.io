@@ -4,7 +4,7 @@ title: Home
 ---
 
 
-Trang web này được tạo ra để giúp mình note lại những cái từng làm và đang làm. Ngoài việc giúp mình nhanh chóng tìm lại khi cần thì nó còn giúp kiểm soát tốt hơn tiến độ của các project. Các bài viết được lược kê bên dưới.
+Trang web này được tạo ra để giúp mình note lại những cái từng làm và đang làm. Ngoài việc giúp mình nhanh chóng tìm lại khi cần thì nó còn giúp kiểm soát tốt hơn tiến độ của các project. Các bài viết được liệt kê bên dưới.
 
 
 ### Linux -  networking
