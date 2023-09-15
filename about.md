@@ -23,7 +23,7 @@ Welcome to my website, where I write about Linux, Embedded, Networking, IoT, Rob
     </tr>
     <tr>
         <td>📬 Email</td>
-        <td><a target="_blank" href="mailto:quangthanh010290@gmail.com">quangthanh010290@gmail.com</a>
+        <td><a target="_blank" href="mailto:quangthanh010290@gmail.com">quangthanh010290@gmail.com</a> | 
         <a target="_blank" href="mailto:thanhlev@amazon.com.vn">thanhlev@amazon.com.vn</a></td>
     </tr>
     <tr>
