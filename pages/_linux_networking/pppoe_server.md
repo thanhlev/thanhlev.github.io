@@ -1,15 +1,15 @@
 ---
 layout: default
-title: "Setup PPPoE server trên board Raspberry Pi"
-short_description: "Setup PPPoE server trên board Raspberry Pi"
+title: "Setup PPPoE server on Raspberry Pi board"
+short_description: "Setup PPPoE server on Raspberry Pi board"
 status: "Pending"
 picture: "assets/images/pppoe_server.png"
-latest_release: "Nothings"
+latest_release: "Nothing"
 index: 7
 publish: false
 ---
 
-# Setup PPPoE server trên board Raspberry Pi
+# Setup PPPoE Server on Raspberry Pi Board
 
 {: .no_toc }
 
@@ -20,6 +20,6 @@ publish: false
 {:toc}
 
 -----------------------------------
-## Giới thiệu
+## Introduction
 
-Các bước để setup và cấu hình một PPPoE server trên Raspberry
+Steps to setup and configure a PPPoE server on Raspberry Pi

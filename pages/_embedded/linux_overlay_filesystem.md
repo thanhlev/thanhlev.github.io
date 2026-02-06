@@ -24,7 +24,7 @@ index: 1
 |:---------|:------------- |:------------|
 | 0.1      | Feb-27-2023   | {{page.latest_release}}|
 
-## Giới thiệu
+## Introduction
 
 Tính năng "phôi phục cài đặt gốc" cần phải ưu tiên và bắt buộc phải có trên các thiết bị có sử dụng firmware/OS. Phương pháp phổ biến hay dùng là trích một phần của bộ nhớ để chứa một bản image "gốc". Khi cần thực hiện factory reset, chỉ cần copy image "gốc" sang phân vùng đang chạy.
 
@@ -36,7 +36,7 @@ Giải pháp ở trên có  một chút lãng phí do phân vùng để chứa i
     <div class="column">
     <p>Overlay-filesystem là kết quả của việc overlaying một filesystem trên một filesystem khác. Như ở hình bên, Lower có thể  là factory image và là filesytem chỉ  có thể đọc. Upper là file system có thể đọc/ghi.<br><br>
 Kernel thực hiện overlay 2 loại file system này và cung cấp 1 file system mới để làm rootfs cho user-space. Một file/folder mà user nhìn thấy trên overlay file system thực chất được lưu trữ trên Lower file system hoặc Upper file system <br><br>
-Ví dụ trong suốt quá trình sử dụng, user chỉ đọc 1 file mà không có nhu cầu chỉnh sữa, file này hoàn toàn có thể lấy trực tiếp từ Lower. Khi có chỉnh sửa file, một bản copy được tạo ra trên Upper file system để hỗ trợ việc ghi dữ liệu.<br><br>
+For example, during the entire usage process, if a user only reads a file without needing to edit it, this file can be taken directly from Lower. When editing a file, a copy is created on the Upper file system to support data writing.<br><br>
 Bằng cách sử dụng kỹ thuật overlay, rõ ràng ta đã có thể tận dụng được "factory image" bằng cách dùng các file read-only của nó. Cách này cũng giúp giảm dung lượng cho Upper file system do không phải copy toàn bộ những file read-only đó.</p>
   </div><div class="column">
         <img  src="./../../../assets/images/OverlayFS_Image.png" width="100%" height="100%">

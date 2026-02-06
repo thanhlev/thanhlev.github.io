@@ -1,14 +1,14 @@
 ---
 layout: default
-title: "Tiva ™ TM4C123GH6ZRB Microcontroller [phần 1]"
-short_description: "Thông tin về kiến trúc, RAM, ROM, Flash, Bootloader"
+title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]"
+short_description: "Information about architecture, RAM, ROM, Flash, Bootloader"
 status: "Done"
 picture: "assets/images/TM4C123GH6ZRB_cpu_block_diagram.png"
-latest_release: "Copy từ repo cũ qua"
+latest_release: "Copied from old repo"
 index: 7
 ---
 
-# Tiva ™ TM4C123GH6ZRB Microcontroller [phần 1]
+# Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]
 
 {: .no_toc }
 

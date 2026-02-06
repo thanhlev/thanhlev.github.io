@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "[🔥] - Linux Packet Filtering"
-short_description: "Đường đi của gói tin trong Linux Kernel"
+short_description: "Packet flow through the Linux Kernel"
 status: "In progress"
 picture: "assets/images/traversing_table_chain.png"
 latest_release: "Initial Document"
@@ -22,19 +22,19 @@ publish: true
 
 ## Revision history
 
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-02-2023   | {{page.latest_release}} |
+|| Revision | Date          | Remark      |
+||:---------|:------------- |:------------|
+|| 0.1      | Feb-02-2023   | {{page.latest_release}} |
 
-## Giới thiệu
+## Introduction
 
-- Để  chủ động điều khiển network của một Linux system, cần hiểu rõ đường đi của một gói tin từ lúc phần cứng nhận được nó cho đến khi gói tin được chuyển đến ứng dụng ở user space và ngược lại, một gói tin được sinh ra ở user space thì được chuyển đến phần cứng như thế nào.
+- To proactively control the network of a Linux system, it's essential to understand the path of a packet from when the hardware receives it until it's delivered to applications in user space, and conversely, how a packet generated in user space is transmitted to the hardware.
 
 
 ## Chain
 
-- Linux network thiết kế các gói tin sẽ đi qua các chain khác nhau tùy thuộc vào địa chỉ nguồn và địa chỉ đích của gói tin.
-- Có 5 chain mặc định bao gồm PREROUTING, POSROUTING, FORWARD, INPUT, OUTPUT. Trong mỗi chain sẽ có những filter table, đây là các hook để Kernel cho phép người dùng điểu khiển gói tin sẽ được đi qua, bị loại bỏ, thay đổi nội dung của gói tin, hoặc đánh dấu gói tin để  để làm dữ liệu filter cho các filter table ở chain sau đó.
+- Linux networking is designed so that packets pass through different chains depending on their source and destination addresses.
+- There are 5 default chains: PREROUTING, POSTROUTING, FORWARD, INPUT, and OUTPUT. Each chain contains filter tables, which are hooks that allow the kernel to let users control whether packets pass through, are dropped, have their content modified, or are marked for filtering in subsequent chains.
 
 <img src="./../../assets/images/traversing_table_chain.png" alt="traversing_table_chain.png">
 
@@ -42,18 +42,18 @@ publish: true
 
 <div class="row">
     <div class="column">
-    <p>- Đây là chain <span style="color:red">quan trọng</span>, vì là chain đầu tiên mà package được đưa đến.<br>
-- Sau khi ra khỏi chain PREROUTING, gói tin sẽ được đưa đến chain INPUT hoặc chain FORWARD phụ thuộc vào địa chỉ đích của gói tin.<br>
-- Nếu địa chỉ đích là IP của host (người nhận chính là host) thì gói tin được đưa vào chain INPUT, tại đây gói tin tiếp tục được filter thông qua các filter table. Cuối cùng được kernel chuyển đến application đang chạy ở user space thông qua các port mà application này đăng ký.<br>
-- Nếu địa chỉ đích không phải là IP của host thì gói tin được chuyển đến chain FORWARD, quy trình đi qua các filter table được lặp lại.<br>
-- Có 2 filter table trên chain này là mangle table và nat table</p>
+    <p>- This is an <span style="color:red">important</span> chain, as it's the first chain that packets are delivered to.<br>
+- After leaving the PREROUTING chain, packets are sent to either the INPUT or FORWARD chain depending on the destination address.<br>
+- If the destination address is the host's IP (the host is the recipient), the packet enters the INPUT chain, where it continues to be filtered through filter tables. Finally, the kernel delivers it to applications running in user space through the ports registered by these applications.<br>
+- If the destination address is not the host's IP, the packet is sent to the FORWARD chain, where the filtering process is repeated.<br>
+- There are 2 filter tables in this chain: mangle table and nat table</p>
 <div class="warning">
-  <p><strong>Warning!</strong> Các rules mà user thiết lập trên filter tables của chain chỉ áp dụng cho gói tin đã được kernel đưa vào chain. Do đó để điểu khiển gói tin đi vào chain INPUT hay FORWARD ta cần điểu khiển trên chain phía trước nó.</p>
+  <p><strong>Warning!</strong> Rules that users set on chain filter tables only apply to packets that the kernel has already delivered to that chain. Therefore, to control whether packets enter the INPUT or FORWARD chain, we need to control them in the preceding chain.</p>
 </div>
 <br>
-- Ví dụ: Giả sử  ta cần mở một DNS server chạy local ở user-space. DNS server này sẽ kiểm tra tất cả các DNS request đến từ network card để lọc những request phân giải các tên miền độc hại.<br>
+- Example: Suppose we need to run a local DNS server in user-space. This DNS server will check all DNS requests coming from the network card to filter requests resolving malicious domain names.<br>
 
-- Tuy nhiên chỉ khi trong package request chỉ định địa chỉ đích là địa chỉ của host thì gói tin này mới đến được chain INPUT và từ đó chuyển đến application. Khi địa chỉ đích là một địa chỉ external (ví dụ 8.8.8.8) thì gói tin được chuyển đến chain FORWARD và từ đó đi ra ngoài, application ở user space không thể nhận được. Để giải quyết vấn đề trên, ta cần thêm các rules ở chain PREROUTING để thay đổi địa chỉ đích của gói tin DNS request thành địa chỉ internal. Kết quả thay vì được đưa đến chain FORWARD thì gói tin được đưa đến chain INPUT<br>
+- However, only when the request packet specifies the destination address as the host's address will this packet reach the INPUT chain and then be forwarded to the application. When the destination address is an external address (e.g., 8.8.8.8), the packet is sent to the FORWARD chain and goes out, making it unreachable by user space applications. To solve this problem, we need to add rules in the PREROUTING chain to change the destination address of DNS request packets to an internal address. As a result, instead of being sent to the FORWARD chain, the packet is sent to the INPUT chain<br>
   </div>
   <div class="column">
         <img src="./../../assets/images/prerouting-input-forward.png" width="400">
@@ -62,15 +62,15 @@ publish: true
 
 ### Chain INPUT
 
-- Các gói tin đi đến chain INPUT xuất phát từ interface và có địa chỉ đích là IP của host (có thể là WAN, LAN , loop back)
-- Outout của chain này được gửi đến các application.
-- Có 2 filter table trên chain này là `mangle table` và `filter table`
+- Packets arriving at the INPUT chain originate from an interface and have a destination address that is the host's IP (can be WAN, LAN, or loopback)
+- The output of this chain is sent to applications.
+- There are 2 filter tables in this chain: `mangle table` and `filter table`
 
 ### Chain FORWARD
 
-- Các gói tin đi đến chain FORWARD xuất phát từ interface và có địa chỉ đích là IP external (không chứa bất kì một IP nào mà host đang có)
-- Outout của chain này được gửi đến chain POSROUTING.
-- Có 2 filter table trên chain này là `mangle table` và `filter table`
+- Packets arriving at the FORWARD chain originate from an interface and have an external IP as the destination address (not any IP that the host currently has)
+- The output of this chain is sent to the POSTROUTING chain.
+- There are 2 filter tables in this chain: `mangle table` and `filter table`
 
 ### Chain OUTPUT
 
@@ -78,9 +78,9 @@ publish: true
 
 <div class="row">
     <div class="column">
-    <p>- Các gói tin đi đến chain OUTPUT xuất phát từ application và có địa chỉ đích là IP external.<br>
-- Outout của chain này được gửi đến chain POSROUTING.<br>
-- Có 3 filter table trên chain này là `mangle table`, `nat table` và `filter table`</p>
+    <p>- Packets arriving at the OUTPUT chain originate from applications and have an external IP as the destination address.<br>
+- The output of this chain is sent to the POSTROUTING chain.<br>
+- There are 3 filter tables in this chain: `mangle table`, `nat table`, and `filter table`</p>
   </div>
   <div class="column">
         <img src="./../../assets/images/output-chain.png" width="400">
@@ -91,11 +91,11 @@ publish: true
 
 <div class="row">
     <div class="column">
-    <p>- Đây là nơi cuối cùng trước khi package được kernel chuyển đến driver để gửi ra ngoài. Đây là một chain quan trọng và được dùng nhiều nhất.<br>
-- Trên hình ta có thể thấy nó nhận từ 2 chain OUTPUT và FORWARD.<br>
-- Nếu thiết bị dạng client, thì dữ liệu đến nhiều từ chain OUTPUT khi có nhiều ứng dụng chạy và cần giao tiếp ra bên ngoài.<br>
-- Trên các thiết bị Router thì vừa nhận từ chain OUTPUT do ứng dụng local đồng thời từ chain FORWARD từ các client của router gửi đến.<br>
-- Có 2 filter table trên chain này là `mangle table` và `nat table`. Trên router thì `nat table` ngốn nhiều CPU nhất do phải thực hiển chuyển đổi địa chỉ source address thành địa chỉ IP của router của tất cả gói tin.</p>
+    <p>- This is the final point before the kernel transfers the packet to the driver for sending out. This is an important and most commonly used chain.<br>
+- In the diagram, we can see it receives from 2 chains: OUTPUT and FORWARD.<br>
+- On client devices, data mostly comes from the OUTPUT chain when many applications are running and need to communicate externally.<br>
+- On Router devices, it receives from both the OUTPUT chain (from local applications) and the FORWARD chain (from router clients).<br>
+- There are 2 filter tables in this chain: `mangle table` and `nat table`. On routers, the `nat table` consumes the most CPU as it must convert the source address to the router's IP address for all packets.</p>
   </div>
   <div class="column">
         <img src="./../../assets/images/postrouting-chain.png" width="400">
@@ -104,31 +104,31 @@ publish: true
 
 ## Filter tables
 
-- Mỗi chain sẽ có những filter tables, đây là nơi user sẽ thiết lập các quy tắc để kiểm soát gói tin.
-- Các thiết lập này và vô cùng nhiều, đa dạng, phức tạp, do đó mình sẽ làm riêng một bài về nó.
+- Each chain has filter tables, where users set rules to control packets.
+- These settings are extremely numerous, diverse, and complex, so I'll create a separate article about them.
 
-## Công cụ để  cấu hình filter tables
+## Tools for configuring filter tables
 
-- Công cụ nổi tiếng `iptables` thực hiện tương tác với kernel để tạo ra các rule này,
-- Cú pháp `iptables [Command] [chain name: default all] -t [filter table: default filter] [option]`, sau đây là các lệnh cơ bản.
+- The famous `iptables` tool interacts with the kernel to create these rules.
+- Syntax: `iptables [Command] [chain name: default all] -t [filter table: default filter] [option]`, here are the basic commands:
 
-| Giải thích | Lệnh         |
-|:---------|:------------- |
-|**Chain OUTPUT**| |
-| Liệt kê các rule đang có trên `nat table`, chain `OUTPUT`      | `iptables -nvL OUTPUT -t nat`  |
-| Liệt kê các rule đang có trên `mangle table`, chain `OUTPUT`      | `iptables -nvL OUTPUT -t mangle`  |
-| Liệt kê các rule đang có trên `filter table`, chain `OUTPUT`      | `iptables -nvL OUTPUT` or `iptables -nvL OUTPUT -t filter`  |
-|**Chain FORWARD**| |
-| Liệt kê các rule đang có trên `mangle table`, chain `FORWARD`      | `iptables -nvL FORWARD -t mangle`  |
-| Liệt kê các rule đang có trên `filter table`, chain `FORWARD`      | `iptables -nvL FORWARD` or `iptables -nvL FORWARD -t filter`  |
-| Liệt kê các rule đang có trên `nat table`, chain `FORWARD`      | `iptables -nvL FORWARD -t nat` : nếu có bài viết ở trên sai  |
-|**Tất cả các chain**| |
-| Liệt kê các rule đang có trên  `mangle table`      | `iptables -nvL -t mangle`  |
-| Liệt kê các rule đang có trên  `filter table`      | `iptables -nvL` or `iptables -nvL -t filter`   |
-| Liệt kê các rule đang có trên  `nat table`      | `iptables -nvL -t nat`   |
+|| Explanation | Command         |
+||:---------|:------------- |
+||**Chain OUTPUT**| |
+|| List current rules on `nat table`, chain `OUTPUT`      | `iptables -nvL OUTPUT -t nat`  |
+|| List current rules on `mangle table`, chain `OUTPUT`      | `iptables -nvL OUTPUT -t mangle`  |
+|| List current rules on `filter table`, chain `OUTPUT`      | `iptables -nvL OUTPUT` or `iptables -nvL OUTPUT -t filter`  |
+||**Chain FORWARD**| |
+|| List current rules on `mangle table`, chain `FORWARD`      | `iptables -nvL FORWARD -t mangle`  |
+|| List current rules on `filter table`, chain `FORWARD`      | `iptables -nvL FORWARD` or `iptables -nvL FORWARD -t filter`  |
+|| List current rules on `nat table`, chain `FORWARD`      | `iptables -nvL FORWARD -t nat` : if the above article is wrong  |
+||**All chains**| |
+|| List current rules on `mangle table`      | `iptables -nvL -t mangle`  |
+|| List current rules on `filter table`      | `iptables -nvL` or `iptables -nvL -t filter`   |
+|| List current rules on `nat table`      | `iptables -nvL -t nat`   |
 
 
-## Ví dụ: Dùng đường truyền WAN tốc độ thấp để định tuyến các mail request (TBD)
+## Example: Using low-speed WAN connection to route mail requests (TBD)
 
 
 ## References

@@ -30,7 +30,7 @@ index: 1
 | 0.3      | Feb-08-2023   | {{page.commit3}}|
 | 0.4      | Feb-09-2023   | {{page.latest_release}}|
 
-## Giới thiệu
+## Introduction
 
 - Pytest là một công cụ test code miễn phí được cộng đồng phát triển.
 - Với các plugins mở rộng, được dùng bởi các hệ thống CI để test tự động.
@@ -38,7 +38,7 @@ index: 1
 ## Hoạt động
 
 User và pytest framework giao tiếp với nhau thông qua các test file, bên dưới là một ví dụ:
-### Ví dụ
+### Example
 
 - tạo file test: `test_sample.py`
 
@@ -89,7 +89,7 @@ thanhle@thanhle ~/build/test
 
 ## Sử dụng fixtures
 
-### Ví dụ
+### Example
 
 ```python
 # content of demo/test_sample.py
@@ -140,7 +140,7 @@ def test_answer(a_val, b_val):
 - biến đầu vào của một fixtures là một fixtures khác
 
 ```python
-# Ví dụ về nested fixtures
+# Example of nested fixtures
 import pytest
 # Arrange
 @pytest.fixture
@@ -160,7 +160,7 @@ def test_string(order):
 - giá trị `a_val` đưa vào 2 test case là giá trị ban đầu được hàm `@pytest.fixture` tạo ra, giúp các test case không bị ảnh hưởng lẫn nhau.
 
 ```python
-# Ví dụ về sử dụng lại fixtures
+# Example of reusing fixtures
 import pytest
 
 @pytest.fixture
@@ -181,7 +181,7 @@ def test_answer2(a_val):
 - pytest tự động gọi fixture để lấy giá trị mà không cần check có test hoặc fixture nào khác cần tới không.
 
 ```python
-# Ví dụ Autouse fixtures
+# Example Autouse fixtures
 @pytest.fixture(autouse=True)
 def a_val():
     return 10
@@ -203,7 +203,7 @@ def test_customer_records(make_customer_record):
 
 #### Fixture có tham số [HOT]
 
-- Ví dụ
+- Example
 
 ```python
 # content of conftest.py
@@ -278,7 +278,7 @@ def sending_user(mail_admin):
 ### Override fixtures
 
 - Fixtures được cung cấp bới các pluggin khác nhau, có thể override lại fixtures ở file `conftest.py`
-Ví dụ
+Example
 
 ```python
 tests/

@@ -27,7 +27,7 @@ publish: true
 | 0.1      | Jan-12-2023   | {{page.commit1}} |
 | 0.2      | Jan-16-2023   | {{page.latest_release}}|
 
-## Giới thiệu
+## Introduction
 
 Wi-Fi driver là một network driver, nhiệm vụ đầu tiên nó cần làm là đăng ký  với Kernel để tạo ra net device
 
@@ -256,7 +256,7 @@ struct iw_statistics {
 };
 ```
 
-Ví dụ trên Ubuntu Desktop 22.04
+Example on Ubuntu Desktop 22.04
 
 ```shell
 cat /proc/net/wireless
@@ -274,9 +274,9 @@ Trong khi `iwconfig` yêu cầu các driver cần phải hỗ trợ để làm v
 
 ##### ioctl
 
-`ioctl` thông thường được dùng để `user-space` giao tiếp với Kernel thông qua file descriptor, tuy nhiên vẫn có thể áp dụng với network socket. Công cụ `ifconfig` đang sử dụng phương pháp này để giao tiếp với Kernel
+`ioctl` is commonly used for `user-space` to communicate with Kernel through file descriptor, but can also be applied with network socket. The `ifconfig` tool is using this method to communicate with Kernel
 
-Ví dụ để thay đổi địa chỉ IP trên interface eth2, `ifconfig` có thể tạo ra 1 ioctl với các tham số sau:
+For example, to change the IP address on interface eth2, `ifconfig` can create an ioctl with the following parameters:
 
 ```
 "eth2", SIOCSIFADDR, new address
@@ -357,7 +357,7 @@ mac80211 là một Kernel module hỗ trợ cho các Wi-Fi module không có kh�
 
 mac80211 thực hiện đăng ký nó với cfg80211 thông qua `struct cfg80211_ops`
 
-> <span style="color:blue">Ví dụ về HW driver đăng ký với mac80211: `drivers/net/wireless/iwlwifi/mvm/mac80211.c`</span>
+> <span style="color:blue">Example of HW driver registering with mac80211: `drivers/net/wireless/iwlwifi/mvm/mac80211.c`</span>
 
 Driver đăng ký sử dụng mac80211 thông qua struct <a target="_blank" href="https://elixir.bootlin.com/linux/v6.0.19/source/include/net/mac80211.h#L4117">ieee80211_ops</a>
 
@@ -371,7 +371,7 @@ Driver đăng ký sử dụng mac80211 thông qua struct <a target="_blank" href
 
 Với tiêu chuẩn nl80211 mới này, các thông tin, mode hỗ trợ, băng tần ... driver cần phải hỗ trợ để cung cấp thông tin đầy đủ để user-space application thực hiện cấu hình.
 
-Ví dụ:
+Example:
 
 ```shell
 thanhle@thanhle ~

@@ -50,7 +50,7 @@ Các rule được đặt tên với prefix là số, giúp user cài đặt lu�
 
 Ngoài ra, nếu có 2 file có tên giống nhau được đặt ở `/usr/lib/udev/rules.d` và ở `/etc/udev/rules.d/` thì file ở `/etc/udev/rules.d/` sẽ overide file cài đặt bởi system
 
-## Ví dụ
+## Example
 
 ### Tự động tắt touch pad khi có chuột gắn vào
 
@@ -89,8 +89,8 @@ Các rule được thiết kế có 2 phần:
 
 - `udevd` dùng các attribute để kiểm tra rule nào thõa điều kiện, trong ví dụ ở trên , product ID và vendor ID được dùng để  kiểm tra.
 
-- Có thể list ra các atttribute mà một device cung cấp thông qua  lệnh `udevadm info`, theo sau là tên hoặc sysfs (file system đại diện cho device). Thông tin về device xem ở `sys/devices`
-    - Ví dụ:
+- You can list the attributes that a device provides through the `udevadm info` command, followed by the name or sysfs (file system representing the device). Device information can be viewed at `sys/devices`
+    - Example:
 
 ```python
 udevadm info -ap /devices/pci0000:00/0000:00:14.0/usb1/1-11/1-11:1.0/input/input15

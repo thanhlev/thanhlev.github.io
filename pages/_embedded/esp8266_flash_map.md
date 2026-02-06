@@ -8,10 +8,10 @@ latest_release: "Unknown"
 index: 5
 ---
 
-# Giới thiệu
+# Introduction
 
 - Đối với production firmware, ta cần quan tâm nhiều đến thiết kế  lưu trữ của bộ nhớ Flash sao cho tối ưu và đáp ứng các yêu cầu của một firmware production như: chứa các dữ liệu của nhà sản xuất, dữ liệu riêng biệt của mỗi MCU (ví dụ WiFi calibration data), dữ liệu người dùng (cần không đổi khi cập nhật firmware), các phân vùng khác nhau để  hỗ trợ cập nhật/backup firmware lúc runtime.
-- Bài viết này giới thiệu tổ chức lưu trữ Flash của chip ESP8266EX, đây là dòng Wireless MCU được hỗ trợ khá tốt và sẽ giúp chúng ta có khái niệm cơ bản khi bước sang các dòng MCU, CPU mạnh mẽ và phức tạp hơn.
+- This article introduces the Flash storage organization of the ESP8266EX chip, which is a well-supported Wireless MCU line that will help us have basic concepts when moving to more powerful and complex MCU and CPU lines.
 
 ## ESP8266EX Block Diagram
 
@@ -129,7 +129,7 @@ Espressif sử dụng bảng phân vùng (partition tables) để thiết lập 
 
 # Tổng kết
 
-Bài viết này giới thiệu tổ chức lưu trữ dữ liệu trên external flash và 2 partition table mặc định được dùng cho 2 loại firmware non-OTA và OTA.
+This article introduces the data storage organization on external flash and 2 default partition tables used for 2 types of firmware: non-OTA and OTA.
 
 Trong các bài viết tiếp theo mình sẽ giới thiệu các trường hơp sử dụng partition table này, cách build partition table và ghi vào bộ nhớ flash.
 

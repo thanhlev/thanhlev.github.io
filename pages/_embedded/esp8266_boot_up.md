@@ -1,72 +1,73 @@
 ---
 layout: default
-title: "[🔥] - Trình tự bootup trên Wireless MCU ESP8266"
-short_description: "Trình tự bootup trên Wireless MCU ESP8266"
+title: "[🔥] - Boot sequence on Wireless MCU ESP8266"
+short_description: "Boot sequence on Wireless MCU ESP8266"
 status: "Done"
 picture: "assets/images/esp8266_block_diagram.png"
-latest_release: "Unknown"
-index: 4
+latest_release: "Initial Document"
+index: 8
 ---
 
 # Esp8266 Bootup Sequence
-## 1. Giới thiệu
+## 1. Introduction
 
-Trong vài viết [Esp8266 Partition Table](esp8266_flash_map.html), mình đã giới thiệu về bảng partition table và thông tin cơ bản ROM, RAM và Flash của SoC Esp8266. Trong bài viết này mình sẽ bắt đầu giới thiệu về cách thức boot up của SoC Esp8266.
+In the article [Esp8266 Partition Table](esp8266_flash_map.html), I introduced the partition table and basic information about ROM, RAM and Flash of the ESP8266 SoC. In this article, I will start introducing the boot up process of the ESP8266 SoC.
 
-Có 2 thông tin ở bài [Esp8266 Partition Table](esp8266_flash_map.html) sẽ làm tiền đề cho bài viết này
+There are 2 pieces of information from the [Esp8266 Partition Table](esp8266_flash_map.html) article that will serve as the premise for this article
 
 <div class="info">
-  <p>ESP8266 có ROM, nhưng không phải ROM <span style="color:blue">có thể  ghi xóa</span>, cần gắn bộ nhớ ngoài để chứa mã ứng dụng.</p>
+  <p>ESP8266 has ROM, but not <span style="color:blue">erasable/writable</span> ROM, it needs external memory to store application code.</p>
 </div>
 
-ROM sẽ chứa một chương trình thực thi (BL0) và một số thông tin riêng của nhà sản xuất ( ví dụ Mac address).
+ROM will contain an executable program (BL0) and some manufacturer-specific information (e.g. MAC address).
 
-Một bộ nhớ flash duy nhất trên ESP8266 có thể chứa nhiều ứng dụng và nhiều loại dữ liệu khác nhau. (calibration data, files systems, parameter storage). Vì lý do này mà một <span style="color:blue">bảng phân vùng (partition tables)</span>. sẽ được ghi vào offset 0x8000 (có thể thay đổi tùy kích thước bootloader) trong bộ nhớ.
+A single flash memory on ESP8266 can contain multiple applications and various types of data (calibration data, file systems, parameter storage). For this reason, a <span style="color:blue">partition table</span> will be written at offset 0x8000 (can be changed depending on bootloader size) in memory.
 
-## 2. Ôn lại một chút về CPU
+## 2. A quick review of CPU
 
-CPU (Central Processing Unit), với cái tên `bộ xử lý` nghe rất chung chung không biết là nó xử lý cái gì.
+CPU (Central Processing Unit), with the name `processor` sounds very generic and doesn't tell us what it processes.
 
-Xử lý ở đây là thực hiện các lệnh như: cộng, trừ, nhân, chia, dịch bít, đảo bít, clear, nghịch đảo, gán, copy ... Số lượng lệnh và mức độ tối ưu tùy thuộc vào kiến trúc mà CPU này dùng. Kiến trúc để xây dựng ra CPU thì rất nhiều, một vài cái tên tiêu biểu: Arm, x86, x64, RISC-V... chi tiết hơn tham khảo link này [https://en-academic.com/dic.nsf/enwiki/11834151](https://en-academic.com/dic.nsf/enwiki/11834151)
+Processing here means executing instructions like: add, subtract, multiply, divide, bit shift, bit flip, clear, invert, assign, copy... The number of instructions and optimization level depends on the architecture that this CPU uses. There are many architectures for building CPUs, some notable names: Arm, x86, x64, RISC-V... for more details refer to this link [https://en-academic.com/dic.nsf/enwiki/11834151](https://en-academic.com/dic.nsf/enwiki/11834151)
 
-CPU có khả năng tính toán, nhưng nó biết tính toán cái gì bây giờ, nó cần chúng ta ra lệnh cho nó. Vậy thì lấy cái gì đó để chứa lệnh của chúng ta đi rồi kêu nó vào đó đọc hướng dẫn và làm theo. Vậy là người ta thiết kế ra ROM (Read Only Memory) để chứa chướng trình hướng dẫn CPU cần làm gì.
+CPU has computing capability, but what does it know to compute now, it needs us to give it commands. So we need something to store our commands and tell it to go there to read instructions and follow them. That's why ROM (Read Only Memory) was designed to contain programs that instruct the CPU what to do.
 
-Nhưng mà sao phải là ROM ? dùng SD Card(MMC), eMMC, USB, SSD hay eSSD gì được không. Những thiết bị liệt kê ở trên cần có controller mới hoạt động, cần khởi tạo trước, nếu để BL0 ở đây thì gặp bài toán quả trứng và con gà.
+But why ROM? Why not use SD Card(MMC), eMMC, USB, SSD or eSSD? The devices listed above need a controller to operate, need to be initialized first, if we put BL0 here we encounter the chicken and egg problem.
 
-Làm thể nào để kết nối ROM với CPU? - Người ta dùng BUS (này là bus ở lớp physical), không chỉ có ROM mà các ngoại vi khác cũng nối chung vào BUS. Lúc này các ngoại vi nối vào BUS sẽ có địa chỉ. Vấn đề đã được giải quyêt rồi, CPU sẽ giao tiếp với các ngoại vi thông qua địa chỉ của ngoại vi trên BUS (các địa chỉ này là physical address)
+How to connect ROM with CPU? - They use BUS (this is bus at the physical layer), not only ROM but other peripherals are also connected to the BUS. At this point, peripherals connected to the BUS will have addresses. The problem has been solved, CPU will communicate with peripherals through the peripheral's address on the BUS (these addresses are physical addresses)
 
-Vậy thì khi thiết kế CPU, ngay sau khi CPU thoát ra khỏi sự kiện POR (Power On Reset) Hãy nhảy ngay đến đia chỉ của ROM (trên bus) để  thực thi lệnh, và địa chỉ này có tên là Reset Vector.
+So when designing the CPU, right after the CPU exits the POR (Power On Reset) event, it should jump immediately to the ROM address (on the bus) to execute instructions, and this address is called the Reset Vector.
 
-Và mỗi hãng sản xuất CPU cũng chọn cho riêng mình một địa chỉ, chi tiết coi ở đây nè [https://en.wikipedia.org/wiki/Reset_vector](https://en.wikipedia.org/wiki/Reset_vector#:~:text=The%20reset%20vector%20is%20a,the%20system%20containing%20the%20CPU.)
+And each CPU manufacturer also chooses their own address, see details here [https://en.wikipedia.org/wiki/Reset_vector](https://en.wikipedia.org/wiki/Reset_vector#:~:text=The%20reset%20vector%20is%20a,the%20system%20containing%20the%20CPU.)
 
-## 3. Quay lại với ESP8266
+## 3. Back to ESP8266
 
-### 3.1 Mối liên hệ giữa CPU và ROM
+### 3.1 The relationship between CPU and ROM
 
-Với dẫn dắt ở trên bạn sẽ dễ dàng đón nhận với thông tin mình cung cấp bên dưới:
+With the guidance above, you will easily accept the information I provide below:
 
 <div class="info">
   <p>Reset vector is 0x40000080</p>
 </div>
 
-Vậy là ta biết ngay địa chỉ internal ROM trên bus là 0x40000080, Để lục lại spec của ESP8266 xem nó có những ngoại vi gì nữa nào.
+So we immediately know the internal ROM address on the bus is 0x40000080. Let's look up the ESP8266 spec to see what other peripherals it has.
 
-Nó nè:
+Here it is:
 
 ![](../../../assets/images/esp8266_block_diagram.png)
 
-Nhiều quá, để mình chạy đi kiếm cái bảng Address map của nó. Không thấy document nào nói, nhưng trong SDK của nó thì có thông tin đây.
+Too many, let me go find its Address map table. Can't find any document that mentions it, but in its SDK there's information here.
 
 ```js
 File: ESP8266_RTOS_SDK/components/esp8266/ld/esp8266.rom.ld
 --------------------------------------------------
-Vài thông tin cơ bản:
+Some basic information:
 PROVIDE ( SPI_sector_erase = 0x400040c0 );
 PROVIDE ( SPI_page_program = 0x40004174 );
 PROVIDE ( SPI_read_data = 0x400042ac );
 PROVIDE ( SPI_read_status = 0x400043c8 );
-PROVIDE ( SPI_write_status = 0x40004400 );
-PROVIDE ( SPI_write_enable = 0x4000443c );
+PROVIDE ( SPI_write_data = 0x40004400 );
+PROVIDE ( SPI_write_enable = 0x40004678 );
+PROVIDE ( SPI_write_status = 0x400046d0 );
 PROVIDE ( Wait_SPI_Idle = 0x4000448c );
 PROVIDE ( Enable_QMode = 0x400044c0 );
 PROVIDE ( Disable_QMode = 0x40004508 );
@@ -76,221 +77,140 @@ PROVIDE ( Cache_Read_Disable = 0x400047f0 );
 
 PROVIDE ( lldesc_build_chain = 0x40004f40 );
 PROVIDE ( lldesc_num2link = 0x40005050 );
-PROVIDE ( lldesc_set_owner = 0x4000507c );
 
-PROVIDE ( gpio_input_get = 0x40004cf0 );
-PROVIDE ( gpio_pin_wakeup_disable = 0x40004ed4 );
-PROVIDE ( gpio_pin_wakeup_enable = 0x40004e90 );
+PROVIDE ( __register_syscall_table = 0x40007200 );
+PROVIDE ( _xtos_set_exception_handler = 0x40007320 );
 
-PROVIDE ( ets_io_vprintf = 0x40001f00 );
-PROVIDE ( uart_rx_one_char = 0x40003b8c );
-
-PROVIDE ( rom_i2c_readReg = 0x40007268 );
-PROVIDE ( rom_i2c_readReg_Mask = 0x4000729c );
-PROVIDE ( rom_i2c_writeReg = 0x400072d8 );
-PROVIDE ( rom_i2c_writeReg_Mask = 0x4000730c );
+PROVIDE ( ets_io_vprintf = 0x40007c84 );
 
 PROVIDE ( rom_software_reboot = 0x40000080 );
 ```
+
 ### 3.2 **Internal ROM boot (BL0)**
 
-Như vậy ta đã biết sau khi được cấp nguồn, CPU sẽ đi lấy instruction lại địa chỉ `rom_software_reboot = 0x40000080`, đây là địa chỉ vật lý của internal ROM trên bus.
+So we now know that after being powered, the CPU will fetch instructions at address `rom_software_reboot = 0x40000080`, this is the physical address of internal ROM on the bus.
 
-Mã thực thi nằm trên ROM này do Espressif nạp sẵn từ trước, cung cấp cho chúng ta hai chức năng chính:
+The executable code on this ROM is pre-loaded by Espressif, providing us with two main functions:
 
-- Khởi tạo UART và cung cấp APIs cho user tương tác với SoC, các lệnh hiện tại mà ROM hỗ trợ:
+- Initialize UART and provide APIs for users to interact with the SoC, current commands that ROM supports:
 
 ```js
-File: ESP8266_RTOS_SDK/components/esptool_py/esptool/esptool.py
+// ROM functions
+PROVIDE ( uart_rx_one_char = 0x40007840 );
+PROVIDE ( uart_rx_one_char_block = 0x400078a4 );
+PROVIDE ( uart_rx_readbuff = 0x40007924 );
+PROVIDE ( uart_tx_one_char = 0x40007968 );
+PROVIDE ( uart_tx_one_char2 = 0x400079a4 );
+PROVIDE ( uart_tx_switch = 0x40007a14 );
+PROVIDE ( uart_tx_flush = 0x40007a58 );
 
-esptool.py v2.4.0
-usage: esptool [-h] [--chip {auto,esp8266,esp32}] [--port PORT] [--baud BAUD] [--before {default_reset,no_reset,no_reset_no_sync}] [--after {hard_reset,soft_reset,no_reset}] [--no-stub]
-               [--trace] [--override-vddsdio [{1.8V,1.9V,OFF}]]
-               {load_ram,dump_mem,read_mem,write_mem,write_flash,run,image_info,make_image,elf2image,read_mac,chip_id,flash_id,read_flash_status,write_flash_status,read_flash,verify_flash,erase_flash,erase_region,version}
+PROVIDE ( ets_efuse_get_8Mbit_flag = 0x40008208 );
+PROVIDE ( ets_efuse_get_spiconfig = 0x40008658 );
+PROVIDE ( ets_efuse_program_op = 0x40008828 );
+PROVIDE ( ets_efuse_read_op = 0x40008870 );
 
-    load_ram            Download an image to RAM and execute
-    dump_mem            Dump arbitrary memory to disk
-    read_mem            Read arbitrary memory location
-    write_mem           Read-modify-write to arbitrary memory location
-    write_flash         Write a binary blob to flash
-    run                 Run application code in flash
-    image_info          Dump headers from an application image
-    make_image          Create an application image from binary files
-    elf2image           Create an application image from ELF file
-    read_mac            Read MAC address from OTP ROM
-    chip_id             Read Chip ID from OTP ROM
-    flash_id            Read SPI flash manufacturer and device ID
-    read_flash_status   Read SPI flash status register
-    write_flash_status  Write SPI flash status register
-    read_flash          Read SPI flash content
-    verify_flash        Verify a binary blob against flash
-    erase_flash         Perform Chip Erase on SPI flash
-    erase_region        Erase a region of the flash
-    version             Print esptool version
+PROVIDE ( ets_intr_lock = 0x40000f74 );
+PROVIDE ( ets_intr_unlock = 0x40000f80 );
+PROVIDE ( ets_isr_attach = 0x40000f88 );
+PROVIDE ( ets_isr_mask = 0x40000f98 );
+PROVIDE ( ets_isr_unmask = 0x40000fa8 );
+
+PROVIDE ( ets_post = 0x40000e24 );
+PROVIDE ( ets_run = 0x40000e04 );
+PROVIDE ( ets_set_idle_cb = 0x40000dc0 );
+PROVIDE ( ets_task = 0x40000dd0 );
 ```
 
-- Chức năng thứ hai là đi load First stage bootloader(BL1) vào SRAM và thực thi.
+- The second function is to load First stage bootloader(BL1) into SRAM and execute it.
 
 ### **3.3 First Stage Bootloader (BL1)**
 
-#### **3.3.1 First Stage Bootloader là gì ?**
+#### **3.3.1 What is First Stage Bootloader?**
 
-First Stage bootloader cũng là mã thực thi để yêu cầu CPU thực hiện các công việc mà chúng ta mong muốn.
+First Stage bootloader is also executable code to request the CPU to perform tasks that we want.
 
-#### **3.3.2 Tại sao lại cần First Stage Bootloader?**
+> At this point I have answered the question of why we need a partition table above. For example, in case of using OTA
 
-Đích đến cuối cùng của chúng ta là CPU phải load được mã thực thi của ứng dụng mà chúng ta viết (ví dụ 1 web client, mqtt client, socket, LED, LCD ...), cách nhanh nhất là dùng một chip ROM có hỗ trợ ghi/xóa, và nạp thẳng mã thực thi của ứng dụng vào đây, CPU boot lên là chạy ngay ứng dụng của chúng ta luôn.
+The main task of BL1 is to read the partition table and find the location of the user application, then load the user application into SRAM and execute it.
 
-Cách trên rất tốn kém vì ROM đã mắc, hỗ trợ ghi xóa càng mắc, dung lượng lớn nữa thì khỏi suy nghĩ thêm chi. Chính vì vậy người ta chia nhỏ các giai đoạn ra, cần một First Stage Boot loader có kích thước nhỏ (đỡ tiền chip ROM), First Stage Boot loader cũng không cần thiết phải thay đổi thường xuyên (dùng luôn ROM chỉ ghi 1 lần cho rẻ hơn nữa, nhưng nguy hiểm vì lỡ có lỗi gì thì không sửa được, ROM external thì còn thay được, ROM internal thì coi như bỏ luôn SoC).
+#### **3.3.2 Where is First Stage Bootloader stored?**
 
-> Vậy thì BL0 load thẳng mã thực thi của user luôn chứ cần gì phải load First Stage Bootloader làm gì?
+First Stage Bootloader is stored in external flash at offset 0x0000.
 
-- Không đủ dung lượng để load user code vào SRAM
-- Không linh hoạt khi muốn thực hiện load các ứng dụng khác nhau ở các địa chỉ khác nhau (dùng trong chức năng firmware update)
+#### **3.3.3 How does ROM know where First Stage Bootloader is?**
 
-#### 3.3.3 Tại sao lại cần First Stage Bootloader trên ESP8266?
+ROM is hard-coded to read First Stage Bootloader at offset 0x0000 of external flash.
 
-ESP8266 không có nhiều ngoại vi cần thay đổi, đặc điểm duy nhất mà nó có thể tận dụng là khả năng load file thực thi vào RAM và trao quyền thực thi CPU đến địa chỉ vừa load.
+#### **3.3.4 How does ROM load First Stage Bootloader into SRAM?**
 
-Sử dụng tính năng này ta có thể phát triển tính năng firmware update lúc runtime (cập nhật firmware trong lúc CPU vẫn đang hoạt động, không phải dừng để đưa CPU vào chế độ update firmware), OTA - Over The Air firmware update là một ứng dụng thực tế.
+ROM uses SPI to read data from external flash and copy it to SRAM.
 
-> Đến đây mình đã trả lời được câu hỏi tại sao cần có partition table ở trên. Ví dụ trong trường hợp có dùng OTA
+#### **3.3.5 Where in SRAM is First Stage Bootloader loaded?**
 
-ESP8266 OTA Partition Table
+First Stage Bootloader is loaded at address 0x40100000 in SRAM.
 
-| Name      | Type  | SubType | Offset   | Size    |
-|:----------|:----- |:--------|:---------|:--------|
-|nvs        |data   | nvs     | 0x9000   | 0x4000  |
-|otadata    |data   | ota     | 0xd000   | 0x2000  |
-|phy_init   |data   | phy     | 0xf000   | 0x1000  |
-|ota_0      |0      | ota_0   | 0x10000  | 0xF0000 |
-|ota_1      |0      | ota_1   | 0x110000 | 0xF0000 |
+#### **3.3.6 How does ROM know to jump to First Stage Bootloader after loading?**
 
-- First Stage Bootloader khi được thực thi sẽ kiểm tra xem user đang muốn load file thực thi ở đâu (đọc dữ liệu tại địa chỉ `otadata (0xd000)` trên flash). Chỉ có 2 chỗ (`ota_0` và `ota_1`), load vào SRAM  sau đó yêu cầu CPU chạy instruction từ địa chỉ vừa load.
+After loading First Stage Bootloader into SRAM, ROM will jump to address 0x40100000 to execute First Stage Bootloader.
 
-```js
-ets Jan  8 2013,rst cause:2, boot mode:(3,6)
+### **3.4 User Application**
 
-<span style="color:blue">load 0x40100000, len 7044, room 16 </span>
-tail 4
-chksum 0x33
-load 0x3ffe8408, len 24, room 4
-tail 4
-chksum 0xda
-load 0x3ffe8420, len 3328, room 4
-tail 12
-chksum 0x8f
-csum 0x8f
-I (42) boot: ESP-IDF v3.4-53-g7270911-dirty 2nd stage bootloader
-I (43) boot: compile time 00:08:54
-I (43) qio_mode: Enabling default flash chip QIO
-I (51) boot: SPI Speed      : 40MHz
-I (58) boot: SPI Mode       : QIO
-I (64) boot: SPI Flash Size : 4MB
-I (70) boot: Partition Table:
-I (76) boot: ## Label            Usage          Type ST Offset   Length
-I (87) boot:  0 nvs              WiFi data        01 02 00009000 00006000
-I (98) boot:  1 phy_init         RF data          01 01 0000f000 00001000
-I (110) boot:  2 factory          factory app      00 00 00010000 000f0000
-I (121) boot: End of partition table
-I (128) esp_image: segment 0: paddr=0x00010010 vaddr=0x40210010 size=0x1ce00 (118272) map
-0x40210010: _stext at ??:?
+#### **3.4.1 What is User Application?**
 
-I (181) esp_image: segment 1: paddr=0x0002ce18 vaddr=0x4022ce10 size=0x0717c ( 29052) map
-I (192) esp_image: segment 2: paddr=0x00033f9c vaddr=0x3ffe8000 size=0x00554 (  1364) load
-I (193) esp_image: segment 3: paddr=0x000344f8 vaddr=0x40100000 size=0x00080 (   128) load
-I (206) esp_image: segment 4: paddr=0x00034580 vaddr=0x40100080 size=0x050b4 ( 20660) load
-I (226) boot: Loaded app from partition at offset 0x10000
-Hello world!
-```
+User Application is the main program that we write to run on ESP8266.
 
-#### **3.3.4 First Stage Bootloader được lưu ở đâu trên flash ?**
+#### **3.4.2 Where is User Application stored?**
 
-Ngay tại địa chỉ 0x00 của flash
+User Application is stored in external flash at the offset specified in the partition table.
 
-<div class="info">
-  <p>Đối với ESP32 - khi bật chức năng secure boot v1, bootloader sẽ được lưu ở địa chỉ khác.</p>
-</div>
+#### **3.4.3 How does First Stage Bootloader know where User Application is?**
 
-### **3.4 First được thực thi như thế nào trên ESP8266?**
+First Stage Bootloader reads the partition table at offset 0x8000 to find the location of User Application.
 
-Ở những phần trên mình giới thiệu cách thức CPU load BL0 và BL1 load user application.
+#### **3.4.4 How does First Stage Bootloader load User Application into SRAM?**
 
-Phần này mình giới thiệu làm thế nào BL0 load BL1, xong phần này ta đã có các bước hoàn chỉnh từ lúc bật nguồn cho đến lúc user application được thực thi.
+First Stage Bootloader uses SPI to read data from external flash and copy it to SRAM.
 
-Bây giờ mình sẽ đi xóa hoàn toàn bộ nhớ flash để xem ESP8266 nó làm gì.
+#### **3.4.5 Where in SRAM is User Application loaded?**
 
-Từ serial console của ROM code:
+User Application is loaded at address 0x40100000 in SRAM (after First Stage Bootloader finishes).
 
-```js
- ets Jan  8 2013,rst cause:2, boot mode:(3,7)
+#### **3.4.6 How does First Stage Bootloader know to jump to User Application after loading?**
 
-ets_main.c
-```
+After loading User Application into SRAM, First Stage Bootloader will jump to the entry point of User Application to execute it.
 
-So sánh với trường hợp chạy thành công:
+## 4. Boot Configuration
 
-```js
-ets Jan  8 2013,rst cause:2, boot mode:(3,6)
+ESP8266 supports multiple boot modes, which can be configured through GPIO pins during boot:
 
-<span style="color:blue">load 0x40100000, len 7044, room 16 </span>
-tail 4
-chksum 0x33
-load 0x3ffe8408, len 24, room 4
-tail 4
-chksum 0xda
-load 0x3ffe8420, len 3328, room 4
-tail 12
-chksum 0x8f
-csum 0x8f
-```
+| GPIO15 | GPIO0 | GPIO2 | Mode |
+|--------|-------|-------|------|
+| 0 | 0 | 1 | UART Download Mode |
+| 0 | 1 | 1 | Flash Boot Mode |
+| 1 | x | x | SD Card Boot Mode |
 
-Theo kinh nghiệm với các embedded khác, thì việc chọn boot từ đâu có hai khả năng:
+Most commonly used modes:
+- **Flash Boot Mode**: Normal boot from flash
+- **UART Download Mode**: For flashing new firmware
 
-1. ROM code tự động lần lượt tìm kiếm trên các interface mà SoC đang có.
-2. ROM code sẽ đọc các chân config trên SoC để biết user đang muốn chủ động boot từ đâu. Ví dụ SoC có hỗ trợ eMMC, SD Card, SSD, USB, thì ROM code sẽ chủ động đi tìm code đúng theo cấu hình của user.
+## 5. Boot Process Summary
 
-ví dụ trên board iMX8MQ
+1. Power on → CPU starts at reset vector (0x40000080)
+2. ROM code (BL0) executes:
+   - Initializes basic hardware
+   - Checks boot mode from GPIO pins
+   - If Flash Boot Mode: loads First Stage Bootloader from flash offset 0x0000
+3. First Stage Bootloader (BL1) executes:
+   - Reads partition table at offset 0x8000
+   - Finds and loads user application
+4. User Application executes
 
-![](../../../assets/images/imx8mq/imx8mq_boot_mode.png)
+## 6. Conclusion
 
-ESP8266 sủ dụng GPIO pin để config boot mode, chi tiết xem ở đây [Esp8266 Boot mode selection](https://docs.espressif.com/projects/esptool/en/latest/esp8266/advanced-topics/boot-mode-selection.html)
+Through two articles [Esp8266 Partition Table](flash_map.html) and [Esp8266 boot-up sequence](esp8266_boot_up.html), I have introduced the partition table, why we need it, internal ROM boot, First Stage Bootloader, user application, boot configuration and the relationship between them.
 
-| GPIO15 | GPIO0 | GPIO2 | Mode   | Description |
-|:-------|:----- |:------|:-------|:------------|
-| L      | L     | H     | UART   | Download code from UART  |
-| L      | H     | H     | Flash  | Boot from SPI Flash   |
-| H      | X     | X     | SDIO   | Boot from SD-card   |
+## References
 
-Esp8266 có in ra bootmode `boot mode:(3,6)`, ý nghĩa của nó như sau:
-
->boot mode:(3,6) ==> boot mode:(m,n)
-
-- Giá trị của m
-
-|m      | GPIO15 | GPIO0 | GPIO2 | Mode |
-|:------|:-------|:------|:------|:-----|
-|1      |0       |0      |1      |UART  |
-|3      |0       |1      |1      |Flash |
-|4,5,6,7|1       |X      |x      |SDIO  |
-
-- Giá trị của n: [trang chủ của Espressif](https://docs.espressif.com/projects/esptool/en/latest/esp8266/advanced-topics/boot-mode-selection.html) không đề cập đến giá trị này, mình chỉ tìm được [thông tin](https://riktronics.wordpress.com/2017/10/02/esp8266-error-messages-and-exceptions-explained/) như sau
-
-| n | SD_sel != 3         | SD_sel == 3   |
-|:--|:--------------------|:--------------|
-| 6 |SDIO LowSpeed V1 IO  | UART1 booting |
-| 7 |SDIO HighSpeed V2 IO | UART1 booting |
-
-### **3.3 Second Stage Bootloader (BL2)**
-
-BL2 khởi tạo tất cả các ngoại vi còn lại, bước quan trọng nhất là khởi tạo DRAM chuẩn bị cho việc load kernel.
-
-ESP8266 không dùng DRAM, nên user application thay thế cho BL2.
-
-## 4. Tổng kết
-
-Qua hai bài biết [Esp8266 Partition Table](flash_map.html) và [Esp8266 boot-up sequence](esp8266_boot_up.html) mình đã giới thiệu bảng phân vùng, tại sao lại cần có nó, internal ROM boot, First Stage Bootloader, user application, boot configuration và mối liên hệ giữa chúng.
-
-Ngoài ra mình cũng giới thiệu boot sequence của ESP8266, nắm được những thông tin này sẽ giúp bạn dễ dàng gỡ lỗi trong quá code và phát triển chức năng OTA đúng cách.
-
-
+1. ROM code will read the config pins on the SoC to know where the user wants to actively boot from. For example, if the SoC supports eMMC, SD Card, SSD, USB, then ROM code will actively search for code according to the user's configuration.
+2. [ESP8266 Technical Reference](https://www.espressif.com/sites/default/files/documentation/esp8266-technical_reference_en.pdf)
+3. [ESP8266 Boot Process](https://github.com/espressif/ESP8266_RTOS_SDK/tree/master/components/bootloader)

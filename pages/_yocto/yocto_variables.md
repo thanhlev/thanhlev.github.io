@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Yocto Variables"
-short_description: "Các biến cần nhớ cho layer và recipe"
+short_description: "Important variables for layers and recipes"
 status: "In Progress"
 picture: "assets/images/yocto_project.png"
 latest_release: "Unknown"

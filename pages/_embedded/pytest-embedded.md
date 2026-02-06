@@ -25,7 +25,7 @@ index: 2
 | 0.1      | Feb-08-2023   | {{page.commit1}}|
 | 0.2      | Feb-14-2023   | {{page.latest_release}}|
 
-## Giới thiệu
+## Introduction
 
 - Pytest-embedded là một pluggin cho công cụ <a target="_blank" href="pytest.html">pytest</a>
 - Được publish trên PyPi (<a target="_blank" href="https://pypi.org/project/pytest-embedded/">pypi.org/project/pytest-embedded</a>), có thể cài trực tiếp bằng lệnh `pip install pytest-embedded`
@@ -80,7 +80,7 @@ Giá trị của option `embedded-services`
     All the related CLI options are under the groups named by "embedded-<service>"
 ```
 
-### Ví dụ
+### Example
 
 - Giả sữ ta cần test đoạn code sau đây cho MCU ESP32
 

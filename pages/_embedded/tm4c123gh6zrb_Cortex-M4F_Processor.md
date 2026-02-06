@@ -1,13 +1,13 @@
 ---
 layout: default
-title: "Tiva ™ TM4C123GH6ZRB Microcontroller [phần 2]"
-short_description: "Thông tin về SoC, Programming model, Register map"
+title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]"
+short_description: "Information about SoC, Programming model, Register map"
 picture: "assets/images/Cortex_M4F_Register_Set.png"
 latest_release: "Copy từ repo cũ qua"
 index: 8
 ---
 
-# Tiva ™ TM4C123GH6ZRB Microcontroller [phần 2]
+# Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]
 
 {: .no_toc }
 

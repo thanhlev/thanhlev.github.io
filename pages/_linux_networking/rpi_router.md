@@ -1,15 +1,15 @@
 ---
 layout: default
-title: "Setup Raspberry Pi4 làm mini router"
-short_description: "Thu Ethernet Phát Wi-Fi"
+title: "Setup Raspberry Pi4 as mini router"
+short_description: "Ethernet to Wi-Fi"
 status: "Pending"
 picture: "assets/images/raspberry_pi4.png"
-latest_release: "Nothings"
+latest_release: "Nothing"
 index: 5
 publish: false
 ---
 
-# Setup PPPoE server trên board Raspberry Pi
+# Setup Raspberry Pi4 as Mini Router
 
 {: .no_toc }
 
@@ -20,6 +20,6 @@ publish: false
 {:toc}
 
 -----------------------------------
-## Giới thiệu
+## Introduction
 
-Các bước để setup và cấu hình một PPPoE server trên Raspberry
+Steps to setup and configure Raspberry Pi4 as a mini router (Ethernet to Wi-Fi)
