@@ -615,12 +615,20 @@ h3 {
   background-color: var(--light-gray);
 }
 
+[data-theme="dark"] .project_table thead {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .project_table th {
   padding: 15px;
   text-align: left;
   font-weight: 600;
   color: var(--primary-color);
   border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme="dark"] .project_table th {
+  color: #fff;
 }
 
 /* Column width specifications */
@@ -1033,12 +1041,20 @@ a:hover {
   background-color: var(--light-gray);
 }
 
+[data-theme="dark"] #main_content table:not(.project_table):not(.contact-table) thead {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 #main_content table:not(.project_table):not(.contact-table) th {
   padding: 12px 15px;
   text-align: left;
   font-weight: 600;
   color: var(--primary-color);
   border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme="dark"] #main_content table:not(.project_table):not(.contact-table) th {
+  color: #fff;
 }
 
 #main_content table:not(.project_table):not(.contact-table) td {
