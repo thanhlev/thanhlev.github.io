@@ -55,6 +55,11 @@
               </li>
               <li><a href="/about" {% if page.url == "/about/" %}class="active"{% endif %}>About</a></li>
               <li><a href="https://github.com/thanhlev" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+              <li>
+                <button class="theme-toggle header-theme-toggle" aria-label="Toggle theme">
+                  <i class="fas fa-moon theme-icon"></i>
+                </button>
+              </li>
             </ul>
           </nav>
           <h2 id="project_tagline">{{ site.description }}</h2>
@@ -94,6 +99,10 @@
         <div class="footer-bottom">
           <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. All rights reserved.</p>
           <p>Powered by <a href="https://pages.github.com">GitHub Pages</a> and <a href="https://jekyllrb.com/">Jekyll</a></p>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-moon theme-icon"></i>
+            <span id="theme-text">Dark Mode</span>
+          </button>
         </div>
       </footer>
     </div>
@@ -118,6 +127,53 @@
           });
         }
       });
+    </script>
+    
+    <!-- Theme Toggle JavaScript -->
+    <script>
+      (function() {
+        // Check for saved theme preference or default to 'light'
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon and text based on current theme
+        function updateThemeToggle(theme) {
+          const themeIcons = document.querySelectorAll('.theme-icon');
+          const themeText = document.getElementById('theme-text');
+          
+          themeIcons.forEach(icon => {
+            if (theme === 'dark') {
+              icon.classList.remove('fa-moon');
+              icon.classList.add('fa-sun');
+            } else {
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
+            }
+          });
+          
+          if (themeText) {
+            themeText.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+          }
+        }
+        
+        // Set initial state
+        document.addEventListener('DOMContentLoaded', function() {
+          updateThemeToggle(currentTheme);
+          
+          // Theme toggle functionality
+          const themeToggles = document.querySelectorAll('.theme-toggle');
+          themeToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+              const currentTheme = document.documentElement.getAttribute('data-theme');
+              const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+              
+              document.documentElement.setAttribute('data-theme', newTheme);
+              localStorage.setItem('theme', newTheme);
+              updateThemeToggle(newTheme);
+            });
+          });
+        });
+      })();
     </script>
   </body>
 </html>
