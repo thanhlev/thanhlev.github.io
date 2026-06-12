@@ -5,7 +5,7 @@ title: Home
 
 # Welcome to My Technical Blog
 
-I'm Thanh Le, a software engineer specializing in Linux systems, embedded development, networking, and DevOps. This blog serves as my knowledge base where I document technical solutions, share insights, and track project progress.
+Hi, I'm Thanh Le — an engineer who loves digging into Linux internals, building embedded systems, and wrangling networks. This is where I write things down so I don't forget them, and hopefully they help you too.
 
 ## Featured Topics
 
