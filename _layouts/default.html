@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="author" content="{{ site.author }}">
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <meta name="keywords" content="Linux, Embedded Systems, Networking, DevOps, Docker, Kubernetes, IoT, Yocto">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{{ page.title | default: site.title }}">
+    <meta property="og:description" content="{{ page.description | default: site.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+    <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+{% seo %}
+    {% include head-custom.html %}
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <nav class="main-nav">
+            <a href="/" class="nav-logo">
+              <h1 id="project_title">{{ site.title }}</h1>
+            </a>
+            <ul class="nav-links">
+              <li><a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Topics <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#linux-networking">Linux Networking</a></li>
+                  <li><a href="#linux-general">Linux General</a></li>
+                  <li><a href="#embedded-systems">Embedded Systems</a></li>
+                  <li><a href="#yocto-project">Yocto Project</a></li>
+                </ul>
+              </li>
+              <li><a href="/about" {% if page.url == "/about/" %}class="active"{% endif %}>About</a></li>
+              <li><a href="https://github.com/thanhlev" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+              <li>
+                <button class="theme-toggle header-theme-toggle" aria-label="Toggle theme">
+                  <i class="fas fa-moon theme-icon"></i>
+                </button>
+              </li>
+            </ul>
+          </nav>
+          <h2 id="project_tagline">{{ site.description }}</h2>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <div class="content-with-sidebar inner">
+        <aside class="sidebar">
+          <div class="sidebar-section">
+            <h3><i class="fas fa-compass"></i> Topics</h3>
+            <ul class="sidebar-nav">
+              <li><a href="/#linux-networking"><i class="fas fa-network-wired"></i> Linux Networking</a></li>
+              <li><a href="/#linux-general"><i class="fas fa-linux"></i> Linux General</a></li>
+              <li><a href="/#embedded-systems"><i class="fas fa-microchip"></i> Embedded Systems</a></li>
+              <li><a href="/#yocto-project"><i class="fas fa-cogs"></i> Yocto Project</a></li>
+            </ul>
+          </div>
+          <div class="sidebar-section sidebar-toc">
+            <h3><i class="fas fa-list"></i> On This Page</h3>
+            <ul id="toc-list" class="sidebar-nav toc-nav">
+            </ul>
+          </div>
+        </aside>
+        <section id="main_content">
+          {{ content }}
+        </section>
+      </div>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="https://github.com/thanhlev" target="_blank">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/thanhlev" target="_blank">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Contact</h3>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+            <p><i class="fas fa-globe"></i> <a href="{{ site.url }}">{{ site.url }}</a></p>
+          </div>
+          <div class="footer-section">
+            <h3>About This Site</h3>
+            <p>Technical blog documenting solutions, insights, and project progress in Linux, embedded systems, and networking.</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. All rights reserved.</p>
+          <p>Powered by <a href="https://pages.github.com">GitHub Pages</a> and <a href="https://jekyllrb.com/">Jekyll</a></p>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-moon theme-icon"></i>
+            <span id="theme-text">Dark Mode</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+    
+    <!-- JavaScript for dropdown menu -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        
+        if (dropdownToggle && dropdownMenu) {
+          dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownMenu.classList.toggle('show');
+          });
+          
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+              dropdownMenu.classList.remove('show');
+            }
+          });
+        }
+      });
+    </script>
+    
+    <!-- Theme Toggle JavaScript -->
+    <script>
+      (function() {
+        // Check for saved theme preference or default to 'light'
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon and text based on current theme
+        function updateThemeToggle(theme) {
+          const themeIcons = document.querySelectorAll('.theme-icon');
+          const themeText = document.getElementById('theme-text');
+          
+          themeIcons.forEach(icon => {
+            if (theme === 'dark') {
+              icon.classList.remove('fa-moon');
+              icon.classList.add('fa-sun');
+            } else {
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
+            }
+          });
+          
+          if (themeText) {
+            themeText.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+          }
+        }
+        
+        // Set initial state
+        document.addEventListener('DOMContentLoaded', function() {
+          updateThemeToggle(currentTheme);
+          
+          // Theme toggle functionality
+          const themeToggles = document.querySelectorAll('.theme-toggle');
+          themeToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+              const currentTheme = document.documentElement.getAttribute('data-theme');
+              const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+              
+              document.documentElement.setAttribute('data-theme', newTheme);
+              localStorage.setItem('theme', newTheme);
+              updateThemeToggle(newTheme);
+            });
+          });
+        });
+      })();
+    </script>
+
+    <!-- Table of Contents Generator -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const tocList = document.getElementById('toc-list');
+        const content = document.getElementById('main_content');
+        if (!tocList || !content) return;
+
+        const headings = content.querySelectorAll('h1, h2, h3');
+        if (headings.length === 0) {
+          document.querySelector('.sidebar-toc').style.display = 'none';
+          return;
+        }
+
+        headings.forEach(function(heading) {
+          if (!heading.id) {
+            heading.id = heading.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+          }
+          var li = document.createElement('li');
+          li.className = 'toc-' + heading.tagName.toLowerCase();
+          var a = document.createElement('a');
+          a.href = '#' + heading.id;
+          a.textContent = heading.textContent;
+          li.appendChild(a);
+          tocList.appendChild(li);
+        });
+
+        // Highlight active TOC item on scroll
+        var tocLinks = tocList.querySelectorAll('a');
+        window.addEventListener('scroll', function() {
+          var current = '';
+          headings.forEach(function(heading) {
+            if (window.scrollY >= heading.offsetTop - 100) {
+              current = heading.id;
+            }
+          });
+          tocLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+              link.classList.add('active');
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

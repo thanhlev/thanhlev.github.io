@@ -1,0 +1,36 @@
+<!-- Additional custom head elements -->
+
+<!-- Preconnect to external domains -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+<!-- Additional Meta Tags -->
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#2c3e50">
+
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32x32.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon-16x16.png' | relative_url }}">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.author }}",
+  "url": "{{ site.url }}",
+  "sameAs": [
+    "https://github.com/{{ site.github_username }}",
+    "https://www.linkedin.com/in/{{ site.linkedin_username }}"
+  ],
+  "jobTitle": "Software Engineer",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Amazon"
+  }
+}
+</script>
+
+<!-- RSS Feed -->
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">

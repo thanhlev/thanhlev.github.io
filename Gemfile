@@ -7,6 +7,8 @@ gem "jekyll-theme-slate", "~> 0.1"
 gem "kramdown-parser-gfm"
 gem 'nokogiri', '~> 1.10'
 gem 'jekyll-redirect-from'
+gem 'jekyll-seo-tag'
+gem 'jekyll-sitemap'
 
 gem "mini_magick", "~> 4.11"
 

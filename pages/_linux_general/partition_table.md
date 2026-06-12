@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Partition Table
-short_description: Infomation about the MBR partition
+title: MBR Partition Table
+short_description: Information about the MBR partition
 status: "Done"
 picture: "assets/images/MBR_usecase_partitions.jpg"
 latest_release: "Unknown"
-videos: []
+index: 1
 ---
 
 # Partition Table
@@ -21,13 +21,13 @@ videos: []
 -----------------------------------
 ## Introduction
 
-In the post [Esp8266 Partition Table](../embedded/esp8266/flash_map.md), I had mentioned about the partition table used on MCU, but it's a customized partition table designed by Espressif. There are standard partition tables used on Windows and Linux machines.
+In the post [Esp8266 Partition Table](../embedded/esp8266_flash_map.html), I had mentioned about the partition table used on MCU, but it's a customized partition table designed by Espressif. There are standard partition tables used on Windows and Linux machines.
 
 There are MBR and GPT partition tables and in this post I will put more detailed information about MBR partition table and how it was used on Embedded Linux System.
 
 ## MBR (Master Boot Record) and Partition Table Format
 
-If we read the post [Tiny210:SD/MMC/eSSD Device Boot Block Assignment](https://thanhle.me/docs/uboot_kernel/2_tiny210/tiny210_information.html#sdmmcessd-device-boot-block-assignment), Block 0 of the storage device is reserved, the Second Boot Loader also knows as BL1 is flashed from block 1. The reason is that Block 0  is reserved to store the MBR, so we can split the SD card into multiple partitions to store data, rootfs ...
+If we read the post [Tiny210:SD/MMC/eSSD Device Boot Block Assignment](../embedded/tiny210_information.html), Block 0 of the storage device is reserved, the Second Boot Loader also knows as BL1 is flashed from block 1. The reason is that Block 0  is reserved to store the MBR, so we can split the SD card into multiple partitions to store data, rootfs ...
 
 The master boot record (MBR) is a structure that holds the boot loader program (use on x86/x64 systems) and the partition table. The length of the MBR structure is 512 bytes.
 

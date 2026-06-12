@@ -1,11 +1,70 @@
-title: Work - Learn - Share
-description: "Lê Quang Thành : quangthanh010290@gmail.com"
+---
+title: Thanh Le - Technical Blog
+description: "Linux, Embedded Systems, Networking, and DevOps Engineering"
+author: Thanh Le (Lê Quang Thành)
+email: thanhlev@amazon.com.vn
+url: https://thanhlev.github.io/
+baseurl: ""
 show_downloads: false
-google_analytics:
+google_analytics: UA-121634256-1
 theme: jekyll-theme-slate
+
+# SEO and Social
+twitter_username: 
+github_username: thanhlev
+linkedin_username: thanhlev
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
 plugins:
   - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
 collections_dir: pages
 collections:
   linux_general:
     output: true
+    permalink: /:collection/:name
+  linux_networking:
+    output: true
+    permalink: /:collection/:name
+  embedded:
+    output: true
+    permalink: /:collection/:name
+  yocto:
+    output: true
+    permalink: /:collection/:name
+  personal:
+    output: true
+    permalink: /:collection/:name
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "linux_general"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "linux_networking"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "embedded"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "yocto"
+    values:
+      layout: "default"

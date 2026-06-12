@@ -3,24 +3,63 @@ layout: default
 title: Home
 ---
 
+# Welcome to My Technical Blog
 
-Trang web này được tạo ra để giúp mình note lại những cái từng làm và đang làm. Ngoài việc giúp mình nhanh chóng tìm lại khi cần thì nó còn giúp kiểm soát tốt hơn tiến độ của các project. Các bài viết được lược kê bên dưới.
+Hi, I'm Thanh Le — an engineer who loves digging into Linux internals, building embedded systems, and wrangling networks. This is where I write things down so I don't forget them, and hopefully they help you too.
 
+## Featured Topics
 
-### Linux -  networking
-### Linux - general
+### 🌐 Linux Networking
+
+Explore advanced networking concepts, Docker networking, virtual interfaces, and network management solutions.
 
 <table class="project_table">
   <thead>
     <tr>
-      <th>Hình ảnh</th>
-      <th>Bài viết</th>
-      <th>Latest commit/release</th>
-      <th>Trạng thái</th>
+      <th>Preview</th>
+      <th>Article</th>
+      <th>Last Updated</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
-{% for page in site.linux_general %}
+{% assign sorted = site.linux_networking | sort: 'index' %}
+{% for page in sorted %}
+    {% if page.publish %}
+      <tr>
+        <td class="page_picture_td">
+          {% if page.picture %}
+            <a href="{{ page.url }}"><img class="page_table_picture" src="{{ page.picture | image_thumbnail }}" alt="{{ page.title }}"></a>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
+          <span class="article-description">{{ page.short_description }}</span>
+        </td>
+        <td>{{ page.latest_release }}</td>
+        <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
+      </tr>
+    {% endif %}
+{% endfor %}
+  </tbody>
+</table>
+
+### 💻 Linux General
+
+System administration, Docker, development tools, and Linux tips & tricks.
+
+<table class="project_table">
+  <thead>
+    <tr>
+      <th>Preview</th>
+      <th>Article</th>
+      <th>Last Updated</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+{% assign sorted = site.linux_general | sort: 'index' %}
+{% for page in sorted %}
     <tr>
       <td class="page_picture_td">
         {% if page.picture %}
@@ -28,18 +67,90 @@ Trang web này được tạo ra để giúp mình note lại những cái từn
         {% endif %}
       </td>
       <td>
-        <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a>
+        <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
+        <span class="article-description">{{ page.short_description }}</span>
       </td>
       <td>{{ page.latest_release }}</td>
-      <td>{{ page.status }}</td>
+      <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
     </tr>
 {% endfor %}
   </tbody>
 </table>
 
+### 🔧 Embedded Systems
 
+Hardware development, microcontrollers, IoT devices, and embedded Linux.
 
+<table class="project_table">
+  <thead>
+    <tr>
+      <th>Preview</th>
+      <th>Article</th>
+      <th>Last Updated</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+{% assign sorted = site.embedded | sort: 'index' %}
+{% for page in sorted %}
+    <tr>
+      <td class="page_picture_td">
+        {% if page.picture %}
+          <a href="{{ page.url }}"><img class="page_table_picture" src="{{ page.picture | image_thumbnail }}" alt="{{ page.title }}"></a>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
+        <span class="article-description">{{ page.short_description }}</span>
+      </td>
+      <td>{{ page.latest_release }}</td>
+      <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
 
+### 🏗️ Yocto Project
 
+{% assign yocto_pages = site.yocto | where_exp: "item", "item.publish != false" %}
+{% if yocto_pages.size > 0 %}
+<table class="project_table">
+  <thead>
+    <tr>
+      <th>Preview</th>
+      <th>Article</th>
+      <th>Last Updated</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+{% assign sorted = site.yocto | sort: 'index' %}
+{% for page in sorted %}
+    {% if page.publish != false %}
+      <tr>
+        <td class="page_picture_td">
+          {% if page.picture %}
+            <a href="{{ page.url }}"><img class="page_table_picture" src="{{ page.picture | image_thumbnail }}" alt="{{ page.title }}"></a>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
+          <span class="article-description">{{ page.short_description }}</span>
+        </td>
+        <td>{{ page.latest_release }}</td>
+        <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
+      </tr>
+    {% endif %}
+{% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="coming-soon">Content coming soon...</p>
+{% endif %}
 
+---
+
+## Recent Updates
+
+Stay tuned for more technical articles and project documentation. Feel free to reach out if you have questions or suggestions!
 

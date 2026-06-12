@@ -1,0 +1,344 @@
+---
+layout: default
+title: Home
+---
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Technical Excellence in<br><span class="highlight">Linux & Embedded Systems</span></h1>
+    <p class="hero-subtitle">Exploring advanced solutions in networking, embedded systems, and DevOps engineering</p>
+    <div class="hero-actions">
+      <a href="#featured-articles" class="btn btn-primary">Explore Articles</a>
+      <a href="/about" class="btn btn-secondary">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="code-preview">
+      <pre><code class="language-bash"># Deploy with confidence
+docker-compose up -d
+kubectl apply -f deployment.yaml
+terraform apply --auto-approve</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Section -->
+<section class="featured-section">
+  <div class="section-header">
+    <h2>Featured Topics</h2>
+    <p>Deep dives into modern infrastructure and embedded systems</p>
+  </div>
+  
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-network-wired"></i>
+      </div>
+      <h3>Linux Networking</h3>
+      <p>Advanced networking concepts, protocols, and real-world implementations</p>
+      <a href="#linux-networking" class="feature-link">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-microchip"></i>
+      </div>
+      <h3>Embedded Systems</h3>
+      <p>Hardware interfaces, RTOS, and IoT development</p>
+      <a href="#embedded-systems" class="feature-link">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-cogs"></i>
+      </div>
+      <h3>Yocto Project</h3>
+      <p>Custom Linux distributions and build systems</p>
+      <a href="#yocto-project" class="feature-link">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-server"></i>
+      </div>
+      <h3>DevOps & Cloud</h3>
+      <p>Infrastructure as code, CI/CD, and automation</p>
+      <a href="#devops" class="feature-link">Explore <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- Latest Articles -->
+<section class="latest-section">
+  <div class="section-header">
+    <h2>Latest Articles</h2>
+    <p>Recent technical insights and tutorials</p>
+  </div>
+  
+  <div class="articles-grid">
+    <!-- This will be populated dynamically -->
+    <div class="article-card skeleton">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-content">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">50+</div>
+      <div class="stat-label">Technical Articles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">15+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Open Source</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Learning Mode</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="cta-content">
+    <h2>Ready to dive deeper?</h2>
+    <p>Explore comprehensive technical guides and real-world solutions</p>
+    <a href="#all-articles" class="btn btn-primary btn-large">Browse All Articles</a>
+  </div>
+</section>
+
+<!-- Articles by Category -->
+<section id="linux-networking" class="category-section">
+  <div class="category-header">
+    <h2><i class="fas fa-network-wired"></i> Linux Networking</h2>
+    <p>Deep dives into network protocols, configurations, and troubleshooting</p>
+  </div>
+  
+  <div class="project_table">
+    <thead>
+      <tr>
+        <th>Preview</th>
+        <th>Article</th>
+        <th>Last Updated</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for page in site.linux_networking %}
+      <tr>
+        <td class="page_picture_td">
+          {% if page.picture %}
+          <img class="page_table_picture" src="{{ page.picture }}" alt="{{ page.title }}">
+          {% else %}
+          <div class="placeholder-icon"><i class="fas fa-network-wired"></i></div>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ page.url }}">{{ page.title }}</a>
+          {% if page.description %}
+          <span class="article-description">{{ page.description }}</span>
+          {% endif %}
+        </td>
+        <td>{{ page.last_modified_at | date: "%B %d, %Y" }}</td>
+        <td>
+          {% if page.status == "done" %}
+          <span class="status-badge status-done">Complete</span>
+          {% elsif page.status == "in-progress" %}
+          <span class="status-badge status-in-progress">In Progress</span>
+          {% else %}
+          <span class="status-badge status-pending">Pending</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section id="linux-general" class="category-section">
+  <div class="category-header">
+    <h2><i class="fas fa-linux"></i> Linux General</h2>
+    <p>System administration, performance tuning, and best practices</p>
+  </div>
+  
+  <div class="project_table">
+    <thead>
+      <tr>
+        <th>Preview</th>
+        <th>Article</th>
+        <th>Last Updated</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for page in site.linux_general %}
+      <tr>
+        <td class="page_picture_td">
+          {% if page.picture %}
+          <img class="page_table_picture" src="{{ page.picture }}" alt="{{ page.title }}">
+          {% else %}
+          <div class="placeholder-icon"><i class="fas fa-linux"></i></div>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ page.url }}">{{ page.title }}</a>
+          {% if page.description %}
+          <span class="article-description">{{ page.description }}</span>
+          {% endif %}
+        </td>
+        <td>{{ page.last_modified_at | date: "%B %d, %Y" }}</td>
+        <td>
+          {% if page.status == "done" %}
+          <span class="status-badge status-done">Complete</span>
+          {% elsif page.status == "in-progress" %}
+          <span class="status-badge status-in-progress">In Progress</span>
+          {% else %}
+          <span class="status-badge status-pending">Pending</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section id="embedded-systems" class="category-section">
+  <div class="category-header">
+    <h2><i class="fas fa-microchip"></i> Embedded Systems</h2>
+    <p>Hardware interfaces, RTOS, and IoT development insights</p>
+  </div>
+  
+  <div class="project_table">
+    <thead>
+      <tr>
+        <th>Preview</th>
+        <th>Article</th>
+        <th>Last Updated</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for page in site.embedded %}
+      <tr>
+        <td class="page_picture_td">
+          {% if page.picture %}
+          <img class="page_table_picture" src="{{ page.picture }}" alt="{{ page.title }}">
+          {% else %}
+          <div class="placeholder-icon"><i class="fas fa-microchip"></i></div>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ page.url }}">{{ page.title }}</a>
+          {% if page.description %}
+          <span class="article-description">{{ page.description }}</span>
+          {% endif %}
+        </td>
+        <td>{{ page.last_modified_at | date: "%B %d, %Y" }}</td>
+        <td>
+          {% if page.status == "done" %}
+          <span class="status-badge status-done">Complete</span>
+          {% elsif page.status == "in-progress" %}
+          <span class="status-badge status-in-progress">In Progress</span>
+          {% else %}
+          <span class="status-badge status-pending">Pending</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section id="yocto-project" class="category-section">
+  <div class="category-header">
+    <h2><i class="fas fa-cogs"></i> Yocto Project</h2>
+    <p>Custom Linux distributions and build systems</p>
+  </div>
+  
+  <div class="project_table">
+    <thead>
+      <tr>
+        <th>Preview</th>
+        <th>Article</th>
+        <th>Last Updated</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for page in site.yocto %}
+      <tr>
+        <td class="page_picture_td">
+          {% if page.picture %}
+          <img class="page_table_picture" src="{{ page.picture }}" alt="{{ page.title }}">
+          {% else %}
+          <div class="placeholder-icon"><i class="fas fa-cogs"></i></div>
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ page.url }}">{{ page.title }}</a>
+          {% if page.description %}
+          <span class="article-description">{{ page.description }}</span>
+          {% endif %}
+        </td>
+        <td>{{ page.last_modified_at | date: "%B %d, %Y" }}</td>
+        <td>
+          {% if page.status == "done" %}
+          <span class="status-badge status-done">Complete</span>
+          {% elsif page.status == "in-progress" %}
+          <span class="status-badge status-in-progress">In Progress</span>
+          {% else %}
+          <span class="status-badge status-pending">Pending</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<script>
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Intersection Observer for animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Observe all sections
+document.querySelectorAll('.category-section, .feature-card, .stat-card').forEach(el => {
+  observer.observe(el);
+});
+</script>
