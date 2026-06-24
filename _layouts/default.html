@@ -47,10 +47,10 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle">Topics <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#linux-networking">Linux Networking</a></li>
-                  <li><a href="#linux-general">Linux General</a></li>
-                  <li><a href="#embedded-systems">Embedded Systems</a></li>
-                  <li><a href="#yocto-project">Yocto Project</a></li>
+                  <li><a href="/#linux-networking">Linux Networking</a></li>
+                  <li><a href="/#linux-general">Linux General</a></li>
+                  <li><a href="/#embedded-systems">Embedded Systems</a></li>
+                  <li><a href="/#yocto-project">Yocto Project</a></li>
                 </ul>
               </li>
               <li><a href="/about" {% if page.url == "/about/" %}class="active"{% endif %}>About</a></li>
@@ -130,13 +130,21 @@
       document.addEventListener('DOMContentLoaded', function() {
         const dropdownToggle = document.querySelector('.dropdown-toggle');
         const dropdownMenu = document.querySelector('.dropdown-menu');
-        
+
         if (dropdownToggle && dropdownMenu) {
           dropdownToggle.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             dropdownMenu.classList.toggle('show');
           });
-          
+
+          // Close dropdown when a menu item is clicked
+          dropdownMenu.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+              dropdownMenu.classList.remove('show');
+            });
+          });
+
           // Close dropdown when clicking outside
           document.addEventListener('click', function(e) {
             if (!e.target.closest('.dropdown')) {

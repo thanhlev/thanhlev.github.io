@@ -9,7 +9,7 @@ Hi, I'm Thanh Le — an engineer who loves digging into Linux internals, buildin
 
 ## Featured Topics
 
-### 🌐 Linux Networking
+### 🌐 Linux Networking {#linux-networking}
 
 Explore advanced networking concepts, Docker networking, virtual interfaces, and network management solutions.
 
@@ -44,7 +44,7 @@ Explore advanced networking concepts, Docker networking, virtual interfaces, and
   </tbody>
 </table>
 
-### 💻 Linux General
+### 💻 Linux General {#linux-general}
 
 System administration, Docker, development tools, and Linux tips & tricks.
 
@@ -77,7 +77,7 @@ System administration, Docker, development tools, and Linux tips & tricks.
   </tbody>
 </table>
 
-### 🔧 Embedded Systems
+### 🔧 Embedded Systems {#embedded-systems}
 
 Hardware development, microcontrollers, IoT devices, and embedded Linux.
 
@@ -110,7 +110,7 @@ Hardware development, microcontrollers, IoT devices, and embedded Linux.
   </tbody>
 </table>
 
-### 🏗️ Yocto Project
+### 🏗️ Yocto Project {#yocto-project}
 
 {% assign yocto_pages = site.yocto | where_exp: "item", "item.publish != false" %}
 {% if yocto_pages.size > 0 %}
