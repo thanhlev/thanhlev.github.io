@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "A WS2812 ring on the RISC-V MCU hidden inside the RK3568"
+title: "FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores"
 short_description: "FreeRTOS on the SoC's own RV32 core under Android 14, SPI3 as the LED wire, and four faults between me and a lit ring"
 status: "Done"
 picture: "assets/images/boards/rock3a/ws2812_ring_lit.png"
@@ -12,7 +12,7 @@ board_parent: rock3a
 result: "16/16 LEDs lit from the MCU at 50.00 frames/s, 523-525 µs per frame on the wire; no blue at 3.3 V"
 ---
 
-# A WS2812 ring on the RISC-V MCU hidden inside the RK3568
+# FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
