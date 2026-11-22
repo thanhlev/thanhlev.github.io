@@ -4,10 +4,13 @@ title: "[🔥] - ESP8266 Flash Map & Partition Table"
 short_description: "Where the ESP8266 keeps what on its external SPI flash: bootloader, partition table, NVS, OTA slots"
 status: "Done"
 picture: "assets/images/esp8266_block_diagram.png"
-latest_release: "2026-11-22: English, checked against the ESP8266 RTOS SDK sources"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
 ---
+
+<!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
+     Same facts, tables and code as the 2026-11-22 English version; nothing added. -->
 
 # ESP8266 Flash Map & Partition Table
 {: .no_toc }
@@ -20,24 +23,30 @@ publish: true
 
 ---
 
-## Why I looked at this
+## Situation
 
-On a hobby board you flash `app.bin` and forget about the rest. For firmware that ships, the
-flash has to hold a lot more than the app: data from the factory, data that is different on
-every chip (Wi-Fi calibration), user settings that must survive an update, and a second app slot
-so an update can happen at runtime. I wanted to see how Espressif lays that out on the ESP8266EX,
-because it's small enough to read end to end and the same ideas come back on the bigger chips.
+On a hobby board you flash `app.bin` and forget about the rest. Firmware that ships needs a lot
+more on its flash than the app: data from the factory, data that is different on every chip (Wi-Fi
+calibration), user settings that must survive an update, and a second app slot so an update can
+happen at runtime. I had never looked at how any of that is laid out.
 
-Part two, what happens at power-on and who reads all this, is
-[Boot sequence on the ESP8266](/embedded/esp8266-boot-up).
+## Task
 
-## The chip, quickly
+Work out how Espressif lays the flash out on the ESP8266EX, from address 0x0 up: what each region
+is, who reads the partition table, and what the rules are when I write my own table. The ESP8266 is
+small enough to read end to end, and the same ideas come back on the bigger chips. Part two, what
+happens at power-on and who reads all this, is [Boot sequence on the ESP8266](/embedded/esp8266-boot-up).
 
-The ESP8266EX is a System on Chip from Espressif.
+## Action
+
+### The chip, quickly
+
+The ESP8266EX is a System on Chip from Espressif. I started with the block diagram and the memory
+section, because the flash layout only makes sense once you know there is no internal flash at all.
 
 ![ESP8266EX Block Diagram](/assets/images/esp8266_block_diagram.png)
 
-### CPU
+#### CPU
 
 A Tensilica L106, 32-bit RISC, up to 160 MHz. Espressif says RTOS + the Wi-Fi stack take about
 20% of the CPU, so roughly 80% is left for the application.
@@ -47,7 +56,7 @@ The CPU talks to memory over three buses:
 - **dBus**: data RAM interface to the memory controller (a hardware bus, nothing to do with D-Bus on Linux)
 - **AHB**: peripheral registers
 
-### Memory
+#### Memory
 
 Inside: a memory controller, SRAM and ROM.
 
@@ -60,7 +69,7 @@ Inside: a memory controller, SRAM and ROM.
 <p>Because the flash is a separate chip on SPI, anyone with the board in their hands can read it, rewrite it, or swap it. If that matters for your device, plan for flash encryption and secure boot.</p>
 </div>
 
-### External SPI flash
+#### External SPI flash
 
 | | |
 |---------|--------------|
@@ -70,9 +79,9 @@ Inside: a memory controller, SRAM and ROM.
 
 How that flash is split up is described by a **partition table**.
 
-## The flash map
+### The flash map
 
-From address 0x0 up, with the default OTA layout:
+From address 0x0 up, with the SDK's default OTA layout:
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -102,7 +111,7 @@ From address 0x0 up, with the default OTA layout:
 └──────────────────────────────────────────────────────────────┘
 ```
 
-## The partition table
+### The partition table
 
 One flash chip, several apps and several kinds of data (calibration, file systems, settings).
 The table at offset **0x8000** says which is where; the bootloader and the app both read it.
@@ -127,7 +136,7 @@ Each 32-byte entry, as `gen_esp32part.py` packs it (yes, the ESP8266 SDK uses th
 | Name | 16 bytes | ASCII label |
 | Flags | 4 bytes | bit 0 = `encrypted` |
 
-### The two built-in tables
+#### The two built-in tables
 
 When you build with Espressif's build system you pick OTA or non-OTA in menuconfig, and it
 builds the matching default table for you.
@@ -155,7 +164,7 @@ The bootloader runs whatever is at 0x10000, labelled `factory`. Everything else 
 So the OTA table gives up 8 KB of NVS to make room for `otadata`, and the two app slots start at
 0x10000 and 0x110000.
 
-### How the bootloader picks a slot
+#### How the bootloader picks a slot
 
 ```
                      ┌──────────────┐
@@ -177,7 +186,7 @@ So the OTA table gives up 8 KB of NVS to make room for `otadata`, and the two ap
 3. When the download is complete and checked, the app writes `otadata` to point at `ota_1`.
 4. Reboot: the bootloader reads `otadata` and boots `ota_1`. Next update goes to `ota_0`.
 
-## Type and SubType
+### Type and SubType
 
 **Type**: 0x00 `app`, 0x01 `data`. 0x00–0x3F are reserved for Espressif; for your own data use
 0x40–0xFE. The bootloader ignores anything that isn't `app` or `data`, but your app can still
@@ -205,7 +214,7 @@ find those partitions through the partition API.
 | 0x81 | fat | FAT filesystem |
 | 0x82 | spiffs | SPIFFS |
 
-## Offset and size: the rule that bites
+### Offset and size: the rule that bites
 
 <div class="warning">
 <p>An app partition has to sit entirely inside one 1 MB block of flash. The default app start, 0x10000, is fixed; to move it, change it in <code>menuconfig</code>. Offsets must also be aligned (the tool wants 4 KB for apps) or <code>gen_esp32part.py</code> refuses the table.</p>
@@ -215,7 +224,7 @@ Careful: it's not "a multiple of 1 MB", the SDK doc says it must *fall within on
 + 0xF0000 ends exactly at 0x100000, and `ota_1` starts at 0x110000 and ends at 0x200000. That's why
 the slots are 960 KB and not 1 MB.
 
-## Your own partition table
+### Writing my own table
 
 Write a CSV:
 
@@ -251,7 +260,7 @@ esptool.py --port /dev/ttyUSB0 read_flash 0x8000 0xC00 ptable.bin
 python gen_esp32part.py ptable.bin       # binary in -> CSV out
 ```
 
-## Using partitions from the app
+### Using partitions from the app
 
 These are the calls from the SDK headers (`esp_partition.h`, `esp_ota_ops.h`, `nvs.h`):
 
@@ -294,10 +303,19 @@ nvs_commit(handle);
 nvs_close(handle);
 ```
 
-## Next
+## Result
 
-What I still want to write up: actually building a custom table with a SPIFFS partition and
-flashing it, with the real `make partition_table` output, instead of only the CSV above.
+I now have the whole map in my head: bootloader at 0x0, the 3072-byte table at 0x8000, NVS from
+0x9000, `otadata` at 0xD000 when OTA is on, PHY init data at 0xF000, and the app slots from 0x10000.
+The one thing I'd have got wrong without reading the SDK is the 1 MB rule: an app partition must fall
+inside one 1 MB block, which is why the default OTA slots are 960 KB and not 1 MB. Everything here
+is from the SDK sources and docs; I haven't flashed a custom table on a board yet.
+
+## What I'd do next
+
+Actually build a custom table with a SPIFFS partition and flash it, with the real `make partition_table`
+output, instead of only the CSV above. Then read the table back with `esptool.py read_flash` and check
+that it decodes to what I wrote.
 
 ## References
 
