@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Humanoid (17-servo biped)"
-short_description: "My 2012 thesis robot, brought back as a model: my own C++ kinematics library, MuJoCo physics, an online walker with IMU feedback"
+short_description: "My thesis robot, brought back as a model: my own C++ kinematics library, MuJoCo physics, an online walker with IMU feedback"
 status: "In Progress"
 picture: "assets/images/robotics/humanoid/walk_push.png"
 latest_release: "2026-11-22: hub page with three STAR write-ups"
@@ -15,11 +15,11 @@ board_hub: true
 
 ![Same sideways push in MuJoCo: open loop falls, IMU feedback stays up]({{ '/assets/images/robotics/humanoid/walk_push.png' | relative_url }})
 
-This is the small biped from my undergraduate thesis (2012): 17 hobby servos, a gait planned
+This is the small biped from my undergraduate thesis: 17 hobby servos, a gait planned
 completely offline in MATLAB, sent as ASCII position commands over a 9600 baud UART to a
 microcontroller that played the frames back. It never read anything back from a servo. The
 original build, with the video of the real thing, is still on its own page:
-[where it started]({{ '/embedded/humanoid-robot' | relative_url }}).
+[where it started]({{ '/robotics/humanoid/thesis' | relative_url }}).
 
 In September 2026 I ported the code to Python and C++ and asked a simple question: does the
 inverse kinematics actually hit its targets? It didn't. Every frame of the walk was off by

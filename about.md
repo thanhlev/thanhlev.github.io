@@ -43,9 +43,9 @@ Blender render) -> §4 contact cards -> tools strip. Text from the 2026-11-22 pr
   <div class="ab-text">
     <p>My undergraduate thesis was a small humanoid robot on SG90 servos. I drew it in SolidWorks, worked out the DH table and the inverse kinematics, and planned its walking in simulation before running it on the controller.</p>
     <p>One wrong angle in a matrix and the leg goes somewhere you didn't expect. I've liked working at that level ever since: close to the hardware, where a number is either right or the thing falls over.</p>
-    <p><a href="{{ '/embedded/humanoid-robot' | relative_url }}">The thesis robot and its videos →</a></p>
+    <p><a href="{{ '/robotics/humanoid/thesis' | relative_url }}">The thesis robot and its videos →</a></p>
   </div>
-  <a class="ab-photo" href="{{ '/embedded/humanoid-robot' | relative_url }}"><img src="{{ '/assets/images/about/thesis_robot.jpg' | relative_url }}" alt="My thesis humanoid robot"><span>Thesis robot · SG90 servos · SolidWorks + IK</span></a>
+  <a class="ab-photo" href="{{ '/robotics/humanoid/thesis' | relative_url }}"><img src="{{ '/assets/images/about/thesis_robot.jpg' | relative_url }}" alt="My thesis humanoid robot"><span>Thesis robot · SG90 servos · SolidWorks + IK</span></a>
 </section>
 
 <div class="sec"><h2>What's on the bench</h2><span>§2 · one page per board, one story per milestone</span><a class="more btn" href="{{ '/#boards' | relative_url }}">All {{ hubs.size }} boards</a></div>
