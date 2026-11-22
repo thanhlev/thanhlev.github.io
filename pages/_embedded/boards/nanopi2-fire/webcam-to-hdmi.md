@@ -27,10 +27,6 @@ camera model here. On the NanoPi I had [FreeRTOS running](/embedded/boards/nanop
 but no USB host stack, no HDMI driver, nothing. Just the S5P4418 manual, the FriendlyELEC kernel and
 U-Boot sources to read, and the D1's UVC code.
 
-<video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_first_picture_poster.jpg" style="width:100%;max-width:360px"><source src="/assets/videos/boards/nanopi2-fire/np2f_first_picture.mp4" type="video/mp4"></video>
-
-*How the first picture gets from the webcam to HDMI, 76 s: 3 072-byte pieces over USB, the CPU stitching them in RAM, then the display block. That first version managed 4.47 pictures a second with the CPU busy copying. (Vietnamese on-screen text, no sound.)*
-
 ## Task
 
 Webcam picture on HDMI, from FreeRTOS, at the camera's full frame rate. Then make the CPU do as little
@@ -64,14 +60,6 @@ The catch was the copy from USB buffers into the frame: 59 % of the CPU with `me
 | PL080 DMA, polled every 1 ms | DMAC | 2.0 % |
 | DMA, polled every 4 ms | DMAC | 1.0–1.4 % |
 | + JPEG unit (JPU) decoding MJPEG | EHCI → DMAC → JPU → display | **1.5–1.7 %** up to 1080p30 (YUYV: 1.1 %) |
-
-<video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_dma_copy_poster.jpg" style="width:100%;max-width:360px"><source src="/assets/videos/boards/nanopi2-fire/np2f_dma_copy.mp4" type="video/mp4"></video>
-
-*The copy, three ways, on the 21 October re-run at 1920×1080: plain copy 53.6 % of the CPU, NEON 29.4 %, the DMA "conveyor belt" 0.6 %. (Re-measured at 1080p, so the numbers differ a bit from the table. Vietnamese on-screen text, no sound.)*
-
-<video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_jpu_1080p_poster.jpg" style="width:100%;max-width:360px"><source src="/assets/videos/boards/nanopi2-fire/np2f_jpu_1080p.mp4" type="video/mp4"></video>
-
-*Why 1080p was stuck at 5 frames a second (USB carries ~24 MB/s, raw 1080p30 needs 124) and how MJPEG + the JPU got it to 29.46 with the CPU at 1.7 %. (Vietnamese on-screen text, no sound.)*
 
 `ps` lied at first. It divided each task's run time by the total since boot, which was mostly time
 with no stream, so I added `uvc load <ms>` to measure over a window. Every number in the table comes
@@ -111,7 +99,7 @@ short of the end, and the faster CPU looked sooner. Both fixed.
 OSD shows per-core load in Vietnamese or English for 0.1 % of the CPU, once I moved the clear to a DMA
 fill. And `uvc ae manual <ms>` locks the exposure: at 30 ms I get exactly 30.00 frames a second.
 
-<video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_uvc_ae_poster.jpg" style="width:100%;max-width:480px"><source src="/assets/videos/boards/nanopi2-fire/np2f_uvc_ae.mp4" type="video/mp4"></video>
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/nanopi2-fire/np2f_uvc_ae_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/nanopi2-fire/np2f_uvc_ae_169.mp4' | relative_url }}" type="video/mp4"></video>
 
 *How the board asks the webcam about exposure: one USB control transfer per question, the real answer bytes, then SET_CUR to manual at 300 × 100 µs. Result on the board: 150 frames in 5 s = 30.00. (Vietnamese on-screen text, no sound.)*
 

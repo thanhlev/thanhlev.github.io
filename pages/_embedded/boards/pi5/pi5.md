@@ -20,7 +20,7 @@ memory controller and HDMI. The RP1, Raspberry Pi's own chip, has almost everyth
 the 40-pin header, USB, Ethernet, the camera and display connectors. Mine is the 8 GB Model B rev 1.0,
 running Debian 13 with kernel 6.18 from the SD card.
 
-<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi5/pi5_boot_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi5/pi5_boot.mp4' | relative_url }}" type="video/mp4"></video>
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi5/pi5_boot_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/pi5/pi5_boot_169.mp4' | relative_url }}" type="video/mp4"></video>
 
 *My Pi 5 with its active cooler on my desk, then its boot in 105 s: boot ROM, EEPROM bootloader, SDRAM, firmware from the SD card, the kernel (PCIe link up at 1.074 s, RP1 at 1.096 s), userspace at about 15 s. (Vietnamese on-screen text, no sound.)*
 

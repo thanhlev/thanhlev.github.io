@@ -27,9 +27,9 @@ micro-USB cable to the PC. On my D1 board I'm used to FEL: the ROM sits on USB a
 I wanted to know if the S5P4418 has something like that, because then I could skip U-Boot and Linux
 completely and start from my own code.
 
-<video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_usbboot_explainer_poster.jpg" style="width:100%;max-width:360px"><source src="/assets/videos/boards/nanopi2-fire/np2f_usbboot_explainer.mp4" type="video/mp4"></video>
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/nanopi2-fire/np2f_dram_training_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/nanopi2-fire/np2f_dram_training_169.mp4' | relative_url }}" type="video/mp4"></video>
 
-*Everything on this page in 107 s: empty slot, the ROM on USB as `04e8:1234`, 15 360 bytes into the 64 KiB SRAM, garbage on the UART, DDR3 training, then FreeRTOS spinning the LED ring from DRAM. The log lines are from my run of 17 October. (Vietnamese on-screen text, no sound.)*
+*How the DDR3 gets trained at every power-on, 93 s: drive strength and termination, the DLL locking at 154 taps of one 1.25 ns clock, reads against the MPR pattern, gate-leveling codes 96/92/96/95, then 1 GiB at 0x71000000 with 0 errors. (Vietnamese on-screen text, music.)*
 
 ## Task
 

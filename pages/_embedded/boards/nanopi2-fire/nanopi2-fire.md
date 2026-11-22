@@ -29,9 +29,9 @@ Linux, just my own code and the Cortex-A9 manual.
 I had just done a "USB webcam to HDMI" demo on my Allwinner D1 board, so the plan was the same here,
 but on bare metal and FreeRTOS. It went a lot further than that.
 
-<video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_boot_tree_poster.jpg" style="width:100%;max-width:360px"><source src="/assets/videos/boards/nanopi2-fire/np2f_boot_tree.mp4" type="video/mp4"></video>
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/nanopi2-fire/np2f_sdboot_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/nanopi2-fire/np2f_sdboot_169.mp4' | relative_url }}" type="video/mp4"></video>
 
-*The whole board on one chip diagram, 82 s: one boot ROM, four ways I start code on it (USB, my own card, FriendlyELEC's Android card, and the Linux + RTOS split I haven't booted yet). It opens on my screen 3.4 s after power-on. (Vietnamese on-screen text, music track if you unmute.)*
+*My own microSD card booting the board, 147 s: what sits in the first megabyte (loader in sectors 1–32, my table at 64, the app from 128), the boot ROM copying 16 KB into SRAM, RAM ready at 0.2 s, every image CRC-checked by 2.2 s, and the webcam on HDMI 3.4 s after reset. (Vietnamese on-screen text, music.)*
 
 ## What I got it to do
 
