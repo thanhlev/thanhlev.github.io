@@ -3,7 +3,9 @@ title: Thanh Le - Technical Blog
 description: "Linux, Embedded Systems, Networking, and DevOps Engineering"
 author: Thanh Le (Lê Quang Thành)
 email: thanhlev@amazon.com.vn
-url: https://thanhlev.github.io/
+# No trailing slash: layouts and jekyll-sitemap append page.url (which starts with "/"),
+# a trailing slash here gave "https://thanhlev.github.io//embedded/..." (fixed 2026-11-22).
+url: https://thanhlev.github.io
 baseurl: ""
 show_downloads: false
 google_analytics: UA-121634256-1
@@ -13,6 +15,23 @@ theme: jekyll-theme-slate
 twitter_username: 
 github_username: thanhlev
 linkedin_username: thanhlev
+
+# Repo files that must not be published (2026-11-22 audit: CLAUDE.md, README.md and LICENSE
+# were copied into _site and served). Setting `exclude` replaces Jekyll's default list, so the
+# defaults (Gemfile*, node_modules, vendor/...) are repeated here. run.sh is listed for when it
+# comes back; it is not in the repo today.
+exclude:
+  - CLAUDE.md
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - run.sh
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
 
 # Build settings
 markdown: kramdown
