@@ -4,7 +4,7 @@ title: "Docker Snippet"
 short_description: "Các lệnh Docker thường dùng"
 status: "In Progress"
 picture: "assets/images/docker-banner.png"
-latest_release: "Init document"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
 ---
@@ -12,41 +12,34 @@ publish: true
 # Docker Snippet
 {: .no_toc }
 
-## Table of contents
-{: .no_toc }
+## Situation
 
-1. TOC
-{:toc}
+Docker mặc định để mọi thứ (image, container, volume) trong `/var/lib/docker`, tức là nằm trên phân vùng root. Mình cần chuyển chỗ lưu đó sang một ổ khác, mount ở `/mnt/newlocation`. Trang này mở ra để ghi các lệnh Docker kiểu đó, những thứ làm một lần rồi lần sau lại phải đi tìm.
 
------------------------------------
+## Task
 
-## Các lệnh thường dùng với Docker
+Đổi thư mục gốc của Docker sang `/mnt/newlocation` mà không phải cài lại gì.
 
-<table>
-  <thead>
-    <tr>
-      <th>Items</th>
-      <th>Details</th>
-    </tr>
-  </thead>
+## Action
 
-  <tbody>
-    <tr>
-        <td >
-        <h6>Thay đổi nơi lưu<br>docker images mặc định</h6>
-        </td>
-        <td>
-          <h6>Tạo file <code>/etc/docker/daemon.json</code></h6>
-            <div style="width:450px;overflow:auto">
-<pre><code>{"data-root": "/mnt/newlocation"}</code></pre>
-            </div>
-          <h6>Restart docker daemon</h6>
-            <div style="width:450px;overflow:auto">
-<pre><code>systemctl restart docker</code></pre>
-            </div>
-          <p>- Các container mới tạo sẽ được lưu vào vị trí mới, các container cũ vẫn được lưu ở: <code>/var/lib/docker</code></p>
-        </td>
-    </tr>
-  </tbody>
-</table>
+### Đổi nơi lưu docker images mặc định
 
+Tạo file `/etc/docker/daemon.json`:
+
+```json
+{"data-root": "/mnt/newlocation"}
+```
+
+Rồi restart daemon để nó đọc lại cấu hình:
+
+```bash
+systemctl restart docker
+```
+
+## Result
+
+Sau khi restart, container và image tạo mới được lưu vào `/mnt/newlocation`. Những cái tạo từ trước vẫn nằm nguyên ở `/var/lib/docker`: Docker không tự chuyển chúng sang, nó chỉ bắt đầu dùng thư mục mới.
+
+## What I'd do next
+
+Muốn mang cả image cũ theo thì phải dừng Docker và chép nội dung `/var/lib/docker` sang chỗ mới trước khi restart. Mình chưa làm bước đó nên chưa ghi lệnh ở đây. Trang vẫn để "In Progress" vì mới có đúng một mục.

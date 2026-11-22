@@ -4,28 +4,38 @@ title: "Programming Language snippets"
 short_description: "Các snippet code hay dùng"
 status: "In Progress"
 picture: "assets/images/C_and_Python_Logos.png"
-latest_release: "Init document"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
 ---
 
-<h2>Python</h2>
-<table class="project_table">
-    <thead>
-        <tr>
-            <th>Items</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Row 1 -->
-        <tr>
-            <td>
-                <h6>Open/write/close/ a file</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code># check file is exists
+# Programming Language snippets
+{: .no_toc }
+
+## Table of contents
+{: .no_toc }
+
+1. TOC
+{:toc}
+
+---
+
+## Situation
+
+Mình viết khá nhiều script Python nhỏ: đọc một file config json, nhận vài option từ dòng lệnh, gọi một lệnh shell rồi lấy output, regex một dòng log. Mấy đoạn đó script nào cũng cần, gần như y hệt nhau.
+
+## Task
+
+Gom các đoạn đó vào một chỗ để copy thẳng. Tên trang ghi "Programming Language" nhưng tới giờ mới có Python.
+
+## Action
+
+### Python
+
+#### Open/write/close a file
+
+```python
+# check file is exists
 os.path.isfile("config.json")
 
 # Open for reading
@@ -36,33 +46,27 @@ data = fh.read()
 file = open("config.json", "w")
 file.write(json.dumps(json_object, indent=4, sort_keys=True))
 file.flush()
-file.close()</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 2 -->
-        <tr>
-            <td>
-                <h6>Atexit</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>import atexit
+file.close()
+```
+
+#### Atexit
+
+Hàm đăng ký bằng `atexit` chạy khi script thoát bình thường, tiện để dọn dẹp hoặc in log cuối.
+
+```python
+import atexit
 
 @atexit.register
 def goodbye():
-    print('You are now leaving the Python sector.')</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 3 -->
-        <tr>
-            <td>
-                <h6>AppOpps</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>from optparse import OptionParser
+    print('You are now leaving the Python sector.')
+```
+
+#### Parse options (optparse)
+
+Đoạn này mình chép ra từ một method trong class, nên nó còn tham số `self`. Dùng như hàm thường thì bỏ `self` đi.
+
+```python
+from optparse import OptionParser
 
 def parseOpt(self, args):
     usage = "usage: %prog [options] arg"
@@ -82,116 +86,80 @@ def parseOpt(self, args):
         print("test = ", options.test)
 
 if __name__ == "__main__":
-    parseOpt(sys.argv)</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 4 -->
-        <tr>
-            <td>
-                <h6>json</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code># load from string data
+    parseOpt(sys.argv)
+```
+
+#### json
+
+```python
+# load from string data
 j_obj = json.loads(str_data)
 
 # Level 1 keys
 for key in j_obj.keys():
     print(f"key {key}, data: {j_obj[key]}")
-                    </code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 5 -->
-        <tr>
-            <td>
-                <h6>Regular Expression</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>import re
+```
+
+#### Regular Expression
+
+```python
+import re
 string = "hello MY_PC_NAME , value: 1.34"
 
 # match name and value
 pattern = 'hello (\D+) , value: (\d+.\d+)'
 match = re.search(pattern, string)
 if match:
-    print(f'str: {match.group(1)}, value: {match.group(2)}')</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 5 -->
-        <tr>
-            <td>
-                <h6>subprocess</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>import subprocess
+    print(f'str: {match.group(1)}, value: {match.group(2)}')
+```
+
+#### subprocess
+
+```python
+import subprocess
 
 def system_call(command):
-    return str(subprocess.getoutput(command))</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 6 -->
-        <tr>
-            <td>
-                <h6>Natural Sort</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>from natsort import natsorted
+    return str(subprocess.getoutput(command))
+```
+
+#### Natural Sort
+
+`sorted()` so chuỗi theo từng ký tự nên "10" đứng trước "2"; `natsort` so phần số như số.
+
+```python
+from natsort import natsorted
 
 list = ["1", "10", "2", "22", "3", "55"]
 print(natsorted(list)) # 1,2,3,10,22,55
-</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 7 -->
-        <tr>
-            <td>
-                <h6>Play beep audio</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>import beepy as beep
+```
+
+#### Play beep audio
+
+```python
+import beepy as beep
 
 beep.beep(1)
 beep.beep(2)
 ...
 beep.beep(10)
-</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 8 -->
-        <tr>
-            <td>
-                <h6>trim string white space</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>str("   hello    ").strip()</code></pre>
-                </div>
-            </td>
-        </tr>
-        <!-- Row 9 -->
-        <tr>
-            <td>
-                <h6>Date and time</h6>
-            </td>
-            <td>
-                <div style="width:1000px;overflow:auto">
-                    <pre><code>from datetime import datetime, date
+```
+
+#### Trim string white space
+
+```python
+str("   hello    ").strip()
+```
+
+#### Date and time
+
+```python
+from datetime import datetime, date
 
 datetime.utcnow()
 datetime.utcnow().hour
 datetime.utcnow().minute
 datetime.utcnow().second
-datetime.utcnow().timetuple().tm_yday // day of year
+datetime.utcnow().timetuple().tm_yday # day of year
 datetime.utcnow().timetuple().tm_year
 datetime.utcnow().timetuple().tm_mon
 datetime.utcnow().timetuple().tm_mday
@@ -206,10 +174,14 @@ day_name = calendar.day_name[today.weekday()]
 current_day = today.strftime("%b-%d-%Y")
 current_day_object = datetime.strptime(current_day, '%b-%d-%Y')
 current_day_utc = current_day_object.utcnow().strftime("%b-%d-%Y")
-</code></pre>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+```
 
+Dòng `tm_yday` trước đây ghi chú bằng `//` kiểu C, Python không hiểu và báo lỗi cú pháp; giờ đã đổi thành `#`.
+
+## Result
+
+Trang giờ là mười đoạn Python, mỗi đoạn một tiêu đề riêng nên Ctrl+F hay mục lục là ra. Các đoạn không kèm `import os, json, sys`, cái đó tự thêm ở đầu file.
+
+## What I'd do next
+
+Hai đoạn đã cũ so với Python bây giờ. `optparse` bị đóng băng từ lâu, script mới nên dùng `argparse`. `datetime.utcnow()` bị đánh dấu deprecated từ Python 3.12, thay bằng `datetime.now(timezone.utc)`. Mình chưa viết lại hai đoạn đó. Phần C thì vẫn chưa có gì, dù tên trang đã hứa.
