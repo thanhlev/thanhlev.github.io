@@ -29,23 +29,18 @@ video decode) before having it on the bench, and that's where it still is.
 *The K2 as I know it from reading: an S905, its Ethernet and Wi-Fi chips, and the one detail I want to test first, four USB ports sharing one 480 Mbit/s hub.*
 
 
-## What I've done so far (no board)
+## What reading settled
 
-| When | What |
-|---|---|
-| 2026-09-27 | Read the FriendlyELEC wiki, the schematic and the vendor trees; rewrote the pin-out page, 41 rows each with a source |
-| 2026-09-27 | Answered my own questions from the sources: the boot chain from BootROM to kernel, the clock, the USB layout |
-| 2026-10-26 | Audited the ten demos against the mainline device tree; fixed four of them (GPIO line names, eMMC, video decoder, USB) |
+I read the FriendlyELEC wiki, the schematic and the vendor trees, rewrote my pin-out notes from them,
+and later checked all ten demos against the mainline device tree. Four needed fixing (GPIO line names,
+eMMC, the video decoder, USB).
 
-A few things the reading settled:
-
-- 1.5 GHz is the rated clock. The 2 GHz people quote is FriendlyELEC's overclock test, not a spec.
-- The four type-A USB ports sit behind one GL852G USB 2.0 hub, so they share 480 Mbit/s.
-- Mainline still supports the board (its device tree was last changed on 2026-01-14), but the eMMC
-  node is disabled by default. Armbian or LibreELEC are the sane OS choices today.
-- Pin 10 of the header is GPIOY_14; the schematic's net label says GPIOY_13, which is a typo.
-- U-Boot has to be wrapped with Amlogic's signed FIP blobs, then written with `dd` from sector 1,
-  keeping the MBR.
+1.5 GHz is the rated clock. The 2 GHz people quote is FriendlyELEC's overclock test, not a spec. The
+four type-A USB ports sit behind one GL852G USB 2.0 hub, so they share 480 Mbit/s. Mainline still
+supports the board (its device tree was last touched in January 2026), but the eMMC node is disabled
+by default, so Armbian or LibreELEC are the sane OS choices today. Pin 10 of the header is GPIOY_14;
+the schematic's net label says GPIOY_13, which is a typo. And U-Boot has to be wrapped with Amlogic's
+signed FIP blobs, then written with `dd` from sector 1, keeping the MBR.
 
 Only one demo has run anywhere: `gpio_led_blink` passes against `gpio-sim` on my PC. Every README says
 "result when run" with an empty slot for the first real log.
