@@ -1,0 +1,57 @@
+---
+layout: default
+title: "Radxa ROCK 3A (RK3568)"
+short_description: "Bare metal, FreeRTOS on four A55s, a 154 ms boot, NPU without Linux, Android 14, a hidden RISC-V MCU"
+status: "In Progress"
+picture: "assets/images/boards/rock3a/rock-3a.jpg"
+latest_release: "2026-11-22: hub page with seven STAR write-ups"
+index: 20
+publish: true
+permalink: /embedded/boards/rock3a/
+board_hub: true
+---
+
+# Radxa ROCK 3A (RK3568)
+
+![ROCK 3A on my desk]({{ '/assets/images/boards/rock3a/rock-3a.jpg' | relative_url }})
+
+The ROCK 3A is Radxa's Pi-sized board with a Rockchip RK3568: four Cortex-A55 cores, a Mali-G52,
+an NPU (Rockchip says 0.8 or 1 TOPS, depending on which doc you read), LPDDR4X (mine has 8 GB), eMMC and a 16 MiB SPI NOR. I bought it because I wanted an
+RK3568 I could afford, with an NPU I could poke at and a datasheet-level manual (the TRM) that is
+actually public.
+
+The first thing I did with it, a few years ago, was a Yocto port. In October 2026 I came back to it
+with a different question: how far down can I go on this chip? Not "install
+Debian and run a demo", but start from the BootROM and own every stage I can.
+
+It went further than I planned. Most of what follows was done in about five weeks of evenings and a
+couple of nights.
+
+## Timeline
+
+| When | What happened |
+|---|---|
+| by Jan 2023 | Yocto port of the Rock-3A machine for meta-radxa (my older post, listed below) |
+| 2026-10-15 | Mainline boot chain (TF-A, U-Boot, kernel) built on the PC, before the board was even plugged in |
+| 2026-10-16 | First bare-metal code from Maskrom: SRAM, then DRAM, then a FreeRTOS shell |
+| 2026-10-18 | FreeRTOS SMP on all four cores (needed my own AArch64 SMP port) |
+| 2026-10-23 | Boot from SPI NOR, FreeRTOS on core 3 before Linux, 154 ms after power-on |
+| 2026-10-24 | Debian 13 on the eMMC next to FreeRTOS, NPU working, then clocked to 1 GHz |
+| 2026-11-01 | Webcam, NPU face detection and HDMI all driven from FreeRTOS, no Linux |
+| 2026-11-18 | Android 14 ported (Radxa only ships it for the ROCK 3C) |
+| 2026-11-19 | Offline Vietnamese voice assistant on the board's CPU |
+| 2026-11-20 | WS2812 ring finally lit, driven by the RISC-V MCU hidden inside the RK3568 |
+
+## The stories
+
+Each page below is one milestone, written as Situation / Task / Action / Result, with the numbers I
+measured on this board.
+
+{% include board_children.html board="rock3a" %}
+
+## Still open
+
+A few things never got a clean result, so they're not pages yet: the board resets itself after running
+two 1280x720 webcams at once (cause not found), 640x480 webcam frames only reach 21.6 to 23.6 fps
+on the RTOS because my JPEG decoder takes 28 ms each, and the LED ring shows no blue at 3.3 V. The
+Real-ESRGAN x4 upscaler on the NPU (2026-11-21) is too fresh to write up.
