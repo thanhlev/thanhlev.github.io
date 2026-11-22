@@ -67,6 +67,9 @@ SPI0 at 50 MHz, reads an app header at NAND `0x10000`, copies the app straight i
 `0x40000000`, checks it and jumps. The app checks an 8 MiB `.bss` array (that could never fit in SRAM)
 and blinks.
 
+![What my SPL does]({{ '/assets/images/boards/d1-nezha/d1_spl_flow.png' | relative_url }})
+*The SPL in five steps, numbers from its UART output: PLL to 1008 MHz, DDR3 trained in 51 124 us, SPI0 at 50 MHz, the app header at NAND `0x10000`, jump to `0x40000000`.*
+
 ## Result
 
 - My code runs **straight from the boot ROM out of NAND**: no Tina, no OpenSBI, no U-Boot. The blink
@@ -75,6 +78,9 @@ and blinks.
   `pc=0x4000005a`, the 8 MiB `.bss` check with **0 bad words**.
 - The ROM's fallback is real and measured: block 0 empty -> it boots **copy 1** (`boot_media 0x14`).
 - Back to stock any time: FEL, then `make restore`, and the 1 MiB readback matches the backup.
+
+![Boot ROM fallback to copy 1]({{ '/assets/images/boards/d1-nezha/d1_rom_fallback.png' | relative_url }})
+*The undo test as a picture: block 0 all `ff`, the ROM moves to Tina's copy at `0x20000` and says so in the header (`boot_media = 0x14`).*
 
 ## What I'd do next
 

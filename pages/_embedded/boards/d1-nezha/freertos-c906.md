@@ -29,6 +29,9 @@ Why FreeRTOS and not RT-Thread, which has D1 BSPs? Those are RT-Smart: S-mode wi
 through OpenSBI and U-Boot, and they want GNU GCC. I'd have had to throw away my boot path, my
 toolchain and my shell. FreeRTOS's generic RISC-V port runs in M-mode and leaves the timer to me.
 
+![M-mode only vs S-mode on OpenSBI]({{ '/assets/images/boards/d1-nezha/d1_mode_pair.png' | relative_url }})
+*The two roads, from my own notes on the D1 boot chain: left, everything at physical addresses with no MMU and the CLINT mine; right, OpenSBI in M-mode and a kernel at `0xffff_ffff_8...` through page tables. (Some Vietnamese labels.)*
+
 ## Task
 
 FreeRTOS V11.2.0 on the C906 with a 1 kHz tick from the CLINT, an interrupt-driven console, all the
@@ -91,6 +94,9 @@ an idle hook with `wfi`:
 999 ms at 1008 MHz: sleeping retired 225457 instructions (1007367730 cycles counted), spinning 377840483: 0.05% of the work
 idle is wfi
 ```
+
+![Instructions retired while asleep: spin vs wfi]({{ '/assets/images/boards/d1-nezha/d1_idle_wfi.png' | relative_url }})
+*Same 999 ms, every task asleep: 517 million instructions with the idle task spinning, 225 thousand with `wfi`. Log scale, or the green bar wouldn't show.*
 
 (`mcycle` keeps counting through `wfi` on the C906, so it can't show sleep. That's why the first demo
 lied.) The temperature sensor also read -10 C at first; it needed a trim value from the SID copied in.

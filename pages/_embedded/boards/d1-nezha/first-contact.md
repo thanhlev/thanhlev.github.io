@@ -31,6 +31,9 @@ and later a USB-C cable on the OTG port.
 Measure, on the board, everything I'd otherwise take from the docs: clocks, RAM, flash, the boot chain,
 the ISA. Then find a way into FEL (the boot ROM's USB mode) that doesn't need someone to press a button.
 
+![reboot efex path into FEL]({{ '/assets/images/boards/d1-nezha/d1_fel_path.png' | relative_url }})
+*Where this ended up: `reboot efex` from an adb shell, U-Boot waits about 3 s, gives up, boot0 sees the flag and the ROM comes up in FEL as `1f3a:efe8`. No hand on the board.*
+
 ## Action
 
 **UART.** The boot log answered half the list by itself:
@@ -67,6 +70,9 @@ In RVV 0.7.1, `vtype = 0x08` means e32/m1, so `vl = 4` gives VLEN = 4 x 32 = 128
 same encoding would be e16 and give `vl = 8`. And `vsetivli` only exists in 1.0. So it's T-Head's 0.7.1
 (mainline calls it `xtheadvector` from Linux 6.14 on), not binary compatible with RVV 1.0. Anything
 built with `-march=rv64gcv` will die with illegal instruction here. That explains the ncnn page.
+
+![vtype 0x08 read as RVV 0.7.1 and as RVV 1.0]({{ '/assets/images/boards/d1-nezha/d1_rvv_vtype.png' | relative_url }})
+*The two readings of the same answer. Only 0.7.1 gives `vl = 4` for e32 at VLEN 128, and only 0.7.1 has no `vsetivli`.*
 
 One odd thing I caught: in the first run, after the `SIGILL` handler returned, `vl` read 128 and
 `vtype` 3, not what I'd set. Without signals (the second probe) the registers held across `printf`,

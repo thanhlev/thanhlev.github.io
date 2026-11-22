@@ -37,6 +37,9 @@ my own.
 | 2026-09-30 | HDMI from FreeRTOS (colour bars at 720p60 and 1080p60), then a USB webcam on screen |
 | 2026-10-01 | XR829 Wi-Fi on mainline Linux 6.8, 22 Mbit/s; Wi-Fi scan from FreeRTOS; power-management demos |
 
+![Stock boot chain vs the ones I built]({{ '/assets/images/boards/d1-nezha/d1_boot_chains.png' | relative_url }})
+*That week as four boot chains: the stock Tina one I found in NAND, then mine. Grey is vendor code, green is mine, blue is upstream I built myself. (No photo of my Nezha yet, so this is the overview.)*
+
 ## The stories
 
 {% include board_children.html board="d1-nezha" %}

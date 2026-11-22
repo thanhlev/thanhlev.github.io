@@ -31,6 +31,9 @@ XR829 driver only exists in Allwinner's Tina tree, but someone in the community 
 Get the XR829 associated with WPA2, DHCP and ping on a mainline kernel, booted through my own chain
 over FEL (my boot0, OpenSBI, U-Boot), without touching the NAND. Then see what throughput it gets.
 
+![Boot chains, the FEL row is this story]({{ '/assets/images/boards/d1-nezha/d1_boot_chains.png' | relative_url }})
+*The bottom row is this story: everything written over FEL, my boot0 setting MAEE before OpenSBI, U-Boot unzipping the kernel, Linux 6.8.12 with the XR829. The NAND stays as it is.*
+
 ## Action
 
 **Kernel version.** I tried the port against 6.18 first. Too far: after fixing the include path there
@@ -66,6 +69,9 @@ The thing I kept looking past was that WARN line. printk to the serial console i
 70-character line at 115200 baud takes about 6 ms. One per frame. With the console quiet:
 **2.4 -> 20.3 Mbit/s**. Made permanent (warning lowered to a debug level, tailroom reserved in the
 driver), three runs per direction after a clean boot: 22 Mbit/s both ways, steady.
+
+![A console line per frame costs 6 ms]({{ '/assets/images/boards/d1-nezha/d1_console_cost.png' | relative_url }})
+*Why one WARN line mattered: at 115200 baud a 70-character line is about 6 ms of synchronous printk, once per frame. Blue is the driver's actual work.*
 
 ## Result
 

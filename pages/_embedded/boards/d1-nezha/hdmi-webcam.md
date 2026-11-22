@@ -31,6 +31,9 @@ BSP does all of it. I wanted to see it on my RTOS.
 Get a picture out of HDMI from FreeRTOS. Then get webcam frames in over USB and onto that screen. Then
 see how far one 1 GHz core can take it.
 
+![Webcam to HDMI data path]({{ '/assets/images/boards/d1-nezha/d1_uvc_path.png' | relative_url }})
+*Where it ended: the frame never passes through the CPU. My EHCI driver points USB DMA at the buffers, the DMA controller gathers the payloads, the Video Engine decodes, the display engine scales to HDMI.*
+
 ## Action
 
 **HDMI first.** With a monitor plugged in, the board saw hot-plug and read the 256-byte EDID. For the
@@ -86,6 +89,9 @@ payloads, the VE decodes and raises an interrupt, the display engine scales and 
 - H.264 on the VE: **720x1280 at 30.00 fps for 120 s, 0 late, 9.5 % CPU**.
 - Three of my own mistakes on record: IRQ 91 vs 107, a clock left off (twice), and blaming the power
   supply for a missing `SET_INTERFACE`.
+
+![MJPEG decode fps and CPU load]({{ '/assets/images/boards/d1-nezha/d1_mjpeg_fps.png' | relative_url }})
+*Who decodes the JPEGs, measured: the C906 alone tops out at 13.2 fps at 640x480 with the core at 100 %; the Video Engine does 1080p at 29.8 fps, and with DMA in the path 29.4 fps at 1.2 % CPU.*
 
 ## What I'd do next
 
