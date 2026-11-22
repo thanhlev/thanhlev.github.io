@@ -4,7 +4,7 @@ title: "Docker Networking"
 short_description: "What each Docker network driver builds out of bridges, veth, macvlan and iptables"
 status: "Done"
 picture: "assets/images/docker_network.png"
-latest_release: "2026-11-22: rewritten in my own words"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 6
 publish: true
 ---
@@ -20,7 +20,17 @@ publish: true
 
 ---
 
-## How Docker networking works
+## Situation
+
+Every machine I run Docker on ends up with a `docker0`, a few `br-<id>` bridges, a row of `vethXXXX` interfaces in `ip link`, and a pile of iptables rules I never wrote. Then the questions start: why can't the host ping the macvlan container, why do names resolve on one network and not on another, why does `-p` do nothing with `--network host`. I wanted to stop guessing at those.
+
+## Task
+
+Work out, driver by driver, which ordinary Linux pieces Docker builds, show the commands that create and inspect them, and write down what breaks with each one and why.
+
+## Action
+
+### How Docker networking works
 
 Short answer: Docker doesn't have its own network stack. Each container lives in its own **network namespace** (own interfaces, routes, iptables rules, sockets), and the driver decides which ordinary Linux pieces connect that namespace to the outside: a bridge plus veth pairs, a macvlan, an ipvlan, a VXLAN tunnel, or nothing. If you know those pieces (see [Virtual Interfaces in Linux]({{ site.baseurl }}{% link _linux_networking/virtual_interface.md %})), Docker networking stops being magic.
 
@@ -46,7 +56,7 @@ And the same drivers compared on what you usually care about:
 | overlay | namespace + VXLAN | yes, on the overlay subnet | several hosts (Swarm) |
 | none | everything | no | no network at all, or you plumb it by hand |
 
-## Bridge (the default)
+### Bridge (the default)
 
 This is the one you get without asking. A Linux bridge on the host, a veth pair per container, and NAT on the way out.
 
@@ -106,7 +116,7 @@ docker network connect my_bridge existing_container
 docker network inspect my_bridge
 ```
 
-### The iptables rules behind it
+#### The iptables rules behind it
 
 Roughly what Docker writes for the default bridge and one `-p 8080:80`. Newer Docker releases split this over more chains (and can use nftables), so take it as the shape and run `iptables-save | grep -i docker` on your own machine to see the real thing.
 
@@ -128,7 +138,7 @@ Roughly what Docker writes for the default bridge and one `-p 8080:80`. Newer Do
 
 Which chain each of these sits in, and why DNAT has to happen in PREROUTING, is the topic of [Linux Packet Filtering]({{ site.baseurl }}{% link _linux_networking/linux_table_chain.md %}).
 
-### Names only resolve on networks you create
+#### Names only resolve on networks you create
 
 This one catches people: on the default `docker0` network, containers can't find each other by name. On a network you created yourself, Docker runs an embedded DNS server at `127.0.0.11` inside each container, and container names resolve.
 
@@ -149,7 +159,7 @@ docker run -d --network app_net --name web myapp
 | Subnet/gateway | daemon-wide setting only | per network |
 | Inter-container traffic (ICC) switch | global | per network |
 
-## Host
+### Host
 
 No namespace, no bridge, no NAT. The container's processes use the host's interfaces, routes and iptables as if they ran on the host.
 
@@ -182,7 +192,7 @@ What follows from that:
 - You give up network isolation between the container and the host completely.
 - On Docker Desktop (macOS/Windows) the "host" is the Linux VM Docker runs in, not your laptop. This driver mostly makes sense on a Linux host.
 
-## MACVLAN
+### MACVLAN
 
 Each container gets its own MAC address and shows up on the LAN as one more device. No NAT: the container takes an address from the physical subnet, and anything on the LAN can reach it directly.
 
@@ -240,7 +250,7 @@ ip route add 192.168.1.51/32 dev macvlan-shim
 
 Where it fits: things that must sit on the LAN as their own box (a DHCP or DNS server, monitoring), or moving a service from a VM/bare metal while keeping its IP.
 
-## IPVLAN
+### IPVLAN
 
 Same idea as macvlan, but every container shares the parent's MAC. The kernel tells them apart by IP instead of by MAC.
 
@@ -296,7 +306,7 @@ How I'd pick between the two:
 | Cloud VM, or a switch port that limits MACs | ipvlan |
 | Want iptables rules to apply to container traffic | ipvlan `l3s` (or macvlan) |
 
-## Overlay
+### Overlay
 
 For containers on different hosts that should share one L2 network. Each host gets a VXLAN interface, frames between hosts are wrapped in UDP (port 4789). This is what Docker Swarm uses.
 
@@ -338,7 +348,7 @@ docker network create --driver overlay --opt encrypted my_secure_overlay
 
 Practical notes: the hosts must let UDP 4789 (VXLAN), TCP/UDP 7946 (gossip) and TCP 2377 (Swarm management) through. The encapsulation adds 50 bytes per frame, so the MTU inside the overlay has to be smaller than on the wire, which is the first thing I'd check if big transfers stall while ping works. On a single host there's no reason to pay for any of this; a bridge does the job.
 
-## None
+### None
 
 Only `lo` inside the container.
 
@@ -369,7 +379,7 @@ ip netns exec custom ip route add default via 10.0.0.1
 ```
 {% endraw %}
 
-## Docker Compose
+### Docker Compose
 
 Compose makes one bridge network per project (`<project>_default`) unless you declare your own. Splitting into a front and back network looks like this:
 
@@ -410,7 +420,7 @@ networks:
 
 Services on the same network find each other by service name. A service can sit on several networks (`web` above is on both). `internal: true` means that network has no way out to the internet, so `db` can't phone home even if something inside it tries.
 
-## The kernel pieces underneath
+### The kernel pieces underneath
 
 | Kernel feature | Where Docker uses it |
 |---------------|--------------|
@@ -444,7 +454,7 @@ About speed: I haven't benchmarked the drivers against each other myself. The ex
 
 There's also `"iptables": false` in `/etc/docker/daemon.json`. It doesn't make anything faster in a way I could tell you; what it does is stop Docker from writing any NAT or filter rules, so published ports and outbound NAT stop working until you write the rules yourself.
 
-## When something doesn't work
+### When something doesn't work
 
 | Symptom | Usual cause | Check |
 |---------|-------------|-------|
@@ -476,7 +486,11 @@ docker inspect -f '{{json .NetworkSettings.Networks}}' <container> | jq
 ```
 {% endraw %}
 
-## Defaults I'd pick
+## Result
+
+Docker networking isn't magic any more: it's a namespace per container plus a bridge and veth pairs, a macvlan, an ipvlan or a VXLAN tunnel, and iptables NAT/filter rules on the host, all of which `ip`, `bridge`, `iptables` and `nsenter` can show. Most of the surprises come straight from those pieces: macvlan and ipvlan can't reach their own host, macvlan can't work over Wi-Fi, names only resolve on user-defined networks, overlay needs a smaller MTU. I haven't measured the drivers against each other, so there's no speed number here.
+
+The defaults I'd pick now:
 
 - A user-defined bridge rather than `docker0`. You get DNS by name and per-network isolation for free.
 - `internal: true` for anything backend-only, like a database network.
@@ -484,7 +498,9 @@ docker inspect -f '{{json .NetworkSettings.Networks}}' <container> | jq
 - macvlan/ipvlan only when the container really has to be a box on the LAN; host network only when the extra hop is a measured problem.
 - Overlay only when there really are several hosts.
 
-Not covered here yet: IPv6 on these networks, and the nftables backend of newer Docker releases.
+## What I'd do next
+
+Run `iperf3` between two containers on each driver on my own machine, so the speed order above becomes a measured one. Not covered here yet either: IPv6 on these networks, and the nftables backend of newer Docker releases.
 
 ## References
 

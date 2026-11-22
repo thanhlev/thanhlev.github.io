@@ -5,7 +5,7 @@ short_description: "ifupdown, NetworkManager, systemd-networkd, Netplan and Open
 picture: "assets/images/linux_network_management.png"
 status: "Done"
 index: 2
-latest_release: "2026-11-22: rewritten in my own words, the empty sections filled in"
+latest_release: "2026-11-22: rewritten as a STAR story"
 publish: true
 ---
 
@@ -19,9 +19,19 @@ publish: true
 
 ---
 
-## Who brings the interface up
+## Situation
 
-The question behind this page: once a driver has registered `eth0` or `wlan0` with the kernel, who actually brings it up and gives it an address? The answer depends on the distro, and there are five common answers.
+The driver posts on this site stop at the point where the driver has registered `eth0` or `wlan0` with the kernel. After that, someone still has to bring the interface up and give it an address, and depending on the distro that someone is different: `/etc/network/interfaces` on Debian, `nmcli` on a desktop, YAML under `/etc/netplan/` on Ubuntu, `uci` on an OpenWrt router. Earlier versions of this page had the headings for them and not much under them.
+
+## Task
+
+Go through the five common network managers, with real config for the common cases (static, DHCP, Wi-Fi, VLAN, bridge, bond, WireGuard), and work out which one to pick and how they can share one machine without fighting.
+
+## Action
+
+### Who brings the interface up
+
+The answer depends on the distro, and there are five common answers.
 
 | Tool | Since | Where you meet it | Config |
 |------|-----|-----------------|-----------------|
@@ -31,7 +41,7 @@ The question behind this page: once a driver has registered `eth0` or `wlan0` wi
 | Netplan | 2017 | Ubuntu; writes config for NM or networkd | `/etc/netplan/` |
 | netifd | 2012 | OpenWrt routers | `/etc/config/network` |
 
-## Ifupdown
+### Ifupdown
 
 After the driver has registered the net interface with the kernel, `ifup` brings it up and configures it, using what it reads from `/etc/network/interfaces`. Ubuntu moved away from this in 17.10 (to Netplan), but Debian and a lot of embedded systems still use it.
 
@@ -79,7 +89,7 @@ iface br0 inet static
     bridge_fd 0
 ```
 
-### Hooks
+#### Hooks
 
 For Wi-Fi or virtual interfaces there's a step before L3: the L2 link has to exist first (associate with the AP, create the bridge). ifupdown does that through hook scripts, run in alphabetical order from these directories:
 
@@ -112,7 +122,7 @@ More on the L2 side: [Linux Wi-Fi Driver]({{ site.baseurl }}{% link _linux_netwo
 
 Reference: [ifupdown2 User Guide](https://cumulusnetworks.github.io/ifupdown2/ifupdown2/userguide.html)
 
-## NetworkManager
+### NetworkManager
 
 [NetworkManager](https://networkmanager.dev/) is a daemon built for machines whose network changes all the time: a laptop moving between Wi-Fi networks, a desktop with a VPN, a box with several profiles. It's the default on most desktop distros (Ubuntu, Fedora, Arch) and on RHEL. On Ubuntu it's still what runs on the desktop, just configured through Netplan since 17.10.
 
@@ -139,7 +149,7 @@ It handles Ethernet, Wi-Fi, mobile broadband, VPNs, DSL, bridges, bonds and VLAN
 └──────────────────────────────────────────────────────┘
 ```
 
-### nmcli
+#### nmcli
 
 ```bash
 nmcli connection show
@@ -191,7 +201,7 @@ nmcli connection add type wireguard con-name wg0 ifname wg0 \
     wireguard.private-key "$(wg genkey)"
 ```
 
-### What a profile looks like on disk
+#### What a profile looks like on disk
 
 ```ini
 # /etc/NetworkManager/system-connections/office.nmconnection
@@ -211,7 +221,7 @@ dns=8.8.8.8;8.8.4.4;
 method=auto
 ```
 
-### Keeping it away from interfaces it shouldn't touch
+#### Keeping it away from interfaces it shouldn't touch
 
 NetworkManager will happily try to manage Docker's bridges and veths. Tell it not to:
 
@@ -226,7 +236,7 @@ unmanaged-devices=interface-name:docker*;interface-name:veth*;interface-name:br-
 
 Reference: [NetworkManager documentation](https://networkmanager.dev/docs/)
 
-## Systemd-networkd
+### Systemd-networkd
 
 The systemd one. It watches for network devices, configures the ones that match a file, and can create virtual devices itself. No GUI, nothing interactive: you write files, it applies them. That makes it a good fit for servers, containers, and anything set up by automation (cloud-init, Ansible). DNS goes to `systemd-resolved`. For Wi-Fi it needs `wpa_supplicant` or `iwd` next to it.
 
@@ -366,7 +376,7 @@ resolvectl flush-caches
 
 Reference: [systemd-networkd](https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd.html)
 
-## Netplan
+### Netplan
 
 Netplan is easy to misread: it doesn't manage anything. It's a YAML front end: you describe the network once, `netplan generate` turns it into config for a **renderer** (systemd-networkd or NetworkManager), and that daemon does the work. Ubuntu has used it since 17.10, with networkd as the renderer on servers and NetworkManager on desktops.
 
@@ -508,7 +518,7 @@ Things that bite:
 
 Reference: [Netplan documentation](https://netplan.readthedocs.io/)
 
-## Netifd
+### Netifd
 
 OpenWrt's network daemon, and the only one there. It's a small C program, which matters on a router with 64 MB of RAM. Config is UCI (`/etc/config/network`); `netifd` turns it into devices (physical, bridge, VLAN), interfaces (the L3 part) and protocol handlers (static, dhcp, pppoe, wireguard, ...), reacts to hotplug events, and tells the firewall which zone each interface belongs to.
 
@@ -643,7 +653,7 @@ When an interface goes up or down, netifd runs the scripts in `/etc/hotplug.d/if
 
 Reference: [OpenWrt network configuration](https://openwrt.org/docs/guide-user/network/network_configuration)
 
-## Which one, and can they share a machine?
+### Which one, and can they share a machine?
 
 | Situation | What I'd use |
 |----------|-----------------|
@@ -674,7 +684,13 @@ network:
 
 Two managers on one interface is the classic cause of an address that keeps coming back after you delete it, or a DHCP lease that flips every few minutes. `networkctl list` and `nmcli device status` both say which interfaces they think they own; checking both is the first thing I'd do.
 
-Not covered yet: ConnMan and `iwd`'s own network config, which some embedded images ship instead of all of the above.
+## Result
+
+The five managers do the same job from five config formats: ifupdown runs scripts from `/etc/network/interfaces` and its hook directories, NetworkManager keeps profiles and `nmcli` edits them, systemd-networkd matches `.netdev`/`.network` files to interfaces, Netplan writes config for one of those two, and netifd reads `/etc/config/network` through `uci`. Which one I'd use comes down to the distro and the kind of box (the table above). The rule that matters more than the choice is one owner per interface: two managers on the same interface is where the address that keeps coming back and the flipping DHCP lease come from.
+
+## What I'd do next
+
+ConnMan and `iwd`'s own network config, which some embedded images ship instead of all of the above.
 
 ## References
 
