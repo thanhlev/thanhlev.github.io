@@ -45,17 +45,17 @@ and from older posts: keep them.
 
 {% assign robo_hubs = site.robotics | where_exp: "i", "i.publish != false" | where: "board_hub", true %}
 {% if robo_hubs.size > 0 %}
-<div class="sec" id="robotics"><h2>Robotics</h2><span>§1b · one hub per robot, each milestone as Situation / Task / Action / Result</span></div>
+<div class="sec" id="robotics"><h2>Robotics</h2><span>§2 · one hub per robot, each milestone as Situation / Task / Action / Result</span></div>
 {% include hub_grid.html coll="robotics" %}
 {% endif %}
 
-<div class="sec" id="embedded-systems"><h2>Embedded notes</h2><span>§2 · single posts, older projects and reading notes</span></div>
+<div class="sec" id="embedded-systems"><h2>Embedded notes</h2><span>§3 · single posts, older projects and reading notes</span></div>
 {% include card_grid.html items=emb_notes %}
 
-<div class="sec" id="linux-networking"><h2>Linux networking</h2><span>§3 · where a packet actually goes</span></div>
+<div class="sec" id="linux-networking"><h2>Linux networking</h2><span>§4 · where a packet actually goes</span></div>
 {% include card_grid.html items=net %}
 
-<div class="sec" id="linux-general"><h2>Linux general</h2><span>§4 · tools and snippets I keep coming back to</span></div>
+<div class="sec" id="linux-general"><h2>Linux general</h2><span>§5 · tools and snippets I keep coming back to</span></div>
 {% include card_grid.html items=gen %}
 
 <div class="last"></div>
