@@ -89,6 +89,3 @@ March 2019).
 
 How many servos, which board drove them, how the gait was tuned. I still owe this page those
 three.
-
-*Update (2026-11-22): I cut the hardware table from the earlier version of this page (gyro,
-LiPo pack, "16+ high-torque servos"). It didn't come from my notes, and the videos don't show it.*
