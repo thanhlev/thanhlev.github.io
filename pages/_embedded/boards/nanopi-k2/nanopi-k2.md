@@ -25,6 +25,10 @@ The vendor BSP has been frozen since 2017, so anything current means mainline. I
 for it (GPIO, CPU governor, thermal, eMMC and network benchmarks, Wi-Fi scan, USB, IR, HDMI framebuffer,
 video decode) before having it on the bench, and that's where it still is.
 
+![NanoPi K2 overview: S905, RTL8211F, AP6212, four USB ports behind one GL852G hub](/assets/images/boards/nanopi-k2/k2_overview.png)
+*The K2 as I know it from reading: an S905, its Ethernet and Wi-Fi chips, and the one detail I want to test first, four USB ports sharing one 480 Mbit/s hub.*
+
+
 ## What I've done so far (no board)
 
 | When | What |
