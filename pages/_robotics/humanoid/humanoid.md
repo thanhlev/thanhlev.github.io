@@ -3,7 +3,7 @@ layout: default
 title: "Humanoid (17-servo biped)"
 short_description: "My thesis robot, brought back as a model: my own C++ kinematics library, MuJoCo physics, an online walker with IMU feedback"
 status: "In Progress"
-picture: "assets/images/robotics/humanoid/walk_push.png"
+picture: "assets/images/robotics/humanoid/humanoid_cover.jpg"
 latest_release: "2026-11-22: hub page with three STAR write-ups"
 index: 3
 publish: true
