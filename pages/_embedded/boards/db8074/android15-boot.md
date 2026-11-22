@@ -70,6 +70,10 @@ for the old names): patch 0003. The Adreno had no IOMMU, so I gave it a 128 MiB 
 `cma=256M`. `system_server` died on `ashmem`, which mainline doesn't have: `sys.use_memfd=true`.
 That got me the boot animation.
 
+![The Android boot animation on the DragonBoard's own panel](/assets/images/boards/db8074/d8k_bootanim_panel.jpg)
+*Android 15's boot animation on the board's own panel. The S/N and MAC labels are painted over.*
+
+
 **Up to the launcher.** Seven more, one after another: init.rc overriding my memfd setting back to
 ashmem, no audio HAL (audioserver had crashed 162 times in one log), a missing `xi:include` file, a
 vendor extension nobody serves, ext4 without POSIX ACL, an OCMEM lock failure after a warm reboot, and
@@ -90,6 +94,10 @@ again. New kernels go in from Android itself:
   after 264 s (15 November, software rendering).
 - From 16 November it boots by itself at power-on: home screen after 66 s from eMMC.
 - The stock boot chain was never written; the backup still matches its SHA-256 sums.
+
+![Android Settings, About tablet: Model DragonBoard 8074 (APQ8074), Android version 15](/assets/images/boards/db8074/d8k_about_android15.jpg)
+*"About tablet": DragonBoard 8074 (APQ8074), Android version 15. A photo of the screen, a bit blurry.*
+
 
 The 264 s was painfully slow. That's the [next story](/embedded/boards/db8074/speed-up).
 

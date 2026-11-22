@@ -38,6 +38,10 @@ persist) exactly where it is.
 board has no EDL mode and no SD boot for the boot chain, so it would never start again. So, no fastboot
 for the GPT. I'd write it with `dd` from Android, and read it back.
 
+![fastboot flash partition erases the whole eMMC; dd from Android with pre-checks does not](/assets/images/boards/db8074/d8k_gpt_paths.png)
+*The two roads: fastboot's `write_gpt()` erases the whole eMMC first (no EDL here, so that's the end), my road writes 67 sectors and reads them back.*
+
+
 **The layout.** The GPT was full, 20 of 20 entries, so I couldn't add a partition. But two neighbours
 were useless as they were: p12 "system" (stock Android 4.3, 1 GiB, unused) and p13 "userdata"
 (12 GiB, holding super). I moved the boundary between them:

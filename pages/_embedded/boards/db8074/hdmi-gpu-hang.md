@@ -26,6 +26,10 @@ result: "HDMI at 1080p60 on kernel 6.6; GPU hangs from 5 to 10 a minute down to 
 for MSM8974; it lives only in the vendor 3.4 kernel. A day later, with HDMI working, a new problem: after
 some minutes of use the screen turned to garbage and then HDMI went black.
 
+![The DragonBoard on my desk driving an external monitor over HDMI](/assets/images/boards/db8074/d8k_hdmi_desk.jpg)
+*My desk with HDMI working: the panel and the external monitor both showing Android. Labels painted over, the room behind blurred.*
+
+
 ## Task
 
 Drive HDMI from kernel 6.6. Then make the board survive more than a few minutes of real use.
@@ -45,6 +49,10 @@ connector `connected`, EDID 256 bytes. Still black. Two blockers above the kerne
    second (`too many planes! cnt=6`). Fix: `vendor.hwc.drm.use_overlay_planes=0`.
 2. Android 15 waits for the user to confirm mirroring to a new display. Fix:
    `cmd display enable-display 2`.
+
+![Android's Mirror to external display dialog on the board's panel](/assets/images/boards/db8074/d8k_hdmi_mirror_prompt.jpg)
+*Blocker 2 in the flesh: Android 15 asking on the panel whether to mirror to the new display. Until someone answers, HDMI stays black.*
+
 
 Then `hdmi_pll` = 148 500 000 Hz (1080p60) and a picture on the monitor.
 
@@ -87,6 +95,10 @@ Patch 0100 keeps carveout buffers that are in use off the shrinker's list; 0101 
 ```
 carveout 0x68100000 size 262144 KiB used 62644 KiB free 199496 KiB largest-free 190368 KiB
 ```
+
+![GPU hangs per minute at 450, 200 and 27 MHz vs zero after patch 0100](/assets/images/boards/db8074/d8k_hang_rate.png)
+*Why I stopped blaming the GPU clock: 6, 5 and 10 hangs a minute at three caps, then 0 in 41 minutes with patch 0100.*
+
 
 ## What I'd do next
 

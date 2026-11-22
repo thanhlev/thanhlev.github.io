@@ -52,6 +52,10 @@ then 576 again. It's a module parameter, so it applies immediately:
 echo 576000 > /sys/module/qcom_krait_l2/parameters/l2_max_khz
 ```
 
+![L2 A/B on one boot: memory read, latency and tokens/s at 576 and 1036.8 MHz](/assets/images/boards/db8074/d8k_l2_ab.png)
+*The clean A/B: 576, 576 again, then 1036.8 MHz on the same boot. Memory read goes from 4433 to 7084 MB/s; one-thread tokens/s barely move.*
+
+
 ![Run 1 vs run 2 for every model, and LLM tokens/s by thread count](/assets/images/boards/db8074/d8k_l27_ai.png)
 
 ## Result
@@ -78,6 +82,10 @@ At 4 threads the LLM difference is inside the noise.
 | yolo-fastestv2 (ncnn) | 36.2 ms | one core |
 | SmolVLM-256M | called four llamas with guitars "four people holding guitars" | |
 | SDXS 512 × 512 | 318.36 s per image, peak RSS 1 118 132 kB | |
+
+![A watercolor robot duck generated on the DragonBoard by SDXS](/assets/images/boards/db8074/d8k_sdxs_duck.png)
+*"a cute robot duck, watercolor": what four Krait cores drew in 318.36 s, one step, not touched up. The GPU sat idle.*
+
 
 Run 1 to run 2 at 1 thread was 1.13 to 2.73 tok/s, but three things changed at once (the L2, free
 memory from 55 MB to 1029 MB, and the CPU clocks the thermal limits allowed). Going by the clean A/B

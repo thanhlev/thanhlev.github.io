@@ -62,6 +62,10 @@ One thing that didn't help, for the record: changing the console log level alone
 - DSI error IRQ: about 59 000/s to about 1/s.
 - Touch works.
 
+![Boot time per change: 264 s, 291 s, 97 s, 64 s](/assets/images/boards/db8074/d8k_boot_steps.png)
+*The same story in four bars: the log level did nothing (291 s), the GPU did most (97 s), the Krait clocks did the rest (64 s).*
+
+
 The catch: under a 4-core load without a heatsink it hits the 75 °C trip and throttles between 0.88
 and 2.15 GHz.
 
