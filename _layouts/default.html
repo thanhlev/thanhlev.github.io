@@ -32,7 +32,8 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
     {% include head-custom.html %}
   </head>
 
-  {% assign is_home = false %}{% if page.url == "/" %}{% assign is_home = true %}{% endif %}
+  {% comment %} `wide: true` in front matter (About, 2026-11-22) = full-width page like home: no doc header, no contents rail. {% endcomment %}
+  {% assign is_home = false %}{% if page.url == "/" or page.wide %}{% assign is_home = true %}{% endif %}
   <body class="{% if is_home %}is-home{% else %}is-doc{% endif %}">
 
     <header class="topbar">
