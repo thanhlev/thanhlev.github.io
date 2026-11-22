@@ -14,7 +14,7 @@ result: "718 webcam frames in 30 s (25.09 fps), faces in 703, JPEG to screen 28.
 
 # Webcam to NPU to HDMI, with no Linux on the chip
 
-[Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }}) · work from 2026-10-31 to 2026-11-01, runs on the board 2026-11-01
+[Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![What each core does for one frame]({{ '/assets/images/boards/rock3a/rtos_face_cores.png' | relative_url }})
 
@@ -41,7 +41,7 @@ shown on HDMI. No Linux, no Rockchip code at run time, no USB stack borrowed fro
 
 I split it into milestones and checked each one against Linux before moving on.
 
-**1. The NPU from the RTOS.** The NPU doesn't run models, it runs "regcmd" lists: arrays of 64-bit
+The NPU first. It doesn't run models, it runs "regcmd" lists: arrays of 64-bit
 words in DRAM, each saying "write this value into this register". The NPU's own program controller
 fetches the list by DMA. So without Linux the job is: power the NPU up (RK809 regulator over I2C, clocks,
 power domain, resets), put a list in DRAM, point the controller at it.
@@ -52,17 +52,12 @@ the DDR firewall, which a Maskrom boot leaves closed for every non-secure master
 failed with `DMA_READ_ERROR`; and the field layout, which is the RK3588's, not the RK3568's. I fixed the
 first two and then took a shortcut for the third: run the model once under `librknnrt` on Debian with
 a small `LD_PRELOAD` that dumps every NPU buffer before and after the job, and replay those buffers from
-the RTOS. (Two days later I rewrote my generator from Rockchip's RK3568 TRM: on the RK3568 the MAC
-array and the accumulator are two blocks with separate start bits, so my RK3588 list had fetched A and
-B and then nobody multiplied them. The new list matches `librknnrt`'s word for word on the PC, but I
-haven't run it on the board yet.)
+the RTOS.
 
-**2. A USB host from scratch.** The "webcam" turned out to be a 4-port USB 2.0 hub with two UVC cameras
+Then a USB host from scratch. The "webcam" turned out to be a 4-port USB 2.0 hub with two UVC cameras
 behind it (a stereo pair). I wrote the DWC3 host setup and an xHCI driver: command ring, event ring,
 device contexts, route strings for devices behind a hub. The device and configuration descriptors my
 RTOS read are byte-identical to what Linux shows in sysfs (43, 699 and 699 bytes).
-
-**3. MJPEG frames.** Isochronous transfers: one TD per 125 µs microframe, a ring of 128 kept full, UVC
 
 ![Which USB port goes to which controller]({{ '/assets/images/boards/rock3a/face_usb_map.png' | relative_url }})
 
@@ -72,13 +67,14 @@ Measured on Debian first, on 2026-11-01: the webcam's port is on the USB 2.0 sid
 
 The nine steps my `usb` command goes through, measured on the board: SoC + DWC3 up in 409/429 ms (400 ms of it deliberate waits), xHCI reset 3 ms, hub and both cameras enumerated in 743 ms, descriptors identical to Linux's 43 + 699 + 699 bytes.
 
-probe/commit to agree on 640x480 MJPEG, then glue the payloads into frames using the FID/EOF bits.
+MJPEG frames come over isochronous transfers: one TD per 125 µs microframe, a ring of 128 kept full,
+UVC probe/commit to agree on 640x480 MJPEG, then the payloads glued into frames using the FID/EOF bits.
 
-**4. A JPEG decoder.** Baseline, 4:2:2, Huffman, integer IDCT, decoding straight into the network's
+The JPEG decoder is my own too: baseline, 4:2:2, Huffman, integer IDCT, decoding straight into the network's
 320x320 BGR letterbox, rotated 180° because of how the camera sits. On the PC the same C file gives
 44.6 to 53.1 dB PSNR against Pillow.
 
-**5. The pipeline.** FreeRTOS SMP, tasks pinned to cores, queues carrying frame-slot indexes, a
+The pipeline around it is FreeRTOS SMP, tasks pinned to cores, queues carrying frame-slot indexes, a
 double-buffered framebuffer flipped at the frame start.
 
 One bug worth keeping: at 640x480 the decoder takes 28 ms, and my USB poll only drained 64 TDs per call.
@@ -87,7 +83,7 @@ times in 10 s. Draining every finished TD before returning fixed it: 0 errors.
 
 ```
 rock3a> face cam 9601 320 30
-  frames .......... 718 shown, 25.09 fps (first to last flip) · 0 JPEGs dropped (pipeline full) · 0 bad · 0 without flip · 0 more drained after the end (not in these numbers)
+  frames .......... 718 shown, 25.09 fps (first to last flip) · 0 JPEGs dropped (pipeline full) · 0 bad
   faces ........... in 703 of 718 frames, best score 100 %
   JPEG decode ..... core 0 · avg 9201 us · min 8841 · max 9368 (320x240 -> 320x240 in 320x320, rot180)
   latency ......... whole JPEG -> its flip: avg 28029 us · min 19632 · max 36377
@@ -109,7 +105,8 @@ isn't a box, dot or label.
 
 ## What I'd do next
 
-- 640x480 only reaches 21.6 to 23.6 fps because the decode takes 28 ms. Splitting the decode across two
-  cores, or using the chip's own JPEG decoder, is the obvious fix. I haven't tried either.
-- The network itself is still Rockchip's: compiled once by their toolkit, captured from `librknnrt`.
-  At run time there's no Rockchip code, but I can't build a new model for the RTOS without Linux yet.
+640x480 only reaches 21.6 to 23.6 fps because the decode takes 28 ms. Splitting the decode across two
+cores, or using the chip's own JPEG decoder, is the obvious fix. I haven't tried either.
+
+The network itself is still Rockchip's: compiled once by their toolkit, captured from `librknnrt`. At
+run time there's no Rockchip code, but I can't build a new model for the RTOS without Linux yet.

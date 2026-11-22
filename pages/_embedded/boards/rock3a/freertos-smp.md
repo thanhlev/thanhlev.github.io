@@ -14,7 +14,7 @@ result: "CoreMark 7634.83 at 1992 MHz on one core, 15.33/MHz on four, tick jitte
 
 # FreeRTOS on all four Cortex-A55 cores, with my own shell
 
-[Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }}) · measured 2026-10-16 to 2026-10-18
+[Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![rtos_cli boot banner on the UART]({{ '/assets/images/boards/rock3a/rtos_cli_banner.png' | relative_url }})
 
@@ -28,10 +28,10 @@ at EL3.
 
 ## Task
 
-- FreeRTOS V11.2.0 on core 0, loaded as the 472 behind the DDR blob, with a shell on UART2.
-- Commands that read the chip for real: clocks, temperature, PMIC, GPIO, I2C, SPI NOR, watchdog.
-- Run the CPU at its top OPP and measure it with CoreMark.
-- Then one kernel on all four cores (SMP), which the upstream AArch64 port doesn't support.
+FreeRTOS V11.2.0 on core 0, loaded as the 472 behind the DDR blob, with a shell on UART2 whose
+commands read the chip for real (clocks, temperature, PMIC, GPIO, I2C, SPI NOR, watchdog). Run the CPU
+at its top OPP and measure it with CoreMark. Then one kernel on all four cores, which the upstream
+AArch64 port doesn't support.
 
 ![The smp command on my shell]({{ '/assets/images/boards/rock3a/smp_cores.png' | relative_url }})
 
@@ -39,11 +39,11 @@ What I was after, as my shell shows it: `smp on` puts all four A55s at 100 % (35
 
 ## Action
 
-**EL3 down to Secure EL1.** My `start.S` sets up what the missing firmware would have: the watchdog,
+First, EL3 down to Secure EL1. My `start.S` sets up what the missing firmware would have: the watchdog,
 the STIMER, `CNTFRQ`, the GIC distributor, then `eret`s into Secure EL1. That means every interrupt is
 Group 1 Secure. The tick is the EL1 physical timer, PPI 30, at priority `0xF0`.
 
-**cpufreq.** Linux's DTS lists 1992 MHz at the same 1.15 V as 1800, but mainline's clock driver has no
+For cpufreq, Linux's DTS lists 1992 MHz at the same 1.15 V as 1800, but mainline's clock driver has no
 divider row for 1992 and refuses it. I wrote the switch myself in the usual order: raise `vdd_cpu` on
 the TCS4525 first, park the core on GPLL, relock the APLL, set the bus dividers, move back. 1992 needs
 `force`, because nothing upstream validates it.
@@ -56,7 +56,7 @@ rock3a> cpufreq 1992 force
   64 MiB at 0x10000000: write 5295 MB/s, read 3057 MB/s, copy 2464 MB/s, errors 0
 ```
 
-**CoreMark** went in as a shell command, with the TSADC temperature printed next to each score.
+CoreMark went in as a shell command, with the TSADC temperature printed next to each score.
 
 ![cpufreq and ps on the UART]({{ '/assets/images/boards/rock3a/smp_cpufreq_ps.png' | relative_url }})
 
@@ -64,21 +64,21 @@ rock3a> cpufreq 1992 force
 
 It ran at six clocks from 407 to 1991 MHz; the CRCs matched every time (`crcfinal 0x33ff`).
 
-**SMP.** This was the real work. FreeRTOS has had SMP since V11.0, but each port has to provide it, and
-the AArch64 port doesn't (I checked V11.3.2 too, on 2026-10-18). The only AArch64 SMP port upstream is
+SMP was the real work. FreeRTOS has had SMP since V11.0, but each port has to provide it, and
+the AArch64 port doesn't (I checked V11.3.2 too). The only AArch64 SMP port upstream is
 for the Cortex-R82, so I made `ARM_AARCH64_SRE` per-core after that one: core ID from `MPIDR_EL1.Aff1`
 (the R82 port uses Aff0, which is 0 on every A55, so that bit me first), ticket spinlocks, SGI 0 to make
 another core reschedule, and per-core state arrays.
 
-Three things came back to bite me in the first SMP build:
+The first SMP build bit back straight away. Every idle core took about 1000 SGIs per second: the
+time-slicing check counts running tasks as waiting, so four idle tasks kept swapping with each other
+every tick. I patched it locally to count only tasks that are ready and not running, and idle cores 1
+and 2 went to 0 SGIs at rest.
 
-- **~1000 SGIs per second on every idle core.** The time-slicing check counts running tasks as
-  waiting, so four idle tasks kept swapping with each other every tick. I patched it locally to count
-  only tasks that are ready and not running. Idle cores 1 and 2 went to 0 SGIs at rest.
-- **Idle time read 58.34 of 4 cores.** The run-time counters only update on a switch-out, which barely
-  happened anymore. The idle hooks now measure their own time.
-- **A wedged core went unnoticed**, because only core 0's tick kicks the watchdog. Core 0 now sends a
-  heartbeat SGI 1 every second; a core that misses 10 in a row stops the kicks and the chip resets.
+Then idle time read 58.34 of 4 cores. The run-time counters only update on a switch-out, which barely
+happened anymore, so the idle hooks now measure their own time. And a wedged core went unnoticed,
+because only core 0's tick kicks the watchdog. Core 0 now sends a heartbeat SGI 1 every second; a core
+that misses 10 in a row stops the kicks and the chip resets.
 
 ```
 rock3a> smp hang 3

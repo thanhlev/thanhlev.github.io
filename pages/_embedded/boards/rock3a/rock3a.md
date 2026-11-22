@@ -29,27 +29,12 @@ couple of nights.
 
 ![Five ways to run the board, measured]({{ '/assets/images/boards/rock3a/overview_options.png' | relative_url }})
 
-The overview I made on 2026-11-02 (labels in Vietnamese): the same RetinaFace job in five set-ups, from bare FreeRTOS to Debian with PREEMPT_RT. Top: power-on to the first face, 3.30 s on the RTOS against 10.17 s on Debian. Middle: one inference, 3.44 ms replayed on the NPU at 600 MHz, 1407 ms on the CPU with numpy. Bottom: worst lateness of a 1 kHz task under load, 6.1 µs on an RTOS core against 349 µs on Linux PREEMPT.
-
-## Timeline
-
-| When | What happened |
-|---|---|
-| by Jan 2023 | Yocto port of the Rock-3A machine for meta-radxa (my older post, listed below) |
-| 2026-10-15 | Mainline boot chain (TF-A, U-Boot, kernel) built on the PC, before the board was even plugged in |
-| 2026-10-16 | First bare-metal code from Maskrom: SRAM, then DRAM, then a FreeRTOS shell |
-| 2026-10-18 | FreeRTOS SMP on all four cores (needed my own AArch64 SMP port) |
-| 2026-10-23 | Boot from SPI NOR, FreeRTOS on core 3 before Linux, 154 ms after power-on |
-| 2026-10-24 | Debian 13 on the eMMC next to FreeRTOS, NPU working, then clocked to 1 GHz |
-| 2026-11-01 | Webcam, NPU face detection and HDMI all driven from FreeRTOS, no Linux |
-| 2026-11-18 | Android 14 ported (Radxa only ships it for the ROCK 3C) |
-| 2026-11-19 | Offline Vietnamese voice assistant on the board's CPU |
-| 2026-11-20 | WS2812 ring finally lit, driven by the RISC-V MCU hidden inside the RK3568 |
+The overview I made (labels in Vietnamese): the same RetinaFace job in five set-ups, from bare FreeRTOS to Debian with PREEMPT_RT. Top: power-on to the first face, 3.30 s on the RTOS against 10.17 s on Debian. Middle: one inference, 3.44 ms replayed on the NPU at 600 MHz, 1407 ms on the CPU with numpy. Bottom: worst lateness of a 1 kHz task under load, 6.1 µs on an RTOS core against 349 µs on Linux PREEMPT.
 
 ## The stories
 
-Each page below is one milestone, written as Situation / Task / Action / Result, with the numbers I
-measured on this board.
+Each page below is one thing I got working, written as Situation / Task / Action / Result, with the
+numbers I measured on this board. The old Yocto port is in the list too.
 
 {% include board_children.html board="rock3a" %}
 
@@ -58,4 +43,4 @@ measured on this board.
 A few things never got a clean result, so they're not pages yet: the board resets itself after running
 two 1280x720 webcams at once (cause not found), 640x480 webcam frames only reach 21.6 to 23.6 fps
 on the RTOS because my JPEG decoder takes 28 ms each, and the LED ring shows no blue at 3.3 V. The
-Real-ESRGAN x4 upscaler on the NPU (2026-11-21) is too fresh to write up.
+Real-ESRGAN x4 upscaler on the NPU is too fresh to write up.
