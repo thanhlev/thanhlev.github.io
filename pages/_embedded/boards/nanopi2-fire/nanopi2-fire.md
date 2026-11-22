@@ -33,16 +33,14 @@ but on bare metal and FreeRTOS. It went a lot further than that.
 
 *The whole board on one chip diagram, 82 s: one boot ROM, four ways I start code on it (USB, my own card, FriendlyELEC's Android card, and the Linux + RTOS split I haven't booted yet). It opens on my screen 3.4 s after power-on. (Vietnamese on-screen text, music track if you unmute.)*
 
-## Timeline
+## What I got it to do
 
-| When | What happened |
-|---|---|
-| 2026-09-30 | Board on USB with no card: the boot ROM shows up as `04e8:1234`. First bare-metal code runs from SRAM, then 1 GiB of DDR3 comes up |
-| 2026-10-01 | FreeRTOS with a shell, then AMP (one kernel per core) and SMP on two and four cores |
-| 2026-10-01 | USB webcam on HDMI from FreeRTOS, then moved onto DMA + the JPEG unit; CPU at 1.2 GHz; a microSD image that boots by itself |
-| 2026-10-11 → 12 | Android 7.1.2 from FriendlyELEC on a card, a WS2812 ring over spidev and a small Android app for it |
-| 2026-10-15 → 24 | Person and face detection on the webcam stream, then a week of making it fast: 642 ms down to 27 ms a run |
-| 2026-11-02 | Linux on cores 0–2 next to FreeRTOS on core 3: built, not run on the board yet |
+The USB boot ROM let me load my own code into SRAM, and from there I brought up the 1 GiB of DDR3 by
+hand. On top of that went FreeRTOS with a shell, first one kernel per core and then one kernel on all
+four. Then the USB webcam on HDMI, with the copy on DMA and the decode on the JPEG unit, and a microSD
+card that boots straight into it. On a different card I ran FriendlyELEC's Android 7.1.2 and drove a
+WS2812 ring from it. The last big piece was person and face detection on the webcam stream, which went
+from 642 ms a run down to 27 ms.
 
 ## The write-ups
 
@@ -52,5 +50,6 @@ Each one is written as Situation / Task / Action / Result, with the numbers I me
 
 ## Still open
 
-Not written up because there's no result yet: Linux + FreeRTOS side by side (built, never booted),
-and the Mali-400 GPU taking over part of the detector (planned, not started).
+Two things aren't written up because there's no result yet. Linux on cores 0–2 next to FreeRTOS on
+core 3 is built but has never booted on the board. And the Mali-400 GPU taking over part of the
+detector is only a plan, I haven't started it.

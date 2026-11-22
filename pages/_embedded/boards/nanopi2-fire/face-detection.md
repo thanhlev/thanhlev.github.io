@@ -33,8 +33,7 @@ with NEON, under my own FreeRTOS, with no Linux and no onnxruntime.
 
 ## Task
 
-Draw a box around every person on the HDMI picture, live. Then (my next request, a week later) only
-faces, and fast enough that the box keeps up when I move my head.
+Draw a box around every person on the HDMI picture, live. Then, a week later, only faces, and fast enough that the box keeps up when I move my head.
 
 ## Action
 
@@ -44,13 +43,10 @@ I picked FastestDet (small, 80 COCO classes) and wrote `tools/fdet_gen.py` to lo
 a list of ops (73 of them: conv, depthwise, pointwise, pool, upsample) plus a blob of fp16 weights
 (489 KB) linked into the firmware. `fdet.c` runs them in C, with NEON kernels.
 
-Before touching the board I checked it on the PC against onnxruntime, on 17 images:
-
-| Variant | vs onnxruntime | Verdict |
-|---|---|---|
-| fp32 | head matches to 1.3e-4, every person box matches (IoU ≥ 0.9) | ok |
-| fp16 weights, plain C and NEON (under qemu) | every person box kept, 17/17 | used |
-| per-channel int8 | box logits off by up to 4.9, person count wrong on 5/17 | rejected |
+Before touching the board I checked it on the PC against onnxruntime, on 17 images. In fp32 the
+head matched to 1.3e-4 and every person box matched (IoU ≥ 0.9). With fp16 weights, plain C and NEON
+(under qemu) kept every person box, 17/17, so that's what I used. Per-channel int8 I threw out: box
+logits off by up to 4.9, and the person count wrong on 5 of 17.
 
 The checker also found my bug: a crowd photo gave 73 candidate cells and my list had 64 slots, so a
 0.657 box fell out before NMS. 256 slots now.
@@ -59,14 +55,8 @@ The checker also found my bug: a crowd photo gave 73 candidate cells and my list
 
 ### First run on the board
 
-The board was unplugged for a week, so the first real run was 23 October. The first load didn't even
-finish (my USB-serial adapter's TX wire, it turned out). Then:
-
-| Cores | One run (person, 352×352) | People found |
-|---|---|---|
-| 1 | 642 ms | 6 |
-| 4 | 184 ms (3.49×) | the same 6 |
-
+The first load didn't even finish (my USB-serial adapter's TX wire, it turned out). Then a person
+run at 352×352 took 642 ms on one core and 184 ms on four (3.49×), and both found the same 6 people.
 It worked. It was also hopeless for a moving person.
 
 ### Faces only: YuNet
@@ -108,21 +98,18 @@ I also tried the JPU decoding a half-size copy just for the network. It saved 0.
 
 ## Result
 
-| YuNet 320×192, 4 cores | One run |
-|---|---|
-| first version | 85 ms (9.7 runs/s, face at 0.930) |
-| conv with 4 outputs per pass | 73 ms |
-| four layers rewritten, bit-identical | **42 ms** |
+YuNet at 320×192 on 4 cores started at 85 ms a run (9.7 runs/s, face at 0.930). A conv with 4
+outputs per pass got it to 73 ms, and the four rewritten layers to **42 ms**, bit-identical.
 
 ![Bar charts: FastestDet 642, 184, 139, 87 ms; YuNet 85, 73, 42, 27, 25.5 ms](/assets/images/boards/nanopi2-fire/np2f_detect_chart.png)
 
 *Every step I measured, left to right. The green bars come from the [L2 cache story](/embedded/boards/nanopi2-fire/hang-and-l2-cache): FastestDet 642 → 87 ms, YuNet 85 → 25.5 ms.*
 
-- Person detection: **642 ms → 184 ms** going from 1 to 4 cores; FastestDet later down to 139 ms.
-- Faces: **85 → 42 ms** on the CPU alone, with outputs identical bit for bit. The webcam keeps 30.00
-  frames a second the whole time.
-- Worker cores: ~71 % busy with a face in view, 12–14 % with nobody (was ~85 % flat out).
-- `detect max <n>` now gives exactly n runs a second (my first version undershot: 15 gave 9.9):
+Person detection went **642 ms → 184 ms** from 1 to 4 cores, and FastestDet later down to 139 ms.
+Faces went **85 → 42 ms** on the CPU alone, outputs identical bit for bit, and the webcam kept 30.00
+frames a second the whole time. The worker cores are ~71 % busy with a face in view and 12–14 % with
+nobody (they were ~85 % flat out before). `detect max <n>` now gives exactly n runs a second (my
+first version undershot: 15 gave 9.9):
 
 | detect max | runs/s | CPU of a core |
 |---|---|---|

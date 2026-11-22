@@ -35,8 +35,8 @@ that should be on and isn't?
 
 ## Task
 
-1. Find why it hangs, and make any future hang reset the board and tell me where it was.
-2. Audit the CPU setup for anything left switched off, and turn it on.
+Find why it hangs, and make any future hang reset the board and tell me where it was. Then go
+through the CPU setup for anything left switched off, and turn it on.
 
 ## Action
 
@@ -93,14 +93,13 @@ l2 bench
 I invalidated all ways and set Control = 1. The board hung on the spot, every time. I wrote it up as
 "needs something from Nexell's secure boot" and made `l2 on` refuse. That conclusion was wrong.
 
-The next day I went through FriendlyELEC's kernel and U-Boot properly. Two pieces were missing:
-
-| Missing | Where I found it | What happened without it |
-|---|---|---|
-| address filter `0xC0000000..0xCFF00000` | `arm,filter-ranges` in the kernel's `s5p4418.dtsi`, written by `cache-l2x0.c` | the PL310 sent device accesses (my UART at `0xC00A1000`) to its DRAM port: instant hang |
-| L2 RAMs out of retention, TIEOFF bits 12–13 | U-Boot `cpu.c`, "set l2 cache tieoff" (`QUADL2C_L2RET1N_0/_1 = 1`) | with only the filter: no hang, but the bench read back wrong data |
-
-Plus the vendor's latencies (3 4 3) and prefetch offset 7. It now runs from a hook before the scheduler starts.
+The next day I went through FriendlyELEC's kernel and U-Boot properly, and found two pieces I'd
+missed. The kernel gives the PL310 an address filter, `0xC0000000..0xCFF00000`. Without it the L2
+sent device accesses (my UART at `0xC00A1000`) to its DRAM port, which is the instant hang. And
+U-Boot takes the L2 RAMs out of retention through TIEOFF bits 12–13 (`QUADL2C_L2RET1N_0/_1 = 1`).
+With only the filter there was no hang, but the bench read back wrong data.
+With both, plus the vendor's latencies (3 4 3) and prefetch offset 7, it works. It now runs from a
+hook before the scheduler starts.
 
 ### And 1.4 GHz, only when there's a face
 

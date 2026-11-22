@@ -33,9 +33,9 @@ completely and start from my own code.
 
 ## Task
 
-- Find out what the board does with no card.
-- Get a bare-metal program of my own running from internal SRAM, with a UART shell.
-- Then bring up the 1 GiB of DDR3 myself, from that SRAM program, and prove all of it works.
+First, find out what the board does with no card. Then get a bare-metal program of my own running
+from the internal SRAM, with a UART shell. And from that SRAM program, bring up the 1 GiB of DDR3
+myself and prove every bit of it works.
 
 ## Action
 
@@ -45,7 +45,6 @@ With the slot empty, `lsusb` showed a new device:
 
 ```
 $ lsusb
-...
 Bus 003 Device 030: ID 04e8:1234 Samsung Electronics Co., Ltd
 ```
 
@@ -67,7 +66,7 @@ But it was garbage, with `}}}` where my `===` banner should be. Wrong baud rate.
 
 ![UART at 115200: line-shaped bursts of garbage](/assets/images/boards/nanopi2-fire/np2f_uart_garbage.png)
 
-*What 115200 looked like: the right number of lines, the wrong bits. Screenshot from the re-run on 17 October.*
+*What 115200 looked like: the right number of lines, the wrong bits.*
 
 So I scanned. Open the port at a rate, send Enter, look for my `np2f>` prompt:
 
@@ -111,9 +110,6 @@ np2f>
 I also added a `reset` command (the same PWRCONT/PWRMODE bits U-Boot uses). With no card, a soft reset
 drops the board straight back into USBBOOT, so the loop "edit, `make run`, test, `reset`" needs no hands.
 
-Side lesson: I stopped my serial logger with `pkill -f`, and the pattern matched my own shell's command
-line. Killed myself. Stopped it by PID after that.
-
 ### DDR3
 
 The `dram_init` demo raises PLL3 to 800 MHz and calls Nexell's `ddr3_initialize()` from their `bl1`
@@ -154,12 +150,12 @@ memtest
   fill 0x71000000..0xB0FFFFFF seed 0xFFFFFFFF: OK (0 errors); write 39045 ms (27 MB/s), read 49852 ms (21 MB/s)
 ```
 
-- **1 GiB DDR3 at 800 MHz, 0 errors over 2 × 1 GiB**, init in 68 ms, all from a 12 KB SRAM program.
-- The timer checked against the wall clock: 177.4 s by the PMU counter vs 177 s by `date`.
-- 27/21 MB/s looks awful, and it is: MMU and D-cache are still off in this demo. It's a "does every
-  bit work" test, not a bandwidth number.
-- The DLL lock value moves a bit from boot to boot (152, 154, 159). I think temperature and voltage
-  at training time explain it, but I didn't measure that.
+So: **1 GiB of DDR3 at 800 MHz, 0 errors over 2 × 1 GiB**, init in 68 ms, all from a 12 KB SRAM
+program. The timer agrees with the wall clock too (177.4 s by the PMU counter, 177 s by `date`).
+
+27/21 MB/s looks awful, and it is. MMU and D-cache are still off in this demo, so it's a "does every
+bit work" test, not a bandwidth number. The DLL lock value also moves a bit from boot to boot (152,
+154, 159). I think temperature and voltage at training time explain it, but I didn't measure that.
 
 ![dram_init memtest on the UART](/assets/images/boards/nanopi2-fire/np2f_dram_memtest.png)
 

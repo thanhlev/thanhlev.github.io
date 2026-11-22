@@ -33,9 +33,9 @@ next (webcam, HDMI), not a superloop.
 
 ## Task
 
-1. FreeRTOS from DRAM with a shell that tests every peripheral I can test without wiring.
-2. AMP: a second, separate FreeRTOS on core 1, talking to core 0.
-3. SMP: one FreeRTOS kernel scheduling tasks on two cores, then all four.
+Three steps. FreeRTOS from DRAM, with a shell that tests every peripheral I can test without wiring.
+Then AMP: a second, separate FreeRTOS on core 1, talking to core 0. Then SMP: one FreeRTOS kernel
+scheduling tasks on two cores, and after that all four.
 
 I started the AMP/SMP part just before going to bed on 1 October and let it run overnight. That
 matters later.
@@ -48,13 +48,11 @@ A tiny SRAM loader brings up DRAM and the MMU, then pulls the app over the UART 
 FreeRTOS's own ARM_CA9 one. It needed the GIC base (at `0xF0000000`, with the SoC's VIC behind it on
 PPI 31), unique interrupt priorities and the A9 private timer for the tick.
 
-Things that bit me on the way:
-- The RTC read as dead. Its registers sit behind an `ALIVEPWRGATEREG` gate; the counter had been
-  running all along. Open the gate, read, close it.
-- PWM duty came out inverted (TCMPB = TCNTB × duty, not the other way).
-- The AXP228 temperature formula I took first was the AXP20x one.
-
-24 commands in the end, and a `test` command that runs 11 checks:
+A few things bit me on the way. The RTC read as dead, but its registers sit behind an
+`ALIVEPWRGATEREG` gate and the counter had been running all along (open the gate, read, close it).
+PWM duty came out inverted (TCMPB = TCNTB × duty, not the other way). And the AXP228 temperature
+formula I took first was the AXP20x one. 24 commands in the end, plus a `test` command that runs 11
+checks:
 
 ![rtos_cli test: 11 passed, 0 failed](/assets/images/boards/nanopi2-fire/np2f_rtos_test.png)
 
@@ -111,22 +109,16 @@ better about it.
 
 ## Result
 
-| Test | Number |
-|---|---|
-| rtos_cli peripheral tests | 11 / 11 |
-| AMP cross-core round trip | **10 µs**, 5/5 restarts, 0 lost pings |
-| SMP, two tasks on two cores | **1.98×** |
-| SMP ping after the CPSIE fix | 33 000 round trips, no hang, abort or overflow |
-| SMP, four busy tasks on four cores | **3.93×** |
-| Lock cost with four-way contention | 1.7 µs per increment; both locks balanced after 10 million operations |
-| Context switch, SMP vs single-core | ~24 µs vs 5.3 µs (not profiled yet) |
+All 11 peripheral tests pass. The AMP round trip from core 0 to core 1 and back is **10 µs**, with
+5/5 restarts and 0 lost pings. Under one SMP kernel, two busy tasks on two cores run **1.98×** as
+fast as on one, and four on four run **3.93×**. After the CPSIE fix `smp ping` did 33 000 round trips
+with no hang, abort or overflow. A lock increment costs 1.7 µs with all four cores fighting for it,
+and both locks were still balanced after 10 million operations. The one number I don't like: a
+context switch takes ~24 µs on SMP against 5.3 µs single-core, and I haven't profiled it yet.
 
 ![Bar chart: 1x on one core, 1.98x on two, 3.93x on four, against a dashed perfect-scaling line](/assets/images/boards/nanopi2-fire/np2f_smp_chart.png)
 
 *Busy tasks under one SMP kernel: 1.98× on two cores, 3.93× on four. The dashed line is perfect scaling; four cores lose about 2 % to the locks.*
-
-Later I added `core <n> on|off <load %>` to the webcam firmware: each of cores 1–3 comes up in about
-1 ms and runs exactly the load it's given, while the stream on core 0 keeps 664 of 664 frames.
 
 One more mistake, found weeks later: the per-core "busy %" was divided by the core's own cycle
 counter, which stops while the core sleeps in `wfe`. A core asleep half the time showed 100 %. It now

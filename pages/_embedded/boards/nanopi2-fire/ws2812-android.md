@@ -33,9 +33,8 @@ bytes whose bit patterns look like WS2812 pulses on MOSI.
 
 ## Task
 
-1. Put Android on a microSD card and boot it.
-2. Drive the ring from Android through `/dev/spidev0.0`, smoothly.
-3. A small app on the HDMI screen to pick effects, with the ring drawn live.
+Put Android on a microSD card and boot it. Drive the ring from Android through `/dev/spidev0.0`,
+smoothly. And write a small app for the HDMI screen to pick effects, with the ring drawn live.
 
 ## Action
 
@@ -108,9 +107,9 @@ eight of them written for this ring.
 
 ## Result
 
-- **16-LED WS2812B-V5 ring, every effect smooth from Android**, probe 16/16 and readback 480/480 bytes clean.
-- Frames at ~190–208 Hz; up to 170 RGB LEDs per ioctl with the default spidev buffer.
-- App APK 33 KB, ran on the board, a tap changed the real ring.
+**The 16-LED WS2812B-V5 ring runs every effect smoothly from Android**, probe 16/16 and readback
+480/480 bytes clean. Frames go out at ~190–208 Hz, and the default spidev buffer fits up to 170 RGB
+LEDs per ioctl. The 33 KB app ran on the board, and a tap on the screen changed the real ring.
 
 A week later the same green-flickering LED 0 came back in my bare-metal driver for the webcam
 firmware. Same cause: the PL022 lets go of the TX line when it isn't sending, so it floated high

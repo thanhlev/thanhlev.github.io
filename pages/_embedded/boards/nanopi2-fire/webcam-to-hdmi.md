@@ -73,14 +73,15 @@ The catch was the copy from USB buffers into the frame: 59 % of the CPU with `me
 
 *Why 1080p was stuck at 5 frames a second (USB carries ~24 MB/s, raw 1080p30 needs 124) and how MJPEG + the JPU got it to 29.46 with the CPU at 1.7 %. (Vietnamese on-screen text, no sound.)*
 
-Notes from that table:
-- `ps` lied at first. It divided each task's run time by the total since boot, mostly time with no
-  stream. I added `uvc load <ms>` that measures over a window. All the numbers above are from that.
-- The JPU decoded, but most frames ended in a "bitstream buffer end" interrupt. I'd set the end
-  address to the data length rounded up to 1 KiB, and the JPU fetches whole pages ahead. Setting the
-  end to the end of the whole 4 MiB buffer fixed it: 4.86 ms per 720p frame.
-- The camera's MJPEG has no Huffman table (DHT) in it, so the JPU's built-in standard tables are used.
-  Remember that one, it comes back in the [hang story](/embedded/boards/nanopi2-fire/hang-and-l2-cache).
+`ps` lied at first. It divided each task's run time by the total since boot, which was mostly time
+with no stream, so I added `uvc load <ms>` to measure over a window. Every number in the table comes
+from that.
+
+The JPU decoded, but most frames ended in a "bitstream buffer end" interrupt. I'd set the end address
+to the data length rounded up to 1 KiB, and the JPU fetches whole pages ahead. Setting the end to the
+end of the whole 4 MiB buffer fixed it: 4.86 ms per 720p frame. Also, the camera's MJPEG has no
+Huffman table (DHT) in it, so the JPU uses its built-in standard tables. Remember that one, it comes
+back in the [hang story](/embedded/boards/nanopi2-fire/hang-and-l2-cache).
 
 Then interrupts instead of polling (one DMAC interrupt per frame, the JPU returns 0.85 ms sooner), and
 H.264 from a clip on the VPU: 720p30, 5.4 ms per frame, **0.3 % CPU**, 2397 frames over 7 loops with
@@ -105,10 +106,10 @@ short of the end, and the faster CPU looked sooner. Both fixed.
 
 ### Modes, OSD, and a card that boots on its own
 
-- `stream <mode> <fps>`: all 50 modes of the B525 (25 sizes, YUYV and MJPEG). YUYV tops out at 10 fps
-  at 720p because USB 2.0 carries ~18–20 MB/s of image; MJPEG keeps 30 fps at every size.
-- The OSD shows per-core load in Vietnamese or English for 0.1 % of the CPU (the clear moved to a DMA fill).
-- `uvc ae manual <ms>`: locking the exposure at 30 ms gives exactly 30.00 frames a second.
+`stream <mode> <fps>` picks any of the B525's 50 modes (25 sizes, YUYV and MJPEG). YUYV tops out at
+10 fps at 720p because USB 2.0 carries ~18–20 MB/s of image; MJPEG keeps 30 fps at every size. The
+OSD shows per-core load in Vietnamese or English for 0.1 % of the CPU, once I moved the clear to a DMA
+fill. And `uvc ae manual <ms>` locks the exposure: at 30 ms I get exactly 30.00 frames a second.
 
 <video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_uvc_ae_poster.jpg" style="width:100%;max-width:480px"><source src="/assets/videos/boards/nanopi2-fire/np2f_uvc_ae.mp4" type="video/mp4"></video>
 
@@ -124,12 +125,14 @@ flag instead.
 
 ## Result
 
-- **MJPEG to HDMI for 1.5–1.7 % of one core** up to 1080p30, against 66.5 % with `memcpy`.
-- 640×480 at 29.4 fps or 1280×720 at 9.9 fps (YUYV), 0 errors in 1671 frames.
-- H.264 720p30 for 0.3 %.
-- **From reset to the webcam on HDMI in 3.4 s**, no PC (over the UART it was ~80 s to load).
-- The board comes back from a power cycle with its last settings: OSD language, stream mode, cores
-  and their loads. Checked: English OSD, YUYV 1280×720 at 9.91 fps, 599 of 599 frames, core 2 at 40.4 %.
+**MJPEG to HDMI costs 1.5–1.7 % of one core** up to 1080p30, against 66.5 % with `memcpy`. Raw YUYV
+runs 640×480 at 29.4 fps or 1280×720 at 9.9 fps, 0 errors in 1671 frames, and H.264 720p30 from the
+VPU costs 0.3 %.
+
+From the card, **reset to webcam on HDMI takes 3.4 s** with no PC (loading over the UART was ~80 s).
+The board also comes back from a power cycle with its last settings: OSD language, stream mode, cores
+and their loads. I checked one: English OSD, YUYV 1280×720 at 9.91 fps, 599 of 599 frames, core 2 at
+40.4 %.
 
 One thing that never got fixed: my PC's USB-serial adapter drops off the bus at the moment the camera
 starts streaming (3 drops in 10 cycles, all 1–2.6 s after `SET_INTERFACE`). The scripts wait for it to
