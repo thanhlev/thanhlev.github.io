@@ -1,10 +1,12 @@
 ---
 layout: default
 title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]"
-short_description: "Information about SoC, Programming model, Register map"
+short_description: "My reading notes on the Cortex-M4F core: modes, stacks, registers, memory model, exceptions"
 picture: "assets/images/Cortex_M4F_Register_Set.png"
-latest_release: "Copy từ repo cũ qua"
-index: 8
+status: "Done"
+latest_release: "Copied from my old notes repo (2023-01)"
+index: 10
+publish: true
 ---
 
 # Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]
@@ -19,6 +21,12 @@ index: 8
 {:toc}
 
 -----------------------------------
+
+Part 2 of my TM4C123GH6ZRB reading notes (part 1:
+[memory, ROM and bootloader](/embedded/tm4c123gh6zrb-architecture-overview)). This half is the
+Cortex-M4F core as TI describes it in the datasheet: privilege levels, the two stacks, the register
+set, and how exceptions get in and out. The text is TI's, condensed; what's mine is the choice
+of what to keep.
 
 ## Block Diagram
 

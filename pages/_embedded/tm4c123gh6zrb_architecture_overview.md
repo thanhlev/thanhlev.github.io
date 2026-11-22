@@ -1,11 +1,12 @@
 ---
 layout: default
 title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]"
-short_description: "Information about architecture, RAM, ROM, Flash, Bootloader"
+short_description: "My reading notes from TI's datasheet: memory map, SRAM, flash, ROM, the ROM bootloader, EEPROM"
 status: "Done"
 picture: "assets/images/TM4C123GH6ZRB_cpu_block_diagram.png"
-latest_release: "Copied from old repo"
-index: 7
+latest_release: "Copied from my old notes repo (2023-01)"
+index: 9
+publish: true
 ---
 
 # Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]
@@ -21,6 +22,13 @@ index: 7
 {:toc}
 
 -----------------------------------
+
+These are my reading notes on TI's Tiva C TM4C123GH6ZRB, moved here in January 2023 from an
+older notes repo of mine. Almost everything below is quoted or condensed from TI's documents
+(the datasheet and the guides listed at the end), not something I measured. I wanted the memory
+layout and the boot path of the chip in one place: what sits in ROM, what the ROM bootloader does,
+where flash, SRAM and EEPROM are. Part 2 is the Cortex-M4F core itself:
+[TM4C123GH6ZRB part 2](/embedded/tm4c123gh6zrb-cortex-m4f-processor).
 
 ## Architectural Overview
 

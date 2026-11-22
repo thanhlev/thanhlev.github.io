@@ -1,11 +1,12 @@
 ---
 layout: default
 title: Tiny210 Information for development
-short_description: Memory map and boot-up information
+short_description: "My reading notes from the S5PV210 manual: address map, iROM/BL1/BL2 boot, boot block layout"
 status: "Done"
 picture: "assets/images/tiny210v2_i.jpg"
-latest_release: "Unknown"
-index: 6
+latest_release: "Copied from my old notes (2023-01)"
+index: 8
+publish: true
 ---
 
 # Tiny210 Information for development
@@ -21,6 +22,13 @@ index: 6
 {:toc}
 
 -----------------------------------
+
+My notes on FriendlyARM's Tiny210 (Samsung S5PV210 inside), from reading Samsung's S5PV210
+documentation. The tables and diagrams are Samsung's; what's mine is the selection and the
+order. I wanted to understand what happens between power-on and U-Boot on this board: what
+the iROM (BL0) loads, from which block of the SD card, and where it lands in memory. The block
+layout here is also why block 0 of the SD card stays free for the MBR (see
+[Disk Partition Tables](/linux_general/partition-table)).
 
 ## **SoC**
 

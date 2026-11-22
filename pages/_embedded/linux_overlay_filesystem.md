@@ -1,11 +1,12 @@
 ---
 layout: default
 title: "Linux Overlay File System"
-short_description: "Linux Overlay File System"
+short_description: "Ghi chép của mình về overlayfs: lower/upper, whiteout, và factory reset bằng cách xoá upper"
 picture: "assets/images/OverlayFS_Image.png"
 latest_release: "Init document"
-status: "Inprogress"
-index: 1
+status: "In Progress"
+index: 3
+publish: true
 ---
 
 # Linux Overlay File System
@@ -26,9 +27,9 @@ index: 1
 
 ## Introduction
 
-Tính năng "phôi phục cài đặt gốc" cần phải ưu tiên và bắt buộc phải có trên các thiết bị có sử dụng firmware/OS. Phương pháp phổ biến hay dùng là trích một phần của bộ nhớ để chứa một bản image "gốc". Khi cần thực hiện factory reset, chỉ cần copy image "gốc" sang phân vùng đang chạy.
+Mình đọc về overlayfs vì chuyện "khôi phục cài đặt gốc" (factory reset): thiết bị nào chạy firmware/OS cũng gần như bắt buộc phải có. Cách hay gặp là chừa một phần bộ nhớ để chứa một bản image "gốc"; khi cần factory reset thì copy image "gốc" đó sang phân vùng đang chạy.
 
-Giải pháp ở trên có  một chút lãng phí do phân vùng để chứa image "gốc" ít được sử dụng, hoặc có thể không bao giờ được dùng đến. Do đó "overlay" file system được ra đời nhằm tận dụng image gốc này trong quá trình sử dụng.
+Mình thấy cách này hơi phí: phân vùng chứa image "gốc" gần như nằm không, có khi cả đời máy không dùng tới. Overlay file system giải quyết đúng chỗ đó: tận dụng luôn image gốc trong lúc máy chạy bình thường.
 
 ## Nguyên tắc hoạt động
 
@@ -36,7 +37,7 @@ Giải pháp ở trên có  một chút lãng phí do phân vùng để chứa i
     <div class="column">
     <p>Overlay-filesystem là kết quả của việc overlaying một filesystem trên một filesystem khác. Như ở hình bên, Lower có thể  là factory image và là filesytem chỉ  có thể đọc. Upper là file system có thể đọc/ghi.<br><br>
 Kernel thực hiện overlay 2 loại file system này và cung cấp 1 file system mới để làm rootfs cho user-space. Một file/folder mà user nhìn thấy trên overlay file system thực chất được lưu trữ trên Lower file system hoặc Upper file system <br><br>
-For example, during the entire usage process, if a user only reads a file without needing to edit it, this file can be taken directly from Lower. When editing a file, a copy is created on the Upper file system to support data writing.<br><br>
+Ví dụ, trong suốt quá trình sử dụng, nếu user chỉ đọc một file mà không sửa thì file đó được lấy thẳng từ Lower. Khi sửa file, kernel tạo một bản copy trên Upper rồi ghi vào bản copy đó (copy-up).<br><br>
 Bằng cách sử dụng kỹ thuật overlay, rõ ràng ta đã có thể tận dụng được "factory image" bằng cách dùng các file read-only của nó. Cách này cũng giúp giảm dung lượng cho Upper file system do không phải copy toàn bộ những file read-only đó.</p>
   </div><div class="column">
         <img  src="./../../../assets/images/OverlayFS_Image.png" width="100%" height="100%">
@@ -60,6 +61,10 @@ Một thư mục được đánh dấu opaque bằng cách set thuộc tính xat
 
 ## Factory reset
 Factory reset thực hiện đơn giản bằng cách xóa toàn bộ dữ liệu trên Upper file system
+
+## Còn thiếu
+
+Bài này mới là phần lý thuyết mình đọc từ tài liệu kernel. Chưa có ví dụ `mount -t overlay` chạy thật trên board, nên mình để trạng thái "In Progress".
 
 ## Reference
 
