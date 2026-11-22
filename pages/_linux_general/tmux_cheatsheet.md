@@ -28,9 +28,6 @@ machine if needed. My session is called `thanhle` almost everywhere (the `boot.s
 [Bluetooth keyboard emulator](/embedded/keyboard-mouse-emulate-rpi) opens one with that name too),
 so that's the name in the examples below.
 
-The first version of this page was a short Vietnamese list from February 2023; this is the
-English one, with the scripting and config parts I added since.
-
 ### Concepts
 
 ```

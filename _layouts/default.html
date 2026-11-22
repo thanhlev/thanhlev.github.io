@@ -1,250 +1,127 @@
 <!DOCTYPE html>
+<!--
+default.html - the one layout of thanhlev.github.io, "Datasheet" design (style A).
+2026-11-22: redesigned (user picked mockup A of three: light paper, engineering-document look,
+IBM Plex Sans Condensed / Plex Mono / Source Serif 4, orange accent). Structure:
+  top bar (mono, uppercase) -> page header block (doc number line + title, not on the home page)
+  -> body: home page full width; every other page = left "contents" rail (built from h2/h3 by
+  the script below) + article column -> footer.
+Front matter it reads: title, short_description, status, latest_release, board_parent, result.
+No custom plugins or filters here: GitHub Pages builds in safe mode and ignores _plugins.
+-->
 <html lang="{{ site.lang | default: "en-US" }}">
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    
-    <!-- SEO Meta Tags -->
     <meta name="author" content="{{ site.author }}">
-    <meta name="description" content="{{ page.description | default: site.description }}">
-    <meta name="keywords" content="Linux, Embedded Systems, Networking, DevOps, Docker, Kubernetes, IoT, Yocto">
-    
-    <!-- Open Graph Meta Tags -->
+    <meta name="description" content="{{ page.short_description | default: page.description | default: site.description }}">
     <meta property="og:title" content="{{ page.title | default: site.title }}">
-    <meta property="og:description" content="{{ page.description | default: site.description }}">
+    <meta property="og:description" content="{{ page.short_description | default: site.description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{ page.title | default: site.title }}">
-    <meta name="twitter:description" content="{{ page.description | default: site.description }}">
-    
-    <!-- Favicon -->
+    {% if page.picture %}<meta property="og:image" content="{{ site.url }}/{{ page.picture }}">{% endif %}
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
-    
-    <!-- Font Awesome for icons -->
+    <!-- Font Awesome stays only for the few icons inside older posts (GitHub/LinkedIn in About). -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- Theme is set before first paint so a dark-mode reader never sees a white flash. -->
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
 {% seo %}
     {% include head-custom.html %}
   </head>
 
-  <body>
+  {% assign is_home = false %}{% if page.url == "/" %}{% assign is_home = true %}{% endif %}
+  <body class="{% if is_home %}is-home{% else %}is-doc{% endif %}">
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <nav class="main-nav">
-            <a href="/" class="nav-logo">
-              <h1 id="project_title">{{ site.title }}</h1>
-            </a>
-            <ul class="nav-links">
-              <li><a href="/" {% if page.url == "/" %}class="active"{% endif %}>Home</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle">Topics <i class="fas fa-chevron-down"></i></a>
-                <ul class="dropdown-menu">
-                  <li><a href="/#linux-networking">Linux Networking</a></li>
-                  <li><a href="/#linux-general">Linux General</a></li>
-                  <li><a href="/#embedded-systems">Embedded Systems</a></li>
-                  <li><a href="/#yocto-project">Yocto Project</a></li>
-                </ul>
-              </li>
-              <li><a href="/about" {% if page.url == "/about/" %}class="active"{% endif %}>About</a></li>
-              <li><a href="https://github.com/thanhlev" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
-              <li>
-                <button class="theme-toggle header-theme-toggle" aria-label="Toggle theme">
-                  <i class="fas fa-moon theme-icon"></i>
-                </button>
-              </li>
-            </ul>
-          </nav>
-          <h2 id="project_tagline">{{ site.description }}</h2>
-        </header>
-    </div>
+    <header class="topbar">
+      <a href="{{ '/' | relative_url }}" class="brand"><b>Thanh Le</b> <span>/ bench notes</span></a>
+      <nav class="topnav">
+        <a href="{{ '/#boards' | relative_url }}">Boards</a>
+        <a href="{{ '/#embedded-systems' | relative_url }}">Embedded</a>
+        <a href="{{ '/#linux-networking' | relative_url }}">Networking</a>
+        <a href="{{ '/#linux-general' | relative_url }}">Linux</a>
+        <a href="{{ '/about/' | relative_url }}" {% if page.url == "/about/" %}class="active"{% endif %}>About</a>
+        <a href="https://github.com/thanhlev" target="_blank" rel="noopener">GitHub</a>
+        <button class="theme-toggle" aria-label="Toggle dark mode"><span class="tt-l">Dark</span><span class="tt-d">Light</span></button>
+      </nav>
+    </header>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <div class="content-with-sidebar inner">
-        <aside class="sidebar">
-          <div class="sidebar-section">
-            <h3><i class="fas fa-compass"></i> Topics</h3>
-            <ul class="sidebar-nav">
-              <li><a href="/#linux-networking"><i class="fas fa-network-wired"></i> Linux Networking</a></li>
-              <li><a href="/#linux-general"><i class="fas fa-linux"></i> Linux General</a></li>
-              <li><a href="/#embedded-systems"><i class="fas fa-microchip"></i> Embedded Systems</a></li>
-              <li><a href="/#yocto-project"><i class="fas fa-cogs"></i> Yocto Project</a></li>
-            </ul>
-          </div>
-          <div class="sidebar-section sidebar-toc">
-            <h3><i class="fas fa-list"></i> On This Page</h3>
-            <ul id="toc-list" class="sidebar-nav toc-nav">
-            </ul>
-          </div>
+    {% if is_home %}
+      <main id="main_content" class="home">
+        {{ content }}
+      </main>
+    {% else %}
+      {% comment %} Doc number line: collection / board / status, like the header strip of a datasheet. {% endcomment %}
+      {% assign coll = page.collection | default: "page" | replace: "_", " " %}
+      <section class="dochead">
+        <div class="pn">
+          {{ coll | upcase }}{% if page.board_parent %} · BOARD {{ page.board_parent | upcase }}{% endif %}{% if page.board_hub %} · BOARD HUB{% endif %}{% if page.status %} · {{ page.status | upcase }}{% endif %}
+        </div>
+        <h1 class="doctitle">{{ page.title | remove: "[🔥] - " }}</h1>
+        {% if page.short_description %}<p class="docsub">{{ page.short_description }}</p>{% endif %}
+        {% if page.result or page.latest_release %}
+        <table class="docspec">
+          {% if page.result %}<tr><td>Result</td><td>{{ page.result }}</td></tr>{% endif %}
+          {% if page.latest_release %}<tr><td>Last change</td><td>{{ page.latest_release }}</td></tr>{% endif %}
+          {% if page.board_parent %}<tr><td>Board</td><td><a href="{{ '/embedded/boards/' | append: page.board_parent | append: '/' | relative_url }}">all stories on this board →</a></td></tr>{% endif %}
+        </table>
+        {% endif %}
+      </section>
+      <div class="docbody">
+        <aside class="rail">
+          <div class="rail-h">Contents</div>
+          <ul id="toc-list"></ul>
         </aside>
-        <section id="main_content">
+        <article id="main_content" class="doc">
           {{ content }}
-        </section>
+        </article>
       </div>
-    </div>
+    {% endif %}
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="https://github.com/thanhlev" target="_blank">GitHub</a></li>
-              <li><a href="https://www.linkedin.com/in/thanhlev" target="_blank">LinkedIn</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Contact</h3>
-            <p><i class="fas fa-envelope"></i> <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-            <p><i class="fas fa-globe"></i> <a href="{{ site.url }}">{{ site.url }}</a></p>
-          </div>
-          <div class="footer-section">
-            <h3>About This Site</h3>
-            <p>Technical blog documenting solutions, insights, and project progress in Linux, embedded systems, and networking.</p>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. All rights reserved.</p>
-          <p>Powered by <a href="https://pages.github.com">GitHub Pages</a> and <a href="https://jekyllrb.com/">Jekyll</a></p>
-          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-            <i class="fas fa-moon theme-icon"></i>
-            <span id="theme-text">Dark Mode</span>
-          </button>
-        </div>
-      </footer>
-    </div>
-    
-    <!-- JavaScript for dropdown menu -->
+    <footer class="foot">
+      <!-- 2026-11-22: range from the first post (2017) to the build year (user chose «© 2017–2026»). -->
+      <span>© 2017–{{ site.time | date: "%Y" }} Thanh Le (Lê Quang Thành)</span>
+      <span><a href="mailto:thanhlevvn@gmail.com">thanhlevvn@gmail.com</a> · <a href="https://www.linkedin.com/in/thanhlev" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/thanhlev" target="_blank" rel="noopener">GitHub</a></span>
+      <span>Every number here was measured on the board.</span>
+    </footer>
+
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const dropdownToggle = document.querySelector('.dropdown-toggle');
-        const dropdownMenu = document.querySelector('.dropdown-menu');
-
-        if (dropdownToggle && dropdownMenu) {
-          dropdownToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-          });
-
-          // Close dropdown when a menu item is clicked
-          dropdownMenu.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-              dropdownMenu.classList.remove('show');
-            });
-          });
-
-          // Close dropdown when clicking outside
-          document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-              dropdownMenu.classList.remove('show');
-            }
-          });
-        }
-      });
-    </script>
-    
-    <!-- Theme Toggle JavaScript -->
-    <script>
-      (function() {
-        // Check for saved theme preference or default to 'light'
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        
-        // Update icon and text based on current theme
-        function updateThemeToggle(theme) {
-          const themeIcons = document.querySelectorAll('.theme-icon');
-          const themeText = document.getElementById('theme-text');
-          
-          themeIcons.forEach(icon => {
-            if (theme === 'dark') {
-              icon.classList.remove('fa-moon');
-              icon.classList.add('fa-sun');
-            } else {
-              icon.classList.remove('fa-sun');
-              icon.classList.add('fa-moon');
-            }
-          });
-          
-          if (themeText) {
-            themeText.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
-          }
-        }
-        
-        // Set initial state
-        document.addEventListener('DOMContentLoaded', function() {
-          updateThemeToggle(currentTheme);
-          
-          // Theme toggle functionality
-          const themeToggles = document.querySelectorAll('.theme-toggle');
-          themeToggles.forEach(toggle => {
-            toggle.addEventListener('click', function() {
-              const currentTheme = document.documentElement.getAttribute('data-theme');
-              const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-              
-              document.documentElement.setAttribute('data-theme', newTheme);
-              localStorage.setItem('theme', newTheme);
-              updateThemeToggle(newTheme);
-            });
-          });
+      // Dark/light toggle; the choice is kept in localStorage (set before paint in <head>).
+      document.querySelectorAll('.theme-toggle').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', t);
+          localStorage.setItem('theme', t);
         });
-      })();
-    </script>
+      });
 
-    <!-- Table of Contents Generator -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const tocList = document.getElementById('toc-list');
-        const content = document.getElementById('main_content');
-        if (!tocList || !content) return;
-
-        const headings = content.querySelectorAll('h1, h2, h3');
-        if (headings.length === 0) {
-          document.querySelector('.sidebar-toc').style.display = 'none';
-          return;
-        }
-
-        headings.forEach(function(heading) {
-          if (!heading.id) {
-            heading.id = heading.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
-          }
+      // Contents rail: one entry per h2/h3 of the article. The first h1 of a post repeats the
+      // page title (already in the doc header), so it is hidden and skipped here.
+      (function () {
+        var doc = document.querySelector('article.doc');
+        var list = document.getElementById('toc-list');
+        if (!doc || !list) return;
+        var h1 = doc.querySelector('h1');
+        if (h1) h1.classList.add('dup-title');
+        var hs = doc.querySelectorAll('h2:not(.no_toc), h3:not(.no_toc)');
+        if (hs.length < 2) { document.querySelector('.rail').classList.add('empty'); return; }
+        hs.forEach(function (h) {
+          if (!h.id) h.id = h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
           var li = document.createElement('li');
-          li.className = 'toc-' + heading.tagName.toLowerCase();
+          li.className = 'toc-' + h.tagName.toLowerCase();
           var a = document.createElement('a');
-          a.href = '#' + heading.id;
-          a.textContent = heading.textContent;
-          li.appendChild(a);
-          tocList.appendChild(li);
+          a.href = '#' + h.id; a.textContent = h.textContent;
+          li.appendChild(a); list.appendChild(li);
         });
-
-        // Highlight active TOC item on scroll
-        var tocLinks = tocList.querySelectorAll('a');
-        window.addEventListener('scroll', function() {
-          var current = '';
-          headings.forEach(function(heading) {
-            if (window.scrollY >= heading.offsetTop - 100) {
-              current = heading.id;
-            }
-          });
-          tocLinks.forEach(function(link) {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-              link.classList.add('active');
-            }
-          });
-        });
-      });
+        var links = list.querySelectorAll('a');
+        window.addEventListener('scroll', function () {
+          var cur = '';
+          hs.forEach(function (h) { if (window.scrollY >= h.offsetTop - 120) cur = h.id; });
+          links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+        }, { passive: true });
+      })();
     </script>
   </body>
 </html>

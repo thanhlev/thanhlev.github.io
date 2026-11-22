@@ -24,8 +24,8 @@ publish: true
 
 In [ESP8266 Flash Map & Partition Table](/embedded/esp8266-flash-map) I wrote about the partition
 table on an MCU, but that one is Espressif's own format. PCs, and most Linux boards with an SD card
-or eMMC, use one of the two standard ones instead. I started this page in 2023 with only MBR,
-because that's what I kept running into on embedded Linux; GPT came later.
+or eMMC, use one of the two standard ones instead. MBR comes first here because that's
+what I kept running into on embedded Linux.
 
 The two side by side:
 

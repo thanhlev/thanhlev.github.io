@@ -7,6 +7,8 @@ latest_release: "2026-11-22: upstream PR link is dead (meta-radxa was reset)"
 status: "Done"
 index: 5
 publish: true
+board_parent: rock3a
+result: "Console and desktop images booting from my meta-radxa port, sent upstream as PR #29"
 ---
 
 # Porting Rock-3A rockchip-bsp to Yocto Project

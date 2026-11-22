@@ -3,156 +3,66 @@ layout: default
 title: Home
 ---
 {% comment %}
-Every table below lists a collection through the same filter: `publish: false` is a draft,
-a missing `publish` counts as published (2026-11-22; before, Networking needed publish: true,
-General/Embedded showed drafts too). _plugins/unpublished_filter.rb already drops drafts from
-the build; the filter here keeps the page right under `jekyll serve --unpublished`.
+index.md - home page, "Datasheet" design (style A, 2026-11-22, user «tôi chọn style a»).
+Blocks: hero (who I am + a spec table counted from the collections) -> Boards (one card per
+board hub: front matter `board_hub: true`, its first STAR result) -> other embedded notes ->
+Linux Networking / Linux General as cards too (_includes/card_grid.html, 2026-11-22 user «Linux networking và Linux general»).
+The Yocto block was removed the same day (user «Xóa Yocto vì chưa có bài»); add it back when site.yocto has a real post.
+Drafts: `publish: false` is skipped everywhere; a missing `publish` counts as published.
+STAR sub-pages (`board_parent`) are listed on their hub only. Anchors #boards,
+#embedded-systems, #linux-networking, #linux-general are linked from the top bar
+and from older posts: keep them.
 {% endcomment %}
+{% assign live_emb = site.embedded | where_exp: "i", "i.publish != false" %}
+{% assign hubs = live_emb | where: "board_hub", true | sort: "index" %}
+{% assign stories = live_emb | where_exp: "i", "i.board_parent != nil" %}
+{% assign emb_notes = live_emb | where_exp: "i", "i.board_parent == nil" | where_exp: "i", "i.board_hub != true" | sort: "index" %}
+{% assign net = site.linux_networking | where_exp: "i", "i.publish != false" | sort: "index" %}
+{% assign gen = site.linux_general | where_exp: "i", "i.publish != false" | sort: "index" %}
 
-# Welcome to My Technical Blog
+<section class="hero">
+  <div class="l">
+    <div class="pn">DOC TL-{{ site.time | date: "%Y" }} · BENCH NOTES · EMBEDDED / LINUX</div>
+    <h1>I take boards apart<br>from the <em>boot ROM</em> up.</h1>
+    <p>I'm Thanh Le, an embedded/firmware engineer at Amazon. Most evenings I'm at home getting one of my own dev boards to boot: bare metal, FreeRTOS, an NPU without Linux, old SoCs pushed further than their vendors went.</p>
+    <p>This site is where I write down what broke and what I measured, so the next time I hit the same wall I don't start from zero.</p>
+    <div class="cta"><a class="btn" href="#boards">See the boards</a><a class="btn" href="{{ '/about/' | relative_url }}">About me</a></div>
+  </div>
+  <div class="spec">
+    <table>
+      <tr><td>Boards on the bench</td><td>{{ hubs.size }}</td></tr>
+      <tr><td>Board stories (STAR)</td><td>{{ stories.size }}</td></tr>
+      <tr><td>Linux notes</td><td>{{ net.size | plus: gen.size }}</td></tr>
+      <tr><td>Power-on to RTOS (ROCK 3A)</td><td>154 ms</td></tr>
+      <tr><td>Oldest SoC revived</td><td>BCM2835 (2012)</td></tr>
+      <tr><td>Writing here since</td><td>2017</td></tr>
+    </table>
+  </div>
+</section>
 
-Hi, I'm Thanh Le — an engineer who loves digging into Linux internals, building embedded systems, and wrangling networks. This is where I write things down so I don't forget them, and hopefully they help you too.
-
-## Featured Topics
-
-### 🌐 Linux Networking {#linux-networking}
-
-Explore advanced networking concepts, Docker networking, virtual interfaces, and network management solutions.
-
-<table class="project_table">
-  <thead>
-    <tr>
-      <th>Preview</th>
-      <th>Article</th>
-      <th>Last Updated</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-{% assign sorted = site.linux_networking | where_exp: "item", "item.publish != false" | sort: 'index' %}
-{% for page in sorted %}
-      <tr>
-        <td class="page_picture_td">
-          {% if page.picture %}
-            <a href="{{ page.url }}"><img class="page_table_picture" src="{{ page.picture | image_thumbnail }}" alt="{{ page.title }}"></a>
-          {% endif %}
-        </td>
-        <td>
-          <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
-          <span class="article-description">{{ page.short_description }}</span>
-        </td>
-        <td>{{ page.latest_release }}</td>
-        <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
-      </tr>
+<div class="sec" id="boards"><h2>Boards</h2><span>§1 · one hub per board, each milestone written as Situation / Task / Action / Result</span></div>
+<div class="boardgrid">
+{% for h in hubs %}
+  {% assign kids = site.embedded | where: "board_parent", h.slug | where_exp: "i", "i.publish != false" | sort: "index" %}
+  {% assign name = h.title | split: ":" | first %}
+  {% assign soc = "" %}{% if name contains "(" %}{% assign soc = name | split: "(" | last | remove: ")" %}{% assign name = name | split: " (" | first %}{% endif %}
+  <a class="bcard" href="{{ h.url | relative_url }}">
+    <div class="ph" style="background-image:url('{{ h.picture | prepend: '/' | relative_url }}')"></div>
+    {% if soc != "" %}<span class="chip">{{ soc }}</span>{% endif %}
+    <h3>{{ name }}</h3>
+    <p>{{ h.short_description }}</p>
+    <div class="res">{% if kids.size > 0 %}<b>{{ kids.size }} {% if kids.size == 1 %}story{% else %}stories{% endif %}</b> · {{ kids.first.result | truncate: 110 }}{% else %}<b>hub only</b> · nothing measured on the board yet{% endif %}</div>
+  </a>
 {% endfor %}
-  </tbody>
-</table>
+</div>
 
-### 💻 Linux General {#linux-general}
+<div class="sec" id="embedded-systems"><h2>Embedded notes</h2><span>§2 · single posts, older projects and reading notes</span></div>
+{% include card_grid.html items=emb_notes %}
 
-System administration, Docker, development tools, and Linux tips & tricks.
+<div class="sec" id="linux-networking"><h2>Linux networking</h2><span>§3 · where a packet actually goes</span></div>
+{% include card_grid.html items=net %}
 
-<table class="project_table">
-  <thead>
-    <tr>
-      <th>Preview</th>
-      <th>Article</th>
-      <th>Last Updated</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-{% assign sorted = site.linux_general | where_exp: "item", "item.publish != false" | sort: 'index' %}
-{% for page in sorted %}
-    <tr>
-      <td class="page_picture_td">
-        {% if page.picture %}
-          <a href="{{ page.url }}"><img class="page_table_picture" src="{{ page.picture | image_thumbnail }}" alt="{{ page.title }}"></a>
-        {% endif %}
-      </td>
-      <td>
-        <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
-        <span class="article-description">{{ page.short_description }}</span>
-      </td>
-      <td>{{ page.latest_release }}</td>
-      <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
-    </tr>
-{% endfor %}
-  </tbody>
-</table>
+<div class="sec" id="linux-general"><h2>Linux general</h2><span>§4 · tools and snippets I keep coming back to</span></div>
+{% include card_grid.html items=gen %}
 
-### 🔧 Embedded Systems {#embedded-systems}
-
-Hardware development, microcontrollers, IoT devices, and embedded Linux.
-
-<table class="project_table">
-  <thead>
-    <tr>
-      <th>Preview</th>
-      <th>Article</th>
-      <th>Last Updated</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-{% assign sorted = site.embedded | where_exp: "item", "item.publish != false" | sort: 'index' %}
-{% for page in sorted %}
-    <tr>
-      <td class="page_picture_td">
-        {% if page.picture %}
-          <a href="{{ page.url }}"><img class="page_table_picture" src="{{ page.picture | image_thumbnail }}" alt="{{ page.title }}"></a>
-        {% endif %}
-      </td>
-      <td>
-        <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
-        <span class="article-description">{{ page.short_description }}</span>
-      </td>
-      <td>{{ page.latest_release }}</td>
-      <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
-    </tr>
-{% endfor %}
-  </tbody>
-</table>
-
-### 🏗️ Yocto Project {#yocto-project}
-
-{% assign yocto_pages = site.yocto | where_exp: "item", "item.publish != false" %}
-{% if yocto_pages.size > 0 %}
-<table class="project_table">
-  <thead>
-    <tr>
-      <th>Preview</th>
-      <th>Article</th>
-      <th>Last Updated</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-{% assign sorted = site.yocto | where_exp: "item", "item.publish != false" | sort: 'index' %}
-{% for page in sorted %}
-      <tr>
-        <td class="page_picture_td">
-          {% if page.picture %}
-            <a href="{{ page.url }}"><img class="page_table_picture" src="{{ page.picture | image_thumbnail }}" alt="{{ page.title }}"></a>
-          {% endif %}
-        </td>
-        <td>
-          <a href="{{ page.url }}"><strong>{{ page.title }}</strong></a><br>
-          <span class="article-description">{{ page.short_description }}</span>
-        </td>
-        <td>{{ page.latest_release }}</td>
-        <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
-      </tr>
-{% endfor %}
-  </tbody>
-</table>
-{% else %}
-<p class="coming-soon">Content coming soon...</p>
-{% endif %}
-
----
-
-## Recent Updates
-
-Stay tuned for more technical articles and project documentation. Feel free to reach out if you have questions or suggestions!
-
+<div class="last"></div>

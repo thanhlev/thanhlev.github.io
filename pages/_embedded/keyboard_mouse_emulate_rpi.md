@@ -15,7 +15,7 @@ publish: true
 In September 2017 I wanted a Raspberry Pi 3 to show up on a PC as a plain Bluetooth
 keyboard. No driver on the host, no app: you pair it like any keyboard and it types. That
 became [thanhlev/keyboard_mouse_emulate_on_raspberry](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry).
-The mouse came in July 2020, media keys in June 2026. As of today (2026-11-22) it has 341 stars and
+Mouse and media keys came later. As of today (2026-11-22) it has 341 stars and
 120 forks, and some of the nastier fixes came from other people, not from me.
 
 The background write-ups from back then are on my old blog:

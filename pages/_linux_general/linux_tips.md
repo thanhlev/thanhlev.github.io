@@ -13,8 +13,7 @@ publish: true
 {: .no_toc }
 
 My scratchpad of shell one-liners: the fstab line for my SSD, the timezone name for Ho Chi Minh,
-the `awk` field tricks, the git rebase I can never remember. It started in 2023 as a Vietnamese
-table; this is the same notes in English, grouped by topic, plus whatever I added since.
+the `awk` field tricks, the git rebase I can never remember.
 
 ## Table of contents
 {: .no_toc }

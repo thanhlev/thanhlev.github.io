@@ -1,0 +1,16 @@
+{% comment %}
+note_rows.html - one "datasheet row" per post of a collection (home page, style A, 2026-11-22).
+Usage: {% include note_rows.html items=some_sorted_array %}
+Row = thumbnail · title + short_description · latest_release · status. Drafts (publish: false)
+must already be filtered out by the caller. Plain Liquid only (GitHub Pages safe mode).
+{% endcomment %}
+<div class="rows">
+{% for p in include.items %}
+  <a class="rowi" href="{{ p.url | relative_url }}">
+    <span class="th" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | prepend: '/' | relative_url }}')"></span>
+    <span><b>{{ p.title | remove: "[🔥] - " }}</b><span class="d">{{ p.short_description }}</span></span>
+    <span class="u">{{ p.latest_release }}</span>
+    <span class="s">{% if p.status %}<span class="status-badge status-{{ p.status | downcase | replace: ' ', '-' }}">{{ p.status }}</span>{% endif %}</span>
+  </a>
+{% endfor %}
+</div>

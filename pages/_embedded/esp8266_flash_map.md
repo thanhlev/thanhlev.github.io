@@ -211,8 +211,7 @@ find those partitions through the partition API.
 <p>An app partition has to sit entirely inside one 1 MB block of flash. The default app start, 0x10000, is fixed; to move it, change it in <code>menuconfig</code>. Offsets must also be aligned (the tool wants 4 KB for apps) or <code>gen_esp32part.py</code> refuses the table.</p>
 </div>
 
-In the first version of this page I wrote "an app partition must be a multiple of 1 MB". That's
-wrong: the SDK doc says it must *fall within one* 1 MB block. Look at the OTA table again: 0x10000
+Careful: it's not "a multiple of 1 MB", the SDK doc says it must *fall within one* 1 MB block. Look at the OTA table again: 0x10000
 + 0xF0000 ends exactly at 0x100000, and `ota_1` starts at 0x110000 and ends at 0x200000. That's why
 the slots are 960 KB and not 1 MB.
 

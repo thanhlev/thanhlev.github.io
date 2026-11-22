@@ -20,20 +20,11 @@ publish: true
 
 ---
 
-## Revision history
+## How Docker networking works
 
-| Revision | Date        | Remark                  |
-| :------- | :---------- | :---------------------- |
-| 0.1      | Jan-12-2023 | Initial document (one table) |
-| 0.2      | Nov-22-2026 | Rewritten, one section per driver |
+Short answer: Docker doesn't have its own network stack. Each container lives in its own **network namespace** (own interfaces, routes, iptables rules, sockets), and the driver decides which ordinary Linux pieces connect that namespace to the outside: a bridge plus veth pairs, a macvlan, an ipvlan, a VXLAN tunnel, or nothing. If you know those pieces (see [Virtual Interfaces in Linux]({{ site.baseurl }}{% link _linux_networking/virtual_interface.md %})), Docker networking stops being magic.
 
-## Why this page exists
-
-The first version of this page (January 2023) was a single table: each Docker network driver next to the "traditional" networking idea it maps to. One cell said `???`, because I couldn't name a classic equivalent for `host`. Looking back, that's because there isn't one: `host` doesn't build anything, it just skips the namespace.
-
-That's also the short answer to "how does Docker networking work". Docker doesn't have its own network stack. Each container lives in its own **network namespace** (own interfaces, routes, iptables rules, sockets), and the driver decides which ordinary Linux pieces connect that namespace to the outside: a bridge plus veth pairs, a macvlan, an ipvlan, a VXLAN tunnel, or nothing. If you know those pieces (see [Virtual Interfaces in Linux]({{ site.baseurl }}{% link _linux_networking/virtual_interface.md %})), Docker networking stops being magic.
-
-The old table, with the `???` filled in:
+Each Docker driver next to the "traditional" networking idea it maps to. `host` has no classic equivalent: it doesn't build anything, it just skips the namespace.
 
 | Traditional | Docker driver | What it is |
 |-------------|---------------|------------|

@@ -22,15 +22,6 @@ publish: true
 {:toc}
 
 -----------------------------------
-## Revision history
-
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-07-2023   | {{page.commit1}}|
-| 0.2      | Feb-08-2023   | {{page.commit2}}|
-| 0.3      | Feb-08-2023   | {{page.commit3}}|
-| 0.4      | Feb-09-2023   | {{page.latest_release}}|
-
 ## Introduction
 
 Đây là ghi chép của mình lúc học pytest (tháng 2/2023), trước khi dùng tới

@@ -1,0 +1,22 @@
+{% comment %}
+board_children.html - table of the STAR sub-pages of one board hub.
+Usage (in a hub page): {% include board_children.html board="rock3a" %}
+Lists every doc in the embedded collection whose front matter has `board_parent: <board>`,
+sorted by `index`, skipping `publish: false`. Plain Liquid only: GitHub Pages runs in safe mode
+and ignores _plugins, so no custom filter may be used here.
+2026-11-22 · added for the per-board hub pages (user: «với mỗi board … tạo 1 trang tổng … các trang con … chuẩn STAR»)
+{% endcomment %}
+{% assign kids = site.embedded | where: "board_parent", include.board | where_exp: "item", "item.publish != false" | sort: 'index' %}
+<table class="project_table">
+  <thead><tr><th>#</th><th>Story</th><th>Result</th><th>Status</th></tr></thead>
+  <tbody>
+{% for kid in kids %}
+    <tr>
+      <td>{{ forloop.index }}</td>
+      <td><a href="{{ kid.url | relative_url }}"><strong>{{ kid.title }}</strong></a><br><span class="article-description">{{ kid.short_description }}</span></td>
+      <td>{{ kid.result }}</td>
+      <td><span class="status-badge status-{{ kid.status | downcase | replace: ' ', '-' }}">{{ kid.status }}</span></td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
