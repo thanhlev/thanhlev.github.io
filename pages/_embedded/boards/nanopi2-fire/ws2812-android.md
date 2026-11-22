@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/nanopi2-fire/ws2812-android
 board_parent: nanopi2-fire
 result: "16 LEDs, every effect smooth, readback 480/480 bytes clean; app APK 33 KB"
+tags: [samsung, arm, android, led]
 ---
 
 # A WS2812 ring from Android 7 over spidev, and why it flickered

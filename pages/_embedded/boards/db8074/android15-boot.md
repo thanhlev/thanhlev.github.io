@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/db8074/android15-boot
 board_parent: db8074
 result: "Launcher3 home screen on the panel; boot from eMMC in 66 s"
+tags: [qualcomm, arm, linux, android, boot, memory]
 ---
 
 # Android 15 on a board that shipped with Android 4.3

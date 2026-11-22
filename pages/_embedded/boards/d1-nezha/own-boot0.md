@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/d1-nezha/own-boot0
 board_parent: d1-nezha
 result: "Boot ROM -> my code from NAND, no Tina; my SPL trains 1 GiB of DDR3 in 51 ms"
+tags: [allwinner, risc-v, bare-metal, boot, memory, led]
 ---
 
 # My own boot0 in NAND block 0: an LED from SRAM, then an app in DRAM

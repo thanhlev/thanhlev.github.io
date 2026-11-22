@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/dino-robot/head-yaw-nod
 board_parent: dino-robot
 result: "at every yaw from −20° to +20°: 18.05° down, 8.20° up, closest gap 0.50 mm (was 2.8° / 0° at 20°)"
+tags: [robotics, servo]
 ---
 
 # A head that turns and nods at the same time

@@ -296,3 +296,17 @@ main.home { padding: 0; }
   .ab-contact { grid-template-columns: 1fr 1fr; } .ab-contact a { border-bottom: 1px solid var(--rule); }
 }
 @media (max-width: 640px) { .ab-feat { grid-template-columns: 1fr; } .ab-card { border-right: 0 !important; border-bottom: 1px solid var(--rule); } .ab-ncard-img { grid-template-columns: 1fr; } .ab-contact { grid-template-columns: 1fr; } }
+
+/* ---------- Tag filter (/tags/) and tag chips in post headers (2026-11-22, user «filter bài viết theo tag») ---------- */
+.tg-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 26px var(--pad) 22px; border-bottom: 1px solid var(--ink); position: sticky; top: 57px; background: var(--paper); z-index: 5; }
+.tg-btn { font: 600 12px var(--f-mono); letter-spacing: .03em; color: var(--ink); background: none; border: 1px solid var(--rule); padding: 5px 10px; cursor: pointer; }
+.tg-btn span { color: var(--mute); font-weight: 500; margin-left: 4px; }
+.tg-btn:hover { border-color: var(--ink); }
+.tg-btn.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.tg-btn.on span { color: var(--paper); opacity: .7; }
+#tg-grid { margin-top: 0; border-top: 0; }
+.bcard .res i { font-style: normal; color: var(--acc2); }
+.doctags { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+.doctags a { font: 600 11.5px var(--f-mono); color: var(--acc2); border: 1px solid var(--acc2); padding: 2px 8px; text-decoration: none; }
+.doctags a:hover { background: var(--acc2); color: var(--paper); }
+@media (max-width: 1000px) { .tg-bar { position: static; } }

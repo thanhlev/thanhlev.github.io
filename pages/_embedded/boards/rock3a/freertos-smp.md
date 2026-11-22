@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/rock3a/freertos-smp
 board_parent: rock3a
 result: "CoreMark 7634.83 at 1992 MHz on one core, 15.33/MHz on four, tick jitter ±0.5 µs"
+tags: [rockchip, arm, freertos, bare-metal]
 ---
 
 # FreeRTOS on all four Cortex-A55 cores, with my own shell

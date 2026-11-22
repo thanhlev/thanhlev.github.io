@@ -7,6 +7,7 @@ picture: "assets/images/MBR_usecase_partitions.jpg"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
+tags: [linux, memory, testing]
 ---
 
 # Disk Partition Tables: MBR & GPT

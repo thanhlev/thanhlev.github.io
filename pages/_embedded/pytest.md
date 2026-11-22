@@ -10,6 +10,7 @@ latest_release: "2026-11-22: viết lại theo dạng STAR"
 status: "Done"
 index: 2
 publish: true
+tags: [testing, python]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

@@ -7,6 +7,7 @@ status: "Done"
 index: 2
 latest_release: "2026-11-22: rewritten as a STAR story"
 publish: true
+tags: [networking, linux]
 ---
 
 # Linux Network Management

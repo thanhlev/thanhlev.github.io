@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/microduck/what-i-must-build
 board_parent: microduck
 result: "software complete; missing: IMU board firmware (HTTP 404), the HAT, a BOM; servos run up to 8.2 V on a 6.0 V rating"
+tags: [robotics, simulation, servo]
 ---
 
 # What the repos give you, and the three holes I'd fill myself

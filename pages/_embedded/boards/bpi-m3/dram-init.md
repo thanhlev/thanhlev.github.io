@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/bpi-m3/dram-init
 board_parent: bpi-m3
 result: "2 GiB LPDDR3, 294 896 words tested, 0 errors, 3.44 s"
+tags: [allwinner, arm, bare-metal, boot, memory, testing]
 ---
 
 # DRAM init over FEL, and the probe that froze the boot ROM

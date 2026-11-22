@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/pi1/mjpeg-videocore
 board_parent: pi1
 result: "352x288 JPEG to I420 in ~5 ms on the GPU; 597 webcam frames, 0 decode errors"
+tags: [raspberry-pi, arm, gpu, freertos, bare-metal, linux]
 ---
 
 # Asking the VideoCore to decode my JPEGs, from bare metal

@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/intel-edison/boot-timeline
 board_parent: intel-edison
 result: "Reset to login 59.52 s; the ROM waits 8.92 s on USB for a flasher at every boot"
+tags: [intel, x86, bare-metal, boot, usb]
 ---
 
 # Timing the Edison boot ROM from the outside, 0.1 s at a time

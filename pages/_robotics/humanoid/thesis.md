@@ -12,6 +12,7 @@ redirect_from:
   - /embedded/humanoid-robot
 board_parent: humanoid
 result: "17 SG90s walking on the floor from angles I computed myself, played back over 9600-baud serial"
+tags: [robotics, kinematics, servo, cad]
 ---
 <!-- 2026-11-22: moved from pages/_embedded/humanoid_robot.md into the Robotics humanoid hub (user «Humanoid
      Robot: my thesis project nên đưa vào Robotics») and rewritten in STAR form; same facts and the same five

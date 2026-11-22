@@ -7,6 +7,7 @@ picture: "assets/images/udev_Kernel.JPG"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 4
 publish: true
+tags: [linux, testing]
 ---
 
 # Udev Quick Reference

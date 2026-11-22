@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/pi-zero/qpu
 board_parent: pi-zero
 result: "4799 MFLOPS on 12 QPUs vs 73 on the ARM with VFP (66x); 192 lanes bit-exact"
+tags: [raspberry-pi, arm, gpu, freertos, bare-metal]
 ---
 
 # Twelve QPUs from bare metal, no Linux

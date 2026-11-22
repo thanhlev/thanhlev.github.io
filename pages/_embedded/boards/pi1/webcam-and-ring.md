@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/pi1/webcam-and-ring
 board_parent: pi1
 result: "Stream restarts ~9/min -> 0 (2117 runs in 121 s, 0 errors); ring lit again with 0xF8"
+tags: [raspberry-pi, arm, camera, led]
 ---
 
 # The webcam that kept dropping, and the LED ring that went dark

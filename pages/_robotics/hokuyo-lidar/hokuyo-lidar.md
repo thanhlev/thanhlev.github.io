@@ -9,6 +9,7 @@ index: 5
 publish: true
 permalink: /robotics/hokuyo-lidar/
 board_hub: true
+tags: [robotics, lidar, usb]
 ---
 
 # Hokuyo URG-04LX lidar (2D, 240°)

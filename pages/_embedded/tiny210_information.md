@@ -7,6 +7,7 @@ picture: "assets/images/tiny210v2_i.jpg"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 8
 publish: true
+tags: [samsung, arm, boot, memory]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

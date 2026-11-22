@@ -7,6 +7,7 @@ status: "Done"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 10
 publish: true
+tags: [arm, mcu, bare-metal]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

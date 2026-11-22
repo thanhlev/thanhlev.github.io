@@ -7,6 +7,7 @@ picture: "assets/images/intel_wifi_module.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 4
 publish: true
+tags: [networking, linux, wifi]
 ---
 
 # Linux Wi-Fi Driver có gì đặc biệt?

@@ -7,6 +7,7 @@ picture: "assets/images/docker_network.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 6
 publish: true
+tags: [networking, linux, docker]
 ---
 
 # Docker Networking: what each driver really builds

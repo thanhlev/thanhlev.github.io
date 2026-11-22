@@ -9,6 +9,7 @@ index: 31
 publish: true
 permalink: /embedded/boards/nanopi-k2/
 board_hub: true
+tags: [arm, linux]
 ---
 
 # NanoPi K2

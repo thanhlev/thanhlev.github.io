@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/nanopi2-fire/freertos-four-cores
 board_parent: nanopi2-fire
 result: "SMP on 4 cores: 3.93× speed-up; AMP round trip 10 µs"
+tags: [samsung, arm, freertos, linux]
 ---
 
 # FreeRTOS on four Cortex-A9 cores: AMP, SMP and one CPSIE too many

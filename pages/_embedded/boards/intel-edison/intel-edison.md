@@ -9,6 +9,7 @@ index: 29
 publish: true
 permalink: /embedded/boards/intel-edison/
 board_hub: true
+tags: [intel, x86, boot, usb]
 ---
 
 # Intel Edison

@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/bpi-m3/dram-cli
 board_parent: bpi-m3
 result: "eMMC, Wi-Fi, BT, PHY and IR all answer; 64 MiB memtest, 0 errors"
+tags: [allwinner, arm, bare-metal, memory, wifi]
 ---
 
 # A bare-metal command line for every peripheral on the board

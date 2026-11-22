@@ -9,6 +9,7 @@ index: 2
 publish: true
 permalink: /robotics/microduck/
 board_hub: true
+tags: [robotics, simulation]
 ---
 
 # Microduck

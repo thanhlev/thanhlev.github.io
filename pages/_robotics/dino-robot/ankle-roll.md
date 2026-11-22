@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/dino-robot/ankle-roll
 board_parent: dino-robot
 result: "in MuJoCo: with ankle roll 0/30 and 1/30 survive, without it 16/30, pair turn without new servos 28/30"
+tags: [robotics, servo, simulation]
 ---
 
 # An ankle roll servo made it worse

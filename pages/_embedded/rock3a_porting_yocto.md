@@ -9,6 +9,7 @@ index: 99   # 2026-11-22: last on the ROCK 3A hub (user «đưa nó xuống dư�
 publish: true
 board_parent: rock3a
 result: "Console and desktop images booting from my meta-radxa port, sent upstream as PR #29"
+tags: [rockchip, arm, boot, yocto]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form like the other ROCK 3A stories (user «trang này không theo STAR

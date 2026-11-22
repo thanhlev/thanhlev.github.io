@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/dino-robot/servo-budget
 board_parent: dino-robot
 result: "worst static load: stance knee 0.759 N·m = 30.3 % of MX-28 stall (limit 40 %), robot 2715 g"
+tags: [robotics, servo, cad]
 ---
 
 # Seven MX-28 and where they go

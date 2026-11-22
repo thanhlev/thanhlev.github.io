@@ -9,6 +9,7 @@ index: 24
 publish: true
 permalink: /embedded/boards/pi5/
 board_hub: true
+tags: [raspberry-pi, arm, freertos, linux, simulation]
 ---
 
 # Raspberry Pi 5 (BCM2712 + RP1)

@@ -7,6 +7,7 @@ picture: "assets/images/TM4C123GH6ZRB_cpu_block_diagram.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 9
 publish: true
+tags: [arm, mcu, bare-metal, boot]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

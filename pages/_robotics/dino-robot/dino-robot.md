@@ -9,6 +9,7 @@ index: 1
 publish: true
 permalink: /robotics/dino-robot/
 board_hub: true
+tags: [robotics, servo, simulation, cad]
 ---
 
 # Dino robot

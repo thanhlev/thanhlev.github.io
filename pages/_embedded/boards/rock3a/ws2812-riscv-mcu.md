@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/rock3a/ws2812-riscv-mcu
 board_parent: rock3a
 result: "16/16 LEDs lit from the MCU at 50.00 frames/s, 523-525 µs per frame on the wire; no blue at 3.3 V"
+tags: [rockchip, arm, freertos, linux, android, risc-v]
 ---
 
 # FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores

@@ -9,6 +9,7 @@ index: 23
 publish: true
 permalink: /embedded/boards/pi1/
 board_hub: true
+tags: [raspberry-pi, arm, gpu, freertos, bare-metal, camera]
 ---
 
 # Raspberry Pi 1 Model B (BCM2835)

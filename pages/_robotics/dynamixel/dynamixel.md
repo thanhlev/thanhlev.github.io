@@ -9,6 +9,7 @@ index: 4
 publish: true
 permalink: /robotics/dynamixel/
 board_hub: true
+tags: [robotics, servo, python]
 ---
 
 # DYNAMIXEL servos (MX-28, AX-12A)

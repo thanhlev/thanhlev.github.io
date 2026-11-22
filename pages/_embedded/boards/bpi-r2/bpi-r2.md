@@ -9,6 +9,7 @@ index: 27
 publish: true
 permalink: /embedded/boards/bpi-r2/
 board_hub: true
+tags: [arm, networking]
 ---
 
 # Banana Pi R2

@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/humanoid/leg-ik
 board_parent: humanoid
 result: "600 of 600 gait targets within 1 µm (was 166 mm median), the whole walk solved in 0.28 s instead of 38.6 s"
+tags: [robotics, kinematics]
 ---
 
 # Leg IK that misses by 166 mm, and the two sign errors behind it

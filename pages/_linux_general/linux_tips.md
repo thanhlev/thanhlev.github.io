@@ -7,6 +7,7 @@ picture: "assets/images/linux_tips.jpg"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 2
 publish: true
+tags: [linux, tools]
 ---
 
 # Linux Tips & Tricks

@@ -9,6 +9,7 @@ index: 26
 publish: true
 permalink: /embedded/boards/bpi-m3/
 board_hub: true
+tags: [allwinner, arm, bare-metal, boot, memory, usb]
 ---
 
 # Banana Pi M3

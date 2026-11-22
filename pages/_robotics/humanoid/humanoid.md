@@ -9,6 +9,7 @@ index: 3
 publish: true
 permalink: /robotics/humanoid/
 board_hub: true
+tags: [robotics, kinematics, simulation, servo]
 ---
 
 # Humanoid (17-servo biped)

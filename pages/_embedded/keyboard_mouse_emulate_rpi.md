@@ -7,6 +7,7 @@ picture: "assets/images/rpi_bt_hid.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
+tags: [raspberry-pi, linux, python, bluetooth]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

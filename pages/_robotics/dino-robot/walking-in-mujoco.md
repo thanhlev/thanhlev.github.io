@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/dino-robot/walking-in-mujoco
 board_parent: dino-robot
 result: "in MuJoCo: full sequence on perturbed robots 0/5, then 2/10, now 30/30; walk 40.7 mm/s"
+tags: [robotics, servo, simulation, cad]
 ---
 
 # It walked in MuJoCo, then I made the sim honest

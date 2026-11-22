@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/pi-zero/usb-boot
 board_parent: pi-zero
 result: "Power-on to my code in ~10 s over USB; stable firmware fails, 1.20241126 works"
+tags: [raspberry-pi, arm, linux, boot, usb]
 ---
 
 # Booting a Pi Zero W with no SD card

@@ -9,6 +9,7 @@ index: 25
 publish: true
 permalink: /embedded/boards/d1-nezha/
 board_hub: true
+tags: [allwinner, risc-v, freertos, bare-metal, boot, camera]
 ---
 
 # Allwinner D1-H Nezha (RISC-V C906)

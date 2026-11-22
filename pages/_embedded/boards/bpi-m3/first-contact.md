@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/bpi-m3/first-contact
 board_parent: bpi-m3
 result: "8 cores online, 11 OPPs 480 to 2016 MHz, FEL at 12 Mbit/s"
+tags: [allwinner, arm, bare-metal, linux]
 ---
 
 # First contact: what the vendor image says about eight cores and 2 GHz

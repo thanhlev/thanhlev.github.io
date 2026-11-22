@@ -12,6 +12,7 @@ board_parent: microduck
 result: "gait from 16 reward terms only (largest air_time +3.0), 4096 robots on a GPU, ~1–2 h on a GPU per upstream"
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 7
+tags: [robotics, simulation, edge-ai, gpu]
 ---
 
 # How the duck learns to walk: no reference motion, 16 rewards

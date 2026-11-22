@@ -7,6 +7,7 @@ picture: "assets/images/docker-banner.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
+tags: [linux, docker, tools]
 ---
 
 # Docker Snippet

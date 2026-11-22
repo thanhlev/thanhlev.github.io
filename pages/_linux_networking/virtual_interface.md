@@ -7,6 +7,7 @@ picture: "assets/images/4port_ethernet_card.webp"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
+tags: [networking, linux]
 ---
 
 # Virtual Interfaces in Linux

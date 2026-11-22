@@ -7,6 +7,7 @@ picture: "assets/images/linux-macvlan.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
+tags: [networking, linux]
 ---
 
 # Linux MacVLAN interface

@@ -8,6 +8,7 @@ latest_release: "2026-11-22: viết lại theo dạng STAR"
 status: "Done"
 index: 4
 publish: true
+tags: [esp32, testing, python, mcu]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

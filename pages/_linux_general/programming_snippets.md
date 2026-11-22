@@ -7,6 +7,7 @@ picture: "assets/images/C_and_Python_Logos.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
+tags: [linux, tools]
 ---
 
 # Programming Language snippets

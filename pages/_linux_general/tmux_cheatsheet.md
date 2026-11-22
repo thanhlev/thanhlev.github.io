@@ -7,6 +7,7 @@ picture: "assets/images/TMUX-Cheatsheet-Cover-Image.001.jpeg"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
+tags: [linux, tools]
 ---
 
 # Tmux Quick Reference

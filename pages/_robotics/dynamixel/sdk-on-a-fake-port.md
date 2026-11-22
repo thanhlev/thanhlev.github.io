@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/dynamixel/sdk-on-a-fake-port
 board_parent: dynamixel
 result: "All 6 e-manual packet examples match byte for byte; a write of FF FF FD goes out unstuffed (LEN 9, not 10); GroupBulkRead on Protocol 1.0 raises TypeError"
+tags: [robotics, servo, python]
 ---
 
 # Two bugs in the DynamixelSDK Python package, found with no servo plugged in

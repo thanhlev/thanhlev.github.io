@@ -7,6 +7,7 @@ picture: "assets/images/esp8266_block_diagram.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
+tags: [esp8266, boot, memory, mcu]
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

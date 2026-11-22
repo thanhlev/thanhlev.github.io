@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/db8074/speed-up
 board_parent: db8074
 result: "Boot to home 264 s to 64 s; CPU 0.80 to 2.15 GHz; a DSI IRQ from 59 000/s to 1/s"
+tags: [qualcomm, arm, gpu, boot]
 ---
 
 # From 264 s to 64 s: touch, a real GPU, and the Krait cores at 2.15 GHz

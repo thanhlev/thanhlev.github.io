@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/pi-zero/rtos-usb-shell
 board_parent: pi-zero
 result: "Shell on /dev/ttyACM0 ~0.8 s after hand-over; 11.3 us per task switch; tick jitter 999-1001 us"
+tags: [raspberry-pi, arm, freertos, boot, usb]
 ---
 
 # A FreeRTOS shell on the boot cable, and the USB device that left after 170 ms

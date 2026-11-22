@@ -10,6 +10,7 @@ publish: true
 permalink: /robotics/humanoid/walking-mujoco
 board_parent: humanoid
 result: "In MuJoCo, IMU feedback lifts the push margin from 1075 to 1338 mN·s (+24 %); steps up to 40 mm walk, 50 mm falls"
+tags: [robotics, kinematics, simulation]
 ---
 
 # Walking in MuJoCo: two feet in one place, and the one feedback that paid

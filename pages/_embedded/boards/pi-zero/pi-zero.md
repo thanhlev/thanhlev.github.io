@@ -9,6 +9,7 @@ index: 22
 publish: true
 permalink: /embedded/boards/pi-zero/
 board_hub: true
+tags: [raspberry-pi, arm, gpu, freertos, bare-metal, boot]
 ---
 
 # Raspberry Pi Zero W (BCM2835)

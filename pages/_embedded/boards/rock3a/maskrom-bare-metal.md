@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/rock3a/maskrom-bare-metal
 board_parent: rock3a
 result: "8 GB DRAM seen from my own code; download to Maskrom again in ~3 s, 0 hands"
+tags: [rockchip, arm, bare-metal, boot, memory]
 ---
 
 # Bare metal from the BootROM, no hands on the board
