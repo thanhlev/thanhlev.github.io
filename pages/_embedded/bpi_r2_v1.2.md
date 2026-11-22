@@ -6,7 +6,8 @@ status: "Pending"
 picture: "assets/images/bpi_r2_v1.2.jpg"
 latest_release: "Placeholder since 2023-01-12, nothing written yet"
 index: 12
-publish: true
+publish: false   # 2026-11-22: empty placeholder, hidden during the STAR rewrite (nothing to tell yet)
+published: false
 board_parent: bpi-r2
 result: "Not started: no OpenWrt build yet"
 ---
