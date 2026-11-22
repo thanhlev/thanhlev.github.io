@@ -49,42 +49,38 @@ its GICv2 AArch64 port; core 3 sets up its own MMU and only touches its own bank
 decided nothing gets written to it yet anyway. So: build on the PC against the Pi kernel at a pinned
 commit (6.18.59), and test the whole cycle on QEMU's `virt` machine with GICv2 and four A76s.
 
-**Bugs on the way.**
-- The first link failed: FreeRTOS's port keeps a 32-bit absolute `.word`, so the link address has to
-  be under 4 GiB. Moved the RTOS virtual address from `0x40_0000_0000` to `0x8000_0000`.
-- A checker script walks every instruction that runs before the MMU is on: 274 of them, no absolute
-  address except the jump to the virtual address. Page tables are walked in software for four layouts
-  (Pi 5 x2, QEMU, VA = PA).
-- First QEMU run: all PASS, and still two real bugs in the log. The second `START` reused the first
-  run's `.data` (it came up still saying "rt 2000 us" from run one), so the image is now copied fresh
-  every time. And the first two log lines used a 54 MHz fallback, so time ran backwards (3.543 s, then
-  3.086 s); `CNTFRQ` is now read first thing.
+**Bugs on the way.** The first link failed: FreeRTOS's port keeps a 32-bit absolute `.word`, so the
+link address has to be under 4 GiB. I moved the RTOS virtual address from `0x40_0000_0000` to
+`0x8000_0000`. Then, because I can't debug core 3 before its MMU is on, a checker script walks every
+instruction that runs before that point: 274 of them, no absolute address except the jump to the
+virtual address. Page tables are walked in software for four layouts (Pi 5 x2, QEMU, VA = PA).
+
+The first QEMU run said all PASS, and the log still had two real bugs in it. The second `START`
+reused the first run's `.data` (it came up still saying "rt 2000 us" from run one), so the image is
+now copied fresh every time. And the first two log lines used a 54 MHz fallback, so time ran
+backwards (3.543 s, then 3.086 s); `CNTFRQ` is now read first thing.
 
 ## Result
 
-The selftest on QEMU, verdict lines only:
+The selftest on QEMU, a few of its verdict lines:
 
 ```
-[PASS] load: header + CRC accepted
 [ 3.013302] amp: '20261030-2354' RUNNING on cpu3 (MPIDR 0x80000003) 6880 us after CPU_ON, entered at EL2, runs at EL1
 start: ok, 54.8 ms (remove_cpu + CPU_ON + boot)
-[PASS] while running: the core is offline in Linux
 [PASS] mailbox: 5 pings answered
 [PASS] tick: ~1000 IRQs/s on core 3
-[PASS] period 1500 us refused (-22)
 stop: ok, 28.3 ms (CPU_OFF + add_cpu)
 [PASS] after: the core is Linux's again
-SELFTEST PASS
-rmmod amp_ctl: ok
 QEMU AMP TEST PASS
 ```
 
-- **13/13** checks pass on QEMU. A separate fault test works too: a data abort on core 3 ends in
-  `CPU_OFF` and the core goes back to Linux.
-- Start **54.8 ms**, stop **28.3 ms**; `CPU_ON` to RUNNING 1.2 to 6.9 ms under TCG.
-- RTOS image **32 392 bytes**, using 1188 KiB of the 3 MiB it's allowed.
-- Latency on QEMU means nothing: three runs gave a worst wake-up of 1.7, 8.0 and 13.7 ms, because
-  each vCPU is just a thread on my busy PC. **The number this demo exists for is not measured yet.**
+All **13/13** checks pass on QEMU, and a separate fault test works too: a data abort on core 3 ends
+in `CPU_OFF` and the core goes back to Linux. Start takes **54.8 ms**, stop **28.3 ms**, and
+`CPU_ON` to RUNNING is 1.2 to 6.9 ms under TCG. The RTOS image is **32 392 bytes** and uses 1188 KiB
+of the 3 MiB it's allowed.
+
+Latency on QEMU means nothing: three runs gave a worst wake-up of 1.7, 8.0 and 13.7 ms, because each
+vCPU is just a thread on my busy PC. **The number this demo exists for is not measured yet.**
 
 ![The 4 MiB block by offset]({{ '/assets/images/boards/pi5/pi5_amp_block.png' | relative_url }})
 *The 4 MiB block by offset, to scale: image header, code, the 1 MiB FreeRTOS heap in `.bss`, page tables, stacks, and the shared window for the rings at the top.*

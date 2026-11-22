@@ -93,14 +93,13 @@ the Raspberry Pi docs). If a USB disk keeps dropping on a Pi 5, this is the firs
 
 ## Result
 
-- RP1 sits behind **PCIe x4 at 5 GT/s**; its registers appear at CPU `0x1f_0000_0000`. A GPIO write is
-  a PCIe memory write to `0x1f_000e_2000`.
-- Idle: ARM at **1.5 GHz** (`measure_clock arm` = 1500019456), **47.7 C**, fan at level 0 of 4,
-  `throttled=0x0`.
-- Sum of V x I over the PMIC rails: **~1.93 W** (VDD_CORE 502 mW of it). That leaves out whatever the
-  PMIC can't see, so it's not the wall power.
-- The RP1 GPIO chip is **gpiochip0** here, not gpiochip4.
-- USB limited to **600 mA** total with this 3 A supply.
+RP1 sits behind **PCIe x4 at 5 GT/s** and its registers appear at CPU `0x1f_0000_0000`, so a GPIO
+write is a PCIe memory write to `0x1f_000e_2000`. The RP1 GPIO chip is **gpiochip0** on this kernel,
+not gpiochip4, and with this 3 A supply USB is held to **600 mA** total.
+
+At idle the ARM runs at **1.5 GHz** (`measure_clock arm` = 1500019456), **47.7 C**, fan at level 0
+of 4, `throttled=0x0`. The sum of V x I over the PMIC rails is **~1.93 W** (VDD_CORE 502 mW of it).
+That leaves out whatever the PMIC can't see, so it's not the wall power.
 
 ## What I'd do next
 

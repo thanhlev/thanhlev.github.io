@@ -29,13 +29,9 @@ can't just flash it or reboot it whenever I like. On 2026-10-30 I treated it lik
 server: everything over ssh, read-only, no sudo. That's also why the RTOS work below is still waiting
 for its first run on the real board.
 
-## Timeline
-
-| When | What happened |
-|---|---|
-| 2026-10-30 | Read-only survey over ssh: buses, boot, power rails, pins, clocks, temperature |
-| 2026-10-30 | AMP demo: a kernel module lends core 3 to FreeRTOS and takes it back; 13/13 checks pass on QEMU |
-| 2026-10-30 | Board unreachable that evening, and no permission to write to it yet. Board run still pending |
+So far I got two things out of it. A read-only survey over ssh (buses, boot, power rails, pins,
+clocks, temperature), which is where I saw that a GPIO write is now a PCIe transaction. And an AMP
+demo: a kernel module lends core 3 to FreeRTOS and takes it back, 13/13 checks passing on QEMU.
 
 ![Pi 5 boot chain on my board]({{ '/assets/images/boards/pi5/pi5_boot_chain.png' | relative_url }})
 *The same boot as one row per stage, read from my board's logs: `BOOT_ORDER=0xf461`, boot mode 1 (SD), kernel 2.33 s + userspace 12.72 s, and what the board shows when each stage fails.*
@@ -46,7 +42,7 @@ for its first run on the real board.
 
 ## Still open
 
-- The AMP selftest on the real Pi 5. Until then I have no real latency number for it, only QEMU's,
-  which measures my PC's scheduler, not the chip.
-- No GPIO toggle measured: the board is shared, so I didn't touch its pins.
-- The boot log on the 3-pin debug UART (J6). I don't have a probe on it.
+The AMP selftest on the real Pi 5. Until then I have no real latency number for it, only QEMU's,
+which measures my PC's scheduler, not the chip. I haven't measured a GPIO toggle either: the board
+is shared, so I didn't touch its pins. And the boot log on the 3-pin debug UART (J6) is still unseen,
+I don't have a probe on it.
