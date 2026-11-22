@@ -27,23 +27,20 @@ were about what changes when the same design goes 64-bit with ARM Trusted Firmwa
 It hasn't been on my bench yet. So there's no STAR write-up here, only what I've read and checked on
 files.
 
-## What I've done so far (on files, not the board)
+## What the files told me
 
-| When | What |
-|---|---|
-| 2026-10-01 | Read the FriendlyELEC wiki against the schematic (2022-12-07), U-Boot `nanopi2-v2016.01` and `sd-fuse_s5p6818` |
-| 2026-10-01 | Took the prebuilt SD boot files apart, header by header |
-| 2026-10-31 | Drew the SoC floorplan from the compiled device tree (86 blocks enabled) and a row-per-stage boot figure |
+I read the FriendlyELEC wiki against the schematic, U-Boot and the SD-fuse scripts, then took the
+prebuilt SD boot files apart, header by header. Everything below I checked on those files.
 
-What the files say, checked by me:
+The SD card carries four boot images before the first partition, not one like on the S5P4418: BL1 at
+sector 1 (21 552 bytes, loaded into SRAM at 0xFFFF0000), BL2 at 129, ATF BL31 + OP-TEE at 769, and
+U-Boot at 3841. Each hop checks a CRC-32 in its NSIH header. I recomputed all three and they match.
 
-- The SD card carries four boot images before the first partition, not one like on the S5P4418:
-  BL1 at sector 1 (21 552 bytes, into SRAM at 0xFFFF0000), BL2 at 129, ATF BL31 + OP-TEE at 769,
-  U-Boot at 3841. Each hop checks a CRC-32 in its NSIH header; I recomputed all three and they match.
-- The BOOT key pulls a strap pin low through a 100 Ω resistor: released means eMMC, held at reset
-  means the SD slot. That's why the wiki says to hold it when booting from a card.
-- One U-Boot binary serves six boards: it reads three PCB-revision GPIOs (0b001 here) and picks
-  `s5p6818-nanopi3-rev01.dtb`.
+The BOOT key pulls a strap pin low through a 100 Ω resistor. Released means eMMC, held at reset means
+the SD slot, which is why the wiki tells you to hold it when booting from a card. And one U-Boot binary
+serves six boards: it reads three PCB-revision GPIOs (0b001 here) and picks
+`s5p6818-nanopi3-rev01.dtb`. I also drew the SoC floorplan from the compiled device tree, 86 blocks
+enabled.
 
 ![NanoPC-T3 SD card: BL1 at sector 1, BL2 at 129, BL31 + OP-TEE at 769, U-Boot at 3841](/assets/images/boards/nanopc-t3/npct3_sd_layout.png)
 *The four images in front of the first partition, by sector, as I read them out of the prebuilt files. The S5P4418 on my NanoPi 2 Fire needs one.*
