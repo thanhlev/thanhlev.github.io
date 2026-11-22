@@ -3,8 +3,7 @@ hub_grid.html - cards for the hub pages of one collection (home page, style A).
 Usage: {% include hub_grid.html coll="embedded" %} or coll="robotics".
 A hub = front matter `board_hub: true`; its stories = docs of the same collection with
 `board_parent: <hub slug>`. Card = picture, chip (text in brackets of the title), name, short
-description, story count + first result. A single-page entry (hub with no stories but a `result:`, e.g. the thesis robot) shows that result.
-Plain Liquid (GitHub Pages safe mode).
+description, story count + first result. Plain Liquid (GitHub Pages safe mode).
 2026-11-22: moved out of index.md so Boards and Robotics share it (user «tạo thêm robotics, cùng cấp với boards»).
 {% endcomment %}
 {% assign live = site[include.coll] | where_exp: "i", "i.publish != false" %}
@@ -19,7 +18,7 @@ Plain Liquid (GitHub Pages safe mode).
     {% if soc != "" %}<span class="chip">{{ soc }}</span>{% endif %}
     <h3>{{ name }}</h3>
     <p>{{ h.short_description }}</p>
-    <div class="res">{% if kids.size > 0 %}<b>{{ kids.size }} {% if kids.size == 1 %}story{% else %}stories{% endif %}</b> · {{ kids.first.result | truncate: 110 }}{% elsif h.result %}<b>result</b> · {{ h.result | truncate: 110 }}{% else %}<b>hub only</b> · nothing measured yet{% endif %}</div>
+    <div class="res">{% if kids.size > 0 %}<b>{{ kids.size }} {% if kids.size == 1 %}story{% else %}stories{% endif %}</b> · {{ kids.first.result | truncate: 110 }}{% else %}<b>hub only</b> · nothing measured yet{% endif %}</div>
   </a>
 {% endfor %}
 </div>
