@@ -6,6 +6,7 @@ status: "In Progress"
 picture: "assets/images/C_and_Python_Logos.png"
 latest_release: "Init document"
 index: 7
+publish: true
 ---
 
 <h2>Python</h2>
