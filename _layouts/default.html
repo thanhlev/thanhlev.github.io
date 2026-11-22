@@ -61,7 +61,7 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
       {% assign coll = page.collection | default: "page" | replace: "_", " " %}
       <section class="dochead">
         <div class="pn">
-          {{ coll | upcase }}{% if page.board_parent %} · {% if page.collection == "robotics" %}ROBOT{% else %}BOARD{% endif %} {{ page.board_parent | upcase }}{% endif %}{% if page.board_hub %} · {% if page.collection == "robotics" %}ROBOT{% else %}BOARD{% endif %} HUB{% endif %}{% if page.status %} · {{ page.status | upcase }}{% endif %}
+          {{ coll | upcase }}{% if page.board_parent %} · {% if page.collection == "robotics" %}ROBOT{% elsif page.path contains "/boards/" %}BOARD{% else %}SERIES{% endif %} {{ page.board_parent | upcase }}{% endif %}{% if page.board_hub %} · {% if page.collection == "robotics" %}ROBOT{% else %}BOARD{% endif %} HUB{% endif %}{% if page.status %} · {{ page.status | upcase }}{% endif %}
         </div>
         <h1 class="doctitle">{{ page.title | remove: "[🔥] - " }}</h1>
         {% if page.short_description %}<p class="docsub">{{ page.short_description }}</p>{% endif %}
@@ -71,7 +71,7 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
         <table class="docspec">
           {% if page.result %}<tr><td>Result</td><td>{{ page.result }}</td></tr>{% endif %}
           {% if page.latest_release %}<tr><td>Last change</td><td>{{ page.latest_release }}</td></tr>{% endif %}
-          {% if page.board_parent %}{% if page.collection == "robotics" %}<tr><td>Robot</td><td><a href="{{ '/robotics/' | append: page.board_parent | append: '/' | relative_url }}">all stories on this robot →</a></td></tr>{% else %}<tr><td>Board</td><td><a href="{{ '/embedded/boards/' | append: page.board_parent | append: '/' | relative_url }}">all stories on this board →</a></td></tr>{% endif %}{% endif %}
+          {% if page.board_parent %}{% comment %} 2026-11-22: the parent hub is looked up (same collection, file slug = board_parent), so board, robot and notes hubs (control/, mcu/) all link right. {% endcomment %}{% assign hubdoc = site[page.collection] | where: "slug", page.board_parent | first %}{% if hubdoc %}<tr><td>{% if page.collection == "robotics" %}Robot{% elsif hubdoc.notes_hub %}Series{% else %}Board{% endif %}</td><td><a href="{{ hubdoc.url | relative_url }}">all stories in {{ hubdoc.title | split: ":" | first }} →</a></td></tr>{% endif %}{% endif %}
         </table>
         {% endif %}
       </section>

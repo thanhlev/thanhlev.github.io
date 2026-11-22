@@ -16,7 +16,7 @@ and from older posts: keep them.
 {% endcomment %}
 {% assign live_emb = site.embedded | where_exp: "i", "i.publish != false" %}
 {% assign hubs = live_emb | where: "board_hub", true | sort: "index" %}
-{% assign stories = live_emb | where_exp: "i", "i.board_parent != nil" %}
+{% assign stories = live_emb | where_exp: "i", "i.board_parent != nil" | where_exp: "i", "i.path contains '/boards/'" %}
 {% assign emb_notes = live_emb | where_exp: "i", "i.board_parent == nil" | where_exp: "i", "i.board_hub != true" | sort: "index" %}
 {% assign net = site.linux_networking | where_exp: "i", "i.publish != false" | sort: "index" %}
 {% assign gen = site.linux_general | where_exp: "i", "i.publish != false" | sort: "index" %}
