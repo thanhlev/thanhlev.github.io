@@ -1,3 +1,5 @@
+# NOTE 2026-11-22: GitHub Pages builds in safe mode and never runs this plugin; live drafts are
+# hidden by `published: false` in the post front matter. This plugin only covers local builds.
 # unpublished_filter.rb: drop collection docs whose front matter says `publish: false`.
 #
 # Why (2026-11-22 audit): the front matter template in CLAUDE.md uses our own key `publish`,

@@ -7,6 +7,7 @@ picture: "assets/images/pppoe_server.png"
 latest_release: "2026-11-22: plan written, nothing run yet"
 index: 9
 publish: false
+published: false   # Jekyll-native: GitHub Pages ignores _plugins/unpublished_filter.rb (safe mode), 2026-11-22
 ---
 
 # Setup PPPoE Server on Raspberry Pi Board

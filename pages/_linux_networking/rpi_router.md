@@ -7,6 +7,7 @@ picture: "assets/images/raspberry_pi4.png"
 latest_release: "2026-11-22: plan written, nothing run yet"
 index: 7
 publish: false
+published: false   # Jekyll-native: GitHub Pages ignores _plugins/unpublished_filter.rb (safe mode), 2026-11-22
 ---
 
 # Raspberry Pi 4 mini router: Ethernet in, Wi-Fi out
