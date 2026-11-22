@@ -70,7 +70,7 @@ The kernel part is called **Netfilter**. It puts hooks at fixed points in the ne
                                     └────────────────────────────────────────┘
 ```
 
-And the diagram from the first edition of this page:
+And the diagram from the first edition of this page, redrawn (same chains and tables):
 
 <img src="./../../assets/images/traversing_table_chain.png" alt="traversing_table_chain.png">
 

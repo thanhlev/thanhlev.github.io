@@ -3,7 +3,7 @@ layout: default
 title: "Udev Quick Reference"
 short_description: "Ghi chép udev của mình: rule nằm đâu, thứ tự, ví dụ tắt touchpad khi cắm chuột, udevadm test"
 status: "Done"
-picture: "assets/images/udev_Kernel.JPG"
+picture: "assets/images/udev_kernel.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 4
 publish: true

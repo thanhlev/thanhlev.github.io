@@ -3,7 +3,7 @@ layout: default
 title: "Disk Partition Tables: MBR & GPT"
 short_description: "MBR byte by byte on a test image, then GPT, the tools, and the layouts I use on boards"
 status: "Done"
-picture: "assets/images/MBR_usecase_partitions.jpg"
+picture: "assets/images/MBR_usecase_partitions.png"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
@@ -171,7 +171,7 @@ between the MBR and the first partition stays unallocated: that's where the boot
 
 |Common partition layout|Embedded Linux partition layout|
 |:---|:---|
-|No reserved space for bootloader<br>![MBR_theory_partitions](../../assets/images/MBR_theory_partitions.jpg)|Unallocated space before first partition stores BL1/U-Boot<br>![MBR_usecase_partitions](../../assets/images/MBR_usecase_partitions.jpg)|
+|No reserved space for bootloader<br>![MBR_theory_partitions](../../assets/images/MBR_theory_partitions.png)|Unallocated space before first partition stores BL1/U-Boot<br>![MBR_usecase_partitions](../../assets/images/MBR_usecase_partitions.png)|
 
 #### Making the partitions
 
