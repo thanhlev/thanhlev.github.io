@@ -25,6 +25,9 @@ script at `0x8000`, a bit of C that sets up the PL011 UART and blinks the ACT LE
 flat `kernel.img` of 1381 bytes. No header, no ELF loader, nothing. It passed `make verify` (entry
 address, first instruction, no ARMv7 opcodes sneaking in) and ran on QEMU's `raspi0`.
 
+<a href="{{ '/assets/images/boards/pi-zero/pz_build_pipeline.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_build_pipeline.png' | relative_url }}" alt="From start.S to kernel.img" style="width:100%;max-width:520px"></a>
+*How the 1381 bytes come out: `start.S` + C, linked at `0x8000`, `objcopy -O binary`, no header at all. QEMU raspi0 was my only test before the board.*
+
 Next day I plugged the real board into my PC. No SD card. `lsusb` showed one line:
 
 ```
@@ -100,6 +103,9 @@ I tried it both ways. Power-cycle, wait 10 s, rpiboot: fine (`Received message D
 Power-cycle, `lsusb -v` on the boot ROM, rpiboot: broken again. 2 out of 2. I never proved why. My
 guess is the ROM mishandles one of the extra descriptor requests `lsusb -v` sends. I just don't query
 it any more.
+
+<a href="{{ '/assets/images/boards/pi-zero/pz_usb_boot_stack.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_usb_boot_stack.png' | relative_url }}" alt="The USB boot stack, PC side and board side" style="width:100%;max-width:520px"></a>
+*Both ends of the one cable: rpiboot and libusb on my PC, then the four stages on the Zero (boot ROM `0a5c:2763`, `bootcode.bin` re-enumerating as `0a5c:2764`, `start.elf`, my kernel at `0x8000`).*
 
 ## Result
 

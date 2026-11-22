@@ -16,8 +16,6 @@ result: "4799 MFLOPS on 12 QPUs vs 73 on the ARM with VFP (66x); 192 lanes bit-e
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-20
 
-![MFLOPS measured on my board]({{ '/assets/images/boards/pi-zero/pz_qpu_mflops.png' | relative_url }})
-
 ## Situation
 
 The Zero W has one ARM core. That's it for the CPU. But the GPU next to it has 12 QPUs (3 slices of 4),
@@ -25,6 +23,9 @@ each a 16-lane SIMD shader core. Linux uses them for 3D through the vc4 driver. 
 [FreeRTOS shell]({{ '/embedded/boards/pi-zero/rtos-usb-shell' | relative_url }}) already ran on the
 ARM, so I asked myself: could my own code run on the QPUs, from bare metal, and how much faster would
 it be than the ARM1176?
+
+<a href="{{ '/assets/images/boards/pi-zero/pz_qpu_ep3.jpg' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_qpu_ep3.jpg' | relative_url }}" alt="Frame from my Pi Zero video, episode 3" style="width:100%;max-width:432px"></a>
+*A frame from episode 3 of my Pi Zero videos: one ARM core, then three slices of 4 QPUs next to it, and 192 results (12 x 16 lanes) landing in RAM. (Vietnamese labels.)*
 
 ## Task
 
@@ -56,6 +57,9 @@ in (no MMU, so the physical address is the ARM's), then writes each thread's uni
 to count 12 programs done.
 
 ## Result
+
+![MFLOPS measured on my board]({{ '/assets/images/boards/pi-zero/pz_qpu_mflops.png' | relative_url }})
+*MFLOPS from the `qpu` command on my board: 4799 on 12 QPUs, 399 on one, 73 on the ARM with VFP, 12 in soft float.*
 
 ```
 pz> qpu

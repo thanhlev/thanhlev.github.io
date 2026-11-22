@@ -31,6 +31,9 @@ device.
 FreeRTOS on the ARM1176, TinyUSB as a CDC-ACM device on the DWC2 controller, a small shell. Then make
 it stable on the real board, where I can't see anything until USB works.
 
+<a href="{{ '/assets/images/boards/pi-zero/pz_rtos_arch.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_rtos_arch.png' | relative_url }}" alt="rtos_cli tasks and interrupts on the BCM2835" style="width:100%;max-width:560px"></a>
+*What I was building: timer IRQ 1 for the 1 kHz tick, DWC2 IRQ 9 into the TinyUSB task (prio 6), the shell task (prio 2), the mailbox to the firmware. The PL011 is drawn but has no cable on my side.*
+
 ## Action
 
 **Port choice.** FreeRTOS V11.2.0 with the old `ARM7_LPC2000` port as the base: ARMv6 in ARM state has
@@ -105,6 +108,9 @@ The real cause was in my own code. At boot I ask the firmware (mailbox) to power
 527 ms. With the old timeout, TinyUSB enumerated inside that window, and the firmware's last reset at
 the end of power-on knocked it off. Its late reply then matched my next mailbox call (same static
 buffer). Timeout raised to 2 s, init after the answer. No delay hacks needed.
+
+![Sequence of the USB drop]({{ '/assets/images/boards/pi-zero/pz_usb_drop.png' | relative_url }})
+*The drop, in order: my 100 ms mailbox timeout gives up, TinyUSB enumerates `cafe:4021`, the firmware's power-on finishes with a core reset into host mode, the pull-up goes, the PC logs "USB disconnect" about 170 ms after mount.*
 
 **Bug 3: scrambled text.** On the way there I had a build with a 3 s delay that stayed connected, and
 the shell answered like this:

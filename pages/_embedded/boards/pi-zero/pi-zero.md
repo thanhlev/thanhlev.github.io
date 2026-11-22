@@ -20,10 +20,16 @@ core, 512 MB of LPDDR2 stacked on top of the SoC, a CYW43438 for Wi-Fi and Bluet
 for data and one for power. Mine has no header soldered and, for this whole project, no SD card and
 no UART cable either. Just the USB data cable to my PC.
 
+<a href="{{ '/assets/images/boards/pi-zero/pz_board_model.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_board_model.png' | relative_url }}" alt="3D model of my Pi Zero W" style="width:100%;max-width:540px"></a>
+*My Zero W as a 3D model I made for the video series (no photo of mine yet): 65 x 30 mm, the BCM2835 with the 512 MB stacked on it, two micro-USB, no header.*
+
 The question I started with in October 2026 was simple: what does "bare metal" even mean on this
 chip? On a microcontroller the reset vector is yours. Here it isn't. The VideoCore GPU boots first
 from its own ROM, runs closed firmware, and only then lets the ARM out of reset at `0x8000`. I wanted
 to see how much of that I could poke at from my side of the cable.
+
+![Datasheet bus addresses vs ARM physical addresses]({{ '/assets/images/boards/pi-zero/pz_addr_map.png' | relative_url }})
+*The first thing that tripped me: the datasheet prints `0x7E...` VideoCore bus addresses, my ARM code has to use `0x20...`. Same GPIO, UART0 and AUX, 0x5E000000 apart.*
 
 ## Timeline
 
