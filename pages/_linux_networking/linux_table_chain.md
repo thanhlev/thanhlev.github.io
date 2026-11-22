@@ -4,7 +4,7 @@ title: "[🔥] - Linux Packet Filtering"
 short_description: "Where a packet goes inside the kernel: the five chains, the tables in each, conntrack, iptables and nftables"
 status: "In progress"
 picture: "assets/images/traversing_table_chain.png"
-latest_release: "2026-11-22: rewritten in my own words, tables and conntrack added"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
 ---
@@ -20,16 +20,24 @@ publish: true
 
 ---
 
-## Introduction
+## Situation
 
-If you want a Linux box to do anything clever with traffic (be a firewall, a router, filter DNS), you need a map of the packet's path: from the moment the NIC hands it to the kernel until an application reads it from a socket, and the other way, from `send()` down to the driver. This page is that map.
+If you want a Linux box to do anything clever with traffic (be a firewall, a router, filter DNS), you need a map of the packet's path: from the moment the NIC hands it to the kernel until an application reads it from a socket, and the other way, from `send()` down to the driver. The first edition of this page was mostly one diagram of that path (it's still below). It showed the boxes, but not why a port forward needs DNAT in PREROUTING, or why the FORWARD rule after it matches the *new* port.
+
+## Task
+
+Draw the path once, then go through it chain by chain and table by table, with conntrack, the iptables and nftables spellings, and examples I'd actually type: a server firewall, a NAT router, a transparent proxy, what Docker writes.
+
+## Action
+
+### Chains and tables
 
 The kernel part is called **Netfilter**. It puts hooks at fixed points in the network stack, and tools like `iptables` and `nftables` hang rules on those hooks. Two words to keep apart:
 
 - a **chain** is *where* in the path a rule runs (one per hook);
 - a **table** is *what kind* of rule it is (filtering, NAT, mangling...). One chain can hold rules from several tables.
 
-## The path, in one picture
+### The path, in one picture
 
 ```
                                     ┌─────────────────────────────┐
@@ -65,7 +73,7 @@ And the diagram from the first edition of this page:
 
 <img src="./../../assets/images/traversing_table_chain.png" alt="traversing_table_chain.png">
 
-## The five chains
+### The five chains
 
 Which chains a packet passes depends on where it comes from and where it's going. There are five built-in chains, one per Netfilter hook:
 
@@ -79,7 +87,7 @@ Which chains a packet passes depends on where it comes from and where it's going
 
 Rules in a chain can let the packet through, drop it, change it, or mark it so a later chain can recognise it.
 
-### PREROUTING
+#### PREROUTING
 
 <div class="row">
     <div class="column">
@@ -102,7 +110,7 @@ The fix is to rewrite the destination in PREROUTING, before the routing decision
     </div>
 </div>
 
-### INPUT
+#### INPUT
 
 - Packets in INPUT came in on an interface and are addressed to one of the host's IPs (WAN, LAN or loopback).
 - What leaves this chain goes to the local application's socket.
@@ -115,7 +123,7 @@ iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -j DROP
 ```
 
-### FORWARD
+#### FORWARD
 
 - Packets in FORWARD came in on an interface and are addressed to an IP the host doesn't have: the host is acting as a router.
 - What leaves this chain goes to POSTROUTING.
@@ -130,7 +138,7 @@ iptables -A FORWARD -i eth0 -o eth1 -m conntrack --ctstate RELATED,ESTABLISHED -
 iptables -A FORWARD -j DROP
 ```
 
-### OUTPUT
+#### OUTPUT
 
 <div class="row">
     <div class="column">
@@ -147,7 +155,7 @@ Redirect the host's own outgoing HTTP to a proxy on port 3128:<br>
     </div>
 </div>
 
-### POSTROUTING
+#### POSTROUTING
 
 <div class="row">
     <div class="column">
@@ -165,7 +173,7 @@ Internet sharing in one line:<br>
     </div>
 </div>
 
-## The tables
+### The tables
 
 Inside each chain, tables run in a fixed order:
 
@@ -183,7 +191,7 @@ Not every table exists in every chain:
 | `filter` | | ✓ | ✓ | ✓ | |
 | `security` | | ✓ | ✓ | ✓ | |
 
-### raw
+#### raw
 
 Runs before connection tracking. Its main job is to say "don't track this" with `CT --notrack`, for heavy traffic that doesn't need stateful rules (a busy DNS server, for example). Only in PREROUTING and OUTPUT.
 
@@ -194,7 +202,7 @@ iptables -t raw -A PREROUTING -p udp --dport 53 -j CT --notrack
 # iptables -t raw -A PREROUTING -p udp --dport 53 -j NOTRACK
 ```
 
-### mangle
+#### mangle
 
 Changes headers and metadata: TOS/DSCP, TTL, TCP MSS, and marks. A mark (`--set-mark`) never goes on the wire; it's a number attached to the packet inside the kernel that policy routing (`ip rule fwmark`), `tc` and later rules can match on. Exists in all five chains.
 
@@ -206,7 +214,7 @@ iptables -t mangle -A PREROUTING -s 192.168.2.0/24 -j MARK --set-mark 2
 iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 ```
 
-### nat
+#### nat
 
 Address translation.
 
@@ -224,7 +232,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to-destination 192.1
 iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to-source 203.0.113.1
 ```
 
-### filter
+#### filter
 
 The default table, used when you don't give `-t`. Accept, drop or reject. INPUT, FORWARD and OUTPUT only. With conntrack it can match on connection state: `NEW`, `ESTABLISHED`, `RELATED`, `INVALID`.
 
@@ -236,11 +244,11 @@ iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT
 iptables -A INPUT -j DROP
 ```
 
-### security
+#### security
 
 For SELinux and other mandatory access control systems: it puts security labels on packets. INPUT, FORWARD, OUTPUT. Rarely set by hand outside SELinux systems.
 
-## Connection tracking
+### Connection tracking
 
 `nf_conntrack` is what makes stateful rules possible. It follows every connection and gives each packet a state:
 
@@ -271,7 +279,7 @@ echo 262144 > /proc/sys/net/netfilter/nf_conntrack_max
 echo 86400 > /proc/sys/net/netfilter/nf_conntrack_tcp_timeout_established
 ```
 
-## The full path, table by table
+### The full path, table by table
 
 **Incoming, for this host**
 
@@ -299,9 +307,9 @@ Application → Local Socket → raw/OUTPUT → mangle/OUTPUT → nat/OUTPUT (DN
 
 (For local traffic the route is actually looked up before OUTPUT and checked again after it, in case a rule changed the destination or mark.)
 
-## Tools
+### Tools
 
-### iptables
+#### iptables
 
 The well-known `iptables` talks to the kernel to create these rules:
 
@@ -368,7 +376,7 @@ Targets:
 | `MARK --set-mark` | set a mark (`mangle`) |
 | `RETURN` | back to the calling chain |
 
-### nftables
+#### nftables
 
 `nftables` replaces `iptables`, `ip6tables`, `arptables` and `ebtables` with one tool, `nft`. Most distributions have defaulted to it since around 2019. The differences that matter in practice:
 
@@ -445,9 +453,9 @@ Mixing the two backends on one machine is a good way to get rules that are "ther
 | Updating | rule by rule | whole ruleset atomically |
 | IPv4 + IPv6 | two tools | one `inet` table |
 
-## Examples
+### Examples
 
-### A web server's own firewall
+#### A web server's own firewall
 
 ```bash
 iptables -F
@@ -472,7 +480,7 @@ iptables -A INPUT -j DROP
 
 Order matters: the ESTABLISHED,RELATED rule near the top means almost every packet is accepted by the second rule and never walks the rest of the list. Also, don't run `-P INPUT DROP` over SSH before the SSH rule exists.
 
-### A NAT router with one port forward
+#### A NAT router with one port forward
 
 LAN on `eth1`, WAN on `eth0`:
 
@@ -491,7 +499,7 @@ iptables -A FORWARD -i eth0 -p tcp --dport 80 -d 192.168.1.100 -j ACCEPT
 
 Notice the FORWARD rule matches port **80**, not 8080: by the time the packet reaches FORWARD, PREROUTING has already rewritten it.
 
-### Transparent proxy with TPROXY
+#### Transparent proxy with TPROXY
 
 ```bash
 iptables -t mangle -A PREROUTING -p tcp --dport 80 -j TPROXY \
@@ -504,7 +512,7 @@ ip route add local 0.0.0.0/0 dev lo table 100
 
 Unlike REDIRECT, TPROXY doesn't rewrite the destination, so the proxy still sees where the client wanted to go (the proxy socket needs `IP_TRANSPARENT`).
 
-### What Docker adds
+#### What Docker adds
 
 ```bash
 -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
@@ -517,7 +525,7 @@ Unlike REDIRECT, TPROXY doesn't rewrite the destination, so the proxy still sees
 
 Every one of the chains and tables above shows up in those six lines, which makes it a good exercise to read. Explained in [Docker Networking]({{ site.baseurl }}{% link _linux_networking/docker_network.md %}).
 
-### Dropping junk and floods
+#### Dropping junk and floods
 
 ```bash
 iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
@@ -541,7 +549,7 @@ iptables -A INPUT -p tcp --syn -m limit --limit 100/s --limit-burst 200 -j ACCEP
 iptables -A INPUT -p tcp --dport 80 -m connlimit --connlimit-above 50 -j REJECT
 ```
 
-### Lots of addresses: ipset
+#### Lots of addresses: ipset
 
 Hundreds of `-s x.x.x.x -j DROP` rules are checked one by one. An ipset is a hash, checked in one step:
 
@@ -554,7 +562,7 @@ iptables -A INPUT -m set --match-set blocklist src -j DROP
 
 (With `hash:ip`, adding a `/24` stores all 256 addresses. Use `hash:net` for ranges.)
 
-## Debugging
+### Debugging
 
 **Which rules does a packet hit?** The `TRACE` target logs every rule a packet passes:
 
@@ -587,9 +595,13 @@ apt install iptables-persistent
 netfilter-persistent save
 ```
 
-## Example: using a low-speed WAN connection to route mail requests (TBD)
+## Result
 
-Still on the list from 2023: two uplinks, mail traffic marked in `mangle` and sent over the slow one with policy routing, everything else over the fast one. The pieces are all on this page (MARK, `ip rule fwmark`, MASQUERADE per interface); the write-up with a real run isn't done yet.
+I now have the map I wanted. A packet for this host goes PREROUTING → INPUT, a forwarded one PREROUTING → FORWARD → POSTROUTING, a local one OUTPUT → POSTROUTING, and inside each chain the tables run in a fixed order (raw, mangle, nat for DNAT, filter, security, nat for SNAT). With that in your head the examples read themselves: DNAT has to happen before the routing decision, so the FORWARD rule sees the rewritten port; one ESTABLISHED,RELATED rule near the top carries most of the traffic; and Docker's six rules touch every chain on the page. The status stays "In progress" because the routing example below has no real run yet.
+
+## What I'd do next
+
+The example still on the list from 2023: using a low-speed WAN connection to route mail requests. Two uplinks, mail traffic marked in `mangle` and sent over the slow one with policy routing, everything else over the fast one. The pieces are all on this page (MARK, `ip rule fwmark`, MASQUERADE per interface); the write-up with a real run isn't done yet.
 
 ## References
 
