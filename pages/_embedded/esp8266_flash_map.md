@@ -1,136 +1,308 @@
 ---
 layout: default
-title: "[🔥] - Esp8266 Flash map và Partition Table"
-short_description: "Esp8266 Flash map và Partition Table"
+title: "[🔥] - ESP8266 Flash Map & Partition Table"
+short_description: "Where the ESP8266 keeps what on its external SPI flash: bootloader, partition table, NVS, OTA slots"
 status: "Done"
 picture: "assets/images/esp8266_block_diagram.png"
-latest_release: "Unknown"
-index: 5
+latest_release: "2026-11-22: English, checked against the ESP8266 RTOS SDK sources"
+index: 7
+publish: true
 ---
 
-# Introduction
+# ESP8266 Flash Map & Partition Table
+{: .no_toc }
 
-- Đối với production firmware, ta cần quan tâm nhiều đến thiết kế  lưu trữ của bộ nhớ Flash sao cho tối ưu và đáp ứng các yêu cầu của một firmware production như: chứa các dữ liệu của nhà sản xuất, dữ liệu riêng biệt của mỗi MCU (ví dụ WiFi calibration data), dữ liệu người dùng (cần không đổi khi cập nhật firmware), các phân vùng khác nhau để  hỗ trợ cập nhật/backup firmware lúc runtime.
-- This article introduces the Flash storage organization of the ESP8266EX chip, which is a well-supported Wireless MCU line that will help us have basic concepts when moving to more powerful and complex MCU and CPU lines.
+## Table of contents
+{: .no_toc }
 
-## ESP8266EX Block Diagram
+1. TOC
+{:toc}
 
-ESP8266EX là một System On Chip (SoC) của hãng Espressif
+---
 
-![](/assets/images/esp8266_block_diagram.png)
+## Why I looked at this
 
-## CPU, Memory, and Flash
+On a hobby board you flash `app.bin` and forget about the rest. For firmware that ships, the
+flash has to hold a lot more than the app: data from the factory, data that is different on
+every chip (Wi-Fi calibration), user settings that must survive an update, and a second app slot
+so an update can happen at runtime. I wanted to see how Espressif lays that out on the ESP8266EX,
+because it's small enough to read end to end and the same ideas come back on the bigger chips.
+
+Part two, what happens at power-on and who reads all this, is
+[Boot sequence on the ESP8266](/embedded/esp8266-boot-up).
+
+## The chip, quickly
+
+The ESP8266EX is a System on Chip from Espressif.
+
+![ESP8266EX Block Diagram](/assets/images/esp8266_block_diagram.png)
 
 ### CPU
 
-Bộ vi xử lý Tensilica L106 32-bit kiến trúc RISC được tích hợp bên trong MCU, bộ xử lý này có mức độ tiêu thụ điện cực thấp và đạt tốc độ xung nhịp tối đa 160 MHz
+A Tensilica L106, 32-bit RISC, up to 160 MHz. Espressif says RTOS + the Wi-Fi stack take about
+20% of the CPU, so roughly 80% is left for the application.
 
-Khi sử dụng RTOS và WiFi stack thì chỉ chiếm 20% CPU resource, còn lại 80% cho chúng ta tự do phát triển ứng dụng.
-
-CPU hỗ trợ các giao tiếp sau:
-
-- Programmable RAM/ROM interfaces (iBus), có thể kết nối đến memory controller và củng có thể dùng để tương tác với flash.
-- Data RAM interface (dBus), có thể kết nối đến memory controller.
-- AHB interface, dùng để tương tác đến các thanh ghi.
+The CPU talks to memory over three buses:
+- **iBus**: instruction RAM/ROM interface to the memory controller; also how code runs from flash (through the cache)
+- **dBus**: data RAM interface to the memory controller (a hardware bus, nothing to do with D-Bus on Linux)
+- **AHB**: peripheral registers
 
 ### Memory
 
-SoC ESP8266EX được tích hợp memory controller, static ram (SRAM) và ROM. MCU có thể truy cập SRAM và ROM thông qua iBus, AHB interface và dBus (này là bus phần cứng chứ không phải dBus nổi tiếng trên linux).
+Inside: a memory controller, SRAM and ROM.
 
-Tuy nhiên với SDK hiện tại, static RAM cấp cho user space được cấu hình như sau:
+- **ROM**: Espressif's boot code. You can't write it.
+- **SRAM**: with Wi-Fi in station mode and connected to an AP, what's left for the application
+  (heap + data) is **about 50 KB**. You feel that limit quickly.
+- **No internal programmable flash**: the app lives on an external SPI flash chip.
 
-- Khi ESP8266 có chạy WiFi Station mode và kết nối đến AccessPoint thì tổng bộ nhớ tối đa bao gồm Heap và Data cho user là <span style="color:red">xấp xỉ 50 kB</span>, cần lưu ý tối ưu space khi làm app.
-- ESP8266 có ROM, nhưng không phải ROM <span style="color:blue">có thể  ghi xóa</span>, cần gắn bộ nhớ ngoài để chứa mã ứng dụng, SoC ESP 8266 hỗ trợ SPI Flash (External flash). <span style="color:red">Các ứng dụng cần bảo mật cao cần lưu ý, hacker có thể đọc/ghi/thay thế chip flask này.</span>
+<div class="warning">
+<p>Because the flash is a separate chip on SPI, anyone with the board in their hands can read it, rewrite it, or swap it. If that matters for your device, plan for flash encryption and secure boot.</p>
+</div>
 
-### External flash
+### External SPI flash
 
-Hỗ trợ tối đa 16M theo lý thuyết.
-Khi lựa chip flash cho project của mình, cần lưu ý các yêu cầu tối thiểu như sau:
+| | |
+|---------|--------------|
+| Maximum supported size | 16 MB (in theory) |
+| Minimum without OTA | 512 KB |
+| Minimum with OTA | 1 MB |
 
-- Nếu firmware không bật tính năng OTA: tối thiểu 512 kB.
-- Nếu firmware cần tính năng OTA: tối thiểu 1M
+How that flash is split up is described by a **partition table**.
 
-Espressif sử dụng bảng phân vùng (partition tables) để thiết lập thông tin và các vùng lưu trữ các loai dữ liệu khác nhau, chi tiết như sau.
+## The flash map
 
-# Partition Tables
+From address 0x0 up, with the default OTA layout:
 
-## Overview
+```
+┌──────────────────────────────────────────────────────────────┐
+│  0x00000  │  Second-stage bootloader (bootloader.bin)         │
+│           │  (loaded by ROM bootloader)                       │
+├───────────┼──────────────────────────────────────────────────┤
+│  0x08000  │  Partition Table (3072 bytes, up to 95 entries)   │
+│           │  + MD5 checksum                                   │
+├───────────┼──────────────────────────────────────────────────┤
+│  0x09000  │  NVS (Non-Volatile Storage)                      │
+│           │  Wi-Fi credentials, user config, PHY calibration │
+├───────────┼──────────────────────────────────────────────────┤
+│  0x0D000  │  OTA Data (which app slot to boot)               │
+│           │  (only present in OTA-enabled firmware)           │
+├───────────┼──────────────────────────────────────────────────┤
+│  0x0F000  │  PHY Init Data (RF calibration parameters)       │
+├───────────┼──────────────────────────────────────────────────┤
+│  0x10000  │  Application Partition (ota_0 or factory)        │
+│           │  Main firmware code                               │
+│           │  ...                                              │
+├───────────┼──────────────────────────────────────────────────┤
+│  0x110000 │  Application Partition (ota_1)                   │
+│  (OTA)    │  Second firmware slot for OTA updates            │
+│           │  ...                                              │
+├───────────┼──────────────────────────────────────────────────┤
+│  End      │  (Optional: filesystem, custom data partitions)  │
+└──────────────────────────────────────────────────────────────┘
+```
 
-- Một bộ nhớ flash duy nhất trên ESP8266 có thể chứa nhiều ứng dụng và nhiều loại dữ liệu khác nhau. (calibration data, files systems, parameter storage). Vì lý do này mà một <span style="color:blue">bảng phân vùng (partition tables)</span>. sẽ được ghi vào offset 0x8000 trong bộ nhớ.
+## The partition table
 
-- Độ dài của <span style="color:blue">partition table</span> này là 0xC00(3072 bytes) với tối đa 95 phân vùng khác nhau. Và một MD5 checksum sẽ được thêm vào cuối dữ liệu phân vùng.
+One flash chip, several apps and several kinds of data (calibration, file systems, settings).
+The table at offset **0x8000** says which is where; the bootloader and the app both read it.
 
-- Tùy thuộc vào loại ứng dụng sử dụng mà <span style="color:blue">partition table</span> có thể có các entry khác nhau.
-- Table bên dưới mô tả một ví dụ một partition table được dùng
+| Property | Value |
+|----------|-------|
+| Location | flash offset 0x8000 |
+| Length | 0xC00 (3072 bytes) |
+| Entries | up to 95 |
+| Integrity | MD5 checksum appended after the last entry |
+| Entry size | 32 bytes |
 
-| Name     | Type | SubType | Offset   | Size | Flags |
-|:---------|:---- |:--------|:---------|:-----|:------|
-| nvs      | data | nvs     | 0x9000   | 16K  | none  |
-| otadata  | data | ota     | 0xd000   | 8K   | none  |
-| phy_init | data | phy     | 0xf000   | 4K   | none  |
-| ota_0    | app  | ota_0   | 0x10000  | 960K | none  |
-| ota_1    | app  | ota_1   | 0x110000 | 960K | none  |
+Each 32-byte entry, as `gen_esp32part.py` packs it (yes, the ESP8266 SDK uses the tool with the ESP32 name):
 
-# Built-in Partition tables
+| Field | Size | What |
+|-------|------|------|
+| Magic | 2 bytes | `AA 50` |
+| Type | 1 byte | `app` (0x00), `data` (0x01), or your own (0x40–0xFE) |
+| SubType | 1 byte | meaning depends on Type |
+| Offset | 4 bytes | start address in flash |
+| Size | 4 bytes | size in bytes |
+| Name | 16 bytes | ASCII label |
+| Flags | 4 bytes | bit 0 = `encrypted` |
 
-- Khi lựa chọn build một ứng dụng từ build system của Espressif ta sẽ có có 2 lựa chọn để build: OTA và non-OTA, việc lựa chọn tùy chọn này sẽ giúp build system biên dịch luôn bảng phân vùng mặc định tương ứng.
-- Dưới đây là khác nhau của partition tables tương ứng 2 trường hợp này.
+### The two built-in tables
 
-#### ESP8266 Non-OTA Partition Table
+When you build with Espressif's build system you pick OTA or non-OTA in menuconfig, and it
+builds the matching default table for you.
 
-| Name      | Type  | SubType | Offset   | Size    |
-|:----------|:----  |:--------|:---------|:--------|
-|nvs     | data| nvs    | 0x9000 | 0x6000 |
-|phy_init| data| phy    | 0xf000 | 0x1000|
-|factory | app | factory| 0x10000| 0xF0000|
+**Non-OTA** ("Single factory app, no OTA"):
 
-- Tại địa chỉ offset 0x10000(64K) được đánh nhãn là factory. Bootloader sẽ chạy mã chương trình tại địa chỉ này theo mặc định.
-- Còn lại là các phân vùng chứa data.
+| Name | Type | SubType | Offset | Size |
+|:-----|:-----|:--------|:-------|:-----|
+| nvs | data | nvs | 0x9000 | 0x6000 (24 KB) |
+| phy_init | data | phy | 0xF000 | 0x1000 (4 KB) |
+| factory | app | factory | 0x10000 | 0xF0000 (960 KB) |
 
-#### ESP8266 OTA Partition Table
+The bootloader runs whatever is at 0x10000, labelled `factory`. Everything else is data.
 
-| Name      | Type  | SubType | Offset   | Size    |
-|:----------|:------|:--------|:---------|:--------|
-|nvs        |data   | nvs     | 0x9000   | 0x4000  |
-|otadata    |data   | ota     | 0xd000   | 0x2000  |
-|phy_init   |data   | phy     | 0xf000   | 0x1000  |
-|ota_0      |0      | ota_0   | 0x10000  | 0xF0000 |
-|ota_1      |0      | ota_1   | 0x110000 | 0xF0000 |
+**OTA** ("Two OTA app"):
 
-##### Trường Type
-- app(0), data(1), là giá trị số từ 0 - 254, hoặc trá trị hex, các loại từ 0x00 đến 0x3F được dự phòng cho ESP8266.
-- Nếu ứng dụng cần lưu trữ dữ liệu, type nên dùng từ 0x40 đến 0xFE.
--  Bootloader sẽ bỏ qua các phân vùng không phải là app(0) , data(1).
+| Name | Type | SubType | Offset | Size |
+|:-----|:-----|:--------|:-------|:-----|
+| nvs | data | nvs | 0x9000 | 0x4000 (16 KB) |
+| otadata | data | ota | 0xD000 | 0x2000 (8 KB) |
+| phy_init | data | phy | 0xF000 | 0x1000 (4 KB) |
+| ota_0 | app | ota_0 | 0x10000 | 0xF0000 (960 KB) |
+| ota_1 | app | ota_1 | 0x110000 | 0xF0000 (960 KB) |
 
-##### Trường Sub Type
+So the OTA table gives up 8 KB of NVS to make room for `otadata`, and the two app slots start at
+0x10000 and 0x110000.
 
->- Là một giá trị 8 bit để chia nhỏ hơn cho Type. SDK hiện tại chỉ hỗ  trợ cho Type app và type data
+### How the bootloader picks a slot
 
-###### Các loại subtype của type app(0).
+```
+                     ┌──────────────┐
+                     │  otadata     │
+                     │  partition   │
+                     └──────┬───────┘
+                            │ "Which slot is active?"
+                            │
+              ┌─────────────┼─────────────┐
+              │             │             │
+       ┌──────▼──────┐           ┌──────▼──────┐
+       │   ota_0     │           │   ota_1     │
+       │ (current)   │           │ (new OTA)   │
+       └─────────────┘           └─────────────┘
+```
 
-- Khi main type là app(0) thì subtype có thể có các giá trị sau: ota_0 (0x10), ota_1(0x11) …​ ota_14(0x1F).
-- ota_0 (0x10): là phân vùng app mặc định, bootloader sẽ chạy code ở phân vùng này đầu tiên. Nếu có các phân vùng OTA khác thì bootloader cần đọc phân vùng otadata để biết cần boot ở đâu. Phân vùng otadata chứa thông tin để bootloader biết phải boot từ phân vùng nào. Nếu otadata trống, bootloader sẽ boot từ ota_0.
+1. `otadata` empty: the bootloader boots `ota_0`.
+2. The running app downloads the new image into the *other* slot (`ota_1`).
+3. When the download is complete and checked, the app writes `otadata` to point at `ota_1`.
+4. Reboot: the bootloader reads `otadata` and boots `ota_1`. Next update goes to `ota_0`.
 
-- Partition Table mặc định của OTA firmware có 2 địa chỉ cho phân vùng app(0), tại 0x10000 và 0x11000.
+## Type and SubType
 
-###### Các loại subtype của type data.
+**Type**: 0x00 `app`, 0x01 `data`. 0x00–0x3F are reserved for Espressif; for your own data use
+0x40–0xFE. The bootloader ignores anything that isn't `app` or `data`, but your app can still
+find those partitions through the partition API.
 
-- Khi main type là data(1) thì subtype có thể có các giá trị sau: ota(0), phy(1), nvs(2).
+**App subtypes** (from `esp_partition.h` in the SDK):
 
-- subtype ota(0): là OTA Data partition là nơi chứa thông tin phân vùng OTA hiện tại được chọn. Phân vùng này nên có size 0x2000.
+| Value | Name | |
+|-------|------|-------------|
+| 0x00 | factory | the default app when there's no OTA |
+| 0x10 | ota_0 | first OTA slot, booted when `otadata` is empty |
+| 0x11 | ota_1 | second OTA slot |
+| 0x12–0x1F | ota_2 … ota_15 | more slots, up to 16 in total |
+| 0x20 | test | test app |
 
-- phy(1): Nơi chứa thông tin physical của từng chip khác nhau. Theo cấu hình mặc định, phân vùng này không được sử dụng mà sử dụng thông tin trực tiếp từ firmware, do đó phân vùng này có thể loại bỏ. Để bật chức năng load PHY data từ phân vùng này ta cần bật option `ESP_PHY_INIT_DATA_IN_PARTITION` trong menuconfig, đồng thời cũng cần tự flash thông tin PHY vào phân vùng này thủ công.
+**Data subtypes**:
 
-- nvs(2): là phân vùng cho các api Non-Volatile Storage. NVS được dùng để chứa các thông tin PHY calibrate cho từng device, nó khác với phy chứa thông tin init. NVS cũng dùng để chứa thông tin WiFi (esp_wifi_set_storage(WIFI_STORAGE_FLASH)). NVS có thể được dùng để lưu trữ thông tin data khác cho ứng dụng. Nên tạo một phân vùng NVS ít nhất 0x3000 byte cho ứng dụng. Nếu ứng dụng cần lưu trữ nhiều data nên sử dụng size 0x6000.
+| Value | Name | |
+|-------|------|-------------|
+| 0x00 | ota | which OTA slot is selected. Make it 0x2000. |
+| 0x01 | phy | PHY *init* data. Not used by default (the init data is compiled into the firmware), so you can drop it. To use it, enable `ESP_PHY_INIT_DATA_IN_PARTITION` in menuconfig, and then you flash the PHY data there yourself. |
+| 0x02 | nvs | for the NVS API. Holds the per-device PHY *calibration* (not the same thing as `phy` above), Wi-Fi settings when you use `esp_wifi_set_storage(WIFI_STORAGE_FLASH)`, and whatever your app stores. At least 0x3000; 0x6000 if the app stores a lot. |
+| 0x03 | coredump | core dump |
+| 0x80 | esphttpd | |
+| 0x81 | fat | FAT filesystem |
+| 0x82 | spiffs | SPIFFS |
 
-##### Trường Offset và Size.
+## Offset and size: the rule that bites
 
-> <span style="color:red">Phân vùng app phải là bội số của 1M. Nếu không app sẽ crash. Địa chỉ bắt đầu của firmware được set cứng tại 0x10000</span>. Nếu muốn thay đổi cần thực hiện trong menuconfig.
+<div class="warning">
+<p>An app partition has to sit entirely inside one 1 MB block of flash. The default app start, 0x10000, is fixed; to move it, change it in <code>menuconfig</code>. Offsets must also be aligned (the tool wants 4 KB for apps) or <code>gen_esp32part.py</code> refuses the table.</p>
+</div>
 
-# Tổng kết
+In the first version of this page I wrote "an app partition must be a multiple of 1 MB". That's
+wrong: the SDK doc says it must *fall within one* 1 MB block. Look at the OTA table again: 0x10000
++ 0xF0000 ends exactly at 0x100000, and `ota_1` starts at 0x110000 and ends at 0x200000. That's why
+the slots are 960 KB and not 1 MB.
 
-This article introduces the data storage organization on external flash and 2 default partition tables used for 2 types of firmware: non-OTA and OTA.
+## Your own partition table
 
-Trong các bài viết tiếp theo mình sẽ giới thiệu các trường hơp sử dụng partition table này, cách build partition table và ghi vào bộ nhớ flash.
+Write a CSV:
 
-Chúng ta cũng có thể tạo custom partition table, ví dụ như tạo thêm partition có định dạng file system để dễ  dàng lưu trữ các file giống như các ứng dụng trên các OS cao cấp.
+```csv
+# Name,    Type,  SubType,  Offset,    Size,     Flags
+nvs,       data,  nvs,      0x9000,    0x6000,
+otadata,   data,  ota,      0xf000,    0x2000,
+phy_init,  data,  phy,      0x11000,   0x1000,
+ota_0,     app,   ota_0,    0x20000,   0xE0000,
+ota_1,     app,   ota_1,    0x120000,  0xE0000,
+storage,   data,  spiffs,   0x200000,  0x100000,
+mfg_data,  data,  0x40,     0x300000,  0x1000,
+```
+
+(`storage` is a SPIFFS filesystem; `mfg_data` uses a custom type for factory data like a serial
+number. This one needs a 4 MB chip, and because the first app moved from 0x10000 to 0x20000 the
+app offset in menuconfig has to move with it. Both slots still end exactly on a 1 MB line.) Then:
+
+```bash
+# CSV -> binary
+python gen_esp32part.py partition_table.csv partition_table.bin
+
+# or let the build do it: menuconfig -> "Custom partition table CSV", set the path, then
+make partition_table          # build it and print it
+make partition_table-flash    # flash only the table (esptool.py underneath)
+make flash                    # everything
+```
+
+Reading the table back from a board and decoding it:
+
+```bash
+esptool.py --port /dev/ttyUSB0 read_flash 0x8000 0xC00 ptable.bin
+python gen_esp32part.py ptable.bin       # binary in -> CSV out
+```
+
+## Using partitions from the app
+
+These are the calls from the SDK headers (`esp_partition.h`, `esp_ota_ops.h`, `nvs.h`):
+
+```c
+#include "esp_partition.h"
+
+// find by type / subtype / label
+const esp_partition_t *mfg = esp_partition_find_first(
+    ESP_PARTITION_TYPE_DATA, 0x40, "mfg_data");
+
+char serial[32];
+esp_partition_read(mfg, 0, serial, sizeof(serial));
+
+// raw writes: erase the sector first
+esp_partition_erase_range(mfg, 0, 4096);
+esp_partition_write(mfg, 0, data, len);
+
+// which slot am I running from?
+const esp_partition_t *running = esp_ota_get_running_partition();
+printf("Running from: %s at 0x%x\n", running->label, running->address);
+```
+
+NVS is the key-value store on top of the `nvs` partition; for settings it's much less work than
+raw partition writes:
+
+```c
+#include "nvs_flash.h"
+#include "nvs.h"
+
+esp_err_t ret = nvs_flash_init();
+if (ret == ESP_ERR_NVS_NO_FREE_PAGES) {   // partition full or from another layout
+    nvs_flash_erase();
+    nvs_flash_init();
+}
+
+nvs_handle_t handle;
+nvs_open("app_config", NVS_READWRITE, &handle);
+nvs_set_i32(handle, "boot_count", boot_count + 1);
+nvs_commit(handle);
+nvs_close(handle);
+```
+
+## Next
+
+What I still want to write up: actually building a custom table with a SPIFFS partition and
+flashing it, with the real `make partition_table` output, instead of only the CSV above.
+
+## References
+
+- [ESP8266 RTOS SDK: Partition Tables](https://docs.espressif.com/projects/esp8266-rtos-sdk/en/latest/api-guides/partition-tables.html)
+- [ESP8266_RTOS_SDK sources](https://github.com/espressif/ESP8266_RTOS_SDK) (`components/partition_table/gen_esp32part.py`, `components/spi_flash/include/esp_partition.h`)
+- [ESP8266 Technical Reference Manual](https://www.espressif.com/sites/default/files/documentation/esp8266-technical_reference_en.pdf)
+- [esptool.py documentation](https://docs.espressif.com/projects/esptool/en/latest/)

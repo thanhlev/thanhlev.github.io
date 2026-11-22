@@ -1,11 +1,12 @@
 ---
 layout: default
 title: "[🔥] - Add Yocto support for Rock-3A Single Board Computer"
-short_description: Porting from bsp to Yocto
+short_description: "My meta-radxa port for the Rock-3A (RK3568), from the Radxa BSP to Yocto"
 picture: "assets/images/rock-3a.jpg"
-latest_release: "Unknown"
+latest_release: "2026-11-22: upstream PR link is dead (meta-radxa was reset)"
 status: "Done"
-index: 3
+index: 5
+publish: true
 ---
 
 # Porting Rock-3A rockchip-bsp to Yocto Project
@@ -23,14 +24,22 @@ index: 3
 
 ## Description
 
-I have a task to evaluate the board [Rock-3A](https://wiki.radxa.com/Rock3/3a) from [Radxa](https://wiki.radxa.com/Home) for my upcoming projects.
-The projects require the Yocto build system, but the current [meta-radxa](https://wiki.radxa.com/Yocto-layer-for-radxa-boards) does node support Rock-3A machine.
+I wanted to try the RK3568 on a board I could afford, and the [Rock-3A](https://wiki.radxa.com/Rock3/3a)
+from [Radxa](https://wiki.radxa.com/Home) was it. I also wanted my own Yocto image on it, not the
+vendor Debian, but [meta-radxa](https://wiki.radxa.com/Yocto-layer-for-radxa-boards) didn't support
+the Rock-3A machine yet.
 
-So I create a pull request to port the Rock-3A based on [Radxa's bsp](https://wiki.radxa.com/Rock3/dev/Debian). Enjoy it!
+So I ported it myself, starting from [Radxa's BSP](https://wiki.radxa.com/Rock3/dev/Debian), and sent
+it upstream as a pull request. Enjoy it!
 
 ## My pull request for Yocto Rock-3A-RK3568 porting
 
 [https://github.com/radxa/meta-radxa/pull/29](https://github.com/radxa/meta-radxa/pull/29)
+
+> **Update (2026-11-22)**
+> Radxa restarted the meta-radxa repo from scratch in September 2026 (the history now begins on
+> 2026-09-02), so this link gives a 404 today and I haven't found an archived copy. The photos below
+> are what's left of the test run.
 
 ## Porting's test result
 
@@ -39,7 +48,7 @@ So I create a pull request to port the Rock-3A based on [Radxa's bsp](https://wi
 ![](../../../assets/images/rock3a/desktop_result.jpg)
 
 
-### Consolse Image (radxa-console-image)
+### Console Image (radxa-console-image)
 
 ![](../../../assets/images/rock3a/console_result.jpg)
 

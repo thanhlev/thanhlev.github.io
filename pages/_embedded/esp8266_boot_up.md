@@ -1,19 +1,20 @@
 ---
 layout: default
 title: "[🔥] - Boot sequence on Wireless MCU ESP8266"
-short_description: "Boot sequence on Wireless MCU ESP8266"
+short_description: "What runs between power-on and my app on the ESP8266: ROM (BL0), the first-stage bootloader, the partition table"
 status: "Done"
 picture: "assets/images/esp8266_block_diagram.png"
-latest_release: "Initial Document"
-index: 8
+latest_release: "2026-11-22: intro and ending rewritten, links fixed"
+index: 6
+publish: true
 ---
 
 # Esp8266 Bootup Sequence
 ## 1. Introduction
 
-In the article [Esp8266 Partition Table](esp8266_flash_map.html), I introduced the partition table and basic information about ROM, RAM and Flash of the ESP8266 SoC. In this article, I will start introducing the boot up process of the ESP8266 SoC.
+This is part two of my ESP8266 notes. In [ESP8266 Flash Map & Partition Table](/embedded/esp8266-flash-map) I went through ROM, RAM, flash and the partition table. Here I follow the chip from power-on until my own code runs, because I wanted to know who actually reads that partition table, and when.
 
-There are 2 pieces of information from the [Esp8266 Partition Table](esp8266_flash_map.html) article that will serve as the premise for this article
+Two things from part one that everything below leans on:
 
 <div class="info">
   <p>ESP8266 has ROM, but not <span style="color:blue">erasable/writable</span> ROM, it needs external memory to store application code.</p>
@@ -205,9 +206,9 @@ Most commonly used modes:
    - Finds and loads user application
 4. User Application executes
 
-## 6. Conclusion
+## 6. Where to go from here
 
-Through two articles [Esp8266 Partition Table](flash_map.html) and [Esp8266 boot-up sequence](esp8266_boot_up.html), I have introduced the partition table, why we need it, internal ROM boot, First Stage Bootloader, user application, boot configuration and the relationship between them.
+The flash layout this boot chain reads from is in part one, [ESP8266 Flash Map & Partition Table](/embedded/esp8266-flash-map). One caveat on all the ROM addresses above: they come from the SDK linker script `esp8266.rom.ld`, not from a datasheet. I couldn't find a document from Espressif that lists them.
 
 ## References
 
