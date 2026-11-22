@@ -31,6 +31,9 @@ Map the board from Linux alone: what's on the PCIe link, where RP1's registers l
 address space, how it boots, and what it draws at idle. One script, `probe.sh`, that only reads, and
 logs everything to text files I can quote later.
 
+![BCM2712 and RP1 joined by PCIe]({{ '/assets/images/boards/pi5/pi5_soc.png' | relative_url }})
+*The picture I ended up with: the BCM2712 on the left, RP1 (GPIO, UART, SPI, I2C, USB, Ethernet, MIPI) on the right, four PCIe lanes at 5 GT/s between them. Addresses from this board's device tree.*
+
 ## Action
 
 **What's on PCIe.** `lspci` shows one bridge and one device behind it, the RP1. dmesg has the link and
@@ -56,6 +59,9 @@ maps to PCIe address `0x0`.
 | CPU (Cortex-A76) | `0x1f_000e_2000` |
 | PCIe bus | `0x00_000e_2000`, a 4-byte memory write |
 | inside RP1 | `0xc0_400e_2000` (sys_rio0 + 0x2000 SET) |
+
+![One GPIO write in three address spaces]({{ '/assets/images/boards/pi5/pi5_addr.png' | relative_url }})
+*The same GPIO17 SET write in the three address spaces: CPU `0x1f_000e_2000`, PCIe `0x00_000e_2000`, RP1 `0xc0_400e_2000`.*
 
 So yes, toggling a pin is a posted write across the PCIe link to another chip. I didn't time it; I
 didn't want to toggle pins on a shared board.

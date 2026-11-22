@@ -42,6 +42,9 @@ and the RTOS talk through rings in that shared block. To stop, the RTOS calls `C
 the module calls `add_cpu(3)`. About half the code comes from my ROCK 3A AMP. FreeRTOS V11.2.0 uses
 its GICv2 AArch64 port; core 3 sets up its own MMU and only touches its own banked GIC registers.
 
+<a href="{{ '/assets/images/boards/pi5/pi5_amp_seq.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi5/pi5_amp_seq.png' | relative_url }}" alt="Sequence: load, start, ping, stop" style="width:100%;max-width:760px"></a>
+*One full cycle as a sequence: `ampctl` LOAD and START, `remove_cpu(3)`, PSCI `CPU_ON` at the block's physical address, the RTOS turning on its MMU, pings over the rings, then `CPU_OFF` on itself and `add_cpu(3)`.*
+
 **The Pi was offline.** On 2026-10-30 I couldn't reach the board at all (100 % ping loss), and I had
 decided nothing gets written to it yet anyway. So: build on the PC against the Pi kernel at a pinned
 commit (6.18.59), and test the whole cycle on QEMU's `virt` machine with GICv2 and four A76s.
@@ -82,6 +85,9 @@ QEMU AMP TEST PASS
 - RTOS image **32 392 bytes**, using 1188 KiB of the 3 MiB it's allowed.
 - Latency on QEMU means nothing: three runs gave a worst wake-up of 1.7, 8.0 and 13.7 ms, because
   each vCPU is just a thread on my busy PC. **The number this demo exists for is not measured yet.**
+
+![The 4 MiB block by offset]({{ '/assets/images/boards/pi5/pi5_amp_block.png' | relative_url }})
+*The 4 MiB block by offset, to scale: image header, code, the 1 MiB FreeRTOS heap in `.bss`, page tables, stacks, and the shared window for the rings at the top.*
 
 ## What I'd do next
 
