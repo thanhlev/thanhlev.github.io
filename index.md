@@ -95,7 +95,8 @@ Hardware development, microcontrollers, IoT devices, and embedded Linux.
     </tr>
   </thead>
   <tbody>
-{% assign sorted = site.embedded | where_exp: "item", "item.publish != false" | sort: 'index' %}
+{% comment %} 2026-11-22: board STAR sub-pages (front matter `board_parent`) are listed on their board hub, not here. {% endcomment %}
+{% assign sorted = site.embedded | where_exp: "item", "item.publish != false" | where_exp: "item", "item.board_parent == nil" | sort: 'index' %}
 {% for page in sorted %}
     <tr>
       <td class="page_picture_td">

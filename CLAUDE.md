@@ -29,3 +29,20 @@ publish: true
 bundle exec jekyll build
 bundle exec jekyll serve   # local preview
 ```
+
+## Board hubs and STAR sub-pages (2026-11-22)
+
+Each board I have played with gets one hub page plus several sub-pages, all in `pages/_embedded/boards/<slug>/`:
+
+- Hub `pages/_embedded/boards/<slug>/<slug>.md`: front matter as the template above plus
+  `permalink: /embedded/boards/<slug>/` and `board_hub: true`. It shows on the home page Embedded table.
+  Body: what the board is (SoC, why I bought it), a short timeline, then
+  `{% include board_children.html board="<slug>" %}`.
+- Sub-page `pages/_embedded/boards/<slug>/<topic>.md`: front matter as the template plus
+  `permalink: /embedded/boards/<slug>/<topic>`, `board_parent: <slug>`, `result: "<one line, a number if possible>"`.
+  It is NOT listed on the home page (index.md filters `board_parent`), only on its hub.
+  Body follows STAR: `## Situation`, `## Task`, `## Action`, `## Result` (+ optional `## What I'd do next`),
+  first person, real commands/logs from my own runs, numbers in Result.
+- Every doc in a subfolder needs an explicit `permalink` (the collection default `/:collection/:name`
+  would make all hubs collide).
+- No custom Liquid filters or plugins in these pages: GitHub Pages builds in safe mode.
