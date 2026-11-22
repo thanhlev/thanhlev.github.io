@@ -92,6 +92,9 @@ out again.
 | + pool, no copies | 104 ms | 6.7 /s |
 | + load, im2col, HDMI on the QPUs | 43.5 ms | 12.3 /s |
 
+![Face detection time per stage, log scale]({{ '/assets/images/boards/pi1/pi1_speed_chart.png' | relative_url }})
+*Each step on one chart, log scale: blue is one still picture (2374 -> 795 -> 136 -> 104 ms...), green is live from the webcam, down to 81 ms a frame. (Vietnamese labels.)*
+
 - **54x** faster per picture than the CPU version. Step 1 gave exactly the CPU's boxes and scores
   (884 and 872); I checked that the face is still found after each later step, I didn't re-diff every
   score.

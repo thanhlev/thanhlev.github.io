@@ -30,6 +30,9 @@ instead of 47, a PL011 UART on header pins 8/10 where I had a PL2303 adapter.
 1. Run the Zero's `rtos_cli` on the Pi 1 without forking it.
 2. Stop pulling the SD card for every build. Each iteration was: card out, PC, copy, card back, power.
 
+![What is on my Pi 1 SD card]({{ '/assets/images/boards/pi1/pi1_sdcard.png' | relative_url }})
+*The card I kept pulling out, measured from its image: the FAT partition and the five boot files with their LBAs and sizes, and how the boot ROM walks MBR, boot sector and FAT chain to `bootcode.bin`.*
+
 ## Action
 
 **Same image.** I added the boot files next to what was already on the card (checked byte for byte,
@@ -93,6 +96,10 @@ then on:
 - `uload`: a **921 224-byte** image in **6.7 s** at 1.5 Mbaud through a PL2303 (137 kB/s), prompt in
   7.2 s. On QEMU the prompt came after 12.4 s.
 - The SD card only gets touched when `uload` itself changes.
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi1/pi1_kernel_format_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi1/pi1_kernel_format.mp4' | relative_url }}" type="video/mp4"></video>
+
+*What each of those files is, 80 s: `bootcode.bin` a raw blob from `0x200`, `start.elf` an ELF for the VideoCore (`e_machine 0x89`), my `kernel.img` 1 065 705 bytes with no header, its first word a branch. (Vietnamese on-screen text, background music, no voice-over.)*
 
 ## What I'd do next
 

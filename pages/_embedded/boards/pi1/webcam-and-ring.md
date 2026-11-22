@@ -31,6 +31,9 @@ should chase one light per face. At some point it just stayed dark.
 Make the stream stay up for minutes, find out whether faces really had anything to do with it, and get
 the ring back.
 
+![Pi 1 header pins in use]({{ '/assets/images/boards/pi1/pi1_header.png' | relative_url }})
+*Where the ring hangs: 3.3 V on pin 1, data on pin 19 (SPI0 MOSI, GPIO10), next to the PL2303 on pins 8/10.*
+
 ## Action
 
 **The stall, first look.** It wasn't the GPU: the stream stopped after ~95 s with no VCHIQ use at all.
@@ -91,6 +94,9 @@ SPI bit, one SPI byte per LED bit. A WS2812 "1" was `0xF8` (800 ns high). Somewh
 version and the new one it had become `0xF0`: 640 ns high. Too short for my ring. Back to `0xF8`, a red
 test frame, and it lit.
 
+![0xF0 vs 0xF8 as an SPI waveform]({{ '/assets/images/boards/pi1/pi1_ws2812_bits.png' | relative_url }})
+*The whole bug in one picture: four high SPI bits are 640 ns, five are 800 ns. My ring wanted the longer one.*
+
 While I was in there I gave the ring its own FreeRTOS task: the face task calls `ring_note(n)`, which
 wakes the `led` task with `xTaskNotifyGive`; it waits for that or 40 ms. A frame on the SPI takes
 0.5 ms. The effects come from my NanoPi project (78 of them), the WS2812 encoder from my ROCK 3A code.
@@ -104,6 +110,9 @@ wakes the `led` task with `xTaskNotifyGive`; it waits for that or 40 ms. A frame
   But the test found a real bug (no retry after a failed restart).
 - The LED ring: dark with `0xF0` (640 ns), lit with **`0xF8` (800 ns)**. Checked by eye: the old image spun,
   then the new one lit.
+
+![Webcam stream restarts before and after the fix]({{ '/assets/images/boards/pi1/pi1_restarts.png' | relative_url }})
+*Restarts per run: 12 with the ring off, 8 with it spinning, 0 in 121 s after the parity and packet-size change.*
 
 ## What I'd do next
 

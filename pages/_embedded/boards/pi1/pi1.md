@@ -21,6 +21,9 @@ slot and the old 26-pin header. When I first looked at mine I couldn't find "A" 
 anywhere. I counted: 26 GPIO pins, an RJ45, two USB ports. So, a Model B. The firmware later said
 revision `0x000E`, which is the B rev 2.
 
+<a href="{{ '/assets/images/boards/pi1/pi1_bench.jpg' | relative_url }}"><img src="{{ '/assets/images/boards/pi1/pi1_bench.jpg' | relative_url }}" alt="My Pi 1 B on the bench, HDMI to the monitor" style="width:100%;max-width:640px"></a>
+*Mine, on my desk: the Pi 1 B with jumper wires on the header and HDMI into the monitor, 11 s after power-on, my FreeRTOS status panel already on screen.*
+
 Why this board at all: in October 2026 I'd just got FreeRTOS running on my
 [Pi Zero W]({{ '/embedded/boards/pi-zero/' | relative_url }}), same chip. The Pi 1 was sitting there
 plugged into the PC, so I asked the obvious question: does the Zero's image run on it? It did. And then
@@ -39,6 +42,13 @@ no Linux under it.
 | 2026-10-26 | Convolutions moved onto the 12 QPUs: 43.5 ms per picture |
 | 2026-10-26 | Webcam drops fixed in the DWC2 isochronous code; WS2812 ring counts the faces |
 | 2026-10-27 | Separate FreeRTOS task for the ring, `0xF8` for a 1 bit, new kernel on the card |
+
+![Timeline of the Pi 1 face detector]({{ '/assets/images/boards/pi1/pi1_timeline.png' | relative_url }})
+*The same week as a line, from the Zero's image booting on 10-20 to 12.3 detections a second on 10-26 20:20. (Vietnamese labels.)*
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi1/pi1_boot_short_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi1/pi1_boot_short.mp4' | relative_url }}" type="video/mp4"></video>
+
+*How this board gets from power to my code, 84 s: a real clip of my bench first, then the boot ROM finding `bootcode.bin` (52 KB), `start.elf` (2.9 MB) splitting the RAM 448/64 MB, `kernel.img` at `0x8000`. (Vietnamese on-screen text, background music, no voice-over.)*
 
 ## The stories
 

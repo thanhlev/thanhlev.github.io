@@ -32,6 +32,9 @@ I had no Linux.
 Talk VCHIQ and MMAL from FreeRTOS, hand the firmware a JPEG, get I420 back. Then feed the face
 detector from it.
 
+<a href="{{ '/assets/images/boards/pi1/pi1_pipeline.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi1/pi1_pipeline.png' | relative_url }}" alt="Webcam to HDMI pipeline on the Pi 1" style="width:100%;max-width:460px"></a>
+*Where this fits in the whole thing: webcam MJPEG through the LAN9512 and my DWC2 host code, about 74 KB a frame, then the VideoCore `video_decode` over VCHIQ/MMAL (~5 ms) before the QPUs see a pixel.*
+
 ## Action
 
 I took VCHIQ and MMAL from Linux's `drivers/staging/vc04_services` and rewrote what I needed in bare
@@ -87,6 +90,9 @@ found one face.
 - Pixel check against libjpeg: Y mean **101.878 vs 101.635**.
 - Gotchas on record: VCHIQ opens once per GPU boot; bulk lengths in multiples of 4; the decoder
   returns frame N when you send frame N+1.
+
+<a href="{{ '/assets/images/boards/pi1/pi1_hdmi_osd.jpg' | relative_url }}"><img src="{{ '/assets/images/boards/pi1/pi1_hdmi_osd.jpg' | relative_url }}" alt="HDMI screenshot: webcam picture and status panel" style="width:100%;max-width:800px"></a>
+*Straight off the HDMI output, 27 s after boot: my floor through the webcam, and the panel says `GPU VideoCore IV: giải MJPEG 5 ms, 80 KB/khung` (decode 5 ms, 80 KB per frame). The 29 USB errors on it are the next story. (Vietnamese panel.)*
 
 ## What I'd do next
 
