@@ -4,16 +4,13 @@ title: "Linux Tips & Tricks"
 short_description: "My scratchpad of shell one-liners: fstab, cleanup, time, git, sed, awk, find"
 status: "Done"
 picture: "assets/images/linux_tips.jpg"
-latest_release: "2026-11-22: English, grouped by topic, more sed/awk/find"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 2
 publish: true
 ---
 
 # Linux Tips & Tricks
 {: .no_toc }
-
-My scratchpad of shell one-liners: the fstab line for my SSD, the timezone name for Ho Chi Minh,
-the `awk` field tricks, the git rebase I can never remember.
 
 ## Table of contents
 {: .no_toc }
@@ -23,9 +20,25 @@ the `awk` field tricks, the git rebase I can never remember.
 
 ---
 
-## Process & System Info
+## Situation
 
-### Count Processes and Threads
+Some shell lines I type once a year and never remember: the fstab line for my SSD, the timezone
+name for Ho Chi Minh, the `awk` field tricks, the git rebase. Every time, it was a web search
+again for something I had already worked out once.
+
+## Task
+
+Keep them all on one page, grouped by what I'm trying to do (disk, time, network, git, text), so
+the TOC or Ctrl+F gets me there faster than a search engine does.
+
+## Action
+
+Everything below is the reference itself. Placeholders like `<PID>`, `eth0` or `HDMI1` are mine
+to replace; the UUID in the fstab line is the one from my own SSD.
+
+### Process & System Info
+
+#### Count Processes and Threads
 
 ```bash
 # Count all processes
@@ -44,7 +57,7 @@ ps aux --sort=-%mem | head -11
 ps aux --sort=-%cpu | head -11
 ```
 
-### System Resource Usage
+#### System Resource Usage
 
 ```bash
 # Memory usage summary
@@ -69,9 +82,9 @@ strace -p <PID> -c    # summary
 strace -p <PID> -e trace=network    # only network calls
 ```
 
-## Disk & Filesystem
+### Disk & Filesystem
 
-### Auto-Mount a Disk at Boot
+#### Auto-Mount a Disk at Boot
 
 ```bash
 # 1. Find the UUID of the partition
@@ -93,7 +106,7 @@ findmnt --verify
 sudo mount -a
 ```
 
-### fstab Options Reference
+#### fstab Options Reference
 
 | Option | Meaning |
 |--------|---------|
@@ -104,7 +117,7 @@ sudo mount -a
 | `ro` | Read-only |
 | `x-systemd.automount` | Mount on first access (lazy mount) |
 
-### Disk Cleanup
+#### Disk Cleanup
 
 ```bash
 # Check disk usage
@@ -141,9 +154,9 @@ rm -rf ~/.cache/thumbnails/*
 docker system prune -a --volumes
 ```
 
-## Time & Timezone
+### Time & Timezone
 
-### Set Timezone
+#### Set Timezone
 
 ```bash
 # List available timezones
@@ -159,7 +172,7 @@ sudo timedatectl set-timezone UTC
 timedatectl status
 ```
 
-### Hardware Clock (RTC)
+#### Hardware Clock (RTC)
 
 ```bash
 # Read hardware clock
@@ -182,9 +195,9 @@ sudo hwclock --systohc
 sudo timedatectl set-ntp true
 ```
 
-## Networking
+### Networking
 
-### NetworkManager: leave some interfaces alone
+#### NetworkManager: leave some interfaces alone
 
 ```ini
 # /etc/NetworkManager/NetworkManager.conf
@@ -207,7 +220,7 @@ After editing, reload:
 sudo systemctl reload NetworkManager
 ```
 
-### Quick Network Diagnostics
+#### Quick Network Diagnostics
 
 ```bash
 # Show all IPs and interfaces
@@ -242,9 +255,9 @@ nc -zv hostname 443
 ip neigh show
 ```
 
-## Git
+### Git
 
-### Rewrite Pushed Commits (Interactive Rebase)
+#### Rewrite Pushed Commits (Interactive Rebase)
 
 ```bash
 # Edit last N commits
@@ -267,7 +280,7 @@ Interactive rebase commands:
 git push --force-with-lease    # safer than --force
 ```
 
-### Other Useful Git Commands
+#### Other Useful Git Commands
 
 ```bash
 # Undo last commit (keep changes staged)
@@ -305,9 +318,9 @@ git clean -fd    # actually delete
 git log --oneline --graph --all --decorate
 ```
 
-## Shell Scripting
+### Shell Scripting
 
-### Special Variables
+#### Special Variables
 
 | Variable | Meaning |
 |----------|---------|
@@ -322,7 +335,7 @@ git log --oneline --graph --all --decorate
 | `$!` | PID of last background process |
 | `$_` | Last argument of previous command |
 
-### Arithmetic
+#### Arithmetic
 
 ```bash
 # Integer arithmetic
@@ -342,7 +355,7 @@ printf "0x%x\n" 255       # decimal → hex: 0xff
 echo "obase=2; 255" | bc  # decimal → binary: 11111111
 ```
 
-### Conditionals and Loops
+#### Conditionals and Loops
 
 ```bash
 # String comparison
@@ -376,7 +389,7 @@ done < input.txt
 diff <(ls dir1) <(ls dir2)
 ```
 
-### Useful Patterns
+#### Useful Patterns
 
 ```bash
 # Default value for variable
@@ -400,9 +413,9 @@ done
 echo
 ```
 
-## sed
+### sed
 
-### Replace Text
+#### Replace Text
 
 ```bash
 # Replace first occurrence per line
@@ -422,7 +435,7 @@ sed -i "s/\(ssid=\).*/\1\"$new_ssid\"/" /etc/wpa_supplicant/wpa_supplicant.conf
 sed 's|/usr/local/bin|/opt/bin|g' file
 ```
 
-### Delete Lines
+#### Delete Lines
 
 ```bash
 # Delete lines matching a pattern
@@ -441,7 +454,7 @@ sed -i '/^$/d' file
 sed -i '/^#/d' file
 ```
 
-### Insert and Append
+#### Insert and Append
 
 ```bash
 # Insert before line 3
@@ -457,7 +470,7 @@ sed -i '1i\First line' file
 sed -i '$a\Last line' file
 ```
 
-### Extract and Transform
+#### Extract and Transform
 
 ```bash
 # Print only lines matching pattern (like grep)
@@ -476,11 +489,11 @@ sed 's/<[^>]*>//g' file.html
 sed -i 's/\r$//' file
 ```
 
-## awk
+### awk
 
 `awk` processes text line-by-line. Each line is split into fields (`$1`, `$2`, ..., `$NF`). The pattern before `{ }` selects lines; the action inside `{ }` processes them.
 
-### Print Fields
+#### Print Fields
 
 ```bash
 # Print first column (default delimiter: whitespace)
@@ -499,7 +512,7 @@ awk '{printf "%-20s %s\n", $1, $NF}' file
 awk '{$1=""; print $0}' file
 ```
 
-### Pattern Matching
+#### Pattern Matching
 
 ```bash
 # Print lines where field 9 equals 500
@@ -521,7 +534,7 @@ awk 'NR>=10 && NR<=20' file
 awk '!/pattern/' file
 ```
 
-### Calculations
+#### Calculations
 
 ```bash
 # Sum values in column 1
@@ -540,7 +553,7 @@ awk 'BEGIN {printf "%.3f\n", 2005.50 / 3}'
 awk '{count[$1]++} END {for (k in count) print count[k], k}' file | sort -rn
 ```
 
-### Multi-line Programs (awk scripts)
+#### Multi-line Programs (awk scripts)
 
 ```bash
 # Parse Wi-Fi scan results into a clean table
@@ -560,7 +573,7 @@ awk '{count[$1]++} END {for (k in count) print count[k], k}' file | sort -rn
 sudo iw wlan0 scan | awk -f wlan_scan.awk | sort -g
 ```
 
-### Useful One-Liners
+#### Useful One-Liners
 
 ```bash
 # Print unique lines (like sort -u but preserves order)
@@ -579,7 +592,7 @@ awk 'ORS=NR%3?"\t":"\n"' file
 awk -F',' '{$3="replaced"; print}' OFS=',' file.csv
 ```
 
-## find
+### find
 
 ```bash
 # Find files modified in the last 24 hours
@@ -613,7 +626,7 @@ find / -perm -4000 -type f 2>/dev/null
 find /home -user username -type f
 ```
 
-## xargs
+### xargs
 
 ```bash
 # Delete files found by find
@@ -632,9 +645,9 @@ cat urls.txt | xargs -I {} curl -sO {}
 echo {1..100} | xargs -n 10 echo
 ```
 
-## Display & Desktop
+### Display & Desktop
 
-### Virtual Display (Intel, X11)
+#### Virtual Display (Intel, X11)
 
 ```bash
 # 1. Create /etc/X11/xorg.conf.d/20-intel.conf
@@ -656,7 +669,7 @@ xrandr --output VIRTUAL1 --mode 1920x1080_60.00 --right-of HDMI1
 xrandr --output VIRTUAL1 --off
 ```
 
-### Screen Brightness
+#### Screen Brightness
 
 ```bash
 # Get current brightness
@@ -669,9 +682,9 @@ echo 500 | sudo tee /sys/class/backlight/intel_backlight/brightness
 xrandr --output HDMI-1 --brightness 0.8
 ```
 
-## Sorting
+### Sorting
 
-### Natural Sort (Numeric-Aware)
+#### Natural Sort (Numeric-Aware)
 
 ```bash
 # Standard sort treats numbers as strings: 1, 10, 11, 2, 20, 3...
@@ -688,7 +701,7 @@ sort -h -k1 data.txt       # sort by human-readable sizes (1K, 2M, 3G)
 sort -t',' -k3 -rn data.csv  # CSV, 3rd column, reverse numeric
 ```
 
-## Miscellaneous One-Liners
+### Miscellaneous One-Liners
 
 ```bash
 # Generate random password
@@ -737,6 +750,15 @@ sudo fuser -k 8080/tcp
 # Show listening processes and their ports
 sudo ss -tlnp | awk 'NR>1 {print $4, $NF}'
 ```
+
+## Result
+
+This page is the one I open instead of searching. The blocks I reach for most are the ones from the
+Situation: the fstab steps (with `findmnt --verify` before rebooting, so a typo doesn't leave me at
+an emergency shell), `timedatectl set-timezone Asia/Ho_Chi_Minh`, and the `awk` field and sum
+one-liners. A side note for anyone copying this into their own Jekyll site: the `docker ps --format`
+line under Sorting sits inside a Liquid `raw` block, because Jekyll would otherwise read its double
+braces as a template variable and print nothing there.
 
 ## References
 
