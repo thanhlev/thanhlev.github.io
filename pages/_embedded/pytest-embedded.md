@@ -4,11 +4,14 @@ title: "Pytest-Embedded"
 short_description: "Mình thử plugin pytest-embedded của Espressif: cài đặt, các service, chạy test hello world trên ESP32-C3"
 picture: "assets/images/pytest-embedded.png"
 commit1: "Init document"
-latest_release: "Add description and example"
+latest_release: "2026-11-22: viết lại theo dạng STAR"
 status: "Done"
 index: 4
 publish: true
 ---
+
+<!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
+     Cùng lệnh, code và log ngày 14/02/2023 như trước, không thêm gì. -->
 
 # Pytest-Embedded
 {: .no_toc }
@@ -18,17 +21,24 @@ publish: true
 1. TOC
 {:toc}
 
------------------------------------
-## Introduction
+---
 
-Sau khi học [pytest](/embedded/pytest), mình muốn dùng nó để test firmware trên board thật chứ không chỉ test code Python. Espressif có sẵn plugin cho chuyện này; ở cuối bài là lần mình chạy ví dụ esp-idf của họ trên một con ESP32-C3 (log ngày 14/02/2023).
+## Situation
+
+Sau khi học [pytest](/embedded/pytest), mình muốn dùng nó để test firmware trên board thật chứ không chỉ
+test code Python. Espressif có sẵn plugin cho chuyện này:
 
 - Pytest-embedded là một plugin cho công cụ <a target="_blank" href="/embedded/pytest">pytest</a>
 - Được publish trên PyPi (<a target="_blank" href="https://pypi.org/project/pytest-embedded/">pypi.org/project/pytest-embedded</a>), có thể cài trực tiếp bằng lệnh `pip install pytest-embedded`
 - Tài liệu: <a target="_blank" href="https://docs.espressif.com/projects/pytest-embedded/en/latest/">docs.espressif.com/projects/pytest-embedded</a>
 - Source code: <a target="_blank" href="https://github.com/espressif/pytest-embedded">github.com/espressif/pytest-embedded</a>
 
-## Cách dùng
+## Task
+
+Cài plugin, hiểu nó đưa board vào test bằng cách nào, rồi chạy ví dụ esp-idf của Espressif trên một con
+ESP32-C3 mình có: firmware hello world, một test đọc log serial của nó.
+
+## Action
 
 ### Cài đặt
 
@@ -53,7 +63,10 @@ embedded-jtag:
 embedded-qemu:
   ...
 ```
-### Đăng ký sử dụng
+
+### Đăng ký service
+
+Plugin chia chức năng thành các service, bật cái nào thì khai báo trong `pytest.ini`:
 
 ```yaml
 # file pytest.ini
@@ -76,9 +89,9 @@ Giá trị của option `embedded-services`
     All the related CLI options are under the groups named by "embedded-<service>"
 ```
 
-### Example
+### Firmware và test
 
-- Giả sữ ta cần test đoạn code sau đây cho MCU ESP32
+- Đoạn firmware cần test là hello world của esp-idf
 
 ```C
 #include <stdio.h>
@@ -161,7 +174,8 @@ dut -- ../../.espressif/python_env/idf5.0_py3.10_env/lib/python3.10/site-package
 addopts =
   --embedded-services esp,idf
 ```
-### Chạy test ví dụ
+
+### Build và chạy
 
 - Đầu tiên cần build project đúng với MCU ESP32 đang có
 
@@ -174,7 +188,12 @@ idf.py -C hello_world all
 ```script
 pytest
 ```
-- Kết quả (mình cắt bớt phần nạp flash và boot log ở giữa, chỗ `...`):
+
+## Result
+
+Test pass trên ESP32-C3 sau 5.01 s, kể cả nạp flash. Plugin tự nhận ra target và cổng
+(`Target: esp32c3, Port: /dev/ttyUSB1`), nạp app ở offset 0x10000, rồi `dut.expect` bắt được
+`Hello world!` và `Restarting`. Log (mình cắt bớt phần nạp flash và boot log ở giữa, chỗ `...`):
 
 ```
  pytest
@@ -201,5 +220,8 @@ PASSED
 
 ================================================================================================= 1 passed in 5.01s ==================================================================================================
 ```
+
+Dòng `This i---- live log call ----` bị cắt ngang là do log của pytest và log serial in xen vào nhau,
+không phải firmware in sai.
 
 - Nguồn: [https://github.com/espressif/pytest-embedded/tree/main/examples/esp-idf](https://github.com/espressif/pytest-embedded/tree/main/examples/esp-idf)
