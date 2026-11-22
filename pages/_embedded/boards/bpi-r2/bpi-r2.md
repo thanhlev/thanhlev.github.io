@@ -18,7 +18,7 @@ board_hub: true
 
 The BPI-R2 is Banana Pi's router board: a MediaTek MT7623N (four Cortex-A7), 2 GB of DDR3, 8 GB of
 eMMC, SATA, and five Gigabit jacks (four LAN, one WAN) behind an MT7530 switch. I got it for OpenWrt,
-wrote an empty placeholder post for that in January 2023, and got no further.
+wrote an empty placeholder post for that back in 2023, and got no further.
 
 In October 2026 I came back to it with the docs, the mainline U-Boot and the Linux device tree, to know
 what I'm dealing with before I plug anything in. The board wasn't on the bench then and still isn't,
@@ -28,23 +28,22 @@ so there's no STAR write-up with a result yet. This page is honest about that.
 *Everything on this page in one drawing: the MT7623N, the MT7530 that turns five jacks into two MACs, and the four boot stages. All from paper, none of it checked on the board.*
 
 
-## What I've done so far (all on paper or on my PC)
+## What reading taught me
 
-| When | What |
-|---|---|
-| 2023-01-12 | Placeholder post for an OpenWrt build. Nothing written |
-| 2026-10-01 | Read the Banana Pi docs and the mainline sources, built mainline U-Boot (`mt7623n_bpir2_defconfig`): `u-boot-mtk.bin`, 474 608 bytes, in 19.7 s on my PC |
-| 2026-10-04 | Added pictures from the schematic to my notes |
+The only thing I've actually run is a build on my PC: mainline U-Boot with `mt7623n_bpir2_defconfig`
+gives a 474 608-byte `u-boot-mtk.bin` in 19.7 s. The rest is from the docs and the sources, and none
+of it is checked on the board yet.
 
-The things I learned from reading, none of them checked on the board:
+Boot is four stages: boot ROM, MediaTek preloader, U-Boot at 0x81E00000, then Linux. The U-Boot image
+carries a 512-byte LK header with magic 0x58881688; that part I did check, on the file.
 
-- Boot is four stages: boot ROM, MediaTek preloader, U-Boot at 0x81E00000, Linux. The U-Boot image I
-  built carries a 512-byte LK header (magic 0x58881688); that part I did check, on the file.
-- Five jacks, two MACs: the MT7530 adds a 4-byte MediaTek tag after the source MAC, its low 3 bits are
-  the port, and Linux DSA (`mtk_tag_rcv()`) turns that into `lan0..3` / `wan`.
-- Cores 1 to 3 wake through a mailbox at 0x10202000: jump address at +0x34, three magic keys, then an IPI.
-- The console is UART2 on the 3-pin CON2, 3.3 V. From the 26 MHz clock the divisor gives 115 556 baud
-  in Linux (+0.31 %) and 116 071 in U-Boot (+0.76 %). On paper both are fine.
+The five-jacks-on-two-MACs trick is the MT7530 adding a 4-byte MediaTek tag after the source MAC. Its
+low 3 bits are the port number, and Linux DSA (`mtk_tag_rcv()`) turns that into `lan0..3` and `wan`.
+Cores 1 to 3 wake through a mailbox at 0x10202000: the jump address goes at +0x34, then three magic
+keys, then an IPI.
+
+The console is UART2 on the 3-pin CON2, at 3.3 V. With the 26 MHz clock the divisor gives 115 556 baud
+in Linux (+0.31 %) and 116 071 in U-Boot (+0.76 %). On paper both are fine. I'd like to see it.
 
 ## The write-ups
 
