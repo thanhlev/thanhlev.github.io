@@ -32,7 +32,7 @@ device.
 FreeRTOS on the ARM1176, TinyUSB as a CDC-ACM device on the DWC2 controller, a small shell. Then make
 it stable on the real board, where I can't see anything until USB works.
 
-<a href="{{ '/assets/images/boards/pi-zero/pz_rtos_arch.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_rtos_arch.png' | relative_url }}" alt="rtos_cli tasks and interrupts on the BCM2835" style="width:100%;max-width:560px"></a>
+<a href="{{ '/assets/images/boards/pi-zero/pz_rtos_arch.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_rtos_arch.png' | relative_url }}" alt="rtos_cli tasks and interrupts on the BCM2835" style="width:100%"></a>
 *What I was building: timer IRQ 1 for the 1 kHz tick, DWC2 IRQ 9 into the TinyUSB task (prio 6), the shell task (prio 2), the mailbox to the firmware. The PL011 is drawn but has no cable on my side.*
 
 ## Action
