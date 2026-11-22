@@ -27,6 +27,10 @@ WS2812 rings lying around. WS2812s need tight bit timing (a few hundred ns per p
 normal app no access to hardware, and the S5P4418 has no LED peripheral. The usual trick is SPI: send
 bytes whose bit patterns look like WS2812 pulses on MOSI.
 
+![The NanoPi 2 Fire on a café table with three unlit 16-LED WS2812 rings](/assets/images/boards/nanopi2-fire/np2f_board_rings.jpg)
+
+*Where it started: the board and three 16-LED rings on a café table, nothing wired yet.*
+
 ## Task
 
 1. Put Android on a microSD card and boot it.
@@ -64,6 +68,10 @@ each ioctl costs ~100 µs, and the rest scales with length at a fixed fraction o
 0.835 with 8-bit words, 0.907 with 16-bit. Both fit one number: the controller leaves an idle gap of
 **1.5 clocks after every word**. So I made one LED bit exactly one SPI word and checked the period with
 the gap included.
+
+![Animation: one frame of 16 LEDs, 24 bits each, going down the SPI line and latching](/assets/images/boards/nanopi2-fire/np2f_ws2812_frame.gif)
+
+*One frame on the wire, 13 s loop. In this drawing each LED bit is one SPI byte (8 slots × 161.5 ns), 384 bits for the ring, each LED keeps the first 24 and passes the rest on, then the line stays low past 280 µs and all 16 latch. (Vietnamese labels.)*
 
 The readback said the ring wasn't a classic WS2812B: its 1s came back at 482 ns and 0s at 321 ns,
 which is the WS2812B-V5's timing (with a longer reset). New threshold, driven reset: probe 16/16,

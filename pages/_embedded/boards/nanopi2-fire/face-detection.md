@@ -27,6 +27,10 @@ one core, and cores 1–3 were sitting idle. The S5P4418 has no NPU and no DSP. 
 but that's a whole other project. So the only thing to run a neural net on is four Cortex-A9 cores
 with NEON, under my own FreeRTOS, with no Linux and no onnxruntime.
 
+![My bench: the NanoPi 2 Fire, the LED ring, the webcam and the HDMI screen](/assets/images/boards/nanopi2-fire/np2f_bench.jpg)
+
+*The setup for all of this: board, webcam, HDMI screen, and the 16-LED ring that later counts the people in view.*
+
 ## Task
 
 Draw a box around every person on the HDMI picture, live. Then (my next request, a week later) only
@@ -109,6 +113,10 @@ I also tried the JPU decoding a half-size copy just for the network. It saved 0.
 | first version | 85 ms (9.7 runs/s, face at 0.930) |
 | conv with 4 outputs per pass | 73 ms |
 | four layers rewritten, bit-identical | **42 ms** |
+
+![Bar charts: FastestDet 642, 184, 139, 87 ms; YuNet 85, 73, 42, 27, 25.5 ms](/assets/images/boards/nanopi2-fire/np2f_detect_chart.png)
+
+*Every step I measured, left to right. The green bars come from the [L2 cache story](/embedded/boards/nanopi2-fire/hang-and-l2-cache): FastestDet 642 → 87 ms, YuNet 85 → 25.5 ms.*
 
 - Person detection: **642 ms → 184 ms** going from 1 to 4 cores; FastestDet later down to 139 ms.
 - Faces: **85 → 42 ms** on the CPU alone, with outputs identical bit for bit. The webcam keeps 30.00

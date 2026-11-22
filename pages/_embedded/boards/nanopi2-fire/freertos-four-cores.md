@@ -27,6 +27,10 @@ DRAM, but only on core 0, and only a toy shell. The S5P4418 has four Cortex-A9 c
 started a secondary core by hand on any chip. I also wanted a real RTOS under everything that came
 next (webcam, HDMI), not a superloop.
 
+![A 3D model of the NanoPi 2 Fire from four sides](/assets/images/boards/nanopi2-fire/np2f_board_model.png)
+
+*The board from four sides (a model I put together from FriendlyELEC's drawings). The green square in the middle is the S5P4418: four Cortex-A9 cores, and at this point three of them did nothing.*
+
 ## Task
 
 1. FreeRTOS from DRAM with a shell that tests every peripheral I can test without wiring.
@@ -116,6 +120,10 @@ better about it.
 | SMP, four busy tasks on four cores | **3.93×** |
 | Lock cost with four-way contention | 1.7 µs per increment; both locks balanced after 10 million operations |
 | Context switch, SMP vs single-core | ~24 µs vs 5.3 µs (not profiled yet) |
+
+![Bar chart: 1x on one core, 1.98x on two, 3.93x on four, against a dashed perfect-scaling line](/assets/images/boards/nanopi2-fire/np2f_smp_chart.png)
+
+*Busy tasks under one SMP kernel: 1.98× on two cores, 3.93× on four. The dashed line is perfect scaling; four cores lose about 2 % to the locks.*
 
 Later I added `core <n> on|off <load %>` to the webcam firmware: each of cores 1–3 comes up in about
 1 ms and runs exactly the load it's given, while the stream on core 0 keeps 664 of 664 frames.

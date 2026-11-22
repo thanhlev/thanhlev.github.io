@@ -26,6 +26,10 @@ result: "Hang fixed (417 s clean past the 186 s mark); L2 on: YuNet 42 → 27 ms
 the microSD card and running fine, until it wasn't. The board froze: webcam LED still on, HDMI showing
 one still frame, nothing on the UART. And the watchdog, which I'd armed weeks before, never reset it.
 
+![The HDMI screen showing the webcam picture of two toy dinosaurs, the LED ring lit beside it](/assets/images/boards/nanopi2-fire/np2f_frozen_screen.jpg)
+
+*My screen on a normal card boot: the webcam looking at two toy dinosaurs, the ring lit on the right. On the bad days it looked exactly like this, except the picture never moved again.*
+
 The day after, with the hang gone, I asked myself a different question: is there anything on this SoC
 that should be on and isn't?
 
@@ -115,6 +119,10 @@ error per clock change; it now waits until the JPU isn't decoding.
 | YuNet, one run | 42 ms | **27 ms** |
 | FastestDet, one run | 139 ms | 87 ms |
 | YuNet with the 1.4 GHz boost | 27.6 ms | 25.5 ms |
+
+![Bar charts: L2 read 550 to 2325 MB/s and 551 to 1371 MB/s; YuNet 42 to 27 ms, FastestDet 139 to 87 ms](/assets/images/boards/nanopi2-fire/np2f_l2_chart.png)
+
+*Red is L2 off, green is L2 on, same board, same firmware otherwise. A 256 KiB read goes 4.2× faster, and both detectors drop by about a third.*
 
 From the card, 300 s recorded with L2 on: no reset, no STALL, 29.94 frames/s, 11 362 JPU decodes with
 0 errors and 1 bad header. That one bad header is a damaged frame the new DHT check dropped. Before

@@ -27,6 +27,10 @@ micro-USB cable to the PC. On my D1 board I'm used to FEL: the ROM sits on USB a
 I wanted to know if the S5P4418 has something like that, because then I could skip U-Boot and Linux
 completely and start from my own code.
 
+<video controls muted playsinline preload="metadata" poster="/assets/images/boards/nanopi2-fire/np2f_usbboot_explainer_poster.jpg" style="width:100%;max-width:360px"><source src="/assets/videos/boards/nanopi2-fire/np2f_usbboot_explainer.mp4" type="video/mp4"></video>
+
+*Everything on this page in 107 s: empty slot, the ROM on USB as `04e8:1234`, 15 360 bytes into the 64 KiB SRAM, garbage on the UART, DDR3 training, then FreeRTOS spinning the LED ring from DRAM. The log lines are from my run of 17 October. (Vietnamese on-screen text, no sound.)*
+
 ## Task
 
 - Find out what the board does with no card.
@@ -61,6 +65,10 @@ on every reset) and a udev rule so I don't need sudo.
 The ROM took the image and my code ran. I could tell because bytes came out in line-shaped bursts.
 But it was garbage, with `}}}` where my `===` banner should be. Wrong baud rate.
 
+![UART at 115200: line-shaped bursts of garbage](/assets/images/boards/nanopi2-fire/np2f_uart_garbage.png)
+
+*What 115200 looked like: the right number of lines, the wrong bits. Screenshot from the re-run on 17 October.*
+
 So I scanned. Open the port at a rate, send Enter, look for my `np2f>` prompt:
 
 ```
@@ -74,6 +82,10 @@ center 105250.0
 The board was talking at about 105 250 baud, 0.914 × 115200. Its UART clock was ≈45.7 MHz, not the
 50 MHz my code had computed. The clock register held exactly what I wrote (PLL0 = 550 MHz, divider
 field 10 = ÷11). So either PLL0 was off, or the divider doesn't do what the manual says.
+
+![The same firmware read at 105 250 baud: clean banner and shell](/assets/images/boards/nanopi2-fire/np2f_uart_clean.png)
+
+*Same firmware, terminal opened at 105 250 instead: a clean banner. Note it still claims `UART0 clock = 50.0 MHz`: that's the number my code computed, not what the hardware did.*
 
 I changed the divider live with `mw` and scanned again each time:
 
