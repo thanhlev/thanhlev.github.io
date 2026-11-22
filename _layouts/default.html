@@ -82,7 +82,8 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
     {% endif %}
 
     <footer class="foot">
-      <span>© {{ 'now' | date: "%Y" }} Thanh Le (Lê Quang Thành)</span>
+      <!-- 2026-11-22: range from the first post (2017) to the build year (user chose «© 2017–2026»). -->
+      <span>© 2017–{{ site.time | date: "%Y" }} Thanh Le (Lê Quang Thành)</span>
       <span><a href="mailto:thanhlevvn@gmail.com">thanhlevvn@gmail.com</a> · <a href="https://www.linkedin.com/in/thanhlev" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/thanhlev" target="_blank" rel="noopener">GitHub</a></span>
       <span>Every number here was measured on the board.</span>
     </footer>
