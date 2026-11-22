@@ -20,13 +20,6 @@ publish: true
 
 -----------------------------------
 
-## Revision history
-
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-14-2023   | {{page.latest_release}} |
-
-
 ## Thông tin
 
 Mình ghi lại udev vì một chuyện nhỏ: muốn laptop tự tắt touchpad khi cắm con chuột Logitech vào (ví dụ ở dưới), và tiện thể ghi luôn rule nằm ở đâu, chạy theo thứ tự nào, test bằng `udevadm` ra sao.

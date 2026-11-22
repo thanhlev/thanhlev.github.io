@@ -19,18 +19,9 @@ publish: true
 
 ---
 
-## Revision history
-
-| Revision | Date        | Remark |
-|:---------|:----------- |:-------|
-| 0.1      | Feb-16-2023 | add Ifupdown |
-| 0.2      | Nov-22-2026 | Rewritten; NetworkManager, systemd-networkd, Netplan, netifd written out |
-
-## Where this page started
+## Who brings the interface up
 
 The question behind this page: once a driver has registered `eth0` or `wlan0` with the kernel, who actually brings it up and gives it an address? The answer depends on the distro, and there are five common answers.
-
-The first version had the ifupdown part, two lines on NetworkManager, and three empty headings: systemd-networkd, Netplan, Netifd. They stayed empty for a long time. This version fills them in.
 
 | Tool | Since | Where you meet it | Config |
 |------|-----|-----------------|-----------------|
@@ -99,7 +90,7 @@ For Wi-Fi or virtual interfaces there's a step before L3: the L2 link has to exi
 | `/etc/network/if-down.d/` | before it goes down |
 | `/etc/network/if-post-down.d/` | after it's down |
 
-The pre-up hooks listed in the first version of this page:
+An example list of pre-up hooks:
 
 ```bash
 # ls /etc/network/if-pre-up.d

@@ -20,12 +20,6 @@ publish: true
 
 -----------------------------------
 
-## Revision history
-
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-06-2023   | {{page.latest_release}} |
-
 ## Các lệnh thường dùng với Docker
 
 <table>

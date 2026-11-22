@@ -19,14 +19,6 @@ publish: true
 {:toc}
 
 -----------------------------------
-## Revision history
-
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Jan-12-2023   | Cập nhật Control Path |
-| 0.2      | Jan-16-2023   | Cập nhật Control path ngày nay và Flow hoạt động của driver đời mới |
-| 0.3      | Nov-22-2026   | Sửa lệnh và tên hàm bị sai, thêm data path chi tiết, luồng kết nối, công cụ và cách debug |
-
 ## Introduction
 
 Wi-Fi driver là một network driver, nhiệm vụ đầu tiên nó cần làm là đăng ký với Kernel để tạo ra net device.
@@ -63,7 +55,7 @@ sudo ip link set wlan0 name "cu-tèo"
 sudo ifconfig "cu-tèo" up
 ```
 
-(Bản đầu của bài mình ghi lệnh đổi tên là `ip set name ...`, sai cú pháp. Lệnh đúng là `ip link set <tên cũ> name <tên mới>`. Tên interface tối đa 15 byte, "cu-tèo" là 7 byte vì chữ "è" chiếm 2 byte UTF-8.)
+(Cú pháp: `ip link set <tên cũ> name <tên mới>`. Tên interface tối đa 15 byte, "cu-tèo" là 7 byte vì chữ "è" chiếm 2 byte UTF-8.)
 
 Kết quả nó như thế này:
 
@@ -78,7 +70,7 @@ cu-tèo: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 
 ```
 
-Để tăng tính thuyết phục nó là một net device thông thường, mình set thêm địa chỉ IP cho nó (lệnh đúng không có chữ `set`, bản đầu mình ghi thừa):
+Để tăng tính thuyết phục nó là một net device thông thường, mình set thêm địa chỉ IP cho nó:
 
 ```shell
 sudo ifconfig "cu-tèo" 20.10.20.10 netmask 255.255.255.0
@@ -471,7 +463,7 @@ mac80211 đăng ký với cfg80211 qua struct cfg80211_ops
 driver Full-MAC đăng ký thẳng với cfg80211 qua struct cfg80211_ops
 ```
 
-> <span style="color:blue">Example of HW driver registering with mac80211: `drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c` (bản 2023 mình ghi đường dẫn cũ `drivers/net/wireless/iwlwifi/...`, thư mục đã chuyển vào `intel/`)</span>
+> <span style="color:blue">Example of HW driver registering with mac80211: `drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c`</span>
 
 Driver đăng ký sử dụng mac80211 thông qua struct <a target="_blank" href="https://elixir.bootlin.com/linux/v6.0.19/source/include/net/mac80211.h#L4117">ieee80211_ops</a>:
 
@@ -491,8 +483,6 @@ struct ieee80211_ops {
 ```
 
 ## Flow hoạt động của driver đời mới
-
-Bản 2023 bảng này có 3 bước và ghi sai tên hàm (`ieee80211_allow_hw()`, `cfg80211_wiphy_new()`, không có hai hàm này). Bản sửa:
 
 |Bước     | Giải thích|
 |:---------|:----------|

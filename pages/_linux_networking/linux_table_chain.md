@@ -20,13 +20,6 @@ publish: true
 
 ---
 
-## Revision history
-
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-02-2023   | Initial Document |
-| 0.2      | Nov-22-2026   | Rewritten; tables per chain, conntrack, nftables, examples |
-
 ## Introduction
 
 If you want a Linux box to do anything clever with traffic (be a firewall, a router, filter DNS), you need a map of the packet's path: from the moment the NIC hands it to the kernel until an application reads it from a socket, and the other way, from `send()` down to the driver. This page is that map.
@@ -174,8 +167,6 @@ Internet sharing in one line:<br>
 
 ## The tables
 
-In 2023 I wrote "these settings are extremely numerous, diverse, and complex, so I'll create a separate article about them". Still true, but the basics fit here.
-
 Inside each chain, tables run in a fixed order:
 
 ```
@@ -318,7 +309,7 @@ The well-known `iptables` talks to the kernel to create these rules:
 iptables [-t table] COMMAND chain [match] [target]
 ```
 
-The table I made in 2023 for listing rules, chain by chain:
+Listing rules, chain by chain:
 
 | Explanation | Command         |
 |:---------|:------------- |

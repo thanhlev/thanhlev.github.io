@@ -20,21 +20,9 @@ publish: true
 
 ---
 
-## Revision history
+## What they have in common
 
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-02-2023   | Add Document |
-| 0.2      | Feb-02-2023   | Add description of Docker using VETH |
-| 0.3      | Feb-04-2023   | Add tunnel interface |
-| 0.34     | Feb-06-2023   | Add ipvlan interface |
-| 0.4      | Nov-22-2026   | Rewritten; one section per type, added VXLAN, WireGuard, dummy, bond, namespaces |
-
-## Why I keep this page
-
-In February 2023 this page was one big HTML table: type, how to create it, what it means. Revisions 0.1 to 0.34 happened over four days: the table first, then veth for Docker, then tunnels, then ipvlan.
-
-The table got too narrow for the explanations, so now each type has its own section. The thing all of them have in common: to the kernel they're normal network interfaces. They have a name, usually a MAC, they take IP addresses, show up in routing, and you can `tcpdump` them. Almost all of them are created with `ip link` from iproute2.
+To the kernel they're all normal network interfaces. They have a name, usually a MAC, they take IP addresses, show up in routing, and you can `tcpdump` them. Almost all of them are created with `ip link` from iproute2.
 
 | Type | Layer | Used for |
 |------|-------|-------------|
@@ -275,7 +263,7 @@ ip netns exec ns1 ip link set veth1 up
 ping 10.0.0.2
 ```
 
-This was the row I added for Docker back in 2023. Docker's default bridge network is exactly this, repeated: for each container one veth pair, one end renamed `eth0` inside the container's namespace, the other end a port of `docker0`, and an address from the bridge subnet.
+Docker's default bridge network is exactly this, repeated: for each container one veth pair, one end renamed `eth0` inside the container's namespace, the other end a port of `docker0`, and an address from the bridge subnet.
 
 ```
 ┌────────────────────────────────────────────────────────┐
@@ -387,7 +375,7 @@ That's the usual VM setup: QEMU holds the TAP, the TAP is a port of `br0`, `br0`
 
 ## Tunnels (IPIP, GRE, SIT, VTI)
 
-Packets inside packets, so two sites can exchange traffic the network in between wouldn't route by itself. In 2023 my only example was a 6in4 (`sit`) tunnel with variables:
+Packets inside packets, so two sites can exchange traffic the network in between wouldn't route by itself. A 6in4 (`sit`) tunnel, with variables:
 
 ```bash
 ip tunnel add tunnel0 mode sit ttl $TUNTTL remote $ISPBRIP local $WAN4IP

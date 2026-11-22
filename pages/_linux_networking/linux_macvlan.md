@@ -20,13 +20,6 @@ publish: true
 
 ---
 
-## Revision history
-
-| Revision | Date        | Remark                  |
-| :------- | :---------- | :---------------------- |
-| 0.1      | Jan-12-2023 | Initial document: definition, modes, one disadvantage |
-| 0.2      | Nov-22-2026 | Rewritten; how it works inside, commands, the host workaround |
-
 ## What it is
 
 <div class="row">
@@ -44,7 +37,7 @@ The short version of how it behaves:
 - It's a sub-interface of a parent (`eth0`), not a bridge. There's no MAC learning, no STP, no ageing timer.
 - The kernel looks at the destination MAC of each frame the parent receives and hands it to the sub-interface that owns that MAC.
 - Sub-interfaces can be moved into other network namespaces, which is how containers use it.
-- The parent has to accept frames for MACs other than its own. In the first version I wrote "the physical interface needs to support promiscuous mode"; that's roughly right, the details are below.
+- The parent has to accept frames for MACs other than its own. Roughly: the physical interface needs to support promiscuous mode; the details are below.
 
 ## What happens inside
 
@@ -219,9 +212,9 @@ Remove one with `ip link delete macvlan0`.
 
 ## Why the host can't reach its own macvlans
 
-This is the "disadvantage" from the first version. In 2023 I wrote it as: the VM sends to the host's MAC, the kernel pushes the frame out of the parent to the switch, and the switch won't send a frame back out of the port it came in on. So VM and host can't talk.
+The short version: the VM sends to the host's MAC, the kernel pushes the frame out of the parent to the switch, and the switch won't send a frame back out of the port it came in on. So VM and host can't talk.
 
-That's the right picture. The detail that explains it: the macvlan code sits on the parent's **receive** path and on the sub-interfaces' **transmit** path. Look at both directions:
+That picture is right. The detail that explains it: the macvlan code sits on the parent's **receive** path and on the sub-interfaces' **transmit** path. Look at both directions:
 
 - **Host → container.** The host's IP stack sends on `eth0` itself. That frame goes straight to the NIC driver and out. It never passes the macvlan lookup, so the kernel never notices that the destination MAC belongs to a local sub-interface.
 - **Container → host.** In bridge mode the sub-interface checks whether the destination MAC belongs to a *sibling*. The parent isn't a sibling, so the frame goes to the wire.
