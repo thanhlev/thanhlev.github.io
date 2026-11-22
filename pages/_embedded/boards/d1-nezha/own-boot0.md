@@ -27,10 +27,9 @@ OpenSBI, U-Boot, the kernel. I wanted my code to be the very first thing after t
 
 ## Task
 
-1. A bare-metal program that the ROM itself loads from NAND: no boot0, no OpenSBI, no U-Boot, no DRAM.
-   Make the on-board RGB LED cycle its colours.
-2. Then a second stage in DRAM, which means doing the DDR3 training myself.
-3. Be able to undo it all.
+First a bare-metal program that the ROM itself loads from NAND: no boot0, no OpenSBI, no U-Boot, no
+DRAM, just the on-board RGB LED cycling its colours. Then a second stage in DRAM, which means doing
+the DDR3 training myself. And I had to be able to undo all of it.
 
 ## Action
 
@@ -51,10 +50,10 @@ erases block 0; the other 7 stay, and the ROM runs the first valid image it find
 **Flashed.** I wrote block 0 and power-cycled. No ADB (Tina didn't boot), the LED cycled, and my UART
 line had the proof:
 
-- `boot_media=0x00000004`: the ROM writes this into the header of the image it loaded, and 4 is
-  SPI-NAND. Before that run it was only my inference from the ROM code.
-- `pc=0x2007a`, which is `main` in the map file. `sp=0x27f60`, under my stack top.
-- `PLL_CPU=0xfa001000`: 408 MHz, the ROM's setting. So no boot0 ran before me.
+`boot_media=0x00000004`: the ROM writes this into the header of the image it loaded, and 4 is
+SPI-NAND (before that run it was only my inference from the ROM code). `pc=0x2007a`, which is `main`
+in the map file, and `sp=0x27f60`, under my stack top. And `PLL_CPU=0xfa001000`: 408 MHz, the ROM's
+setting, so no boot0 ran before me.
 
 **Undo.** Erasing block 0 to all `ff` and power-cycling: Tina came back, boot0 starting at `[158]`
 instead of the usual `[45]`, and the header said `boot_media = 0x14`, copy number 1. Exactly what the
@@ -72,12 +71,14 @@ and blinks.
 
 ## Result
 
-- My code runs **straight from the boot ROM out of NAND**: no Tina, no OpenSBI, no U-Boot. The blink
-  image is 1160 bytes of code and data, padded to 16 KiB.
-- SPL: **1024 MiB of DDR3 trained in 51 124 us**, SPI-NAND ID `c226`, app running at
-  `pc=0x4000005a`, the 8 MiB `.bss` check with **0 bad words**.
-- The ROM's fallback is real and measured: block 0 empty -> it boots **copy 1** (`boot_media 0x14`).
-- Back to stock any time: FEL, then `make restore`, and the 1 MiB readback matches the backup.
+My code runs **straight from the boot ROM out of NAND**: no Tina, no OpenSBI, no U-Boot. The blink
+image is 1160 bytes of code and data, padded to 16 KiB. The SPL trains **1024 MiB of DDR3 in
+51 124 us**, reads SPI-NAND ID `c226`, and the app runs at `pc=0x4000005a` with the 8 MiB `.bss`
+check at **0 bad words**.
+
+The ROM's fallback is real and measured: with block 0 empty it boots **copy 1** (`boot_media 0x14`).
+And I can go back to stock any time: FEL, then `make restore`, and the 1 MiB readback matches the
+backup.
 
 ![Boot ROM fallback to copy 1]({{ '/assets/images/boards/d1-nezha/d1_rom_fallback.png' | relative_url }})
 *The undo test as a picture: block 0 all `ff`, the ROM moves to Tina's copy at `0x20000` and says so in the header (`boot_media = 0x14`).*

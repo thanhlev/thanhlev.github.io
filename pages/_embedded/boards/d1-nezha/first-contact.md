@@ -105,11 +105,13 @@ each 4 KB block, or read with `xfel spinand read`; both give the same bytes and 
 
 ## Result
 
-- CPU **1008 MHz** single level, **1 GiB** DDR3 (PLL at 1584 MHz), 256 MB SPI-NAND, all from the board.
-- Vector: **VLEN 128**, `vl = 4` at e32/m1, `vsetivli` raises **SIGILL**: it's **RVV 0.7.1**, not 1.0.
-- ADB as root, **4.5 / 5.1 MB/s** push/pull over a 480M link.
-- **FEL reachable from software** (`reboot efex`), and the stock boot0 header checks out byte for byte.
-- Reading the NAND's first 4 KB over FEL: **125 KB/s**. Slow, but it's the ROM.
+All from the board, not the docs: the CPU runs at **1008 MHz** with a single level, **1 GiB** of DDR3
+(PLL at 1584 MHz), 256 MB of SPI-NAND. The vector unit has **VLEN 128**, `vl = 4` at e32/m1, and
+`vsetivli` raises **SIGILL**, so it's **RVV 0.7.1**, not 1.0.
+
+ADB gives root, **4.5 / 5.1 MB/s** push/pull over a 480M link. **FEL is reachable from software**
+(`reboot efex`), the stock boot0 header checks out byte for byte, and reading the NAND's first 4 KB
+over FEL runs at **125 KB/s**. Slow, but it's the ROM.
 
 ## What I'd do next
 

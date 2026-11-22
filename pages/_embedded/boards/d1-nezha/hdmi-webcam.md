@@ -82,13 +82,14 @@ payloads, the VE decodes and raises an interrupt, the display engine scales and 
 
 ## Result
 
-- **1920x1080 MJPEG from the webcam to HDMI at 29.4 fps, CPU about 1.2 % busy**, 0 errors. Checked by
-  eye on the monitor.
-- First version (YUY2 640x480, CPU copying): **29.9 fps, 23 %**. The OSD panel on top costs **0.4 %**.
-- HDMI from FreeRTOS at **720p60 and 1080p60**, vblank-paced drawing at 60 frames/s, no late frame.
-- H.264 on the VE: **720x1280 at 30.00 fps for 120 s, 0 late, 9.5 % CPU**.
-- Three of my own mistakes on record: IRQ 91 vs 107, a clock left off (twice), and blaming the power
-  supply for a missing `SET_INTERFACE`.
+**1920x1080 MJPEG from the webcam to HDMI at 29.4 fps, with the CPU about 1.2 % busy** and 0
+errors, checked by eye on the monitor. The first version (YUY2 640x480, CPU copying) did **29.9 fps
+at 23 %**; the OSD panel on top costs **0.4 %**. HDMI from FreeRTOS works at **720p60 and 1080p60**,
+with vblank-paced drawing at 60 frames/s and no late frame, and H.264 on the VE plays **720x1280 at
+30.00 fps for 120 s, 0 late, 9.5 % CPU**.
+
+Three of the mistakes were mine: IRQ 91 vs 107, a clock left off (twice), and blaming the power
+supply for a missing `SET_INTERFACE`.
 
 ![MJPEG decode fps and CPU load]({{ '/assets/images/boards/d1-nezha/d1_mjpeg_fps.png' | relative_url }})
 *Who decodes the JPEGs, measured: the C906 alone tops out at 13.2 fps at 640x480 with the core at 100 %; the Video Engine does 1080p at 29.8 fps, and with DMA in the path 29.4 fps at 1.2 % CPU.*

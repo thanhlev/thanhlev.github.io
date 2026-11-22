@@ -109,12 +109,13 @@ lied.) The temperature sensor also read -10 C at first; it needed a trim value f
 | tick wake-up, 10 000 samples | 14.96 / 15.58 / 18.04 us | **0.500 / 0.500 / 0.541 us** | 0.92 / 2.92 / 5.29 us |
 | wake-ups that slipped a tick | 0 | 0 | 0 |
 
-- **27x** faster task switch from one bit in `mhcr`. Under load the worst wake-up is 5.3 us and no
-  tick is ever missed.
-- Every `d1_cli` command gives the same result under the RTOS (DMA 1 MiB at 345 MB/s, 0 mismatches).
-- Idle in `wfi`: **225 thousand** instructions a second instead of 444 million. After 90 s idle the die
-  read **19.2 C** with `wfi` against **21.6 C** spinning (18.6 C at 24 MHz with the PLL, VE and DSP
-  off). Trends, not steady states.
+So one bit in `mhcr` made the task switch **27x** faster. Under load the worst wake-up is 5.3 us
+and no tick is ever missed. Every `d1_cli` command gives the same result under the RTOS (DMA 1 MiB at
+345 MB/s, 0 mismatches).
+
+Idle in `wfi` retires **225 thousand** instructions a second instead of 444 million. After 90 s idle
+the die read **19.2 C** with `wfi` against **21.6 C** spinning (18.6 C at 24 MHz with the PLL, VE and
+DSP off). Trends, not steady states.
 
 ## What I'd do next
 
