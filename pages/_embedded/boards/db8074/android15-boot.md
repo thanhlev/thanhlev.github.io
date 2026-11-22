@@ -52,12 +52,12 @@ image with the DTB appended, lk2nd's ramdisk/DTB addresses moved up so they don'
 4.57 s and stopped at 30.6 s: `partition(s) not found after polling timeout: super`.
 
 **Up to adb.** Two causes, not one. The RPM never probed because in 6.6 `mbox_request_channel()`
-returns `-ENOENT` and `qcom_smd` only falls back on `-ENODEV`: patch 0001, and suddenly eMMC, USB and
+returns `-ENOENT` and `qcom_smd` only falls back on `-ENODEV`. One patch, and suddenly eMMC, USB and
 UART stop being deferred. And super had to live somewhere: I chose to overwrite the eMMC userdata
 partition (12 GiB, the only one big enough). That needed two settings, not one,
 `androidboot.super_partition=userdata` plus `BOARD_SUPER_PARTITION_METADATA_DEVICE := userdata`.
-Then `bpfloader` exited 2 and init rebooted, because the arm32 BPF JIT doesn't do atomics: patch 0002
-falls back to the interpreter. And `g_ether.ko` in the ramdisk grabbed the only USB device controller,
+Then `bpfloader` exited 2 and init rebooted, because the arm32 BPF JIT doesn't do atomics, so I patched it
+to fall back to the interpreter. And `g_ether.ko` in the ramdisk grabbed the only USB device controller,
 so adb never showed. Removed it.
 
 ```
@@ -66,7 +66,7 @@ $ adb shell getprop ro.build.version.release
 ```
 
 **Up to the screen.** Five NoC bus clocks failed (6.6 moved them, the interconnect driver still asked
-for the old names): patch 0003. The Adreno had no IOMMU, so I gave it a 128 MiB VRAM carveout and
+for the old names), another patch. The Adreno had no IOMMU, so I gave it a 128 MiB VRAM carveout and
 `cma=256M`. `system_server` died on `ashmem`, which mainline doesn't have: `sys.use_memfd=true`.
 That got me the boot animation.
 
@@ -80,7 +80,7 @@ vendor extension nobody serves, ext4 without POSIX ACL, an OCMEM lock failure af
 the missing `android.software.app_widgets` feature. Rendering was still software (ANGLE on
 SwiftShader): the GPU had no firmware yet.
 
-**Persistent boot** (16 November). lk2nd at offset 0 of the 16 MiB eMMC boot partition, my Android
+**Persistent boot.** lk2nd at offset 0 of the 16 MiB eMMC boot partition, my Android
 boot image at 512 KiB, stock aboot untouched. A small patch so `adb reboot bootloader` reaches fastboot
 again. New kernels go in from Android itself:
 
@@ -90,10 +90,10 @@ again. New kernels go in from Android itself:
 
 ## Result
 
-- Android 15 (BP1A.250505.005.D1), kernel 6.6.162, Launcher3 on the panel: first `boot_completed=1`
-  after 264 s (15 November, software rendering).
-- From 16 November it boots by itself at power-on: home screen after 66 s from eMMC.
-- The stock boot chain was never written; the backup still matches its SHA-256 sums.
+Android 15 (BP1A.250505.005.D1) on kernel 6.6.162, with Launcher3 on the panel. The first
+`boot_completed=1` came after 264 s, still with software rendering. Once lk2nd and my boot image sat
+on the eMMC, it booted by itself at power-on and reached the home screen after 66 s. The stock boot
+chain was never written, and the backup still matches its SHA-256 sums.
 
 ![Android Settings, About tablet: Model DragonBoard 8074 (APQ8074), Android version 15](/assets/images/boards/db8074/d8k_about_android15.jpg)
 *"About tablet": DragonBoard 8074 (APQ8074), Android version 15. A photo of the screen, a bit blurry.*

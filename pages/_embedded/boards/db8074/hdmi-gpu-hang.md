@@ -22,7 +22,7 @@ result: "HDMI at 1080p60 on kernel 6.6; GPU hangs from 5 to 10 a minute down to 
 
 ## Situation
 
-16 November 2026. Touch and the panel worked, HDMI showed nothing. No mainline kernel has the HDMI PLL
+November 2026. Touch and the panel worked, HDMI showed nothing. No mainline kernel has the HDMI PLL
 for MSM8974; it lives only in the vendor 3.4 kernel. A day later, with HDMI working, a new problem: after
 some minutes of use the screen turned to garbage and then HDMI went black.
 
@@ -38,8 +38,8 @@ Drive HDMI from kernel 6.6. Then make the board survive more than a few minutes 
 
 **The PLL.** I started from Dmitry Baryshkov's "drm/msm: add support for HDMI on msm8974" RFC from May
 2023, never merged, but tested on this very board, with the PLL code from Brian Masney's 2019 RFC.
-That became patch 0012 (`hdmi_pll_8974.c`, 749 lines), plus 0013 for the SoC nodes and 0014 for the
-board's connector and supplies. I didn't trust the tables blindly: every register value of the 7
+That became a 749-line PLL driver, plus device tree nodes for the SoC and for the board's connector
+and supplies. I didn't trust the tables blindly: every register value of the 7
 pixel rates I kept was checked against the vendor's `clock-mdss-8974.c`, 38 writes each.
 
 On the board the kernel side came up at once: PLL registered, 7 rates from 25.2 to 148.5 MHz, the
@@ -83,14 +83,14 @@ memory.
 
 ![Why the Adreno 330 hung once zram swapped, and where patch 0100 cuts the chain](/assets/images/boards/db8074/d8k_l19_evict.png)
 
-Patch 0100 keeps carveout buffers that are in use off the shrinker's list; 0101 adds
+Patch 0100 keeps carveout buffers that are in use off the shrinker's list. A second small one adds
 `/sys/kernel/debug/dri/0/vram` so I can see the carveout.
 
 ## Result
 
-- HDMI driven by kernel 6.6 at 1080p60 (148.5 MHz pixel clock), with the DSI panel still working.
-- GPU hangs: 5 to 10 a minute before; after patch 0100, 41 minutes with HDMI on and 180 MB in zram,
-  0 hangs. The carveout used 62 644 KiB of 262 144.
+HDMI runs from kernel 6.6 at 1080p60 (148.5 MHz pixel clock), and the DSI panel still works next to
+it. The GPU hangs went from 5 to 10 a minute to none: after patch 0100 I watched 41 minutes with HDMI
+on and 180 MB in zram, 0 hangs. The carveout used 62 644 KiB of its 262 144.
 
 ```
 carveout 0x68100000 size 262144 KiB used 62644 KiB free 199496 KiB largest-free 190368 KiB

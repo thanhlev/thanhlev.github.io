@@ -22,7 +22,7 @@ result: "/data from 864 MiB to 10 GiB, 15 bytes changed per GPT copy"
 
 ## Situation
 
-17 November 2026, late evening. Android warned about low storage. When I put super into the userdata
+November 2026. Android warned about low storage. When I put super into the userdata
 partition back in the first bring-up, /data had to move somewhere, and it landed on the 864 MiB "grow"
 partition. So a board with a 16 GB eMMC had less than 1 GB for apps.
 
@@ -68,7 +68,7 @@ before, saves the boot image and super, and refuses to go on if anything differs
 00:08:41 PRECHECK OK
 ```
 
-**The write** (00:16:05), 34 sectors at the start and 33 at the end, then read back:
+**The write**, 34 sectors at the start and 33 at the end, then read back:
 
 ```
 00:16:05 dd new_primary_gpt.bin -> LBA 0..33, new_backup_gpt.bin -> LBA 30212063..30212095
@@ -90,9 +90,9 @@ was wrong, not the disk. Fixed the number, went on: flash super (100 s), erase u
 /dev/block/mmcblk0p13  10G 345M  9.2G   4% /storage/emulated/0/Android/obb
 ```
 
-- /data from 864 MiB to 10 GiB (9.2 GiB free), super its own 3 GiB partition.
-- 15 bytes changed in each GPT copy, nothing else on the eMMC moved.
-- Android 15 at `boot_completed` after 22 s on the first boot.
+/data went from 864 MiB to 10 GiB (9.2 GiB free), and super has its own 3 GiB partition. Each GPT
+copy changed by 15 bytes, and nothing else on the eMMC moved. The first boot reached `boot_completed`
+after 22 s.
 
 ## What I'd do next
 
