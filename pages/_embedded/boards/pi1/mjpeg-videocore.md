@@ -83,13 +83,13 @@ found one face.
 
 ## Result
 
-- MJPEG decoded on the VideoCore from bare metal: **19 534 B JPEG -> 152 064 B I420 in 5.3 ms** in
-  steady state.
-- Live on the webcam: **597 frames, 0 decode errors, 5 ms a decode**, one face found (3.0 s a run, the
-  detector was still on the CPU then).
-- Pixel check against libjpeg: Y mean **101.878 vs 101.635**.
-- Gotchas on record: VCHIQ opens once per GPU boot; bulk lengths in multiples of 4; the decoder
-  returns frame N when you send frame N+1.
+MJPEG gets decoded on the VideoCore from bare metal: **19 534 B of JPEG -> 152 064 B of I420 in
+5.3 ms** in steady state, and the Y mean is **101.878 against libjpeg's 101.635**. Live on the webcam
+it did **597 frames with 0 decode errors, 5 ms a decode**, and found one face (3.0 s a run, the
+detector was still on the CPU then).
+
+The gotchas, so I don't hit them twice: VCHIQ opens once per GPU boot, bulk lengths go in multiples
+of 4, and the decoder returns frame N when you send frame N+1.
 
 <a href="{{ '/assets/images/boards/pi1/pi1_hdmi_osd.jpg' | relative_url }}"><img src="{{ '/assets/images/boards/pi1/pi1_hdmi_osd.jpg' | relative_url }}" alt="HDMI screenshot: webcam picture and status panel" style="width:100%;max-width:800px"></a>
 *Straight off the HDMI output, 27 s after boot: my floor through the webcam, and the panel says `GPU VideoCore IV: giải MJPEG 5 ms, 80 KB/khung` (decode 5 ms, 80 KB per frame). The 29 USB errors on it are the next story. (Vietnamese panel.)*

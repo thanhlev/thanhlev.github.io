@@ -30,21 +30,10 @@ plugged into the PC, so I asked the obvious question: does the Zero's image run 
 it turned into a bigger thing: the face detector I had on my NanoPi 2 Fire, but on a 2012 board, with
 no Linux under it.
 
-## Timeline
-
-| When | What happened |
-|---|---|
-| 2026-10-20 | The Zero W's `rtos_cli` image boots unchanged from the SD card; pins picked per board revision |
-| 2026-10-20 | First UART loader (`pzload`): works on QEMU, prints nothing on the real board |
-| 2026-10-25 | YuNet face detector ported from my NanoPi 2 Fire project; same boxes as on the PC (QEMU) |
-| 2026-10-26 | Loader built into the firmware itself: new image over the UART at 1.5 Mbaud, no card swap |
-| 2026-10-26 | First run on the board: 2.37 s per picture. MJPEG decoded on the VideoCore from bare metal |
-| 2026-10-26 | Convolutions moved onto the 12 QPUs: 43.5 ms per picture |
-| 2026-10-26 | Webcam drops fixed in the DWC2 isochronous code; WS2812 ring counts the faces |
-| 2026-10-27 | Separate FreeRTOS task for the ring, `0xF8` for a 1 bit, new kernel on the card |
-
-![Timeline of the Pi 1 face detector]({{ '/assets/images/boards/pi1/pi1_timeline.png' | relative_url }})
-*The same week as a line, from the Zero's image booting on 10-20 to 12.3 detections a second on 10-26 20:20. (Vietnamese labels.)*
+What it does now: the Zero's FreeRTOS image boots unchanged from the SD card, a loader inside the
+firmware takes the next build over the UART at 1.5 Mbaud (no more card swaps), the VideoCore decodes
+the webcam's MJPEG for me, and the face detector runs on the 12 QPUs at 43.5 ms a picture. A WS2812
+ring counts the faces.
 
 <video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi1/pi1_boot_short_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi1/pi1_boot_short.mp4' | relative_url }}" type="video/mp4"></video>
 
@@ -56,9 +45,7 @@ no Linux under it.
 
 ## Still open
 
-- The auto start at power-on is on the card, but I haven't watched it come up from a cold boot with the
-  latest kernel yet.
-- VCHIQ only opens once per GPU boot, so I have to reboot before every `make load`. Annoying, not fixed.
-- The port saves no VFP registers, so only the face task may use floats; the ring effects run in soft
-  float.
-- Ethernet on the LAN9512 is still unused.
+The auto start at power-on is on the card, but I haven't watched it come up from a cold boot with the
+latest kernel yet. VCHIQ only opens once per GPU boot, so I have to reboot before every `make load`;
+annoying, not fixed. The port saves no VFP registers, so only the face task may use floats and the
+ring effects run in soft float. Ethernet on the LAN9512 is still unused.

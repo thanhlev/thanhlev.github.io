@@ -27,8 +27,8 @@ instead of 47, a PL011 UART on header pins 8/10 where I had a PL2303 adapter.
 
 ## Task
 
-1. Run the Zero's `rtos_cli` on the Pi 1 without forking it.
-2. Stop pulling the SD card for every build. Each iteration was: card out, PC, copy, card back, power.
+Run the Zero's `rtos_cli` on the Pi 1 without forking it. Then stop pulling the SD card for every
+build, because each iteration was card out, PC, copy, card back, power.
 
 ![What is on my Pi 1 SD card]({{ '/assets/images/boards/pi1/pi1_sdcard.png' | relative_url }})
 *The card I kept pulling out, measured from its image: the FAT partition and the five boot files with their LBAs and sizes, and how the boot ROM walks MBR, boot sector and FAT chain to `bootcode.bin`.*
@@ -90,12 +90,11 @@ then on:
 
 ## Result
 
-- The Zero W's `kernel.img` runs **unchanged** on the Pi 1 B rev 2, from the SD card, console on the
-  PL011.
-- Pin selection by revision: **12/12** codes decoded right on the PC.
-- `uload`: a **921 224-byte** image in **6.7 s** at 1.5 Mbaud through a PL2303 (137 kB/s), prompt in
-  7.2 s. On QEMU the prompt came after 12.4 s.
-- The SD card only gets touched when `uload` itself changes.
+The Zero W's `kernel.img` runs **unchanged** on the Pi 1 B rev 2, from the SD card, console on the
+PL011, and the pin selection by revision decodes **12/12** codes right on the PC. With `uload` a
+**921 224-byte** image goes over in **6.7 s** at 1.5 Mbaud through a PL2303 (137 kB/s), prompt in
+7.2 s (on QEMU the prompt came after 12.4 s). The SD card only gets touched when `uload` itself
+changes.
 
 <video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi1/pi1_kernel_format_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi1/pi1_kernel_format.mp4' | relative_url }}" type="video/mp4"></video>
 

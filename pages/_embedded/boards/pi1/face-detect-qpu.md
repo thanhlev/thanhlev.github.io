@@ -95,13 +95,13 @@ out again.
 ![Face detection time per stage, log scale]({{ '/assets/images/boards/pi1/pi1_speed_chart.png' | relative_url }})
 *Each step on one chart, log scale: blue is one still picture (2374 -> 795 -> 136 -> 104 ms...), green is live from the webcam, down to 81 ms a frame. (Vietnamese labels.)*
 
-- **54x** faster per picture than the CPU version. Step 1 gave exactly the CPU's boxes and scores
-  (884 and 872); I checked that the face is still found after each later step, I didn't re-diff every
-  score.
-- After the [webcam fix]({{ '/embedded/boards/pi1/webcam-and-ring' | relative_url }}) the live rate
-  went to **~17.5 detections a second**: the stream had been restarting about 9 times a minute.
-- Where a live frame's time goes now (from `usb stat`): load 2.1 ms, forward 44.7 ms (dw 17.1, pw 15.8,
-  pool 6.5, conv 5.1), boxes and drawing 0.8 ms, HDMI 3.3 ms.
+That's **54x** faster per picture than the CPU version. Step 1 gave exactly the CPU's boxes and
+scores (884 and 872); after each later step I checked that the face is still found, I didn't re-diff
+every score. After the [webcam fix]({{ '/embedded/boards/pi1/webcam-and-ring' | relative_url }}) the
+live rate went to **~17.5 detections a second**: the stream had been restarting about 9 times a minute.
+
+Where a live frame's time goes now (from `usb stat`): load 2.1 ms, forward 44.7 ms (dw 17.1, pw 15.8,
+pool 6.5, conv 5.1), boxes and drawing 0.8 ms, HDMI 3.3 ms.
 
 ## What I'd do next
 

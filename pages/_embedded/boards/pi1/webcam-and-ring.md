@@ -103,13 +103,13 @@ wakes the `led` task with `xTaskNotifyGive`; it waits for that or 40 ms. A frame
 
 ## Result
 
-- Webcam: from ~9 stream restarts a minute to **0 in 121 s**, **2117 detector runs**, 0 isochronous
-  errors, 0 decode errors.
-- Live rate: **~17.5 detections a second** (it was 12.3 with the restarts).
-- The "drops when a face appears" theory was wrong: **12 drops with the ring off vs 8 with it on**.
-  But the test found a real bug (no retry after a failed restart).
-- The LED ring: dark with `0xF0` (640 ns), lit with **`0xF8` (800 ns)**. Checked by eye: the old image spun,
-  then the new one lit.
+The webcam went from ~9 stream restarts a minute to **0 in 121 s**: **2117 detector runs**, 0
+isochronous errors, 0 decode errors. The live rate is now **~17.5 detections a second** (it was 12.3
+with the restarts).
+
+My "drops when a face appears" theory was wrong: **12 drops with the ring off vs 8 with it on**. But
+that test found a real bug (no retry after a failed restart). The LED ring was dark with `0xF0`
+(640 ns) and lit with **`0xF8` (800 ns)**, checked by eye: the old image spun, then the new one lit.
 
 ![Webcam stream restarts before and after the fix]({{ '/assets/images/boards/pi1/pi1_restarts.png' | relative_url }})
 *Restarts per run: 12 with the ring off, 8 with it spinning, 0 in 121 s after the parity and packet-size change.*
