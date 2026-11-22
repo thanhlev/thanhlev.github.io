@@ -13,9 +13,9 @@ This site is where I write down what I found, so the next time I hit the same wa
 
 ## Where it started
 
-My undergraduate thesis was a humanoid robot: a servo-driven biped that walks, keeps its balance with an IMU and plays back motion routines.
+My undergraduate thesis was a small humanoid robot on SG90 servos: I drew it in SolidWorks, worked out the DH table and the inverse kinematics, and planned its walking trajectories in simulation before running them on the controller.
 The [videos are here](/embedded/humanoid-robot) if you want to see it walk.
-That project is the reason I still like the low-level end of things, where getting the balance wrong means the robot falls over.
+That project is the reason I still like the low-level end of things, where one wrong angle in a matrix means the leg goes somewhere you didn't expect.
 
 ## What I tinker with
 
