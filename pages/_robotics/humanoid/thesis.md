@@ -1,23 +1,23 @@
 ---
 layout: default
-title: "Humanoid Robot: my thesis project"
+title: "Thesis humanoid (SG90): my undergraduate robot"
 short_description: "A small humanoid on SG90 servos: SolidWorks model, DH table, inverse kinematics, then the real thing"
 status: "Done"
 picture: "assets/images/humanoid_robot.jpg"
 latest_release: "2026-11-22: moved under Robotics, written as a STAR story"
-index: 0
+index: 0   # first card in Robotics
 publish: true
 permalink: /robotics/humanoid/thesis
 redirect_from:
   - /embedded/humanoid-robot
-board_parent: humanoid
+board_hub: true   # 2026-11-22: own card in Robotics (user «vẫn chưa thấy trang thesis mang qua»); the humanoid hub links it in its text
 result: "17 SG90s walking on the floor from angles I computed myself, played back over 9600-baud serial"
 ---
 <!-- 2026-11-22: moved from pages/_embedded/humanoid_robot.md into the Robotics humanoid hub (user «Humanoid
      Robot: my thesis project nên đưa vào Robotics») and rewritten in STAR form; same facts and the same five
      YouTube videos as before. The old URL /embedded/humanoid-robot redirects here (jekyll-redirect-from). -->
 
-[Back to the humanoid hub](/robotics/humanoid/)
+[The same robot, years later in simulation →](/robotics/humanoid/)
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
