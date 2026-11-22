@@ -64,9 +64,7 @@ to count 12 programs done.
 ```
 pz> qpu
  QPUs on, V3D 02443356, GPU memory at bus 5EBF8000
- check: 12 QPU x 16 lanes, 1000 x vs CPU, max error:
  CPU rounding to nearest 107231 ppb
- lane 191: QPU 70858200, CPU 70864064 (millionths)
  CPU rounding toward zero 0 ppb
  12 QPU 1000000 x 80007 us 4799 MFLOPS
  1 QPU 1000000 x 80003 us 399 MFLOPS
@@ -74,15 +72,15 @@ pz> qpu
  CPU soft 10000 x 25636 us 12 MFLOPS
 ```
 
-- **4799 MFLOPS** on 12 QPUs, against **73** on the ARM1176 with its VFP and **12** in the soft float
-  `rtos_cli` is built with. That's **66x** and **400x**.
-- The arithmetic checks out: 5 instructions x 4 cycles x 1 000 000 passes at 250 MHz is 80 ms, and one
-  QPU took 80 003 us. Twelve took the same time, so they really ran in parallel.
-- At first the results looked wrong (107231 ppb off). It's rounding: the QPU rounds toward zero. With
-  the CPU also rounding toward zero, all **192 lanes match bit for bit**.
-- The firmware's own "execute QPU" mailbox call doesn't answer on this firmware; queueing through the
-  V3D registers works.
-- The image grew to 60 KB with this command in.
+That's **4799 MFLOPS** on 12 QPUs, against **73** on the ARM1176 with its VFP and **12** in the soft
+float `rtos_cli` is built with: **66x** and **400x**. The arithmetic checks out too. 5 instructions x
+4 cycles x 1 000 000 passes at 250 MHz is 80 ms, and one QPU took 80 003 us. Twelve took the same
+time, so they really ran in parallel.
+
+At first the results looked wrong (107231 ppb off). It's rounding: the QPU rounds toward zero. With
+the CPU also rounding toward zero, all **192 lanes match bit for bit**. The firmware's own "execute
+QPU" mailbox call doesn't answer on this firmware; queueing through the V3D registers works. The
+image grew to 60 KB with this command in.
 
 ## What I'd do next
 

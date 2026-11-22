@@ -31,17 +31,11 @@ to see how much of that I could poke at from my side of the cable.
 ![Datasheet bus addresses vs ARM physical addresses]({{ '/assets/images/boards/pi-zero/pz_addr_map.png' | relative_url }})
 *The first thing that tripped me: the datasheet prints `0x7E...` VideoCore bus addresses, my ARM code has to use `0x20...`. Same GPIO, UART0 and AUX, 0x5E000000 apart.*
 
-## Timeline
-
-| When | What happened |
-|---|---|
-| 2026-10-11 | Bare-metal project from an empty folder: a 1381-byte `kernel.img`, checked on QEMU's `raspi0` machine |
-| 2026-10-12 | Plugged the board in with no card. USB device boot works, but only after pinning an older firmware |
-| 2026-10-12 | Same day: FreeRTOS and a 13-command shell over the boot cable, after a long hunt for a USB drop |
-| 2026-10-13 | Went back over my own notes: 10 code excerpts did not match their files, fixed by extracting them from the files |
-| 2026-10-20 | `qpu` command: the same multiply-add on the 12 QPUs and on the ARM |
-| 2026-10-20 | `cam` command for the CSI port: I2C and the Unicam receiver answer, but I still have no camera |
-| 2026-10-20 | The same `rtos_cli` image runs unchanged on my Pi 1 Model B ([Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }})) |
+What I got out of it: a 1381-byte bare-metal kernel booting over USB with no card (once I pinned an
+older firmware), then FreeRTOS with a 13-command shell on that same boot cable, after a long hunt for
+a USB device that kept leaving. Later the shell learned to run my own programs on the 12 QPUs, and
+the same `rtos_cli` image runs unchanged on my Pi 1 Model B
+([Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }})).
 
 ## The stories
 
@@ -49,11 +43,12 @@ to see how much of that I could poke at from my side of the cable.
 
 ## Still open
 
-- **The camera.** `cam probe` gets a NACK from both sensor addresses (OV5647 at `0x36`, IMX219 at
-  `0x10`) because nothing is plugged in. The receiver registers read back as written, and the board's
-  own 640x480 test frame comes back to the PC in 1.0 s (my first try took 45.9 s). The real frame
-  waits for a camera and a cable.
-- **No UART cable yet**, so the bare-metal banner and its baud rate have never been seen on a wire.
-- **A crash only shows up as a reboot.** I tried to keep a "black box" record in DRAM at
-  `0x0F000000` across a watchdog reset. It was gone after the reset, every time.
-- SD-card boot, Wi-Fi, the D-cache and the MMU: not touched.
+The camera. `cam probe` gets a NACK from both sensor addresses (OV5647 at `0x36`, IMX219 at `0x10`)
+because nothing is plugged in. The Unicam receiver registers read back as written, and the board's
+own 640x480 test frame comes back to the PC in 1.0 s (my first try took 45.9 s), so the real frame
+just waits for a camera and a cable.
+
+I still have no UART cable, so the bare-metal banner and its baud rate have never been seen on a
+wire. A crash only shows up as a reboot: I tried keeping a "black box" record in DRAM at `0x0F000000`
+across a watchdog reset and it was gone after the reset, every time. SD-card boot, Wi-Fi, the D-cache
+and the MMU I haven't touched.

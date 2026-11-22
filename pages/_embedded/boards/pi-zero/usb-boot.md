@@ -109,16 +109,16 @@ it any more.
 
 ## Result
 
-- My **1381-byte** `kernel.img` boots on the real Pi Zero W over USB with no SD card. LED blinking.
-- Power-on to my code is about **10 s**: 5.7 s SD timeout, 2.3 s for `bootcode.bin`, 1.6 s to
-  re-enumerate, then the file transfers.
-- The stable firmware's `start.elf` never takes its first bulk read on USB boot. **1.20241126** works,
-  and so do three older tags.
-- One boot is **two** enumerations with this firmware, not three: `start.elf` keeps using
-  `bootcode.bin`'s USB device.
-- Two traps on record: don't `lsusb -v` the boot ROM before rpiboot, and don't trust a blinking LED as
-  proof of anything else (see the [shell story]({{ '/embedded/boards/pi-zero/rtos-usb-shell' | relative_url }}):
-  my kernel was blinking from the wrong address).
+My **1381-byte** `kernel.img` boots on the real Pi Zero W over USB with no SD card, LED blinking.
+Power-on to my code is about **10 s**: 5.7 s SD timeout, 2.3 s for `bootcode.bin`, 1.6 s to
+re-enumerate, then the file transfers. And with this firmware one boot is **two** enumerations, not
+three: `start.elf` keeps using `bootcode.bin`'s USB device.
+
+The stable firmware's `start.elf` never takes its first bulk read on USB boot; **1.20241126** works,
+and so do three older tags. Two traps I keep in mind: don't `lsusb -v` the boot ROM before rpiboot,
+and don't trust a blinking LED as proof of anything else (see the
+[shell story]({{ '/embedded/boards/pi-zero/rtos-usb-shell' | relative_url }}): my kernel was blinking
+from the wrong address).
 
 ## What I'd do next
 

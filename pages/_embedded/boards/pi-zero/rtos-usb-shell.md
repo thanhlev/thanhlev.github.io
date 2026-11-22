@@ -152,13 +152,14 @@ pz> rt switch
  1000 round trips in 22522 us: 11261 ns per switch
 ```
 
-- The shell is on `/dev/ttyACM0` about **0.8 s** after the firmware hands over, stable, all
-  **13 commands** checked on the board.
-- `vTaskDelay(1)` x 1000 on the board: **min 999, avg 1000, max 1001 us**.
-- Task switch **13.9 -> 11.3 us** with the I-cache on; IDLE at 98.8 %.
-- The USB power-on through the mailbox takes **527 ms**. Initialise the DWC2 only after the reply.
-- Eight days later I ran the same steps again: boot ROM after 5.69 s again, task switch 11247 ns
-  against 11261.
+The shell is on `/dev/ttyACM0` about **0.8 s** after the firmware hands over, stable, and all
+**13 commands** check out on the board. `vTaskDelay(1)` x 1000 on the board gives **min 999, avg
+1000, max 1001 us**. A task switch went from **13.9 to 11.3 us** with the I-cache on, and IDLE sits
+at 98.8 %.
+
+The lesson I keep: the USB power-on through the mailbox takes **527 ms**, so initialise the DWC2 only
+after the reply. Eight days later I ran the same steps again and got the boot ROM after 5.69 s again
+and a task switch of 11247 ns against 11261.
 
 ## What I'd do next
 
