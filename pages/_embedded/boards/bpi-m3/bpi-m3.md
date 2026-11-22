@@ -29,15 +29,12 @@ on two clusters: I wanted to see how Linux even wakes the second cluster.
 *What hangs off the A83T on my board: no photo of my own yet, so this is drawn from what my probes found (AXP813 over RSB, AP6212 on SDIO, RTL8211E, 2 GB LPDDR3).*
 
 
-## Timeline
+## What I got it to do
 
-| When | What happened |
-|---|---|
-| 2026-10-01 | Read the Banana Pi docs, built a mainline U-Boot + Linux 6.18 SD image. Never booted it (no card reader here) |
-| 2026-10-03 | Board on a USB-serial adapter. Measured the vendor image: 8 cores, 11 CPU frequencies up to 2016 MHz. FEL works |
-| 2026-10-03 | First bare-metal program from SRAM: blinks the two LEDs that hang off the PMIC |
-| 2026-10-03 → 04 | DRAM brought up from SRAM over FEL, 2 GiB, then the same blink running from DRAM |
-| 2026-10-04 | A bare-metal command line in DRAM with one command per peripheral |
+First I only read the vendor image over the serial console: eight cores, eleven CPU frequencies up
+to 2016 MHz. Everything after that went in over USB through the FEL boot ROM. My own code from SRAM, a blink of the two
+LEDs that hang off the PMIC. Then DRAM: xfel can't bring it up on the A83T, so I ported U-Boot's
+init and got all 2 GiB. And last a bare-metal command line in DRAM with one command per peripheral.
 
 ## The write-ups
 
@@ -47,6 +44,6 @@ Each one is Situation / Task / Action / Result, with the numbers I measured on m
 
 ## Still open
 
-The mainline image from 1 October is still unbooted, so every Linux number here is from the vendor
+The mainline U-Boot + Linux 6.18 SD image I built is still unbooted (no card reader here), so every Linux number here is from the vendor
 3.4 kernel. The eMMC root file system of the vendor image also has EXT4 errors; I haven't written
 anything to it and won't until I can fsck it unmounted.

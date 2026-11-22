@@ -22,7 +22,7 @@ result: "eMMC, Wi-Fi, BT, PHY and IR all answer; 64 MiB memtest, 0 errors"
 
 ## Situation
 
-4 October 2026. DRAM worked over FEL, so I had 2 GiB and a CPU that does exactly what I tell it. What
+The day after. DRAM worked over FEL, so I had 2 GiB and a CPU that does exactly what I tell it. What
 I didn't have was any idea whether the rest of the board was alive under my code: eMMC, the SDIO Wi-Fi,
 Bluetooth, the Ethernet PHY, the IR receiver. The vendor image talks to most of it through blobs.
 
@@ -37,9 +37,8 @@ poke, and `exit` back to FEL for the next build. No U-Boot, no OS.
 
 ## Action
 
-`dram_cli/` is loaded by `run.sh` the same way as the DRAM blink: `ddr_init.bin` first, then `cli.bin`
-at 0x40000000. One C file per test group (`t_pmic.c`, `t_mmc.c`, `t_net.c`, ...). There's no write
-command for eMMC or SD, on purpose.
+It's loaded the same way as the DRAM blink: `ddr_init.bin` first, then `cli.bin` at 0x40000000.
+There's no write command for eMMC or SD, on purpose.
 
 ```
 $ make                      # cli.bin, about 29 KiB
@@ -48,23 +47,18 @@ $ python3 cli.py /dev/ttyUSB0 help info pmic emmc
 $ python3 cli.py /dev/ttyUSB0 exit
 ```
 
-The rules I wrote down while getting it to run, each one learned the hard way:
-
-| Rule | Why |
-|---|---|
-| anything written before `.bss` is cleared must not live in `.bss` | otherwise `exit` restored a stack pointer of 0 |
-| invalidate the I-cache before enabling it | FEL writes the new image behind the cache |
-| build with `-mno-unaligned-access` | MMU off means unaligned loads fault |
-| start the SD/MMC module clock before the controller reset completes | the reset never finishes otherwise |
-| throw away the first temperature sample | it reads 0 until the first conversion ends |
-| every polling loop reaches its timeout test on every path | one path that skipped it is a hang |
+Getting it to run taught me a few rules the hard way. Anything written before `.bss` is cleared
+must not live in `.bss`: my `exit` once restored a stack pointer of 0. FEL writes the new image behind
+the cache, so invalidate the I-cache before turning it on. With the MMU off, unaligned loads fault,
+hence `-mno-unaligned-access`. The SD/MMC module clock has to run before the controller reset can
+finish, or it never does. The first temperature sample reads 0 until a conversion ends, so throw it
+away. And every polling loop has to reach its timeout test on every path, because the one path that
+skipped it was a hang.
 
 One issue from that session is still open. My suspect: I had a second serial terminal on the same port
 while `cli.py` ran, and two readers on one port split the bytes between them.
 
 ## Result
-
-Measured on 4 October 2026:
 
 | Command | Result on my board |
 |---|---|
@@ -82,7 +76,7 @@ Measured on 4 October 2026:
 | `i2c` | TWI0 to 2 scan: nothing on CON1 (nothing plugged in) |
 
 ![Each BPI-M3 block with the result my bare-metal CLI got from it](/assets/images/boards/bpi-m3/bpim3_cli_after.png)
-*Same diagram after 4 October: every block answered, from the AXP813 (IC 0x51) to the IR receiver (6 codes).*
+*Same diagram afterwards: every block answered, from the AXP813 (IC 0x51) to the IR receiver (6 codes).*
 
 
 Also there: `timer` (Timer1 at 24 MHz; the ARM generic timer isn't counting, the ROM leaves it off),

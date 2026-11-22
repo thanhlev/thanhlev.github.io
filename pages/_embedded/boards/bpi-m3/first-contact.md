@@ -22,7 +22,7 @@ result: "8 cores online, 11 OPPs 480 to 2016 MHz, FEL at 12 Mbit/s"
 
 ## Situation
 
-3 October 2026, about 21:15. I had a list of open questions from reading the docs two days before:
+October 2026. I had a list of open questions from reading the docs two days before:
 the spec says 1.8 GHz but mainline Linux tops out at 1.2 GHz, the board has two CPU clusters and I
 didn't know how the second one gets started, and I wasn't sure FEL works on this SoC at all. I also had
 a ready mainline SD image, and no way to write an SD card on this PC.
@@ -53,9 +53,8 @@ bpi-iot-ros-ai login:
 That's the vendor image, so every number below is for the vendor BSP, not mainline. Fine by me: that's
 exactly the comparison my mainline notes were missing.
 
-I wrote a small helper, `tools/serial_sh.py`, that logs in, turns echo off and ends each command with a
-marker plus `$?`, so I can cut the output exactly. The first run still printed the markers (I fixed the
-filter afterwards). Only read commands:
+A small script of mine logs in and runs each command with echo off, so the output comes back clean.
+Only read commands:
 
 ```
 $ uname -a
@@ -88,7 +87,7 @@ code.
 
 
 Last, FEL. The kernel has no symbol with `efex` or `fel` in it, so there's no "reboot into FEL" here:
-it's the U-Boot key or nothing. I held the key and replugged OTG, and at 21:21 the PC saw
+it's the U-Boot key or nothing. I held the key and replugged OTG, and the PC saw
 `1f3a:efe8 ... in FEL/flashing mode`. `xfel version` answered with SoC ID 0x1673 (A83T), full speed.
 
 What I skipped on purpose: no CPU hotplug, no fsck, no writes. The boot log has two
@@ -97,11 +96,12 @@ damaged before I touched it.
 
 ## Result
 
-- 8 cores online on the vendor kernel, 11 OPPs from 480 to 2016 MHz (so the "1.8 GHz" spec is the boot
-  speed, not the top), 840 mV idle, 54 °C.
-- The secondary-core entry register 0x01F01DA4 holds 0x400201A0 = physical `mcpm_entry_point`.
-- FEL works with the key only, at USB full speed (12 Mbit/s).
-- The board clock was 2 h 8 min ahead of the PC: no RTC battery, no NTP.
+All 8 cores come up on the vendor kernel, with 11 OPPs from 480 to 2016 MHz. So the "1.8 GHz" on the
+spec sheet is the boot speed, not the top. At idle it sat at 840 mV and 54 °C.
+
+The second cluster wakes through the soft-entry register 0x01F01DA4, which holds 0x400201A0, the
+physical address of `mcpm_entry_point`. FEL works, but only with the key, and only at USB full speed
+(12 Mbit/s). Small extra: the board clock was 2 h 8 min ahead of the PC (no RTC battery, no NTP).
 
 ## What I'd do next
 
