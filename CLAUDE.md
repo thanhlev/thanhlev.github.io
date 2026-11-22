@@ -54,3 +54,11 @@ Each board I have played with gets one hub page plus several sub-pages, all in `
 - No timeline / changelog sections. Only what the reader needs: the problem, the key step, the number.
   Quote the few log lines that matter, not whole logs.
 - Videos are 16:9 only (H.264, ≤ 10 MB, `assets/videos/...`); no 9:16 phone cuts on the site.
+
+## Robot hubs (2026-11-22)
+
+Same as the board hubs, in the `robotics` collection: `pages/_robotics/<slug>/<slug>.md` with
+`permalink: /robotics/<slug>/` and `board_hub: true`; sub-pages `pages/_robotics/<slug>/<topic>.md` with
+`permalink: /robotics/<slug>/<topic>`, `board_parent: <slug>`, `result:`. The hub lists them with
+`{% include board_children.html board="<slug>" coll="robotics" %}`. Home shows the hubs in the
+Robotics block (`_includes/hub_grid.html coll="robotics"`), right after Boards.

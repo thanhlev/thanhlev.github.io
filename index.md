@@ -41,20 +41,13 @@ and from older posts: keep them.
 </section>
 
 <div class="sec" id="boards"><h2>Boards</h2><span>§1 · one hub per board, each milestone written as Situation / Task / Action / Result</span></div>
-<div class="boardgrid">
-{% for h in hubs %}
-  {% assign kids = site.embedded | where: "board_parent", h.slug | where_exp: "i", "i.publish != false" | sort: "index" %}
-  {% assign name = h.title | split: ":" | first %}
-  {% assign soc = "" %}{% if name contains "(" %}{% assign soc = name | split: "(" | last | remove: ")" %}{% assign name = name | split: " (" | first %}{% endif %}
-  <a class="bcard" href="{{ h.url | relative_url }}">
-    <div class="ph" style="background-image:url('{{ h.picture | prepend: '/' | relative_url }}')"></div>
-    {% if soc != "" %}<span class="chip">{{ soc }}</span>{% endif %}
-    <h3>{{ name }}</h3>
-    <p>{{ h.short_description }}</p>
-    <div class="res">{% if kids.size > 0 %}<b>{{ kids.size }} {% if kids.size == 1 %}story{% else %}stories{% endif %}</b> · {{ kids.first.result | truncate: 110 }}{% else %}<b>hub only</b> · nothing measured on the board yet{% endif %}</div>
-  </a>
-{% endfor %}
-</div>
+{% include hub_grid.html coll="embedded" %}
+
+{% assign robo_hubs = site.robotics | where_exp: "i", "i.publish != false" | where: "board_hub", true %}
+{% if robo_hubs.size > 0 %}
+<div class="sec" id="robotics"><h2>Robotics</h2><span>§1b · one hub per robot, each milestone as Situation / Task / Action / Result</span></div>
+{% include hub_grid.html coll="robotics" %}
+{% endif %}
 
 <div class="sec" id="embedded-systems"><h2>Embedded notes</h2><span>§2 · single posts, older projects and reading notes</span></div>
 {% include card_grid.html items=emb_notes %}

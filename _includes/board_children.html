@@ -1,12 +1,14 @@
 {% comment %}
 board_children.html - table of the STAR sub-pages of one board hub.
-Usage (in a hub page): {% include board_children.html board="rock3a" %}
+Usage (in a hub page): {% include board_children.html board="rock3a" %}  (robot hubs: add coll="robotics")
 Lists every doc in the embedded collection whose front matter has `board_parent: <board>`,
 sorted by `index`, skipping `publish: false`. Plain Liquid only: GitHub Pages runs in safe mode
 and ignores _plugins, so no custom filter may be used here.
 2026-11-22 · added for the per-board hub pages (user: «với mỗi board … tạo 1 trang tổng … các trang con … chuẩn STAR»)
 {% endcomment %}
-{% assign kids = site.embedded | where: "board_parent", include.board | where_exp: "item", "item.publish != false" | sort: 'index' %}
+{% comment %} 2026-11-22: coll= picks the collection (default embedded) so robot hubs reuse this table. {% endcomment %}
+{% assign src = site.embedded %}{% if include.coll %}{% assign src = site[include.coll] %}{% endif %}
+{% assign kids = src | where: "board_parent", include.board | where_exp: "item", "item.publish != false" | sort: 'index' %}
 <table class="project_table">
   <thead><tr><th>#</th><th>Story</th><th>Result</th><th>Status</th></tr></thead>
   <tbody>
