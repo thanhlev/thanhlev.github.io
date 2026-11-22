@@ -19,12 +19,6 @@ publish: true
 {:toc}
 
 -----------------------------------
-## Revision history
-
-| Revision | Date          | Remark      |
-|:---------|:------------- |:------------|
-| 0.1      | Feb-27-2023   | {{page.latest_release}}|
-
 ## Introduction
 
 Mình đọc về overlayfs vì chuyện "khôi phục cài đặt gốc" (factory reset): thiết bị nào chạy firmware/OS cũng gần như bắt buộc phải có. Cách hay gặp là chừa một phần bộ nhớ để chứa một bản image "gốc"; khi cần factory reset thì copy image "gốc" đó sang phân vùng đang chạy.
