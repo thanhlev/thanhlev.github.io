@@ -28,14 +28,13 @@ dropped it years ago, so whatever I want on it now, I do myself.
 ![An Intel Edison Mini Breakout with numbered parts](/assets/images/boards/intel-edison/ied_breakout.jpg)
 *A Mini Breakout like mine (not my board): FTDI console on J3, USB OTG on J16, the 70-pin module connector J7. Photo: Mwilde2, CC BY-SA 4.0, Wikimedia Commons; numbers added by me.*
 
-## Timeline
+## What I got it to do
 
-| When | What happened |
-|---|---|
-| 2026-11-12 | Console probes (read-only): 2 × Atom at 500 MHz, 983 516 kB RAM for Linux, 11 SFI tables, 36 PCI functions |
-| 2026-11-12 | One timed reboot: reset to login in 59.52 s, 24.16 s of it a DHCP wait |
-| 2026-11-12 | The boot ROM and the boot chain timed from the USB side, and what happens when the eMMC is empty |
-| 2026-11-12 | Zephyr built for an out-of-tree "edison" board and run from RAM over U-Boot |
+I started with read-only probes on the console: two Atom cores at 500 MHz, 983 516 kB of RAM for
+Linux, 11 SFI tables and 36 PCI functions. One timed reboot took 59.52 s from reset to login, and
+24.16 s of that was a DHCP wait. The boot ROM prints nothing, so I timed it from the USB side instead,
+and that gave me a first answer to what happens when the eMMC is empty. Then I built Zephyr for an out-of-tree
+"edison" board and ran it from RAM through the old U-Boot.
 
 ## The write-ups
 

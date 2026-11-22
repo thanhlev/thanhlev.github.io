@@ -22,8 +22,7 @@ result: "Hello World 0.05 s after go; thread period 0.6038 s vs 0.6039 s expecte
 
 ## Situation
 
-12 November 2026, same day as the boot timing. I had found pictures of the module online for my notes
-and wanted the next step: an RTOS on it. FreeRTOS has no ia32 port that boots from U-Boot's `go`
+Same day as the boot timing. I wanted the next step: an RTOS on it. FreeRTOS has no ia32 port that boots from U-Boot's `go`
 without writing one. Zephyr has x86 support but no Edison board.
 
 ![Top of an Edison module with the shield removed, parts numbered](/assets/images/boards/intel-edison/ied_module_top.jpg)
@@ -79,11 +78,10 @@ thread_b: Hello World from cpu 0 on edison!
 
 ## Result
 
-- "Hello World! edison/atom" within 0.05 s of `go` (0.05 s is my script's serial read timeout).
-- Thread period 0.6038 s measured over 49 intervals vs about 0.6039 s expected: the 499.2 MHz
-  TSC-deadline timer is right.
-- YMODEM at about 1391 B/s: 15 240 bytes in 11.4 s.
-- Nothing written to the eMMC.
+"Hello World! edison/atom" shows up within 0.05 s of `go`, and 0.05 s is just my script's serial read
+timeout, so it could be faster. The thread period came out at 0.6038 s over 49 intervals against about
+0.6039 s expected, so the 499.2 MHz TSC-deadline timer is right. Loading is the slow part: YMODEM at
+about 1391 B/s, 15 240 bytes in 11.4 s. Nothing was written to the eMMC.
 
 Side effect: Zephyr never kicks the SCU watchdog, so about 100 s after `go` the board resets and boots
 back into Linux by itself.

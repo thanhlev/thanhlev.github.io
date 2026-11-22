@@ -22,7 +22,7 @@ result: "Reset to login 59.52 s; the ROM waits 8.92 s on USB for a flasher at ev
 
 ## Situation
 
-12 November 2026. My Edison booted fine but slowly, and after a reboot the console stayed silent for
+November 2026. My Edison booted fine but slowly, and after a reboot the console stayed silent for
 about 13 seconds before anything printed. There's no public Intel document for this boot ROM. I also
 wanted to know what happens if the eMMC is blank or broken, without making it blank or broken.
 
