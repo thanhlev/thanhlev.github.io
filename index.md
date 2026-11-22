@@ -3,6 +3,7 @@ layout: default
 title: Home
 ---
 {% comment %}
+2026-11-22: Edge AI block (§2) lists `edge_ai: true` stories; same cards on /edge-ai/.
 index.md - home page, "Datasheet" design (style A, 2026-11-22, user «tôi chọn style a»).
 Blocks: hero (who I am + a spec table counted from the collections) -> Boards (one card per
 board hub: front matter `board_hub: true`, its first STAR result) -> other embedded notes ->
@@ -43,19 +44,24 @@ and from older posts: keep them.
 <div class="sec" id="boards"><h2>Boards</h2><span>§1 · one hub per board, each milestone written as Situation / Task / Action / Result</span></div>
 {% include hub_grid.html coll="embedded" %}
 
+{% assign ai_a = site.embedded | where: "edge_ai", true %}{% assign ai_b = site.robotics | where: "edge_ai", true %}
+{% assign ai = ai_a | concat: ai_b | where_exp: "i", "i.publish != false" | sort: "edge_ai_index" %}
+<div class="sec" id="edge-ai"><h2>Edge AI</h2><span>§2 · AI stories from the boards and robots, models running on the chip itself</span><a class="more btn" href="{{ '/edge-ai/' | relative_url }}">Edge AI page</a></div>
+{% include story_grid.html items=ai %}
+
 {% assign robo_hubs = site.robotics | where_exp: "i", "i.publish != false" | where: "board_hub", true %}
 {% if robo_hubs.size > 0 %}
-<div class="sec" id="robotics"><h2>Robotics</h2><span>§2 · one hub per robot, each milestone as Situation / Task / Action / Result</span></div>
+<div class="sec" id="robotics"><h2>Robotics</h2><span>§3 · one hub per robot, each milestone as Situation / Task / Action / Result</span></div>
 {% include hub_grid.html coll="robotics" %}
 {% endif %}
 
-<div class="sec" id="embedded-systems"><h2>Embedded notes</h2><span>§3 · single posts, older projects and reading notes</span></div>
+<div class="sec" id="embedded-systems"><h2>Embedded notes</h2><span>§4 · single posts, older projects and reading notes</span></div>
 {% include card_grid.html items=emb_notes %}
 
-<div class="sec" id="linux-networking"><h2>Linux networking</h2><span>§4 · where a packet actually goes</span></div>
+<div class="sec" id="linux-networking"><h2>Linux networking</h2><span>§5 · where a packet actually goes</span></div>
 {% include card_grid.html items=net %}
 
-<div class="sec" id="linux-general"><h2>Linux general</h2><span>§5 · tools and snippets I keep coming back to</span></div>
+<div class="sec" id="linux-general"><h2>Linux general</h2><span>§6 · tools and snippets I keep coming back to</span></div>
 {% include card_grid.html items=gen %}
 
 <div class="last"></div>

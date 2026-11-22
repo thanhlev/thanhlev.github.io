@@ -10,6 +10,8 @@ publish: true
 permalink: /embedded/boards/rock3a/rtos-face-detect
 board_parent: rock3a
 result: "718 webcam frames in 30 s (25.09 fps), faces in 703, JPEG to screen 28.0 ms avg, 0 dropped"
+edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
+edge_ai_index: 0
 ---
 
 # Webcam to NPU to HDMI, with no Linux on the chip

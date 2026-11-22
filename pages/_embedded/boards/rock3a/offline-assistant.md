@@ -10,6 +10,8 @@ publish: true
 permalink: /embedded/boards/rock3a/offline-assistant
 board_parent: rock3a
 result: "First spoken word 11.8 s after the question (median of 12), LLM 4.0 tok/s, about 4 in 10 answers right"
+edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
+edge_ai_index: 2
 ---
 
 # A Vietnamese voice assistant with the network unplugged

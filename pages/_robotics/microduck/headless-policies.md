@@ -10,6 +10,8 @@ publish: true
 permalink: /robotics/microduck/headless-policies
 board_parent: microduck
 result: "in MuJoCo: 4 runs, 0 falls, 10 s simulated in 8.54 s on CPU; speed only 0.09–0.11 of 0.3 m/s"
+edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
+edge_ai_index: 8
 ---
 
 # Running the official policies with no window

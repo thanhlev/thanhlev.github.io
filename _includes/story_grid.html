@@ -1,0 +1,19 @@
+{% comment %}
+story_grid.html - STAR stories from any collection as cards (Edge AI page/home block, style A).
+Usage: {% include story_grid.html items=array %}
+Card = picture, chip (board or robot the story belongs to), title, short description, result line.
+2026-11-22: added for Edge AI (user «Thêm 1 page là "Edge AI" cùng cấp với Board, … có thể trùng với
+các category khác»): stories keep their home under their board/robot hub and are only listed here,
+selected by front matter `edge_ai: true`, ordered by `edge_ai_index`. Plain Liquid (safe mode).
+{% endcomment %}
+<div class="boardgrid">
+{% for p in include.items %}
+  <a class="bcard" href="{{ p.url | relative_url }}">
+    <div class="ph" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | prepend: '/' | relative_url }}')"></div>
+    {% if p.board_parent %}<span class="chip">{{ p.board_parent | replace: "-", " " | upcase }}</span>{% endif %}
+    <h3>{{ p.title | remove: "[🔥] - " }}</h3>
+    <p>{{ p.short_description }}</p>
+    {% if p.result %}<div class="res"><b>result</b> · {{ p.result | truncate: 120 }}</div>{% endif %}
+  </a>
+{% endfor %}
+</div>

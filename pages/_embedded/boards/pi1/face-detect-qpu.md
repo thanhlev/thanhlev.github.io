@@ -10,6 +10,8 @@ publish: true
 permalink: /embedded/boards/pi1/face-detect-qpu
 board_parent: pi1
 result: "One picture 2374 -> 43.5 ms; live 0.3 -> 12.3 detections/s (17.5 after the webcam fix)"
+edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
+edge_ai_index: 5
 ---
 
 # A face detector on a 2012 Pi: 2.37 s to 43.5 ms on the 12 QPUs
