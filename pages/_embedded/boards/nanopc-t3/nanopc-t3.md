@@ -45,6 +45,10 @@ What the files say, checked by me:
 - One U-Boot binary serves six boards: it reads three PCB-revision GPIOs (0b001 here) and picks
   `s5p6818-nanopi3-rev01.dtb`.
 
+![NanoPC-T3 SD card: BL1 at sector 1, BL2 at 129, BL31 + OP-TEE at 769, U-Boot at 3841](/assets/images/boards/nanopc-t3/npct3_sd_layout.png)
+*The four images in front of the first partition, by sector, as I read them out of the prebuilt files. The S5P4418 on my NanoPi 2 Fire needs one.*
+
+
 And two mistakes in the vendor wiki I noted: the "aarch64 toolchain" section actually installs the
 32-bit armhf compiler from the S5P4418 template, and the kernel output path it gives is the arm32 one.
 
