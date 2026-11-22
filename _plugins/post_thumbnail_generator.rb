@@ -1,4 +1,10 @@
-# post_thumbnail_generator.rb
+# post_thumbnail_generator.rb - for every doc with `picture:`, write a 200 px wide copy under
+# assets/images/thumbnail/<same sub-path>, matching the image_thumbnail filter (which swaps
+# "/assets/images/" for "/assets/images/thumbnail/"). Local builds only: GitHub Pages runs in
+# safe mode and skips _plugins, so the live site shows the full picture.
+# 2026-11-22: keep the picture's sub-folder (assets/images/boards/<slug>/x.png). Before, it used
+# File.basename + "assets/images", so any picture in a sub-folder broke the build
+# ("No such file assets/images/bpim3_fel_path.png") once the board hub pages were added.
 require 'mini_magick'
 
 module Jekyll
@@ -8,7 +14,8 @@ module Jekyll
       @site = site
       @base = base
       @dir = dir
-      @dest_dir = File.join("assets/images", "thumbnail")
+      # dir = "assets/images/<sub>" -> thumbnail lands in "assets/images/thumbnail/<sub>"
+      @dest_dir = dir.sub(%r{\Aassets/images}, "assets/images/thumbnail")
       @name = name
       @@mtimes = {}
     end
@@ -38,7 +45,8 @@ module Jekyll
       site.collections.each do |name, collection|
         collection.docs.each do |doc|
           if doc.data.has_key?("picture")
-            site.static_files << PostThumbnailImage.new(site, site.source, "assets/images", File.basename(doc.data["picture"]))
+            pic = doc.data["picture"].to_s.sub(%r{\A/}, "")
+            site.static_files << PostThumbnailImage.new(site, site.source, File.dirname(pic), File.basename(pic))
           end
         end
       end
