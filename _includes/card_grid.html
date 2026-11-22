@@ -1,0 +1,18 @@
+{% comment %}
+card_grid.html - posts as the same 3-column cards the Boards grid uses (home page, style A).
+Usage: {% include card_grid.html items=some_sorted_array %}
+Card = picture · status chip · title · short_description · last change. Callers filter drafts.
+2026-11-22: added for the Embedded notes block (user «bên embedded notes cũng làm giống như boards»).
+Plain Liquid only (GitHub Pages safe mode).
+{% endcomment %}
+<div class="boardgrid">
+{% for p in include.items %}
+  <a class="bcard" href="{{ p.url | relative_url }}">
+    <div class="ph" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | prepend: '/' | relative_url }}')"></div>
+    {% if p.status %}<span class="chip">{{ p.status | upcase }}</span>{% endif %}
+    <h3>{{ p.title | remove: "[🔥] - " }}</h3>
+    <p>{{ p.short_description }}</p>
+    {% if p.latest_release %}<div class="res"><b>last change</b> · {{ p.latest_release | truncate: 110 }}</div>{% endif %}
+  </a>
+{% endfor %}
+</div>

@@ -57,7 +57,7 @@ and from older posts: keep them.
 </div>
 
 <div class="sec" id="embedded-systems"><h2>Embedded notes</h2><span>§2 · single posts, older projects and reading notes</span></div>
-{% include note_rows.html items=emb_notes %}
+{% include card_grid.html items=emb_notes %}
 
 <div class="sec" id="linux-networking"><h2>Linux networking</h2><span>§3 · where a packet actually goes</span></div>
 {% include note_rows.html items=net %}
