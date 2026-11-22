@@ -8,7 +8,8 @@
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#2c3e50">
 
-<!-- Apple Touch Icons -->
+<!-- Apple Touch Icons: PNGs resized from /favicon.ico (256 px) with Pillow, 2026-11-22;
+     before that the three files did not exist and each page logged 3 x 404. -->
 <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32x32.png' | relative_url }}">
 <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon-16x16.png' | relative_url }}">
@@ -32,5 +33,6 @@
 }
 </script>
 
-<!-- RSS Feed -->
-<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+<!-- RSS feed link removed 2026-11-22: the feed file was never generated (jekyll-feed is not in
+     the Gemfile), so the tag pointed at a 404. Add jekyll-feed to Gemfile + plugins first if a
+     feed is wanted again. -->

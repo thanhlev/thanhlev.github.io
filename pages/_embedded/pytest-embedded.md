@@ -1,12 +1,13 @@
 ---
 layout: default
 title: "Pytest-Embedded"
-short_description: "Khái niệm và cách dùng pluggin này cho embedded project"
+short_description: "Mình thử plugin pytest-embedded của Espressif: cài đặt, các service, chạy test hello world trên ESP32-C3"
 picture: "assets/images/pytest-embedded.png"
 commit1: "Init document"
 latest_release: "Add description and example"
 status: "Done"
-index: 2
+index: 4
+publish: true
 ---
 
 # Pytest-Embedded
@@ -27,7 +28,9 @@ index: 2
 
 ## Introduction
 
-- Pytest-embedded là một pluggin cho công cụ <a target="_blank" href="pytest.html">pytest</a>
+Sau khi học [pytest](/embedded/pytest), mình muốn dùng nó để test firmware trên board thật chứ không chỉ test code Python. Espressif có sẵn plugin cho chuyện này; ở cuối bài là lần mình chạy ví dụ esp-idf của họ trên một con ESP32-C3 (log ngày 14/02/2023).
+
+- Pytest-embedded là một plugin cho công cụ <a target="_blank" href="/embedded/pytest">pytest</a>
 - Được publish trên PyPi (<a target="_blank" href="https://pypi.org/project/pytest-embedded/">pypi.org/project/pytest-embedded</a>), có thể cài trực tiếp bằng lệnh `pip install pytest-embedded`
 - Tài liệu: <a target="_blank" href="https://docs.espressif.com/projects/pytest-embedded/en/latest/">docs.espressif.com/projects/pytest-embedded</a>
 - Source code: <a target="_blank" href="https://github.com/espressif/pytest-embedded">github.com/espressif/pytest-embedded</a>

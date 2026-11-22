@@ -2,6 +2,12 @@
 layout: default
 title: Home
 ---
+{% comment %}
+Every table below lists a collection through the same filter: `publish: false` is a draft,
+a missing `publish` counts as published (2026-11-22; before, Networking needed publish: true,
+General/Embedded showed drafts too). _plugins/unpublished_filter.rb already drops drafts from
+the build; the filter here keeps the page right under `jekyll serve --unpublished`.
+{% endcomment %}
 
 # Welcome to My Technical Blog
 
@@ -23,9 +29,8 @@ Explore advanced networking concepts, Docker networking, virtual interfaces, and
     </tr>
   </thead>
   <tbody>
-{% assign sorted = site.linux_networking | sort: 'index' %}
+{% assign sorted = site.linux_networking | where_exp: "item", "item.publish != false" | sort: 'index' %}
 {% for page in sorted %}
-    {% if page.publish %}
       <tr>
         <td class="page_picture_td">
           {% if page.picture %}
@@ -39,7 +44,6 @@ Explore advanced networking concepts, Docker networking, virtual interfaces, and
         <td>{{ page.latest_release }}</td>
         <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
       </tr>
-    {% endif %}
 {% endfor %}
   </tbody>
 </table>
@@ -58,7 +62,7 @@ System administration, Docker, development tools, and Linux tips & tricks.
     </tr>
   </thead>
   <tbody>
-{% assign sorted = site.linux_general | sort: 'index' %}
+{% assign sorted = site.linux_general | where_exp: "item", "item.publish != false" | sort: 'index' %}
 {% for page in sorted %}
     <tr>
       <td class="page_picture_td">
@@ -91,7 +95,7 @@ Hardware development, microcontrollers, IoT devices, and embedded Linux.
     </tr>
   </thead>
   <tbody>
-{% assign sorted = site.embedded | sort: 'index' %}
+{% assign sorted = site.embedded | where_exp: "item", "item.publish != false" | sort: 'index' %}
 {% for page in sorted %}
     <tr>
       <td class="page_picture_td">
@@ -124,9 +128,8 @@ Hardware development, microcontrollers, IoT devices, and embedded Linux.
     </tr>
   </thead>
   <tbody>
-{% assign sorted = site.yocto | sort: 'index' %}
+{% assign sorted = site.yocto | where_exp: "item", "item.publish != false" | sort: 'index' %}
 {% for page in sorted %}
-    {% if page.publish != false %}
       <tr>
         <td class="page_picture_td">
           {% if page.picture %}
@@ -140,7 +143,6 @@ Hardware development, microcontrollers, IoT devices, and embedded Linux.
         <td>{{ page.latest_release }}</td>
         <td><span class="status-badge status-{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status }}</span></td>
       </tr>
-    {% endif %}
 {% endfor %}
   </tbody>
 </table>

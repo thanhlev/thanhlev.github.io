@@ -1,11 +1,12 @@
 ---
 layout: default
 title: "Udev Quick Reference"
-short_description: "Udev Quick Reference"
+short_description: "Ghi chép udev của mình: rule nằm đâu, thứ tự, ví dụ tắt touchpad khi cắm chuột, udevadm test"
 status: "Done"
 picture: "assets/images/udev_Kernel.JPG"
 latest_release: "Init document"
 index: 4
+publish: true
 ---
 
 # Udev Quick Reference
@@ -28,9 +29,11 @@ index: 4
 
 ## Thông tin
 
+Mình ghi lại udev vì một chuyện nhỏ: muốn laptop tự tắt touchpad khi cắm con chuột Logitech vào (ví dụ ở dưới), và tiện thể ghi luôn rule nằm ở đâu, chạy theo thứ tự nào, test bằng `udevadm` ra sao.
+
 - Trong OS system sử dụng udev, việc quản lý các event liên quan đến các thiết bị hoạt động ở kernel được thực hiện bởi udev thông qua daemon `udevd`.
 - `udevd` chạy như một daemon ở user space, mở kết nối đến Kernel và nhận các system event từ kernel.
-- Dựa trên các rule được thiết lập, `edevd` thực hiện các hành động tương ứng với các sự kiện, ví dụ :
+- Dựa trên các rule được thiết lập, `udevd` thực hiện các hành động tương ứng với các sự kiện, ví dụ :
     - Đổi tên 1 thiết bị
     - Cung cấp tên gợi nhớ bằng symlink
     - Đặt tên thiết bi dựa trên output của một program
@@ -70,7 +73,7 @@ ACTION=="add" \
 
     - `+= , -=` :  thêm hoặc giá trá trị của key có chứa giá trị dạng list.
 
-- The keys we used
+- Các key đã dùng
     - `ACTION` :  add/remove/change:  loại hành động muốn thực hiện
     - `ATTRS` : Khai báo các attribute muốn match
 

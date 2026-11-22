@@ -6,6 +6,7 @@ status: "In Progress"
 picture: "assets/images/docker-banner.png"
 latest_release: "Init document"
 index: 5
+publish: true
 ---
 
 # Docker Snippet

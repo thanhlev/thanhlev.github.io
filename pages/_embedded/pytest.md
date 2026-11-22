@@ -1,14 +1,15 @@
 ---
 layout: default
 title: "[🔥] - Pytest"
-short_description: "Pytest và cách sử dụng"
+short_description: "Ghi chép học pytest của mình: test file, fixtures, marks, config, plugin"
 picture: "assets/images/pytest_diagram.png"
 commit1: "Init document"
 commit2: "Add marks"
 commit3: "Add configuration example"
 latest_release: "Add plugin"
 status: "Done"
-index: 1
+index: 2
+publish: true
 ---
 
 # Pytest và cách sử dụng
@@ -32,8 +33,12 @@ index: 1
 
 ## Introduction
 
+Đây là ghi chép của mình lúc học pytest (tháng 2/2023), trước khi dùng tới
+[pytest-embedded](/embedded/pytest-embedded) để test firmware trên board thật. Output trong bài là
+mình chạy trên máy của mình, kể cả cái test fail cố ý ở ví dụ đầu.
+
 - Pytest là một công cụ test code miễn phí được cộng đồng phát triển.
-- Với các plugins mở rộng, được dùng bởi các hệ thống CI để test tự động.
+- Có nhiều plugin mở rộng, nên các hệ thống CI hay dùng nó để chạy test tự động.
 
 ## Hoạt động
 
@@ -473,7 +478,7 @@ junit_log_passing_tests = True
 | pytest-embedded      | A pytest plugin that has multiple services available for various functionalities. Designed for embedded testing.|
 
 <div class="success">
-  <strong>Info! </strong> Xem thêm bài viết về <a href="pytest-embedded.html"><strong>pytest-embedded</strong></a>
+  <strong>Info! </strong> Xem thêm bài viết về <a href="/embedded/pytest-embedded"><strong>pytest-embedded</strong></a>
 </div>
 ## Tham khảo
 - Reference [docs.pytest.org](https://docs.pytest.org/en/latest/contents.html)
