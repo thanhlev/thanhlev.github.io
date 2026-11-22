@@ -24,6 +24,10 @@ In October 2026 I came back to it with the docs, the mainline U-Boot and the Lin
 what I'm dealing with before I plug anything in. The board wasn't on the bench then and still isn't,
 so there's no STAR write-up with a result yet. This page is honest about that.
 
+![BPI-R2 overview: MT7623N, MT7530 switch with five ports, four boot stages](/assets/images/boards/bpi-r2/r2_overview.png)
+*Everything on this page in one drawing: the MT7623N, the MT7530 that turns five jacks into two MACs, and the four boot stages. All from paper, none of it checked on the board.*
+
+
 ## What I've done so far (all on paper or on my PC)
 
 | When | What |
