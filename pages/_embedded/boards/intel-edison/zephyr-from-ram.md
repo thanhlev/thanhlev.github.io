@@ -3,7 +3,7 @@ layout: default
 title: "Zephyr on the Edison: a 15 KB image over YMODEM and one wrong reg-shift"
 short_description: "An out-of-tree Zephyr board for an x86 module, loaded into RAM by the old U-Boot, nothing written to eMMC"
 status: "Done"
-picture: "assets/images/boards/intel-edison/ied_boot.png"
+picture: "assets/images/boards/intel-edison/ied_zephyr_run.png"
 latest_release: "2026-11-12: hello and synchronization samples run"
 index: 2
 publish: true
@@ -25,6 +25,10 @@ result: "Hello World 0.05 s after go; thread period 0.6038 s vs 0.6039 s expecte
 12 November 2026, same day as the boot timing. I had found pictures of the module online for my notes
 and wanted the next step: an RTOS on it. FreeRTOS has no ia32 port that boots from U-Boot's `go`
 without writing one. Zephyr has x86 support but no Edison board.
+
+![Top of an Edison module with the shield removed, parts numbered](/assets/images/boards/intel-edison/ied_module_top.jpg)
+*What's under the shield of an Edison (another module, not mine), parts numbered by me. Photo: Joe Glancy, CC BY-SA 4.0, Wikimedia Commons.*
+
 
 ## Task
 
@@ -83,6 +87,10 @@ thread_b: Hello World from cpu 0 on edison!
 
 Side effect: Zephyr never kicks the SCU watchdog, so about 100 s after `go` the board resets and boots
 back into Linux by itself.
+
+![Timeline of one Zephyr run: loady 11.4 s, Hello 0.05 s after go, watchdog reset about 100 s later](/assets/images/boards/intel-edison/ied_zephyr_run.png)
+*One run end to end: 11.4 s of YMODEM, "Hello World" 0.05 s after `go`, then about 100 s until the SCU watchdog pulls the board back into Linux.*
+
 
 ## What I'd do next
 

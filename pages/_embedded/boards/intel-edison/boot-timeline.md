@@ -26,6 +26,10 @@ result: "Reset to login 59.52 s; the ROM waits 8.92 s on USB for a flasher at ev
 about 13 seconds before anything printed. There's no public Intel document for this boot ROM. I also
 wanted to know what happens if the eMMC is blank or broken, without making it blank or broken.
 
+![The 59.52 s from reset to login split by stage](/assets/images/boards/intel-edison/ied_boot_split.png)
+*Where my 59.52 s went, drawn from the table further down: 8.92 s of the ROM waiting for a flasher and 24.16 s of DHCP are the two fat ones.*
+
+
 ## Task
 
 Find out what runs in those silent seconds and how long each stage takes, using read-only commands

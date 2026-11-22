@@ -25,6 +25,9 @@ Why look at it in 2026? It's x86, and every other board on my shelf is ARM. Its 
 tree; it describes the hardware with SFI tables and PCI instead, which I'd never dealt with. And Intel
 dropped it years ago, so whatever I want on it now, I do myself.
 
+![An Intel Edison Mini Breakout with numbered parts](/assets/images/boards/intel-edison/ied_breakout.jpg)
+*A Mini Breakout like mine (not my board): FTDI console on J3, USB OTG on J16, the 70-pin module connector J7. Photo: Mwilde2, CC BY-SA 4.0, Wikimedia Commons; numbers added by me.*
+
 ## Timeline
 
 | When | What happened |
