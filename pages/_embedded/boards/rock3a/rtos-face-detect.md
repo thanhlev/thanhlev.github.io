@@ -28,6 +28,10 @@ for the webcam. It worked. But the whole point of the RTOS work was to see how m
 could run without Linux, and the NPU is the part everyone says needs Linux, because Rockchip only
 ships the runtime as a closed `.so` for Linux and Android.
 
+![NPU stack on Linux vs what the RTOS does itself]({{ '/assets/images/boards/rock3a/face_npu_linux_vs_rtos.png' | relative_url }})
+
+The NPU stack on Debian (left) and what my FreeRTOS has to do itself for each layer (right). The top half happens on every job; the bottom five (regulator, clock, power domain, DDR firewall, IOMMU) are what Linux and TF-A quietly did at boot.
+
 ## Task
 
 Get the same demo running entirely on FreeRTOS: USB webcam in, RetinaFace on the NPU, boxes drawn and
@@ -59,6 +63,15 @@ device contexts, route strings for devices behind a hub. The device and configur
 RTOS read are byte-identical to what Linux shows in sysfs (43, 699 and 699 bytes).
 
 **3. MJPEG frames.** Isochronous transfers: one TD per 125 µs microframe, a ring of 128 kept full, UVC
+
+![Which USB port goes to which controller]({{ '/assets/images/boards/rock3a/face_usb_map.png' | relative_url }})
+
+Measured on Debian first, on 2026-11-01: the webcam's port is on the USB 2.0 side of the xHCI at `0xfd000000`, behind a 4-port hub with the two cameras of the stereo pair (`05a3:9601`, `05a3:9602`). So no SuperSpeed needed.
+
+![usb on the RTOS: nine steps from Maskrom to descriptors]({{ '/assets/images/boards/rock3a/face_usb_bringup.png' | relative_url }})
+
+The nine steps my `usb` command goes through, measured on the board: SoC + DWC3 up in 409/429 ms (400 ms of it deliberate waits), xHCI reset 3 ms, hub and both cameras enumerated in 743 ms, descriptors identical to Linux's 43 + 699 + 699 bytes.
+
 probe/commit to agree on 640x480 MJPEG, then glue the payloads into frames using the FID/EOF bits.
 
 **4. A JPEG decoder.** Baseline, 4:2:2, Huffman, integer IDCT, decoding straight into the network's

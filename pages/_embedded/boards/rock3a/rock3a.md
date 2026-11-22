@@ -27,6 +27,10 @@ Debian and run a demo", but start from the BootROM and own every stage I can.
 It went further than I planned. Most of what follows was done in about five weeks of evenings and a
 couple of nights.
 
+![Five ways to run the board, measured]({{ '/assets/images/boards/rock3a/overview_options.png' | relative_url }})
+
+The overview I made on 2026-11-02 (labels in Vietnamese): the same RetinaFace job in five set-ups, from bare FreeRTOS to Debian with PREEMPT_RT. Top: power-on to the first face, 3.30 s on the RTOS against 10.17 s on Debian. Middle: one inference, 3.44 ms replayed on the NPU at 600 MHz, 1407 ms on the CPU with numpy. Bottom: worst lateness of a 1 kHz task under load, 6.1 µs on an RTOS core against 349 µs on Linux PREEMPT.
+
 ## Timeline
 
 | When | What happened |

@@ -35,6 +35,10 @@ that doesn't care what Android is doing.
 - The A55 side only sends commands. My NanoPi phone app (`vn.np2f.ws2812`) should work unchanged.
 - A hook for music: beats and energy from Android to the MCU, for effects that follow a song.
 
+![My NanoPi LED app, unchanged]({{ '/assets/images/boards/rock3a/ws_app_breathe.png' | relative_url }})
+
+The phone app I'd written for the NanoPi 2 Fire, pointed at the ROCK 3A: 16 LEDs on a ring, "thở" (breathe) selected, the effect list filtered to 80 of 109. It talks to `r3a_ringd` on the board without knowing an MCU is behind it.
+
 ## Action
 
 **The firmware** was the easy half. The MCU sends each LED bit as a pattern of SPI bits, with interrupts
@@ -50,6 +54,10 @@ It all worked, in the sense that every register read back right, the frames came
 I hooked a Saleae up to DI and DO and measured. I was sure the wiring was right. The Saleae said DI was
 flat. It turned out to be four separate faults stacked on top of each other, and each one hid the next:
 
+![Saleae: DI flat while the MCU sends frames]({{ '/assets/images/boards/rock3a/ws_saleae_flat.png' | relative_url }})
+
+The capture that ended my "dead LEDs" theory (Saleae Logic Pro 8, 2026-11-20 22:08): the MCU sends solid-red frames at 50 fps and DI (blue) sits at 0 V, even with pin 19 held high. Fault 1, an open wire.
+
 | # | What I saw | Cause | Fix |
 |---|---|---|---|
 | 1 | DI flat on the analyzer | the DI wire was open | rewired, around 22:40 |
@@ -60,6 +68,10 @@ flat. It turned out to be four separate faults stacked on top of each other, and
 After the fourth one, at 23:59, all 16 LEDs went red. Then I lit one byte at a time and photographed it
 to settle the order: byte 0 is LED 0 green, byte 1 is LED 0 red, byte 3 is LED 1 green. Standard
 WS2812B GRB, 24 bits per LED.
+
+![One byte at a time to find the colour order]({{ '/assets/images/boards/rock3a/ws_byte_order.jpg' | relative_url }})
+
+Lighting one byte at a time: byte 0 gives LED 0 green, byte 1 LED 0 red, and so on. That's how I settled GRB rather than guessing.
 
 One trap I set for myself along the way: loading a new MCU image with `mcuctl load` while `r3a_ringd`
 was running left the MCU unable to start any image, the vendor one included, until a full board reboot.
@@ -81,6 +93,11 @@ frames: the MCU side was never the problem.
 - The ring lights: **16/16** red and green, driven by the MCU while Android runs.
 - **50.00 frames/s**, 523 to 525 µs per frame on the wire. On the analyzer: 332 / 834 / 1 334 ns for
   0-high / 1-high / bit period, 384 bits = 16 pixels.
+
+![The working waveform at 6 MHz]({{ '/assets/images/boards/rock3a/ws_final_wave.png' | relative_url }})
+
+The waveform once it worked: SPI3 at 6 MHz, 0 = 333 ns high, 1 = 833 ns, bit period 1333 ns, DI swinging to 3.4 V with the resistor bypassed and the ring on 3.3 V.
+
 - 78 effects render on the MCU in 259 µs per frame on average, worst 990 µs (bounce).
 - The NanoPi app works unchanged: tapping "thở" (breathe) made the MCU report effect 2 running.
 - Music hook: 100.0 audio blocks/s from Android, 777 µs average round trip.

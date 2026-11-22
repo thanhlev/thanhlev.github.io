@@ -31,6 +31,10 @@ the ROCK 3C. Same RK3568, different board.
 Make a ROCK 3A product out of Radxa's ROCK 3C tree, with HDMI, Ethernet, GApps and the NPU working, built
 from scratch by scripts I keep in git, so I can rebuild it later without remembering anything.
 
+![The build chain, script by script]({{ '/assets/images/boards/rock3a/a14_build_chain.png' | relative_url }})
+
+The chain the scripts ended up as, with what broke at each step: 1236 projects sorted by `fix_manifest.py`, the 134-byte LFS pointer at 60 %, eight patch files to turn the ROCK 3C product into a ROCK 3A, and the DDR blob swap from v1.23 to v1.26.
+
 ## Action
 
 The chain ended up as `fetch.sh` → `fix_manifest.py` → `make_target.sh` + `apply.sh` → `build.sh` (Docker,
@@ -69,6 +73,10 @@ themselves, and init restarted one 8 s after a `kill -9`. One more surprise: the
 problem with your device" dialog at boot came from `CONFIG_DEVMEM=y`, which I'd turned on for the MCU and
 which fails Android's VINTF check. The MCU now goes through two UIO devices instead, no `/dev/mem`.
 
+![Android System: There's an internal problem with your device]({{ '/assets/images/boards/rock3a/a14_devmem_dialog.jpg' | relative_url }})
+
+The dialog every boot greeted me with (HDMI screencap, 7:52 PM on 2026-11-19, before the fix). It's `CONFIG_DEVMEM=y` failing the VINTF check, nothing to do with the hardware.
+
 ```
 ~/$ adb shell 'getprop ro.build.version.security_patch; getprop ro.build.version.release; uname -r'
 2025-01-05
@@ -81,6 +89,11 @@ which fails Android's VINTF check. The MCU now goes through two UIO devices inst
 - **Android 14** (UQ1A.240205.004.B1, security patch 2025-01-05, kernel 6.1.99, userdebug) runs on the
   ROCK 3A with HDMI, Ethernet and GApps.
 - Warm reboot works again: `adb reboot` back in **36 s** with DDR blob v1.26.
+
+![Home screen after the fix, no dialog]({{ '/assets/images/boards/rock3a/a14_no_dialog.jpg' | relative_url }})
+
+First boot with the UIO kernel: home screen at 8:04 PM, no dialog. Boots 2 and 3 (8:11 and 8:13 PM) had no dialog either.
+
 - NPU clocked to 1 GHz in the DTS (0.95 V from the chip's bin, 40 °C): YOLOv5s **35.91 → 34.58 ms**,
   RetinaFace 320 in 2.76 ms.
 - LLM on the CPU: Qwen3-0.6B Q4_0 at **12.56 tok/s** generation, 59.90 tok/s prompt (llama.cpp, 4 threads).

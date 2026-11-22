@@ -33,6 +33,10 @@ at EL3.
 - Run the CPU at its top OPP and measure it with CoreMark.
 - Then one kernel on all four cores (SMP), which the upstream AArch64 port doesn't support.
 
+![The smp command on my shell]({{ '/assets/images/boards/rock3a/smp_cores.png' | relative_url }})
+
+What I was after, as my shell shows it: `smp on` puts all four A55s at 100 % (359 M steps/s each at 1799 MHz), `smp off` sends cores 1 to 3 back to WFE. The prompt is my own ("cậu bé ham vọc" means roughly "the kid who pokes at things").
+
 ## Action
 
 **EL3 down to Secure EL1.** My `start.S` sets up what the missing firmware would have: the watchdog,
@@ -53,6 +57,11 @@ rock3a> cpufreq 1992 force
 ```
 
 **CoreMark** went in as a shell command, with the TSADC temperature printed next to each score.
+
+![cpufreq and ps on the UART]({{ '/assets/images/boards/rock3a/smp_cpufreq_ps.png' | relative_url }})
+
+`cpufreq` prints the OPP table (copied from Linux's `rk3568.dtsi`) next to `vdd_cpu` on the TCS4525: 1799 MHz measured at 1.150 V, and 1992 only with `force` because Linux's divider table doesn't have it. Under it, `ps`: the shell, idle at 95.2 % and the timer task.
+
 It ran at six clocks from 407 to 1991 MHz; the CRCs matched every time (`crcfinal 0x33ff`).
 
 **SMP.** This was the real work. FreeRTOS has had SMP since V11.0, but each port has to provide it, and

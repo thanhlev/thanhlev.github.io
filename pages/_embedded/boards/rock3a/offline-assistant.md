@@ -34,6 +34,10 @@ A full voice loop on the board's CPU, with Wi-Fi and Ethernet switched off for t
 audio in, text out on HDMI, spoken answer out. Measure every stage, and record enough runs to say
 honestly how good it is.
 
+![The assistant chain on the board]({{ '/assets/images/boards/rock3a/assist_chain.png' | relative_url }})
+
+The whole chain on the four A55s, with the medians: question WAV in, ASR in `r3a_speech` (1009 ms), `llama-server` on `127.0.0.1` with Qwen3-0.6B (first token 1624 ms, 4.0 tok/s), Piper TTS sentence by sentence (RTF 1.45), then the app on HDMI. First voice 11.8 s after the question.
+
 ## Action
 
 The chain:
@@ -79,6 +83,15 @@ the question.)
 - Quality, judged by me by hand: Qwen3-0.6B gets about **4 in 10** right. It said 17×23 = 339, that a cat
   has 2 legs, and that the ROCK 3A uses a Snapdragon 660. Gemma-3-1B gets about 7 in 10 but is 2 to 3
   times slower.
+
+![17 times 23 is 339, says Qwen3]({{ '/assets/images/boards/rock3a/assist_math.png' | relative_url }})
+
+One of the wrong ones, as it showed on HDMI: "17 times 23 is how much?" and Qwen3-0.6B answers 339 (it's 391), first voice after 10.9 s.
+
+![The ROCK 3A uses a Snapdragon 660, says Qwen3]({{ '/assets/images/boards/rock3a/assist_chip.png' | relative_url }})
+
+And my favourite: asked (typed this time) which chip the ROCK 3A uses, it said a Snapdragon 660. Fast though: 4.4 tok/s, voice at 9.5 s.
+
 
 ## What I'd do next
 

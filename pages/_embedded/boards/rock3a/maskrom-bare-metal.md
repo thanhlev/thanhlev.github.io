@@ -31,6 +31,10 @@ nothing once the board moved to a proper PSU, so every power cycle needed my han
 2. Get one running from DRAM (`dram_hello`), which means the DDR training has to happen first.
 3. Make the loop hands-free: build, download, run, and land back in Maskrom by itself.
 
+![The two SRAMs of the RK3568]({{ '/assets/images/boards/rock3a/maskrom_sram_map.png' | relative_url }})
+
+Before DDR training the only memory is on the chip: 64 KB of system SRAM at `0xfdcc0000` (where `sram_hello` lives, and where the DDR blob runs later) and 8 KB of PMU SRAM. Drawn from TF-A's `rk3568_def.h` plus my own measurement of the blob's size (59 240 B). The pink block is from a later experiment.
+
 ## Action
 
 **From U-Boot first.** At that point my PC only saw the board through USB-C, which is power only,
@@ -55,6 +59,10 @@ from the BootROM nobody has programmed `CNTFRQ_EL0` and the system counter isn't
 the second (472). The BootROM runs the blob, it trains the LPDDR4X, returns, then the BootROM copies
 my 472 to DRAM address `0x0` and jumps to it at EL3. My code starts the STIMER (so the generic timer
 counts at 24 MHz), probes 10 addresses up to `0x1fff00000`, and runs a 16 MiB write/read test.
+
+![Where the DDR blob sits in the 471 image]({{ '/assets/images/boards/rock3a/maskrom_ddr_blob.png' | relative_url }})
+
+Why `dram_hello` needs two images: the 471 is Rockchip's closed DDR blob v1.26 (59 240 B of the 60 KB the BootROM allows), it trains the LPDDR4X and returns to the BootROM. The red boxes are the things I wanted and can't have: FreeRTOS can't call the blob (it lives in the DRAM that isn't trained yet), and there's no public source to rewrite it from.
 
 **The hands-free part** is three registers. `dram_hello` ends with `reset_into()`: write `0xEF08A53C`
 into `PMU_GRF os_reg0` (`0xfdc20200`, U-Boot keeps its boot-mode flag there), wait for UART `LSR.TEMT`
