@@ -3,7 +3,7 @@ layout: default
 title: "A bare-metal command line for every peripheral on the board"
 short_description: "29 KiB of my own code in DRAM, loaded over FEL: one command per block, from the PMIC to the IR receiver"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_fel_path.png"
+picture: "assets/images/boards/bpi-m3/bpim3_cli_after.png"
 latest_release: "2026-10-04: every command measured on the board"
 index: 4
 publish: true
@@ -25,6 +25,10 @@ result: "eMMC, Wi-Fi, BT, PHY and IR all answer; 64 MiB memtest, 0 errors"
 4 October 2026. DRAM worked over FEL, so I had 2 GiB and a CPU that does exactly what I tell it. What
 I didn't have was any idea whether the rest of the board was alive under my code: eMMC, the SDIO Wi-Fi,
 Bluetooth, the Ethernet PHY, the IR receiver. The vendor image talks to most of it through blobs.
+
+![Each BPI-M3 block with the dram_cli command meant to test it](/assets/images/boards/bpi-m3/bpim3_cli_before.png)
+*The plan for the CLI: one command per block, and at that point a question mark on every one of them.*
+
 
 ## Task
 
@@ -76,6 +80,10 @@ Measured on 4 October 2026:
 | `ir` | 12-bit fixed-code remote, 6 codes decoded |
 | `ac100` | RTC running, still at 1970 (never set) |
 | `i2c` | TWI0 to 2 scan: nothing on CON1 (nothing plugged in) |
+
+![Each BPI-M3 block with the result my bare-metal CLI got from it](/assets/images/boards/bpi-m3/bpim3_cli_after.png)
+*Same diagram after 4 October: every block answered, from the AXP813 (IC 0x51) to the IR receiver (6 codes).*
+
 
 Also there: `timer` (Timer1 at 24 MHz; the ARM generic timer isn't counting, the ROM leaves it off),
 `led`/`key`, `pin`/`header` (all 40 pins of CON1 with function and level), `sd` (no card in the slot).

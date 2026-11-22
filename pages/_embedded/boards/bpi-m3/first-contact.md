@@ -3,7 +3,7 @@ layout: default
 title: "First contact: what the vendor image says about eight cores and 2 GHz"
 short_description: "Plugged in a serial adapter, read the old vendor kernel instead of waiting for mainline, then checked FEL"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_fel_path.png"
+picture: "assets/images/boards/bpi-m3/bpim3_opp.png"
 latest_release: "2026-10-03: measured on the vendor Ubuntu 16.04 image, read-only"
 index: 1
 publish: true
@@ -26,6 +26,10 @@ result: "8 cores online, 11 OPPs 480 to 2016 MHz, FEL at 12 Mbit/s"
 the spec says 1.8 GHz but mainline Linux tops out at 1.2 GHz, the board has two CPU clusters and I
 didn't know how the second one gets started, and I wasn't sure FEL works on this SoC at all. I also had
 a ready mainline SD image, and no way to write an SD card on this PC.
+
+![Spec 1.8 GHz, mainline 1.2 GHz, vendor kernel 480 to 2016 MHz, FEL ROM 408 MHz](/assets/images/boards/bpi-m3/bpim3_opp.png)
+*The clock question I walked in with: 1.8 GHz on the spec sheet, 1.2 GHz in mainline, and the vendor kernel on the board says 11 steps up to 2016 MHz.*
+
 
 So the board came up on a new FTDI adapter on the debug UART (CON2, 115200 8N1), still running whatever
 was on its eMMC.
@@ -78,6 +82,10 @@ c00201a0 T mcpm_entry_point
 0xC00201A0 virtual is 0x400201A0 physical. So the vendor kernel parks the wake-up address of every
 secondary core there, and mainline uses the very same register (`mc_smp.c`), just with its own entry
 code.
+
+![Soft-entry register 0x01F01DA4 holds the physical address of mcpm_entry_point](/assets/images/boards/bpi-m3/bpim3_cluster_entry.png)
+*How a sleeping core finds its way back: 0x01F01DA4 holds 0x400201A0, which is `mcpm_entry_point` (0xC00201A0 virtual) on the vendor kernel.*
+
 
 Last, FEL. The kernel has no symbol with `efex` or `fel` in it, so there's no "reboot into FEL" here:
 it's the U-Boot key or nothing. I held the key and replugged OTG, and at 21:21 the PC saw

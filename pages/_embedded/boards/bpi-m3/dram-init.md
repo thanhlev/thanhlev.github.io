@@ -3,7 +3,7 @@ layout: default
 title: "DRAM init over FEL, and the probe that froze the boot ROM"
 short_description: "xfel ddr doesn't know the A83T, so I ported U-Boot's LPDDR3 init into a 4 KiB SRAM program"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_fel_path.png"
+picture: "assets/images/boards/bpi-m3/bpim3_dram_order.png"
 latest_release: "2026-10-04: 2 GiB up and tested, blink runs from 0x40000000"
 index: 3
 publish: true
@@ -33,6 +33,10 @@ Failed to initial ddr controller
 ```
 
 No luck, xfel has no DRAM init for this chip.
+
+![ddr_init in SRAM brings up DRAM; reading DRAM before that hangs the ROM](/assets/images/boards/bpi-m3/bpim3_dram_order.png)
+*The plan, and the hole I fell into on the way: a 4196-byte init in SRAM, DRAM only after it says `DDR!`. My early `hexdump 0x40000000` cost a power cycle.*
+
 
 ## Task
 
@@ -88,6 +92,10 @@ $ sh run.sh 4 250 2
 - The unchanged blink, relinked at 0x40000000, ran from DRAM: result `DONE` at 0x40000F00, an address
   only DRAM has. 8 writes = 4 blue blinks, 2.0 s.
 - Both byte lanes trained clean (DXnGSR0 = 0x0046A300 on lanes 0 and 1).
+
+![Coverage of the 294 896-word memory test over 2 GiB](/assets/images/boards/bpi-m3/bpim3_memtest.png)
+*What my "0 errors" actually covers: every word of the first MiB, then one word per 64 KiB. It's a smoke test, not a full memtest.*
+
 
 Not measured: DRAM at full speed or with marginal timing. The CPU was at the ROM's clock with caches
 off.

@@ -25,6 +25,10 @@ plug in USB, and the boot ROM waits for the PC (FEL mode). That means I can run 
 without an SD card, which matters because my PC has no card reader. The other pull was the eight cores
 on two clusters: I wanted to see how Linux even wakes the second cluster.
 
+![Block diagram of the BPI-M3 around the A83T](/assets/images/boards/bpi-m3/bpim3_blocks.png)
+*What hangs off the A83T on my board: no photo of my own yet, so this is drawn from what my probes found (AXP813 over RSB, AP6212 on SDIO, RTL8211E, 2 GB LPDDR3).*
+
+
 ## Timeline
 
 | When | What happened |

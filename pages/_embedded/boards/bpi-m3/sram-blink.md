@@ -3,7 +3,7 @@ layout: default
 title: "Blinking an LED that lives on the PMIC, from 1148 bytes in SRAM"
 short_description: "Bare metal over FEL: the user LEDs hang off the AXP813, so a blink means bringing up the RSB bus by hand"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_fel_path.png"
+picture: "assets/images/boards/bpi-m3/bpim3_led_path.png"
 latest_release: "2026-10-03: four runs over FEL, all writes acknowledged"
 index: 2
 publish: true
@@ -30,6 +30,10 @@ loaded by the boot ROM, nothing else running.
 
 A program that runs from SRAM (DRAM isn't up in FEL), blinks an LED a given number of times, and then
 hands the CPU back to the ROM so I can load the next thing without a power cycle.
+
+![Five steps from SRAM code to an LED on the AXP813](/assets/images/boards/bpi-m3/bpim3_led_path.png)
+*What "blink an LED" turned into on this board: five blocks to set up before the PMIC's GPIO0 (green) or GPIO1 (blue) changes.*
+
 
 ## Action
 
@@ -78,6 +82,10 @@ Then I ran it three more times with other parameters by writing the parameter wo
   USB request after 4.018 s.
 - On the later runs the PMIC GPIO registers read back what the previous run left (0, not the power-on
   value 7), so the writes stuck.
+
+![SRAM A2 layout of sram_blink and the timing of one 4.000 s run](/assets/images/boards/bpi-m3/bpim3_sram_run.png)
+*Where the 1148 bytes sit in SRAM A2, and the only clock I had: the ROM answered USB again 4.018 s after a 4.000 s blink.*
+
 
 Honest gap: the program proves the PMIC took the writes. I didn't note down whether I watched the LEDs
 blink.
