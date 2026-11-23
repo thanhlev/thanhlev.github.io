@@ -21,7 +21,7 @@ tags: [rockchip, arm, npu, edge-ai, linux, android]
 
 ## Situation
 
-By now the NPU in my ROCK 3A has shown up in three of my posts about the board. It finds faces on a
+By now the NPU in my ROCK 3A has shown up in three of my posts about the board. It finds faces in my stereo webcam's picture on a
 [bare FreeRTOS core]({{ '/embedded/boards/rock3a/rtos-face-detect' | relative_url }}), it names the
 music the board is playing on [Linux]({{ '/embedded/boards/rock3a/music-linux' | relative_url }}), and it
 runs YOLOv5s on my [Android 14 port]({{ '/embedded/boards/rock3a/android14-port' | relative_url }}). Every
