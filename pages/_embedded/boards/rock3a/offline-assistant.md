@@ -3,7 +3,7 @@ layout: default
 title: "A Vietnamese voice assistant with the network unplugged"
 short_description: "Speech to text, a 0.6B LLM and Vietnamese TTS on the RK3568's four A55 cores under Android 14, recorded 17 times"
 status: "Done"
-picture: "assets/images/boards/rock3a/offline_assistant.png"
+picture: "assets/images/boards/rock3a/assist_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-19: 17 recorded runs, 16 fully offline"
 index: 16
 publish: true
@@ -18,6 +18,9 @@ tags: [rockchip, arm, edge-ai, android]
 # A Vietnamese voice assistant with the network unplugged
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The result first]({{ '/assets/images/boards/rock3a/assist_cover.jpg' | relative_url }})
+*The result first: 11.8 s from my question to the first spoken word, everything on the board, network unplugged.*
 
 ![The assistant's HDMI screen mid-answer]({{ '/assets/images/boards/rock3a/offline_assistant.png' | relative_url }})
 
