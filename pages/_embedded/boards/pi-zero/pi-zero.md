@@ -3,7 +3,7 @@ layout: default
 title: "Raspberry Pi Zero W (BCM2835)"
 short_description: "Bare metal with no SD card, a FreeRTOS shell on the boot cable, and the 12 QPUs driven from my own code"
 status: "In Progress"
-picture: "assets/images/boards/pi-zero/pz_board_blocks.png"
+picture: "assets/images/boards/pi-zero/pz_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with three STAR write-ups"
 index: 22
 publish: true
@@ -13,6 +13,9 @@ tags: [raspberry-pi, arm, gpu, freertos, bare-metal, boot]
 ---
 
 # Raspberry Pi Zero W (BCM2835)
+
+![The Pi Zero W in numbers]({{ '/assets/images/boards/pi-zero/pz_hub_cover.jpg' | relative_url }})
+*What came out of it: 4799 MFLOPS on the 12 QPUs (66 times the ARM with VFP), and my code running about 10 s after power-on, all over one USB cable. The board on the left is my 3D model of it.*
 
 ![Pi Zero W block diagram, drawn from the reduced schematic and the device tree]({{ '/assets/images/boards/pi-zero/pz_board_blocks.png' | relative_url }})
 

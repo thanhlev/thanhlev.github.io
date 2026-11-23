@@ -3,7 +3,7 @@ layout: default
 title: "NanoPC-T3 (S5P6818): eight A53 cores, read from the SD card image"
 short_description: "The 64-bit big sister of my NanoPi 2 Fire. Everything so far comes from the schematic, U-Boot and the boot files, not the board"
 status: "Pending"
-picture: "assets/images/boards/nanopc-t3/npct3_boot.png"
+picture: "assets/images/boards/nanopc-t3/npct3_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: honest hub, nothing measured on the board yet"
 index: 30
 publish: true
@@ -14,6 +14,9 @@ tags: [samsung, arm, boot]
 
 # NanoPC-T3
 {: .no_toc }
+
+![The NanoPC-T3 so far]({{ '/assets/images/boards/nanopc-t3/npct3_hub_cover.jpg' | relative_url }})
+*Nothing has run on the board yet: these numbers come from the SD card image. Three CRC-32s recomputed, three match.*
 
 ![The NanoPC-T3 SD boot, stage by stage, with numbers read from the files on the card image](/assets/images/boards/nanopc-t3/npct3_boot.png)
 

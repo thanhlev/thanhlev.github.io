@@ -3,7 +3,7 @@ layout: default
 title: "The RK3568 NPU: what Radxa's docs say, and what it did on my boards"
 short_description: "Radxa's RKNN guide for the ROCK 3A read side by side with my own runs: converting with rknn-toolkit2, calling librknnrt from C, NPU against CPU and GPU, and the traps the docs don't mention"
 status: "Done"
-picture: "assets/images/boards/rock3a/npu_flow.png"
+picture: "assets/images/boards/rock3a/npu_rknn_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-23: docs read, three models compared on NPU, CPU and GPU"
 index: 18
 publish: true
@@ -18,6 +18,9 @@ tags: [rockchip, arm, npu, edge-ai, linux, android]
 # The RK3568 NPU: what Radxa's docs say, and what it did on my boards
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The result first]({{ '/assets/images/boards/rock3a/npu_rknn_cover.jpg' | relative_url }})
+*The result first: YAMNet runs 32 times faster on the NPU than on one A55 thread (1.44 against 45.68 ms), about 0.49 TOPS of real work.*
 
 ## Situation
 

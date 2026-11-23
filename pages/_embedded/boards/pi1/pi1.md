@@ -3,7 +3,7 @@ layout: default
 title: "Raspberry Pi 1 Model B (BCM2835)"
 short_description: "A 2012 Pi with no Linux: FreeRTOS, MJPEG decoded by the VideoCore, a face detector on the 12 QPUs, a WS2812 ring"
 status: "In Progress"
-picture: "assets/images/boards/pi1/pi1_block.png"
+picture: "assets/images/boards/pi1/pi1_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with four STAR write-ups"
 index: 23
 publish: true
@@ -13,6 +13,9 @@ tags: [raspberry-pi, arm, gpu, freertos, bare-metal, camera]
 ---
 
 # Raspberry Pi 1 Model B (BCM2835)
+
+![The Pi 1 B in numbers]({{ '/assets/images/boards/pi1/pi1_hub_cover.jpg' | relative_url }})
+*The board in numbers: 43.5 ms per face pass on the QPUs, about 5 ms to decode a webcam JPEG on the GPU, a new build in 6.7 s over the UART.*
 
 ![Pi 1 Model B block diagram]({{ '/assets/images/boards/pi1/pi1_block.png' | relative_url }})
 

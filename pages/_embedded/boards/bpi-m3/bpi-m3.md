@@ -3,7 +3,7 @@ layout: default
 title: "Banana Pi M3 (A83T): eight cores, poked over USB"
 short_description: "An octa-core Allwinner board I drove from the FEL boot ROM: my own code in SRAM, then DRAM, then a CLI for every peripheral"
 status: "In Progress"
-picture: "assets/images/boards/bpi-m3/bpim3_fel_path.png"
+picture: "assets/images/boards/bpi-m3/bpim3_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page and four STAR write-ups"
 index: 26
 publish: true
@@ -14,6 +14,9 @@ tags: [allwinner, arm, bare-metal, boot, memory, usb]
 
 # Banana Pi M3
 {: .no_toc }
+
+![The BPI-M3 in numbers]({{ '/assets/images/boards/bpi-m3/bpim3_hub_cover.jpg' | relative_url }})
+*All of it over USB: my first 1148 bytes in SRAM, then all 2 GiB of DRAM brought up and tested with 0 errors. On the left, part of my block diagram (no photo of mine yet).*
 
 ![The path my code takes on the BPI-M3: FEL ROM, SRAM, DRAM init, then programs in DRAM](/assets/images/boards/bpi-m3/bpim3_fel_path.png)
 
