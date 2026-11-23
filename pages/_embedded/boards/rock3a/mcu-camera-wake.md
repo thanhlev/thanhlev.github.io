@@ -34,7 +34,11 @@ the day. You want it to look all the time. You don't want to pay for four Cortex
 The RK3568 on my ROCK 3A has a part that looks made for this and that hardly anyone uses: a fifth
 processor, a small 32-bit RISC-V core next to the four A55s. It's a Syntacore SCR1 (the TRM never
 names it, but its CSR map and the register name `SCR1_BOOT_ADDR` give it away), RV32IMC, machine mode
-only, no cache, no MMU. On this board it runs at 100 MHz from `aclk_bus`. I'd already used it for
+only, no cache, no MMU. Its clock is `aclk_bus`, which a mux in the CRU (`CRU_CLKSEL_CON50[1:0]`) sets to
+200, 150 or 100 MHz from the GPLL, or the 24 MHz crystal. Nothing documents which one the boot leaves, so
+my code counts `mcycle` against a timer: under my Debian boot it was the 100 MHz tap (100.006 MHz
+measured), under Android the 150 MHz one (148.5 MHz measured). Every number in this post is at
+100 MHz; I never switched the mux up to 150 or 200 MHz for these runs. I'd already used it for
 something small, a WS2812 LED ring under Android
 ([FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores]({{ '/embedded/boards/rock3a/ws2812-riscv-mcu' | relative_url }})),
 where it ran FreeRTOS at 148.5 MHz and talked to Android through the mailbox. That post is
