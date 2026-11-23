@@ -3,7 +3,7 @@ layout: default
 title: "FreeRTOS on all four Cortex-A55 cores, with my own shell"
 short_description: "rtos_cli from Maskrom: GICv3 at Secure EL1, cpufreq up to 1992 MHz, CoreMark, then an AArch64 SMP port"
 status: "Done"
-picture: "assets/images/boards/rock3a/rtos_cli_banner.png"
+picture: "assets/images/boards/rock3a/r3a_smp_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-18: SMP heartbeat and four-core CoreMark"
 index: 11
 publish: true
@@ -16,6 +16,9 @@ tags: [rockchip, arm, freertos, bare-metal]
 # FreeRTOS on all four Cortex-A55 cores, with my own shell
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The SMP story in one picture]({{ '/assets/images/boards/rock3a/r3a_smp_cover.jpg' | relative_url }})
+*The whole story in one picture: CoreMark 7634.83 on one A55 at 1992 MHz, 15.33 per MHz on all four, and a tick that stays within ±0.5 µs.*
 
 ![rtos_cli boot banner on the UART]({{ '/assets/images/boards/rock3a/rtos_cli_banner.png' | relative_url }})
 
@@ -102,6 +105,10 @@ new Maskrom device 038: after 20.999683402 s
 
 CoreMark per MHz stays at 3.83 from 400 to 2000 MHz, which is what you'd hope from a small in-order
 core with the work in L1.
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_freertos_smp_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/rock3a/r3a_freertos_smp_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*The whole story in 89 s: the first line on the UART, the hang I fixed, the clock steps and CoreMark on four cores, 27583 = 3.98× one core at 1799 MHz (the one-core bar in the film, 6926, comes from a different build than the 7489 in the table). Vietnamese on-screen text, background music, no voice-over.*
 
 ## What I'd do next
 

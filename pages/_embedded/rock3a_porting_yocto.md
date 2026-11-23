@@ -2,7 +2,7 @@
 layout: default
 title: "Add Yocto support for Rock-3A Single Board Computer"
 short_description: "My Rock-3A machine for meta-radxa, from the Radxa BSP to two booting Yocto images and a pull request"
-picture: "assets/images/rock-3a.jpg"
+picture: "assets/images/rock3a/rock3a_yocto_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story; upstream PR link is dead (meta-radxa was reset)"
 status: "Done"
 index: 99   # 2026-11-22: last on the ROCK 3A hub (user «đưa nó xuống dưới cùng»)
@@ -16,6 +16,9 @@ tags: [rockchip, arm, boot, yocto]
      format»). Same facts as before, nothing added: Radxa BSP -> meta-radxa machine, PR #29, two images. -->
 
 [Back to the ROCK 3A hub](/embedded/boards/rock3a/)
+
+![The result first]({{ '/assets/images/rock3a/rock3a_yocto_cover.jpg' | relative_url }})
+*The result first: both meta-radxa images, console and desktop, boot on the board from my port, sent upstream as PR #29.*
 
 ![The Radxa ROCK 3A on my desk](../../../assets/images/rock3a/rock-3a.jpg)
 

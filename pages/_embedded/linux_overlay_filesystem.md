@@ -2,12 +2,13 @@
 layout: default
 title: "Linux Overlay File System"
 short_description: "Ghi chép của mình về overlayfs: lower/upper, whiteout, và factory reset bằng cách xoá upper"
-picture: "assets/images/OverlayFS_Image.png"
+picture: "assets/images/overlayfs_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: viết lại theo dạng STAR"
 status: "In Progress"
 index: 3
 publish: true
 tags: [memory, linux]
+lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
@@ -15,6 +16,9 @@ tags: [memory, linux]
 
 # Linux Overlay File System
 {: .no_toc }
+
+![Overlayfs tóm tắt]({{ '/assets/images/overlayfs_cover.jpg' | relative_url }})
+*Hai filesystem, một view: lower là image gốc chỉ đọc, factory reset chỉ là xoá upper. Mới là lý thuyết, mình chưa mount trên board.*
 
 ## Table of contents
 {: .no_toc }

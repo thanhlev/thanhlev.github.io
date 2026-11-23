@@ -3,7 +3,7 @@ layout: default
 title: "USB webcam to HDMI on FreeRTOS, from 66 % CPU to 1.5 %"
 short_description: "EHCI isochronous by hand, then the copy moved to DMA and the decode to the JPEG unit; the card boots straight into it"
 status: "Done"
-picture: "assets/images/boards/nanopi2-fire/np2f_bench.jpg"
+picture: "assets/images/boards/nanopi2-fire/np2f_uvc_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-01: 1.5 % CPU for MJPEG up to 1080p30, 3.4 s from reset to picture"
 index: 3
 publish: true
@@ -17,6 +17,9 @@ tags: [samsung, arm, freertos, boot, usb, camera]
 {: .no_toc }
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
+
+![The webcam story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_uvc_cover.jpg' | relative_url }})
+*The whole story in one picture: MJPEG to HDMI for 1.5 % of one core instead of 66.5 %, and 3.4 s from reset to the webcam on screen.*
 
 1. TOC
 {:toc}

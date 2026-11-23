@@ -3,7 +3,7 @@ layout: default
 title: "Banana Pi R2 (MT7623N): a router board I've only read so far"
 short_description: "Five Ethernet jacks on two MACs, a quad Cortex-A7, and nothing measured on the board yet"
 status: "Pending"
-picture: "assets/images/bpi_r2_v1.2.jpg"
+picture: "assets/images/boards/bpi-r2/r2_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: honest hub, reading notes only"
 index: 27
 publish: true
@@ -14,6 +14,9 @@ tags: [arm, networking]
 
 # Banana Pi R2
 {: .no_toc }
+
+![The BPI-R2 so far]({{ '/assets/images/boards/bpi-r2/r2_hub_cover.jpg' | relative_url }})
+*Five jacks on two MACs, all of it from paper so far: the only thing I've run is a U-Boot build on my PC.*
 
 ![My BPI-R2 v1.2](/assets/images/bpi_r2_v1.2.jpg)
 

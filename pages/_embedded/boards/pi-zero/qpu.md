@@ -3,7 +3,7 @@ layout: default
 title: "Twelve QPUs from bare metal, no Linux"
 short_description: "Queueing my own programs on the VideoCore IV shader cores from FreeRTOS, and checking every lane against the ARM"
 status: "Done"
-picture: "assets/images/boards/pi-zero/pz_qpu_mflops.png"
+picture: "assets/images/boards/pi-zero/pz_qpu_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-20: qpu command in rtos_cli"
 index: 30
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, gpu, freertos, bare-metal]
 # Twelve QPUs from bare metal, no Linux
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-20
+
+![The QPU story in one picture]({{ '/assets/images/boards/pi-zero/pz_qpu_cover.jpg' | relative_url }})
+*The whole story in one picture: 4799 MFLOPS on the 12 QPUs, 66 times the ARM with its VFP, every one of the 192 lanes bit-exact.*
 
 ## Situation
 
@@ -82,6 +85,10 @@ At first the results looked wrong (107231 ppb off). It's rounding: the QPU round
 the CPU also rounding toward zero, all **192 lanes match bit for bit**. The firmware's own "execute
 QPU" mailbox call doesn't answer on this firmware; queueing through the V3D registers works. The
 image grew to 60 KB with this command in.
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi-zero/pz_qpu_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi-zero/pz_qpu_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*55 s: how the ARM hands the work to the 12 QPUs through the mailbox, why the results first differed (rounding), and twelve cores finishing in the time of one: 66× the ARM with VFP. English on-screen text, background music.*
 
 ## What I'd do next
 

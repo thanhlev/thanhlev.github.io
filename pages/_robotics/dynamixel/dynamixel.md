@@ -3,7 +3,7 @@ layout: default
 title: "DYNAMIXEL servos (MX-28, AX-12A)"
 short_description: "Smart servos on one half-duplex bus, and what their Python SDK really puts on the wire"
 status: "In Progress"
-picture: "assets/images/robotics/dynamixel/write_sequence.png"
+picture: "assets/images/robotics/dynamixel/dxmx_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with one STAR write-up"
 index: 4
 publish: true
@@ -13,6 +13,9 @@ tags: [robotics, servo, python]
 ---
 
 # DYNAMIXEL servos (MX-28, AX-12A)
+
+![DYNAMIXEL cover: 6 of 6 e-manual packets match]({{ '/assets/images/robotics/dynamixel/dxmx_hub_cover.jpg' | relative_url }})
+*All 6 e-manual packet examples match on a fake port, and two SDK bugs fell out of it.*
 
 ![One Goal Position write and its status reply, byte by byte]({{ '/assets/images/robotics/dynamixel/write_sequence.png' | relative_url }})
 

@@ -3,7 +3,7 @@ layout: default
 title: "A FreeRTOS shell on the boot cable, and the USB device that left after 170 ms"
 short_description: "FreeRTOS + TinyUSB CDC on the Zero W with no UART cable; three bugs found one bit at a time"
 status: "Done"
-picture: "assets/images/boards/pi-zero/pz_reset_seq.png"
+picture: "assets/images/boards/pi-zero/pz_shell_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-12: shell stable, I-cache on"
 index: 20
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, freertos, boot, usb]
 # A FreeRTOS shell on the boot cable, and the USB device that left after 170 ms
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-12
+
+![The USB shell story in one picture]({{ '/assets/images/boards/pi-zero/pz_shell_cover.jpg' | relative_url }})
+*The whole story in one picture: a FreeRTOS shell on /dev/ttyACM0 about 0.8 s after hand-over, and 11.3 µs per task switch.*
 
 ![What happens between start.elf releasing the ARM and kmain]({{ '/assets/images/boards/pi-zero/pz_reset_seq.png' | relative_url }})
 
@@ -161,6 +164,10 @@ at 98.8 %.
 The lesson I keep: the USB power-on through the mailbox takes **527 ms**, so initialise the DWC2 only
 after the reply. Eight days later I ran the same steps again and got the boot ROM after 5.69 s again
 and a task switch of 11247 ns against 11261.
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi-zero/pz_rtos_shell_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi-zero/pz_rtos_shell_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*53 s: the shell over the USB cable, the port that vanished until I waited 527 ms for the USB power, and five tasks running with the CPU still about 99 % idle. English on-screen text, background music.*
 
 ## What I'd do next
 

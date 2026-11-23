@@ -3,7 +3,7 @@ layout: default
 title: "Radxa ROCK 3A (RK3568)"
 short_description: "Bare metal, FreeRTOS on four A55s, a 154 ms boot, NPU without Linux, Android 14, a hidden RISC-V MCU"
 status: "In Progress"
-picture: "assets/images/boards/rock3a/rock-3a.jpg"
+picture: "assets/images/boards/rock3a/r3a_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with seven STAR write-ups"
 index: 20
 publish: true
@@ -14,7 +14,9 @@ tags: [rockchip, arm, npu, freertos, bare-metal, linux]
 
 # Radxa ROCK 3A (RK3568)
 
-![ROCK 3A on my desk]({{ '/assets/images/boards/rock3a/rock-3a.jpg' | relative_url }})
+![The ROCK 3A in numbers]({{ '/assets/images/boards/rock3a/r3a_hub_cover.jpg' | relative_url }})
+*What came out of it: FreeRTOS on core 3 at 154 ms, 25.09 fps of NPU face detection with no Linux, CoreMark 7634.83 on one A55, and a LED ring driven from the RISC-V MCU.*
+
 
 The ROCK 3A is Radxa's Pi-sized board with a Rockchip RK3568: four Cortex-A55 cores, a Mali-G52,
 an NPU (Rockchip says 0.8 or 1 TOPS, depending on which doc you read), LPDDR4X (mine has 8 GB), eMMC and a 16 MiB SPI NOR. I bought it because I wanted an
@@ -45,4 +47,5 @@ A few things never got a clean result, so they're not pages yet: the board reset
 two 1280x720 webcams at once (cause not found), 640x480 webcam frames only reach 21.6 to 23.6 fps
 on the RTOS because my JPEG decoder takes 28 ms each, and the LED ring shows no blue at 3.3 V. The
 Real-ESRGAN x4 upscaler runs on the NPU (its numbers are in the NPU post), but it scores below plain bicubic
-on real game frames and hasn't been filmed, so it isn't a story of its own yet.
+on real game frames and hasn't been filmed, so it isn't a story of its own yet. The MCU camera story
+([The RISC-V MCU keeps watch]({{ '/embedded/boards/rock3a/mcu-camera-wake' | relative_url }})) has no watts yet: there's no current meter on the bench, only the chip's temperature.

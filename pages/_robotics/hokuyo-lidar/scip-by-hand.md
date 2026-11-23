@@ -3,7 +3,7 @@ layout: default
 title: "Talking SCIP 2.0 to the URG-04LX by hand"
 short_description: "A raw client in Python and C++: 6-bit text encoding, a checksum that skips the semicolon, and two stream bugs of my own"
 status: "Done"
-picture: "assets/images/robotics/hokuyo-lidar/scan_gd.png"
+picture: "assets/images/robotics/hokuyo-lidar/hok_scip_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-09-27: raw SCIP client in C++ and Python"
 index: 1
 publish: true
@@ -16,6 +16,9 @@ tags: [robotics, lidar, python]
 # Talking SCIP 2.0 to the URG-04LX by hand
 
 [Back to the Hokuyo hub]({{ '/robotics/hokuyo-lidar/' | relative_url }})
+
+![SCIP cover: 100.6 ms per frame]({{ '/assets/images/robotics/hokuyo-lidar/hok_scip_cover.jpg' | relative_url }})
+*Every frame has 682 steps and 0 bad checksum lines, 100.6 ms apart, σ 3 to 4 mm at 14 cm.*
 
 ## Situation
 

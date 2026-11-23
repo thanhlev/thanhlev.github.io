@@ -3,7 +3,7 @@ layout: default
 title: "Power loops: a charger with no state machine, MPPT, and a sine an integrator can't follow"
 short_description: "CC-CV as the minimum of two loops, perturb-and-observe on a panel that heats up, and resonant vs repetitive control on a grid-tie inverter"
 status: "Done"
-picture: "assets/images/control/plant-models/charger_current.png"
+picture: "assets/images/control/plant-models/power_loops_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 6
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, cpp]
 # Power loops: a charger with no state machine, MPPT, and a sine an integrator can't follow
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/plant-models/power_loops_cover.jpg' | relative_url }})
+*The result first: the two-loop charger ends 99.5 % full against 90.0 % for the state machine; MPPT harvests 99.97 %.*
 
 ![Charge current: the CC-CV state machine vs the minimum of two loops]({{ '/assets/images/control/plant-models/charger_current.png' | relative_url }})
 

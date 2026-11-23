@@ -3,7 +3,7 @@ layout: default
 title: "ESP32-S3 demo apps"
 short_description: "Small ESP-IDF apps on my ESP32-S3 devkits: a fake USB webcam that plays video files, and every TinyUSB device demo checked from the PC side"
 status: "In Progress"
-picture: "assets/images/mcu/esp32-s3/webcam_capture.png"
+picture: "assets/images/mcu/esp32-s3/esp32_s3_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with two STAR write-ups"
 index: 40
 publish: true
@@ -13,6 +13,9 @@ tags: [esp32, usb, camera, freertos]
 ---
 
 # ESP32-S3 demo apps
+
+![The ESP32-S3 demos in numbers]({{ '/assets/images/mcu/esp32-s3/esp32_s3_cover.jpg' | relative_url }})
+*What the S3 can pretend to be over USB: a webcam at 30.3 fps with no gap over 50 ms, and 8 of 14 TinyUSB demos confirmed from the PC side.*
 
 ![Frame 30 recorded on the PC from the S3 webcam]({{ '/assets/images/mcu/esp32-s3/webcam_capture.png' | relative_url }})
 

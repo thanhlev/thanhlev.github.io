@@ -3,7 +3,7 @@ layout: default
 title: "Microduck (14 × XL330): rebuilding an open RL-trained duck"
 short_description: "Pollen Robotics' small open biped that learns to walk in simulation; I run their pipeline before building one"
 status: "In Progress"
-picture: "assets/images/robotics/microduck/rollouts_sheet.png"
+picture: "assets/images/robotics/microduck/duck_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page and three STAR write-ups"
 index: 2
 publish: true
@@ -14,6 +14,9 @@ tags: [robotics, simulation]
 
 # Microduck
 {: .no_toc }
+
+![Microduck cover: 4 runs of the official policies, no fall]({{ '/assets/images/robotics/microduck/duck_hub_cover.jpg' | relative_url }})
+*Simulation only so far: 4 runs of the official policies and no fall, at about a third of the commanded speed.*
 
 ![Four runs of the official Microduck policies in MuJoCo, frames at 1, 4 and 7.5 s](/assets/images/robotics/microduck/rollouts_sheet.png)
 *My own MuJoCo renders of the open Microduck model (Microduck · Pollen Robotics · CC BY-NC-SA 4.0), November 2026.*

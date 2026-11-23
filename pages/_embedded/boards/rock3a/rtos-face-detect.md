@@ -19,6 +19,9 @@ tags: [rockchip, arm, edge-ai, npu, freertos, bare-metal]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
+![The whole story in one picture]({{ '/assets/images/boards/rock3a/rtos_face_cover.jpg' | relative_url }})
+*The whole story in one picture: 25.09 fps from webcam to HDMI, the NPU doing the faces, no Linux on the chip.*
+
 ![What each core does for one frame]({{ '/assets/images/boards/rock3a/rtos_face_cores.png' | relative_url }})
 
 Per-core time for one frame, averaged over the 718 frames of the final run (labels in Vietnamese, from

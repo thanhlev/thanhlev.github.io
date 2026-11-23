@@ -3,7 +3,7 @@ layout: default
 title: "A hang at 186 s, and a 512 KB L2 cache nobody had switched on"
 short_description: "A watchdog black box that pointed at one bad MJPEG frame, then the PL310 L2 that hung the board until I read the vendor's sources"
 status: "Done"
-picture: "assets/images/boards/nanopi2-fire/np2f_board_model.png"
+picture: "assets/images/boards/nanopi2-fire/np2f_l2_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-24: L2 on at boot, YuNet 42 → 27 ms, no hang past 417 s"
 index: 5
 publish: true
@@ -19,6 +19,9 @@ tags: [samsung, arm, edge-ai, memory, camera]
 {: .no_toc }
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
+
+![The hang and L2 story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_l2_cover.jpg' | relative_url }})
+*The whole story in one picture: 417 s clean past the old 186 s hang, and YuNet down from 42 to 27 ms once the L2 was on. The board is my 3D model of it.*
 
 1. TOC
 {:toc}

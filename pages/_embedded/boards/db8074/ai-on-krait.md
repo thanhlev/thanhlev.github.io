@@ -3,7 +3,7 @@ layout: default
 title: "Local AI on a 2013 phone chip, and an L2 cache stuck at 576 MHz"
 short_description: "No NPU, no GPU compute: LLM, speech and vision on four Krait cores, then a new driver so the L2 follows the CPU"
 status: "Done"
-picture: "assets/images/boards/db8074/d8k_l27_ai.png"
+picture: "assets/images/boards/db8074/d8k_ai_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-19: two full bench runs, L2 A/B on one boot"
 index: 5
 publish: true
@@ -19,6 +19,9 @@ tags: [qualcomm, arm, edge-ai, memory]
 {: .no_toc }
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
+
+![The result first]({{ '/assets/images/boards/db8074/d8k_ai_cover.jpg' | relative_url }})
+*The result first: Qwen2.5-0.5B at 4.15 tok/s on four Krait cores, and my L2 driver taking memory reads from 4433 to 7084 MB/s.*
 
 1. TOC
 {:toc}
@@ -96,6 +99,14 @@ above, I think most of that gain is not the L2.
 
 One trap in my own build: ncnn gives the same time at 1 and 4 threads (11.62 / 11.60 ms), because my
 build script turned OpenMP off. Every ncnn number here is one core.
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/db8074/d8k_vision_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/db8074/d8k_vision_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*27 s: SmolVLM-256M looks at four alpacas with guitars and answers "four people holding guitars": three things right, one wrong. Test picture from ggml (MIT). Vietnamese on-screen text, background music.*
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/db8074/d8k_sdxs_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/db8074/d8k_sdxs_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*26 s: SDXS drawing the watercolor duck above on the four Krait cores, 5 min 18 s for one picture. Vietnamese on-screen text, background music.*
 
 ## What I'd do next
 

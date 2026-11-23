@@ -3,7 +3,7 @@ layout: default
 title: "When it goes wrong: chip fault, a hot winding, a dead encoder"
 short_description: "Three failure scenarios on the simulated drive: fault and reset through CiA 402, I²t derating on a pump, back-EMF fallback when the encoder line dies"
 status: "Done"
-picture: "assets/images/control/dc-motor-drive/dcm_encoderloss_switch.png"
+picture: "assets/images/control/dc-motor-drive/protection_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 3
 publish: true
@@ -16,6 +16,9 @@ tags: [motor, control, simulation, cpp, testing]
 # When it goes wrong: chip fault, a hot winding, a dead encoder
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/dc-motor-drive/protection_cover.jpg' | relative_url }})
+*The result first: Fault in 1.05 ms, the winding peaks at 95.6 °C under a 110 °C limit, and a dead encoder hands over to back-EMF speed in 5.0 ms.*
 
 ![Encoder line dies at 1.0 s: true shaft, the frozen encoder estimate, the back-EMF estimate]({{ '/assets/images/control/dc-motor-drive/dcm_encoderloss_switch.png' | relative_url }})
 

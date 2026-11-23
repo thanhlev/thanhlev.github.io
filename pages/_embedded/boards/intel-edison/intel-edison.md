@@ -3,7 +3,7 @@ layout: default
 title: "Intel Edison: an x86 module the size of a stamp"
 short_description: "Two Atom cores at 500 MHz on a Mini Breakout: its boot measured from the USB side, then Zephyr run from RAM"
 status: "In Progress"
-picture: "assets/images/boards/intel-edison/ied_boot.png"
+picture: "assets/images/boards/intel-edison/ied_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page and two STAR write-ups"
 index: 29
 publish: true
@@ -14,6 +14,9 @@ tags: [intel, x86, boot, usb]
 
 # Intel Edison
 {: .no_toc }
+
+![The Edison in numbers]({{ '/assets/images/boards/intel-edison/ied_hub_cover.jpg' | relative_url }})
+*59.52 s from reset to login on my module, and the boot ROM waits 8.92 s on USB for a flasher at every boot. Zephyr later said hello 0.05 s after `go`. On the left, my boot diagram.*
 
 ![The Edison boot, measured on my board: reset to login in 59.52 s](/assets/images/boards/intel-edison/ied_boot.png)
 

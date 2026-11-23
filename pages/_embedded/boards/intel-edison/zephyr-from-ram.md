@@ -3,7 +3,7 @@ layout: default
 title: "Zephyr on the Edison: a 15 KB image over YMODEM and one wrong reg-shift"
 short_description: "An out-of-tree Zephyr board for an x86 module, loaded into RAM by the old U-Boot, nothing written to eMMC"
 status: "Done"
-picture: "assets/images/boards/intel-edison/ied_zephyr_run.png"
+picture: "assets/images/boards/intel-edison/ied_zephyr_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-12: hello and synchronization samples run"
 index: 2
 publish: true
@@ -17,6 +17,9 @@ tags: [intel, x86, boot, memory]
 {: .no_toc }
 
 [Back to the Intel Edison hub](/embedded/boards/intel-edison/)
+
+![The result first]({{ '/assets/images/boards/intel-edison/ied_zephyr_cover.jpg' | relative_url }})
+*The result first: "Hello World" 0.05 s after `go`, from a 15 KB Zephyr image loaded into RAM over YMODEM.*
 
 1. TOC
 {:toc}

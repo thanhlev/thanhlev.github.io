@@ -3,7 +3,7 @@ layout: default
 title: "What the repos give you, and the three holes I'd fill myself"
 short_description: "Before buying parts I read their hardware, runtime and OS repos; the software path is complete, the hardware path isn't"
 status: "Done"
-picture: "assets/images/robotics/microduck/hw_map.png"
+picture: "assets/images/robotics/microduck/duck_build_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-06: read from the public repos at pinned commits"
 index: 2
 publish: true
@@ -17,6 +17,9 @@ tags: [robotics, simulation, servo]
 {: .no_toc }
 
 [Back to the Microduck hub](/robotics/microduck/)
+
+![Microduck hardware cover: three holes to fill]({{ '/assets/images/robotics/microduck/duck_build_cover.jpg' | relative_url }})
+*The software is all there. The IMU board, the HAT and a BOM are what I'd have to make myself.*
 
 1. TOC
 {:toc}

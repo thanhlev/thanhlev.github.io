@@ -2,13 +2,14 @@
 layout: default
 title: "Pytest-Embedded"
 short_description: "Mình thử plugin pytest-embedded của Espressif: cài đặt, các service, chạy test hello world trên ESP32-C3"
-picture: "assets/images/pytest-embedded.png"
+picture: "assets/images/pytest_embedded_cover.jpg"   # 2026-11-23 cover, story_cover.py
 commit1: "Init document"
 latest_release: "2026-11-22: viết lại theo dạng STAR"
 status: "Done"
 index: 4
 publish: true
 tags: [esp32, testing, python, mcu]
+lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
@@ -16,6 +17,10 @@ tags: [esp32, testing, python, mcu]
 
 # Pytest-Embedded
 {: .no_toc }
+
+![Kết quả trước]({{ '/assets/images/pytest_embedded_cover.jpg' | relative_url }})
+*Kết quả trước: test hello world pass trên ESP32-C3 sau 5.01 s, tính cả nạp flash.*
+
 ## Table of contents
 {: .no_toc }
 

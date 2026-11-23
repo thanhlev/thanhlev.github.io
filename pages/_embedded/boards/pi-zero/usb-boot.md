@@ -3,7 +3,7 @@ layout: default
 title: "Booting a Pi Zero W with no SD card"
 short_description: "My 1381-byte kernel over USB with rpiboot, a firmware regression, and a lsusb that breaks the next boot"
 status: "Done"
-picture: "assets/images/boards/pi-zero/pz_boot_sources.png"
+picture: "assets/images/boards/pi-zero/pz_usbboot_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-12: USB boot on the real board"
 index: 10
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, linux, boot, usb]
 # Booting a Pi Zero W with no SD card
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-12
+
+![The USB boot story in one picture]({{ '/assets/images/boards/pi-zero/pz_usbboot_cover.jpg' | relative_url }})
+*The whole story in one picture: about 10 s from power-on to my 1381-byte kernel over USB, with no SD card in the board.*
 
 ![BCM2835 boot sources: SD first, then USB device mode]({{ '/assets/images/boards/pi-zero/pz_boot_sources.png' | relative_url }})
 
@@ -120,6 +123,10 @@ and so do three older tags. Two traps I keep in mind: don't `lsusb -v` the boot 
 and don't trust a blinking LED as proof of anything else (see the
 [shell story]({{ '/embedded/boards/pi-zero/rtos-usb-shell' | relative_url }}): my kernel was blinking
 from the wrong address).
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi-zero/pz_usb_boot_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi-zero/pz_usb_boot_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*43 s: the GPU wakes first and asks the PC for files, I try my code on an emulator, then on the board until a firmware version runs it, and the green LED on pin 47 blinks. English on-screen text, background music.*
 
 ## What I'd do next
 

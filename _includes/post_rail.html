@@ -1,0 +1,51 @@
+{% comment %}
+post_rail.html - right-hand, sticky list of posts on document pages (2026-11-23, user: the right side of a
+post is empty on a wide screen; «hãy để danh sách bài đăng cố định bên cột này để user dù đổi trang, hay kéo
+xuống đều thấy danh sách này, dễ dàng click hơn»).
+What it lists, from the current page's own front matter (plain Liquid, GitHub Pages safe mode):
+  - a story (board_parent: X)  -> hub X + all its stories, the current one marked
+  - a hub (board_hub / notes_hub) -> its stories
+  - any other post             -> the other posts of the same collection
+then "More" = the other hubs of the same collection. Drafts (publish: false) are skipped.
+Shown only on wide screens (CSS .prail, ≥ 1500 px), so phones and laptops keep the two-column page.
+{% endcomment %}
+{% comment %} pages outside a collection (404, plain pages) get no rail {% endcomment %}
+{% if page.collection and site[page.collection] %}
+{% assign coll = site[page.collection] | where_exp: "i", "i.publish != false" %}
+{% if page.board_parent %}
+  {% assign hubdoc = coll | where: "slug", page.board_parent | first %}
+  {% assign group = coll | where: "board_parent", page.board_parent | sort: "index" %}
+{% elsif page.board_hub or page.notes_hub %}
+  {% assign hubdoc = page %}
+  {% assign group = coll | where: "board_parent", page.slug | sort: "index" %}
+{% else %}
+  {% assign hubdoc = nil %}
+  {% assign group = coll | where_exp: "i", "i.board_parent == nil" | where_exp: "i", "i.board_hub != true" | where_exp: "i", "i.notes_hub != true" | sort: "index" %}
+{% endif %}
+{% comment %} Jekyll 3.10 where_exp has no "or": the two hub kinds are joined with concat. {% endcomment %}
+{% assign hubs_a = coll | where: "board_hub", true %}{% assign hubs_b = coll | where: "notes_hub", true %}
+{% assign others = hubs_a | concat: hubs_b | sort: "index" %}
+<aside class="prail">
+  <div class="prail-in">
+    {% if hubdoc %}
+      <div class="rail-h">{% if page.collection == "robotics" %}This robot{% elsif hubdoc.notes_hub %}This series{% else %}This board{% endif %}</div>
+      <a class="pr-hub{% if hubdoc.url == page.url %} on{% endif %}" href="{{ hubdoc.url | relative_url }}">{{ hubdoc.title | split: ":" | first }}</a>
+    {% else %}
+      <div class="rail-h">{{ page.collection | replace: "_", " " | capitalize }}</div>
+    {% endif %}
+    <ol class="pr-list">
+      {% for p in group %}
+      <li><a class="{% if p.url == page.url %}on{% endif %}" href="{{ p.url | relative_url }}">{{ p.title | remove: "[🔥] - " }}</a>{% if p.result %}<span>{{ p.result | truncate: 62 }}</span>{% endif %}</li>
+      {% endfor %}
+    </ol>
+    {% assign more = others | where_exp: "i", "i.url != page.url" %}
+    {% if hubdoc %}{% assign more = more | where_exp: "i", "i.url != hubdoc.url" %}{% endif %}
+    {% if more.size > 0 %}
+      <div class="rail-h pr-more">More {% if page.collection == "robotics" %}robots{% elsif page.collection == "embedded" %}boards &amp; series{% else %}hubs{% endif %}</div>
+      <ul class="pr-others">
+        {% for h in more %}<li><a href="{{ h.url | relative_url }}">{{ h.title | split: ":" | first }}</a></li>{% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</aside>
+{% endif %}

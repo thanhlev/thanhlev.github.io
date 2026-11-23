@@ -9,7 +9,7 @@ IBM Plex Sans Condensed / Plex Mono / Source Serif 4, orange accent). Structure:
 Front matter it reads: title, short_description, status, latest_release, board_parent, result.
 No custom plugins or filters here: GitHub Pages builds in safe mode and ignores _plugins.
 -->
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="{{ page.lang | default: site.lang | default: "en-US" }}">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -83,6 +83,7 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
         <article id="main_content" class="doc">
           {{ content }}
         </article>
+        {% include post_rail.html %}
       </div>
     {% endif %}
 

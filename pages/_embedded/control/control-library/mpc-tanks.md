@@ -3,7 +3,7 @@ layout: default
 title: "MPC on two tanks: closer to the overflow than a PI dares"
 short_description: "A 7 kB constrained MPC against two tuned PIs on a two-tank rig where the pump can't run backwards and the tank overflows for real"
 status: "Done"
-picture: "assets/images/control/control-library/mpc_level_one.png"
+picture: "assets/images/control/control-library/mpc_tanks_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 4
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, cpp]
 # MPC on two tanks: closer to the overflow than a PI dares
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/control-library/mpc_tanks_cover.jpg' | relative_url }})
+*The result first: 14.4 m·s of integrated error with MPC against 54.8 and 58.9 for the two PIs, with tank one taken to 0.458 m of 0.50.*
 
 ![Tank one: MPC fills it further than either PI and still stops short of the overflow line]({{ '/assets/images/control/control-library/mpc_level_one.png' | relative_url }})
 

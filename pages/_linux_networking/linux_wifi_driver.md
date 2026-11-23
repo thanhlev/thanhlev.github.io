@@ -3,15 +3,19 @@ layout: default
 title: "[🔥] - Lịch sử của Linux Wi-Fi Driver"
 short_description: "Từ Wireless Extensions đến nl80211/cfg80211/mac80211: Wi-Fi driver trên Linux được thiết kế ra sao"
 status: "Done"
-picture: "assets/images/intel_wifi_module.png"
+picture: "assets/images/linux_wifi_driver_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 4
 publish: true
 tags: [networking, linux, wifi]
+lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 ---
 
 # Linux Wi-Fi Driver có gì đặc biệt?
 {: .no_toc }
+
+![Wi-Fi driver trên Linux trong một hình]({{ '/assets/images/linux_wifi_driver_cover.jpg' | relative_url }})
+*Bảy lệnh nl80211 từ lúc scan tới lúc interface hết NO-CARRIER; data path thì vẫn là một net_device như Ethernet.*
 
 ## Table of contents
 {: .no_toc }

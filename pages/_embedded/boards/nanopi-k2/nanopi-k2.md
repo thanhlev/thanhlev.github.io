@@ -3,7 +3,7 @@ layout: default
 title: "NanoPi K2 (Amlogic S905): ten demos waiting for a board"
 short_description: "A quad A53 TV-box chip on a Pi-sized board. I've read it, fixed my demos against mainline, and not run them on hardware yet"
 status: "Pending"
-picture: "assets/images/boards/nanopi-k2/k2_demos_status.png"
+picture: "assets/images/boards/nanopi-k2/k2_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: honest hub, nothing measured on a board yet"
 index: 31
 publish: true
@@ -14,6 +14,9 @@ tags: [arm, linux]
 
 # NanoPi K2
 {: .no_toc }
+
+![The NanoPi K2 so far]({{ '/assets/images/boards/nanopi-k2/k2_hub_cover.jpg' | relative_url }})
+*Ten demos written and four fixed for mainline, none of them run on the board yet. On the left, part of my overview drawing.*
 
 ![The ten NanoPi K2 demos and where each one stands](/assets/images/boards/nanopi-k2/k2_demos_status.png)
 

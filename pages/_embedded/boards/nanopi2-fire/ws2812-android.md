@@ -3,7 +3,7 @@ layout: default
 title: "A WS2812 ring from Android 7 over spidev, and why it flickered"
 short_description: "FriendlyELEC's Android on a card, a 16-LED ring on the 40-pin header, a root daemon and a 33 KB app built without Android Studio"
 status: "Done"
-picture: "assets/images/boards/nanopi2-fire/np2f_ws2812_app.png"
+picture: "assets/images/boards/nanopi2-fire/np2f_ws_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-17: the same flicker fixed in the bare-metal driver"
 index: 6
 publish: true
@@ -17,6 +17,9 @@ tags: [samsung, arm, android, led]
 {: .no_toc }
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
+
+![The WS2812 story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_ws_cover.jpg' | relative_url }})
+*The whole story in one picture: 16 LEDs running every effect smoothly from Android, 480 of 480 bytes read back clean, from a 33 KB app.*
 
 1. TOC
 {:toc}

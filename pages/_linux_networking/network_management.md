@@ -2,7 +2,7 @@
 layout: default
 title: "Linux Network Management"
 short_description: "ifupdown, NetworkManager, systemd-networkd, Netplan and OpenWrt's netifd: who configures the interface after the driver"
-picture: "assets/images/linux_network_management.png"
+picture: "assets/images/network_management_cover.jpg"   # 2026-11-23 cover, story_cover.py
 status: "Done"
 index: 2
 latest_release: "2026-11-22: rewritten as a STAR story"
@@ -12,6 +12,10 @@ tags: [networking, linux]
 
 # Linux Network Management
 {: .no_toc }
+
+![Network managers in one picture]({{ '/assets/images/network_management_cover.jpg' | relative_url }})
+*Five managers, five config formats, one rule: one owner per interface.*
+
 ## Table of contents
 {: .no_toc }
 

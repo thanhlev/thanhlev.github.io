@@ -3,7 +3,7 @@ layout: default
 title: "Face detection on four 2016 Cortex-A9 cores, no NPU, no Linux"
 short_description: "FastestDet and YuNet hand-lowered to C + NEON inside the FreeRTOS webcam firmware, then made fast enough to follow a face"
 status: "Done"
-picture: "assets/images/boards/nanopi2-fire/np2f_detect_pipeline.png"
+picture: "assets/images/boards/nanopi2-fire/np2f_face_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-24: YuNet 42 ms a run on the CPU, bit-identical to the slow version"
 index: 4
 publish: true
@@ -19,6 +19,9 @@ tags: [samsung, arm, edge-ai, freertos, bare-metal, camera]
 {: .no_toc }
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
+
+![The result first]({{ '/assets/images/boards/nanopi2-fire/np2f_face_cover.jpg' | relative_url }})
+*The result first: faces in 42 ms per pass on four 2016 Cortex-A9 cores, no NPU and no Linux.*
 
 1. TOC
 {:toc}
@@ -124,6 +127,10 @@ And the LED ring on the header got a job: N people in view, N lit spots chasing 
 
 The story continues in [the hang at 186 s and the L2 cache that was never on](/embedded/boards/nanopi2-fire/hang-and-l2-cache),
 which took YuNet from 42 to 27 ms.
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/nanopi2-fire/np2f_person_detect_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/nanopi2-fire/np2f_person_detect_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*Person detection in 99 s: the net as 73 C operations, the same count as on the PC on 17 of 17 pictures, then 642 → 184 ms once the four cores share each layer. Vietnamese on-screen text, no sound.*
 
 ## What I'd do next
 

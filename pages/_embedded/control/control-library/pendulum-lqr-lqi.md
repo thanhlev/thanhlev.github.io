@@ -3,7 +3,7 @@ layout: default
 title: "Five controllers on one pendulum, and the LQR that parks 0.36 rad off"
 short_description: "Old adaptive law, PID, bounded adaptive PID, LQR and LQI against a constant torque the model doesn't know about"
 status: "Done"
-picture: "assets/images/control/control-library/pendulum_lqr_lqi.png"
+picture: "assets/images/control/control-library/pendulum_lqr_lqi_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run; the demo's own text says 0.22 rad, the run says 0.36"
 index: 2
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, cpp]
 # Five controllers on one pendulum, and the LQR that parks 0.36 rad off
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/control-library/pendulum_lqr_lqi_cover.jpg' | relative_url }})
+*The result first: under the same 3 N torque LQR parks 0.36 rad off, LQI ends at 0.0008 rad with 6.1 N.*
 
 ![Angle after a constant 3 N torque at t = 1 s: PID, LQR, LQI]({{ '/assets/images/control/control-library/pendulum_lqr_lqi.png' | relative_url }})
 

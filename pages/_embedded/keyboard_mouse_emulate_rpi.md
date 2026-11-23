@@ -3,7 +3,7 @@ layout: default
 title: "Bluetooth Keyboard, Mouse & Media Emulator on Raspberry Pi"
 short_description: "My Raspberry Pi pretends to be a Bluetooth keyboard, mouse and media remote; started 2017, still patched in 2026"
 status: "Done"
-picture: "assets/images/rpi_bt_hid.png"
+picture: "assets/images/kbd_bt_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
@@ -15,6 +15,9 @@ tags: [raspberry-pi, linux, python, bluetooth]
 
 # Bluetooth Keyboard, Mouse & Media Emulator on Raspberry Pi
 {: .no_toc }
+
+![The BT keyboard emulator in numbers]({{ '/assets/images/kbd_bt_cover.jpg' | relative_url }})
+*A Pi that pairs as a keyboard, mouse and media remote with no driver on the host: 341 stars and 120 forks as of 2026-11-22.*
 
 ## Table of Contents
 {: .no_toc }

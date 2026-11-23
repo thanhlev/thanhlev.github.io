@@ -3,7 +3,7 @@ layout: default
 title: "Bare metal from the BootROM, no hands on the board"
 short_description: "sram_hello and dram_hello loaded over Maskrom, and a reset that drops the chip straight back into Maskrom"
 status: "Done"
-picture: "assets/images/boards/rock3a/boot_seq.png"
+picture: "assets/images/boards/rock3a/r3a_maskrom_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-16: dram_hello dev loop"
 index: 10
 publish: true
@@ -16,6 +16,9 @@ tags: [rockchip, arm, bare-metal, boot, memory]
 # Bare metal from the BootROM, no hands on the board
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The Maskrom story in one picture]({{ '/assets/images/boards/rock3a/r3a_maskrom_cover.jpg' | relative_url }})
+*The whole story in one picture: all 8 GB of DRAM answering my own code, and the board back in Maskrom about 3 s later without me touching it.*
 
 ![RK3568 boot sequence]({{ '/assets/images/boards/rock3a/boot_seq.png' | relative_url }})
 

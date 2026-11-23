@@ -3,7 +3,7 @@ layout: default
 title: "My control library (ctl): PID to MPC, in simulation"
 short_description: "A header-only C++ control library I wrote for small MCUs, and the demos that check every law against a plant instead of a promise"
 status: "In Progress"
-picture: "assets/images/control/control-library/pid_antiwindup.png"
+picture: "assets/images/control/control-library/control_library_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page, four STAR write-ups re-run in double and float"
 index: 30
 publish: true
@@ -13,6 +13,9 @@ tags: [control, simulation, cpp, testing]
 ---
 
 # My control library (ctl): PID to MPC, in simulation
+
+![The control library in numbers]({{ '/assets/images/control/control-library/control_library_cover.jpg' | relative_url }})
+*One library, every law checked against a plant: back from windup in 0.77 s instead of 108, LQI holding the pole to 0.0008 rad, all in simulation. On the left, part of my anti-windup plot.*
 
 ![Same PID, same clamped actuator: without anti-windup it takes 108 s to come back]({{ '/assets/images/control/control-library/pid_antiwindup.png' | relative_url }})
 

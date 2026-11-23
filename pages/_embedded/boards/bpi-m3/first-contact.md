@@ -3,7 +3,7 @@ layout: default
 title: "First contact: what the vendor image says about eight cores and 2 GHz"
 short_description: "Plugged in a serial adapter, read the old vendor kernel instead of waiting for mainline, then checked FEL"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_opp.png"
+picture: "assets/images/boards/bpi-m3/bpim3_first_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-03: measured on the vendor Ubuntu 16.04 image, read-only"
 index: 1
 publish: true
@@ -17,6 +17,9 @@ tags: [allwinner, arm, bare-metal, linux]
 {: .no_toc }
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
+
+![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_first_cover.jpg' | relative_url }})
+*The result first: all 8 cores online and 11 OPPs up to 2016 MHz, so the 1.8 GHz on the spec sheet isn't the top.*
 
 1. TOC
 {:toc}

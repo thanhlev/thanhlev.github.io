@@ -3,7 +3,7 @@ layout: default
 title: "How the duck learns to walk: no reference motion, 16 rewards"
 short_description: "I read the training code to see where the gait comes from, and found two of my own notes were wrong"
 status: "Done"
-picture: "assets/images/robotics/microduck/training_pipeline.png"
+picture: "assets/images/robotics/microduck/duck_learn_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: read at pinned commits, no training run yet"
 index: 3
 publish: true
@@ -19,6 +19,9 @@ tags: [robotics, simulation, edge-ai, gpu]
 {: .no_toc }
 
 [Back to the Microduck hub](/robotics/microduck/)
+
+![The result first]({{ '/assets/images/robotics/microduck/duck_learn_cover.jpg' | relative_url }})
+*The result first: the walk comes from 16 reward terms and no reference motion. Read from the code, not trained yet; the duck is my MuJoCo render of the open model (Microduck · Pollen Robotics · CC BY-NC-SA 4.0).*
 
 1. TOC
 {:toc}

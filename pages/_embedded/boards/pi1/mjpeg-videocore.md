@@ -3,7 +3,7 @@ layout: default
 title: "Asking the VideoCore to decode my JPEGs, from bare metal"
 short_description: "VCHIQ and MMAL rewritten from Linux's staging driver so a FreeRTOS app can use the GPU firmware's MJPEG decoder"
 status: "Done"
-picture: "assets/images/boards/pi1/pi1_soc.png"
+picture: "assets/images/boards/pi1/pi1_mjpeg_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-26: face live on GPU-decoded MJPEG"
 index: 20
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, gpu, freertos, bare-metal, linux]
 # Asking the VideoCore to decode my JPEGs, from bare metal
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26
+
+![The VideoCore JPEG story in one picture]({{ '/assets/images/boards/pi1/pi1_mjpeg_cover.jpg' | relative_url }})
+*The whole story in one picture: a webcam JPEG decoded on the VideoCore in 5.3 ms from bare metal, 597 frames with 0 decode errors.*
 
 ![Inside the BCM2835: the ARM side and the VideoCore side]({{ '/assets/images/boards/pi1/pi1_soc.png' | relative_url }})
 

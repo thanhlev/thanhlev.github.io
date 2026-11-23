@@ -3,7 +3,7 @@ layout: default
 title: "My own boot0 in NAND block 0: an LED from SRAM, then an app in DRAM"
 short_description: "Replacing Tina's first stage with an eGON image I build with zig, then a 24 KiB SPL that trains the DDR3 itself"
 status: "Done"
-picture: "assets/images/boards/d1-nezha/d1_nand_layout.png"
+picture: "assets/images/boards/d1-nezha/d1_boot0_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-09-28: SPL + DRAM app booted from NAND"
 index: 20
 publish: true
@@ -16,6 +16,9 @@ tags: [allwinner, risc-v, bare-metal, boot, memory, led]
 # My own boot0 in NAND block 0: an LED from SRAM, then an app in DRAM
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-28
+
+![The result first]({{ '/assets/images/boards/d1-nezha/d1_boot0_cover.jpg' | relative_url }})
+*The result first: my code straight from the boot ROM out of NAND, and my SPL training 1 GiB of DDR3 in 51 ms. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![Where my image sits in the first 1 MiB of SPI-NAND]({{ '/assets/images/boards/d1-nezha/d1_nand_layout.png' | relative_url }})
 

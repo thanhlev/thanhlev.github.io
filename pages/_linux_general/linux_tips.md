@@ -3,7 +3,7 @@ layout: default
 title: "Linux Tips & Tricks"
 short_description: "My scratchpad of shell one-liners: fstab, cleanup, time, git, sed, awk, find"
 status: "Done"
-picture: "assets/images/linux_tips.jpg"
+picture: "assets/images/linux_tips_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 2
 publish: true
@@ -12,6 +12,9 @@ tags: [linux, tools]
 
 # Linux Tips & Tricks
 {: .no_toc }
+
+![Linux tips in one picture]({{ '/assets/images/linux_tips_cover.jpg' | relative_url }})
+*Thirteen groups of shell lines I never remember; the fstab block is the one I open most.*
 
 ## Table of contents
 {: .no_toc }

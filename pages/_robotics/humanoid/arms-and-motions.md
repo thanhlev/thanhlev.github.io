@@ -3,7 +3,7 @@ layout: default
 title: "Arms, a dance and a 2 mm jump"
 short_description: "Two 3-joint AX-12A arms, five whole-body motions on the same balance, and servo speed limits that keep the jump honest"
 status: "Done"
-picture: "assets/images/robotics/humanoid/jump.png"
+picture: "assets/images/robotics/humanoid/hum_arms_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-21: arms, motions, skeleton torso"
 index: 3
 publish: true
@@ -16,6 +16,9 @@ tags: [robotics, kinematics, simulation, servo]
 # Arms, a dance and a 2 mm jump
 
 [Back to the humanoid hub]({{ '/robotics/humanoid/' | relative_url }})
+
+![Arms and motions cover: 5 of 5 motions stay up]({{ '/assets/images/robotics/humanoid/hum_arms_cover.jpg' | relative_url }})
+*All five motions stay up in MuJoCo; the jump is 0.08 s in the air with the CoM 2.1 mm up.*
 
 ![The jump: crouch −45 mm, extend, a short flight]({{ '/assets/images/robotics/humanoid/motion_jump.gif' | relative_url }})
 

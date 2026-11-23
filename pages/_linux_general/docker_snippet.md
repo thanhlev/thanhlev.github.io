@@ -3,15 +3,19 @@ layout: default
 title: "Docker Snippet"
 short_description: "Các lệnh Docker thường dùng"
 status: "In Progress"
-picture: "assets/images/docker-banner.png"
+picture: "assets/images/docker_snippet_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
 tags: [linux, docker, tools]
+lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 ---
 
 # Docker Snippet
 {: .no_toc }
+
+![Docker snippet]({{ '/assets/images/docker_snippet_cover.jpg' | relative_url }})
+*Một key trong daemon.json, `data-root`, là đủ để Docker chuyển chỗ lưu sang ổ khác; image cũ thì vẫn nằm lại chỗ cũ.*
 
 ## Situation
 

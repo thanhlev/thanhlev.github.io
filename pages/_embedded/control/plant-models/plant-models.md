@@ -3,7 +3,7 @@ layout: default
 title: "Plant models and fourteen small products"
 short_description: "My act library of plants with the ugly parts switchable (backlash, stiction, delay, heat), and product-sized demos that drive them"
 status: "In Progress"
-picture: "assets/images/control/plant-models/cnc_following_error.png"
+picture: "assets/images/control/plant-models/plant_models_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page, six STAR write-ups, all 14 demos re-run in double and float"
 index: 32
 publish: true
@@ -13,6 +13,9 @@ tags: [simulation, control, motor, cpp, testing]
 ---
 
 # Plant models and fourteen small products
+
+![The plant models in numbers]({{ '/assets/images/control/plant-models/plant_models_cover.jpg' | relative_url }})
+*Fourteen product-shaped demos, all passing in double and float: a CNC axis down to 1.48 µm, an ABS stop of 27.5 m, MPPT at 99.97 %. All in simulation.*
 
 ![CNC axis following error: S-curve only, plus a notch, plus feedforward]({{ '/assets/images/control/plant-models/cnc_following_error.png' | relative_url }})
 

@@ -3,7 +3,7 @@ layout: default
 title: "Disk Partition Tables: MBR & GPT"
 short_description: "MBR byte by byte on a test image, then GPT, the tools, and the layouts I use on boards"
 status: "Done"
-picture: "assets/images/MBR_usecase_partitions.png"
+picture: "assets/images/partition_table_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
@@ -12,6 +12,9 @@ tags: [linux, memory, testing]
 
 # Disk Partition Tables: MBR & GPT
 {: .no_toc }
+
+![MBR and GPT in one picture]({{ '/assets/images/partition_table_cover.jpg' | relative_url }})
+*The 64 bytes at offset 446 of my test image, decoded by hand, say exactly what parted and gdisk say.*
 
 ## Table of contents
 {: .no_toc }

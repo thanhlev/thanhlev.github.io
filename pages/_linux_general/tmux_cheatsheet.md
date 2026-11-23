@@ -3,7 +3,7 @@ layout: default
 title: "Tmux Quick Reference"
 short_description: "The tmux commands I actually use: sessions, panes, send-keys scripting, my tmux.conf"
 status: "Done"
-picture: "assets/images/TMUX-Cheatsheet-Cover-Image.001.jpeg"
+picture: "assets/images/tmux_cheatsheet_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
@@ -12,6 +12,9 @@ tags: [linux, tools]
 
 # Tmux Quick Reference
 {: .no_toc }
+
+![Tmux in one picture]({{ '/assets/images/tmux_cheatsheet_cover.jpg' | relative_url }})
+*Four levels, server to pane, and send-keys to script all of it.*
 
 ## Table of contents
 {: .no_toc }

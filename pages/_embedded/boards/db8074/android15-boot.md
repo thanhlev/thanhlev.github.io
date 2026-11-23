@@ -3,7 +3,7 @@ layout: default
 title: "Android 15 on a board that shipped with Android 4.3"
 short_description: "Building AOSP 15 + kernel 6.6 for the APQ8074, booting it from RAM first, and the long list of things between it and a home screen"
 status: "Done"
-picture: "assets/images/boards/db8074/d8k_l7_launcher.png"
+picture: "assets/images/boards/db8074/d8k_a15_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-16: boots from eMMC by itself, home screen after 66 s"
 index: 1
 publish: true
@@ -17,6 +17,9 @@ tags: [qualcomm, arm, linux, android, boot, memory]
 {: .no_toc }
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
+
+![The result first]({{ '/assets/images/boards/db8074/d8k_a15_cover.jpg' | relative_url }})
+*The result first: Android 15 boots from the eMMC by itself and reaches the home screen in 66 s.*
 
 1. TOC
 {:toc}

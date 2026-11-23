@@ -3,7 +3,7 @@ layout: default
 title: "A face detector on a 2012 Pi: 2.37 s to 43.5 ms on the 12 QPUs"
 short_description: "YuNet from my NanoPi project on the ARM1176, then every convolution moved onto the VideoCore's shader cores"
 status: "Done"
-picture: "assets/images/boards/pi1/pi1_face_ms.png"
+picture: "assets/images/boards/pi1/pi1_face_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-26: 43.5 ms a picture, 12.3 detections/s live"
 index: 30
 publish: true
@@ -18,6 +18,9 @@ tags: [raspberry-pi, arm, edge-ai, gpu, camera]
 # A face detector on a 2012 Pi: 2.37 s to 43.5 ms on the 12 QPUs
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26
+
+![The result first]({{ '/assets/images/boards/pi1/pi1_face_cover.jpg' | relative_url }})
+*The result first: one picture from 2374 ms to 43.5 ms once the 12 QPUs do the work.*
 
 ![One picture through YuNet, step by step]({{ '/assets/images/boards/pi1/pi1_face_ms.png' | relative_url }})
 

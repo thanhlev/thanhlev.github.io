@@ -3,7 +3,7 @@ layout: default
 title: "Same kernel, older board, and no more SD card swaps"
 short_description: "The Zero W's FreeRTOS image on a Pi 1 B, pins per revision, then a loader inside the firmware at 1.5 Mbaud"
 status: "Done"
-picture: "assets/images/boards/pi1/pi1_header.png"
+picture: "assets/images/boards/pi1/pi1_uload_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-26: uload at 1.5 Mbaud on the board"
 index: 10
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, freertos, linux, boot]
 # Same kernel, older board, and no more SD card swaps
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-20 and 2026-10-26
+
+![The UART reload story in one picture]({{ '/assets/images/boards/pi1/pi1_uload_cover.jpg' | relative_url }})
+*The whole story in one picture: a new 921 224-byte build on the Pi 1 B in 6.7 s over the UART, instead of a card swap.*
 
 ![The 26-pin header of my Pi 1 B rev 2, with the PL2303 on pins 8/10]({{ '/assets/images/boards/pi1/pi1_header.png' | relative_url }})
 

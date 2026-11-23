@@ -3,15 +3,19 @@ layout: default
 title: "Udev Quick Reference"
 short_description: "Ghi chép udev của mình: rule nằm đâu, thứ tự, ví dụ tắt touchpad khi cắm chuột, udevadm test"
 status: "Done"
-picture: "assets/images/udev_kernel.png"
+picture: "assets/images/udev_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 4
 publish: true
 tags: [linux, testing]
+lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 ---
 
 # Udev Quick Reference
 {: .no_toc }
+
+![Udev trong một hình]({{ '/assets/images/udev_cover.jpg' | relative_url }})
+*Ba bước từ kernel tới module, và một rule tắt touchpad khi cắm receiver chuột.*
 
 ## Table of contents
 {: .no_toc }

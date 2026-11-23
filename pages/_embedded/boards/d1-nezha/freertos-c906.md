@@ -3,7 +3,7 @@ layout: default
 title: "FreeRTOS on the C906: a 27x cache surprise, and an RTOS that never slept"
 short_description: "The generic RISC-V port in M-mode, loaded over FEL; two things only the measurements caught"
 status: "Done"
-picture: "assets/images/boards/d1-nezha/d1_rtos_switch.png"
+picture: "assets/images/boards/d1-nezha/d1_rtos_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-01: idle hook with wfi by default"
 index: 30
 publish: true
@@ -16,6 +16,9 @@ tags: [allwinner, risc-v, freertos, bare-metal, memory]
 # FreeRTOS on the C906: a 27x cache surprise, and an RTOS that never slept
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-29 and 2026-10-01
+
+![The result first]({{ '/assets/images/boards/d1-nezha/d1_rtos_cover.jpg' | relative_url }})
+*The result first: one task switch went from 19 907 to 734 cycles once the D-cache was on. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![One task switch on the C906, cache off vs on]({{ '/assets/images/boards/d1-nezha/d1_rtos_switch.png' | relative_url }})
 

@@ -2,7 +2,7 @@
 layout: default
 title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]"
 short_description: "My reading notes on the Cortex-M4F core: modes, stacks, registers, memory model, exceptions"
-picture: "assets/images/Cortex_M4F_Register_Set.png"
+picture: "assets/images/ti/TM4C123GH6ZRB/tm4c_core_cover.jpg"   # 2026-11-23 cover, story_cover.py
 status: "Done"
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 10
@@ -16,6 +16,9 @@ tags: [arm, mcu, bare-metal]
 
 # Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]
 {: .no_toc }
+
+![TM4C123 part 2 in one picture]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_core_cover.jpg' | relative_url }})
+*What the core does on an exception: eight words stacked, EXC_RETURN in LR, and tail-chaining skips the pop.*
 
 ## Table of contents
 {: .no_toc }

@@ -3,7 +3,7 @@ layout: default
 title: "Re-partitioning the eMMC without the command that would have erased it"
 short_description: "Android said storage was full. /data was 864 MiB. The fix needed a new GPT, and fastboot was the wrong tool"
 status: "Done"
-picture: "assets/images/boards/db8074/d8k_l26_gpt.png"
+picture: "assets/images/boards/db8074/d8k_emmc_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-18: /data 10 GiB, boot in 22 s"
 index: 4
 publish: true
@@ -17,6 +17,9 @@ tags: [qualcomm, arm, android, memory]
 {: .no_toc }
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
+
+![The result first]({{ '/assets/images/boards/db8074/d8k_emmc_cover.jpg' | relative_url }})
+*The result first: /data from 864 MiB to 10 GiB, and only 15 bytes changed in each GPT copy.*
 
 1. TOC
 {:toc}

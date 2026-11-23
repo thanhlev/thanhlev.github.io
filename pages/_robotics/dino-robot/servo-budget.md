@@ -3,7 +3,7 @@ layout: default
 title: "Seven MX-28 and where they go"
 short_description: "I own fewer strong servos than I thought, so the CAD model decided which joints get them"
 status: "Done"
-picture: "assets/images/robotics/dino-robot/early_variants.png"
+picture: "assets/images/robotics/dino-robot/dino_servo_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-20: loads from the CAD model, revision r6"
 index: 1
 publish: true
@@ -17,6 +17,9 @@ tags: [robotics, servo, cad]
 {: .no_toc }
 
 [Back to the Dino robot hub](/robotics/dino-robot/)
+
+![Servo budget cover: worst static load 30.3 % of MX-28 stall]({{ '/assets/images/robotics/dino-robot/dino_servo_cover.jpg' | relative_url }})
+*The worst static load is the stance knee: 0.759 N·m, 30.3 % of an MX-28's stall.*
 
 1. TOC
 {:toc}

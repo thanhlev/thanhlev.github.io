@@ -3,7 +3,7 @@ layout: default
 title: "XR829 Wi-Fi on mainline Linux 6.8: from 2 to 22 Mbit/s, and the culprit was the console"
 short_description: "A community port of the vendor driver, booted through my own FEL chain, five bugs before a ping, then one printk"
 status: "Done"
-picture: "assets/images/boards/d1-nezha/d1_wifi_mbit.png"
+picture: "assets/images/boards/d1-nezha/d1_wifi_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-01: 22 Mbit/s both ways"
 index: 50
 publish: true
@@ -16,6 +16,9 @@ tags: [allwinner, risc-v, bare-metal, linux, boot, wifi]
 # XR829 Wi-Fi on mainline Linux 6.8: from 2 to 22 Mbit/s, and the culprit was the console
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-10-01
+
+![The result first]({{ '/assets/images/boards/d1-nezha/d1_wifi_cover.jpg' | relative_url }})
+*The result first: TCP from the PC to the board went from 2.1 to 22 Mbit/s once the console went quiet. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![TCP from the PC to the board, before and after]({{ '/assets/images/boards/d1-nezha/d1_wifi_mbit.png' | relative_url }})
 

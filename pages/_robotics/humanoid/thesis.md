@@ -3,7 +3,7 @@ layout: default
 title: "Humanoid Robot: my thesis project"
 short_description: "A small humanoid on SG90 servos: SolidWorks model, DH table, inverse kinematics, then the real thing"
 status: "Done"
-picture: "assets/images/humanoid_robot.jpg"
+picture: "assets/images/robotics/humanoid/hum_thesis_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: moved under Robotics, written as a STAR story"
 index: 0
 publish: true
@@ -19,6 +19,9 @@ tags: [robotics, kinematics, servo, cad]
      YouTube videos as before. The old URL /embedded/humanoid-robot redirects here (jekyll-redirect-from). -->
 
 [Back to the humanoid hub](/robotics/humanoid/)
+
+![Thesis humanoid cover: 17 SG90 servos walking]({{ '/assets/images/robotics/humanoid/hum_thesis_cover.jpg' | relative_url }})
+*17 SG90s walking on the floor from angles I computed myself.*
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
