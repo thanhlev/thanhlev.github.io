@@ -44,4 +44,5 @@ numbers I measured on this board. The old Yocto port is in the list too.
 A few things never got a clean result, so they're not pages yet: the board resets itself after running
 two 1280x720 webcams at once (cause not found), 640x480 webcam frames only reach 21.6 to 23.6 fps
 on the RTOS because my JPEG decoder takes 28 ms each, and the LED ring shows no blue at 3.3 V. The
-Real-ESRGAN x4 upscaler on the NPU is too fresh to write up.
+Real-ESRGAN x4 upscaler runs on the NPU (its numbers are in the NPU post), but it scores below plain bicubic
+on real game frames and hasn't been filmed, so it isn't a story of its own yet.
