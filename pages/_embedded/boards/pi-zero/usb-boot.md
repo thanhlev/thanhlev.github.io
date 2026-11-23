@@ -124,6 +124,10 @@ and don't trust a blinking LED as proof of anything else (see the
 [shell story]({{ '/embedded/boards/pi-zero/rtos-usb-shell' | relative_url }}): my kernel was blinking
 from the wrong address).
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi-zero/pz_usb_boot_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi-zero/pz_usb_boot_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*43 s: the GPU wakes first and asks the PC for files, I try my code on an emulator, then on the board until a firmware version runs it, and the green LED on pin 47 blinks. English on-screen text, background music.*
+
 ## What I'd do next
 
 Find the first firmware release that breaks USB boot. I only know it's after 1.20241126. And get a

@@ -165,6 +165,10 @@ The lesson I keep: the USB power-on through the mailbox takes **527 ms**, so ini
 after the reply. Eight days later I ran the same steps again and got the boot ROM after 5.69 s again
 and a task switch of 11247 ns against 11261.
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi-zero/pz_rtos_shell_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi-zero/pz_rtos_shell_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*53 s: the shell over the USB cable, the port that vanished until I waited 527 ms for the USB power, and five tasks running with the CPU still about 99 % idle. English on-screen text, background music.*
+
 ## What I'd do next
 
 The D-cache and the MMU. 11 us per switch is slow for this core, and I'd bet most of it is uncached

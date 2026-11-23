@@ -106,6 +106,10 @@ new Maskrom device 038: after 20.999683402 s
 CoreMark per MHz stays at 3.83 from 400 to 2000 MHz, which is what you'd hope from a small in-order
 core with the work in L1.
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_freertos_smp_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/rock3a/r3a_freertos_smp_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*The whole story in 89 s: the first line on the UART, the hang I fixed, the clock steps and CoreMark on four cores, 27583 = 3.98× one core at 1799 MHz (the one-core bar in the film, 6926, comes from a different build than the 7489 in the table). Vietnamese on-screen text, background music, no voice-over.*
+
 ## What I'd do next
 
 A switch costs ~2.5 µs in the SMP kernel against 605 ns single-core. About 1.7 µs of that is the lock

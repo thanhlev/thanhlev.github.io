@@ -100,6 +100,14 @@ above, I think most of that gain is not the L2.
 One trap in my own build: ncnn gives the same time at 1 and 4 threads (11.62 / 11.60 ms), because my
 build script turned OpenMP off. Every ncnn number here is one core.
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/db8074/d8k_vision_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/db8074/d8k_vision_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*27 s: SmolVLM-256M looks at four alpacas with guitars and answers "four people holding guitars": three things right, one wrong. Test picture from ggml (MIT). Vietnamese on-screen text, background music.*
+
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/db8074/d8k_sdxs_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/db8074/d8k_sdxs_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*26 s: SDXS drawing the watercolor duck above on the four Krait cores, 5 min 18 s for one picture. Vietnamese on-screen text, background music.*
+
 ## What I'd do next
 
 Rebuild ncnn with OpenMP and re-run. Then the bigger one: an offline Vietnamese assistant

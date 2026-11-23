@@ -86,6 +86,10 @@ the CPU also rounding toward zero, all **192 lanes match bit for bit**. The firm
 QPU" mailbox call doesn't answer on this firmware; queueing through the V3D registers works. The
 image grew to 60 KB with this command in.
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/pi-zero/pz_qpu_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/pi-zero/pz_qpu_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*55 s: how the ARM hands the work to the 12 QPUs through the mailbox, why the results first differed (rounding), and twelve cores finishing in the time of one: 66× the ARM with VFP. English on-screen text, background music.*
+
 ## What I'd do next
 
 This was a toy loop, chosen to be easy to count. The useful version came later on my Pi 1, same chip:

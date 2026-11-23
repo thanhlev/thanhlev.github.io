@@ -128,6 +128,10 @@ And the LED ring on the header got a job: N people in view, N lit spots chasing 
 The story continues in [the hang at 186 s and the L2 cache that was never on](/embedded/boards/nanopi2-fire/hang-and-l2-cache),
 which took YuNet from 42 to 27 ms.
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/nanopi2-fire/np2f_person_detect_169_poster.jpg' | relative_url }}" style="width:100%;max-width:640px"><source src="{{ '/assets/videos/boards/nanopi2-fire/np2f_person_detect_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*Person detection in 99 s: the net as 73 C operations, the same count as on the PC on 17 of 17 pictures, then 642 → 184 ms once the four cores share each layer. Vietnamese on-screen text, no sound.*
+
 ## What I'd do next
 
 The 5 face landmarks are computed but not decoded or drawn yet. And pointwise (16 ms) is now the
