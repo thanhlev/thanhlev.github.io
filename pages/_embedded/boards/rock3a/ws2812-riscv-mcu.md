@@ -113,3 +113,6 @@ that's the LEDs' forward voltage, not the data (green needs ~3 V, blue ~3.1 V pl
 For full colour I'll try a 74AHCT125 level shifter with the ring on 5 V, or the ring on 5 V through a
 diode (~4.3 V). Neither tested yet. The first ring (a WS2812B-V5) only ever got the old timing at 5 V,
 so I still don't know if it's dead.
+
+The same RV32 core later took on a much bigger job: driving the webcam, RGA2 and the NPU by itself
+while all four A55s are powered off, in [The RISC-V MCU keeps watch]({{ '/embedded/boards/rock3a/mcu-camera-wake' | relative_url }}).
