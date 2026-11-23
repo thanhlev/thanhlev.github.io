@@ -3,7 +3,7 @@ layout: default
 title: "A face detector on a 2012 Pi: 2.37 s to 43.5 ms on the 12 QPUs"
 short_description: "YuNet from my NanoPi project on the ARM1176, then every convolution moved onto the VideoCore's shader cores"
 status: "Done"
-picture: "assets/images/boards/pi1/pi1_face_ms.png"
+picture: "assets/images/boards/pi1/pi1_face_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-26: 43.5 ms a picture, 12.3 detections/s live"
 index: 30
 publish: true

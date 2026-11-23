@@ -3,7 +3,7 @@ layout: default
 title: "Face detection on four 2016 Cortex-A9 cores, no NPU, no Linux"
 short_description: "FastestDet and YuNet hand-lowered to C + NEON inside the FreeRTOS webcam firmware, then made fast enough to follow a face"
 status: "Done"
-picture: "assets/images/boards/nanopi2-fire/np2f_detect_pipeline.png"
+picture: "assets/images/boards/nanopi2-fire/np2f_face_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-24: YuNet 42 ms a run on the CPU, bit-identical to the slow version"
 index: 4
 publish: true
