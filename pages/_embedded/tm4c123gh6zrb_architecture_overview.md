@@ -3,7 +3,7 @@ layout: default
 title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]"
 short_description: "My reading notes from TI's datasheet: memory map, SRAM, flash, ROM, the ROM bootloader, EEPROM"
 status: "Done"
-picture: "assets/images/TM4C123GH6ZRB_cpu_block_diagram.png"
+picture: "assets/images/ti/TM4C123GH6ZRB/tm4c_overview_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 9
 publish: true
@@ -15,6 +15,9 @@ tags: [arm, mcu, bare-metal, boot]
 
 # Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]
 {: .no_toc }
+
+![TM4C123 part 1 in one picture]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_overview_cover.jpg' | relative_url }})
+*256 KB of flash, 32 KB of SRAM, and the reset path: a blank chip always lands in the ROM boot loader.*
 
 ## Table of contents
 {: .no_toc }

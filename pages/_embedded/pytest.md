@@ -2,7 +2,7 @@
 layout: default
 title: "[🔥] - Pytest"
 short_description: "Ghi chép học pytest của mình: test file, fixtures, marks, config, plugin"
-picture: "assets/images/pytest_diagram.png"
+picture: "assets/images/pytest_cover.jpg"   # 2026-11-23 cover, story_cover.py
 commit1: "Init document"
 commit2: "Add marks"
 commit3: "Add configuration example"
@@ -19,6 +19,10 @@ tags: [testing, python]
 
 # Pytest và cách sử dụng
 {: .no_toc }
+
+![Pytest tóm tắt]({{ '/assets/images/pytest_cover.jpg' | relative_url }})
+*Ví dụ đầu cho đúng kết quả mình chờ: 1 failed, 1 passed in 0.02s, và fixture là chỗ giữ kết nối tới board.*
+
 ![](../../../assets/images/pytest_diagram.png)
 ## Table of contents
 {: .no_toc }

@@ -3,7 +3,7 @@ layout: default
 title: Tiny210 Information for development
 short_description: "My reading notes from the S5PV210 manual: address map, iROM/BL1/BL2 boot, boot block layout"
 status: "Done"
-picture: "assets/images/tiny210v2_i.jpg"
+picture: "assets/images/tiny210/tiny210_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 8
 publish: true
@@ -15,6 +15,9 @@ tags: [samsung, arm, boot, memory]
 
 # Tiny210 Information for development
 {: .no_toc }
+
+![S5PV210 boot in one picture]({{ '/assets/images/tiny210/tiny210_cover.jpg' | relative_url }})
+*The chain from the manual: iROM loads at most 16 KB of BL1 into iRAM, BL1 loads BL2, BL2 brings up DRAM and the OS.*
 
 ![](../../../assets/images/tiny210/tiny210v2_i.jpg)
 

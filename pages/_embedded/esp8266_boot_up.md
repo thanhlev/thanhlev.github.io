@@ -3,7 +3,7 @@ layout: default
 title: "[🔥] - Boot sequence on Wireless MCU ESP8266"
 short_description: "What runs between power-on and my app on the ESP8266: ROM (BL0), the first-stage bootloader, the partition table"
 status: "Done"
-picture: "assets/images/esp8266_block_diagram.png"
+picture: "assets/images/esp8266_boot_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story; ROM addresses re-checked against the SDK"
 index: 6
 publish: true
@@ -16,6 +16,9 @@ tags: [esp8266, boot, memory, mcu]
 
 # Esp8266 Bootup Sequence
 {: .no_toc }
+
+![ESP8266 boot in one picture]({{ '/assets/images/esp8266_boot_cover.jpg' | relative_url }})
+*The answer of this page: the ROM only knows offset 0; BL1 is the one that reads the partition table at 0x8000.*
 
 ## Table of contents
 {: .no_toc }

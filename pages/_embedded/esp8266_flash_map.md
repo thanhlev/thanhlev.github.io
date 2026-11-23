@@ -3,7 +3,7 @@ layout: default
 title: "[🔥] - ESP8266 Flash Map & Partition Table"
 short_description: "Where the ESP8266 keeps what on its external SPI flash: bootloader, partition table, NVS, OTA slots"
 status: "Done"
-picture: "assets/images/esp8266_block_diagram.png"
+picture: "assets/images/esp8266_flash_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
@@ -15,6 +15,9 @@ tags: [esp8266, boot, memory, mcu]
 
 # ESP8266 Flash Map & Partition Table
 {: .no_toc }
+
+![ESP8266 flash map in one picture]({{ '/assets/images/esp8266_flash_cover.jpg' | relative_url }})
+*The default two-OTA layout: a 3072-byte table at 0x8000, and two 960 KB app slots because of the 1 MB rule.*
 
 ## Table of contents
 {: .no_toc }
