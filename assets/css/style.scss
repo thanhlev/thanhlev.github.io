@@ -310,3 +310,40 @@ main.home { padding: 0; }
 .doctags a { font: 600 11.5px var(--f-mono); color: var(--acc2); border: 1px solid var(--acc2); padding: 2px 8px; text-decoration: none; }
 .doctags a:hover { background: var(--acc2); color: var(--paper); }
 @media (max-width: 1000px) { .tg-bar { position: static; } }
+
+/* ---------- Reading size on document pages (2026-11-23, user «trang doc tôi phải zoom 120% thì mới đọc
+   vừa mắt»): everything inside a post is set ~20 % larger than the first Datasheet sheet, and the text
+   column is widened by the same ratio, so a post at 100 % reads like the old one at 120 %. Home, About,
+   Edge AI and Tags (full-width index pages) keep their sizes. ---------- */
+body.is-doc { font-size: 20px; line-height: 1.7; }
+.is-doc .topbar { font-size: 13.5px; }
+.is-doc .pn { font-size: 13.5px; }
+.is-doc .doctitle { font-size: clamp(40px, 5.4vw, 70px); max-width: 24em; }
+.is-doc .docsub { font-size: 22px; }
+.is-doc .docspec { font-size: 15.5px; max-width: 1100px; }
+.is-doc .docspec td:first-child { font-size: 13px; width: 150px; }
+.is-doc .doctags a { font-size: 13.5px; }
+.is-doc .docbody { grid-template-columns: 270px minmax(0, 1fr); }
+.is-doc .rail-h { font-size: 12.5px; }
+.is-doc #toc-list a { font-size: 15px; }
+.is-doc #toc-list .toc-h3 a { font-size: 14px; }
+.is-doc article.doc { max-width: 1180px; }
+.is-doc article.doc h1 { font-size: 42px; }
+.is-doc article.doc h2 { font-size: 36px; }
+.is-doc article.doc h2::before { font-size: 15px; }
+.is-doc article.doc h3 { font-size: 26px; }
+.is-doc article.doc h4 { font-size: 21px; }
+.is-doc article.doc table { font-size: 17.5px; }
+.is-doc article.doc th { font-size: 13.5px; }
+.is-doc article.doc code { font-size: 0.86em; }
+.is-doc article.doc pre, .is-doc article.doc .highlight pre { font-size: 16px; }
+.is-doc article.doc img + em, .is-doc article.doc p > em:only-child, .is-doc article.doc figcaption { font-size: 15.5px; }
+.is-doc article.doc .danger, .is-doc article.doc .success, .is-doc article.doc .info, .is-doc article.doc .warning { font-size: 18px; }
+.is-doc article.doc .project_table td strong { font-size: 21px; }
+.is-doc article.doc .article-description { font-size: 17px; }
+.is-doc article.doc img { max-height: 740px; }
+.is-doc .foot { font-size: 13.5px; }
+@media (max-width: 1000px) { body.is-doc { font-size: 18px; } .is-doc article.doc h2 { font-size: 30px; } }
+/* paragraphs stop at ~75 characters a line at 20 px (comfortable reading measure); pictures, code and
+   tables keep the full 1180 px column. 2026-11-23, same change as above. */
+.is-doc article.doc > p, .is-doc article.doc > ul, .is-doc article.doc > ol, .is-doc article.doc > blockquote { max-width: 44em; }
