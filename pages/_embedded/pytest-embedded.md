@@ -9,6 +9,7 @@ status: "Done"
 index: 4
 publish: true
 tags: [esp32, testing, python, mcu]
+lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

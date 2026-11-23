@@ -8,6 +8,7 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
 tags: [linux, tools]
+lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 ---
 
 # Programming Language snippets
