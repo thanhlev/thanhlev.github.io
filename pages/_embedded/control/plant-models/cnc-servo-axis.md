@@ -3,7 +3,7 @@ layout: default
 title: "CNC axis: 264 mm to 1.5 µm with the same gains"
 short_description: "A ballscrew axis with a 220 Hz resonance: profile, prewarped notch, feedforward, and a gain margin that was negative all along"
 status: "Done"
-picture: "assets/images/control/plant-models/cnc_following_error.png"
+picture: "assets/images/control/plant-models/cnc_servo_axis_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 2
 publish: true
@@ -16,6 +16,9 @@ tags: [motor, servo, control, simulation, cpp]
 # CNC axis: 264 mm to 1.5 µm with the same gains
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/plant-models/cnc_servo_axis_cover.jpg' | relative_url }})
+*The result first: peak following error from 264 mm down to 1.48 µm with the same gains, in simulation.*
 
 ![Following error: profile only (red), plus notch (orange), plus feedforward (blue)]({{ '/assets/images/control/plant-models/cnc_following_error.png' | relative_url }})
 

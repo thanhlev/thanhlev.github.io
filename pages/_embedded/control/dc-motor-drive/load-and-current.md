@@ -3,7 +3,7 @@ layout: default
 title: "A load step, a disturbance observer, and a current sensor that can't tell direction"
 short_description: "What a disturbance observer buys (and costs) under a 0.02 N·m step, and running the inner loop on a magnitude-only current signal"
 status: "Done"
-picture: "assets/images/control/dc-motor-drive/dcm_loadstep_speed.png"
+picture: "assets/images/control/dc-motor-drive/load_and_current_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 2
 publish: true
@@ -16,6 +16,9 @@ tags: [motor, control, sensor, simulation, cpp]
 # A load step, a disturbance observer, and a current sensor that can't tell direction
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/dc-motor-drive/load_and_current_cover.jpg' | relative_url }})
+*The result first: with the observer the load step costs 1.51 rad/s instead of 2.49 and recovers in 3.1 ms instead of 18.0.*
 
 ![Speed at 200 rad/s when 0.02 N·m lands at 0.5 s: PI alone vs with the observer]({{ '/assets/images/control/dc-motor-drive/dcm_loadstep_speed.png' | relative_url }})
 

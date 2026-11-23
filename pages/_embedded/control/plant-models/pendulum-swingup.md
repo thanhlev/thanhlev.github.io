@@ -3,7 +3,7 @@ layout: default
 title: "Cart-pole swing-up: energy pump, then a hand-over to LQR"
 short_description: "Why one controller isn't enough, and the catch condition people forget (the rate, not the angle)"
 status: "Done"
-picture: "assets/images/control/plant-models/swingup_angle.png"
+picture: "assets/images/control/plant-models/pendulum_swingup_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 1
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, robotics, cpp]
 # Cart-pole swing-up: energy pump, then a hand-over to LQR
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/plant-models/pendulum_swingup_cover.jpg' | relative_url }})
+*The result first: upright 1.98 s after release with 4.63 N of the 12 N belt; LQR alone never gets closer than 2.77 rad.*
 
 ![Pole angle: pumping from hanging, the hand-over at 1.98 s, then LQR holds it]({{ '/assets/images/control/plant-models/swingup_angle.png' | relative_url }})
 

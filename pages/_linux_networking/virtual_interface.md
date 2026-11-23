@@ -3,7 +3,7 @@ layout: default
 title: "Virtual Interfaces in Linux"
 short_description: "Bridge, VLAN, macvlan, ipvlan, veth, TUN/TAP, tunnels, VXLAN, WireGuard, dummy, bond: what each is and the ip commands"
 status: "Done"
-picture: "assets/images/4port_ethernet_card.webp"
+picture: "assets/images/virtual_interface_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
@@ -12,6 +12,9 @@ tags: [networking, linux]
 
 # Virtual Interfaces in Linux
 {: .no_toc }
+
+![Virtual interfaces in one picture]({{ '/assets/images/virtual_interface_cover.jpg' | relative_url }})
+*Twelve interface types, each with its ip recipe; two veth pairs and a bridge are what Docker's bridge driver builds.*
 
 ## Table of contents
 {: .no_toc }

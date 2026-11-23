@@ -3,7 +3,7 @@ layout: default
 title: "[🔥] - Linux Packet Filtering"
 short_description: "Where a packet goes inside the kernel: the five chains, the tables in each, conntrack, iptables and nftables"
 status: "In progress"
-picture: "assets/images/traversing_table_chain.png"
+picture: "assets/images/linux_table_chain_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
@@ -12,6 +12,9 @@ tags: [networking, linux]
 
 # Linux Packet Filtering
 {: .no_toc }
+
+![Netfilter in one picture]({{ '/assets/images/linux_table_chain_cover.jpg' | relative_url }})
+*Five chains, five tables in a fixed order: the map of where a packet goes inside the kernel.*
 
 ## Table of contents
 {: .no_toc }

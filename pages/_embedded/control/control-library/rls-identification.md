@@ -3,7 +3,7 @@ layout: default
 title: "RLS: finding the inertia the datasheet doesn't know"
 short_description: "Recursive least squares on a servo axis (physics) and on an unstable cart-pole in closed loop (state-space), and the two ways it lies"
 status: "Done"
-picture: "assets/images/control/control-library/rls_motor_inertia.png"
+picture: "assets/images/control/control-library/rls_identification_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: both demos re-run in double and float"
 index: 3
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, motor, cpp]
 # RLS: finding the inertia the datasheet doesn't know
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/control-library/rls_identification_cover.jpg' | relative_url }})
+*The result first: RLS finds the servo inertia to 5.3 % from 12 s of ordinary motion, where the datasheet was 10× off.*
 
 ![The inertia estimate leaving the datasheet value behind in about two seconds]({{ '/assets/images/control/control-library/rls_motor_inertia.png' | relative_url }})
 

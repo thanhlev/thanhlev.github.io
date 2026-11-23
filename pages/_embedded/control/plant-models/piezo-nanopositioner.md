@@ -3,7 +3,7 @@ layout: default
 title: "Piezo stage: learning control vs an inverse model, and the answer I didn't expect"
 short_description: "13 % hysteresis on a sub-nanometre actuator; iterative learning with no model against a closed-form Prandtl-Ishlinskii inverse"
 status: "Done"
-picture: "assets/images/control/plant-models/piezo_learning.png"
+picture: "assets/images/control/plant-models/piezo_nanopositioner_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 5
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, cpp]
 # Piezo stage: learning control vs an inverse model, and the answer I didn't expect
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/plant-models/piezo_nanopositioner_cover.jpg' | relative_url }})
+*The result first: 118 nm RMS per scan line with the inverse model, 168 nm with learning, 567 nm open loop.*
 
 ![Learning pass by pass: Q-filter at 0.08 converges, the same gain at 0.30 diverges]({{ '/assets/images/control/plant-models/piezo_learning.png' | relative_url }})
 

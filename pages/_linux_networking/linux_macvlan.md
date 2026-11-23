@@ -3,7 +3,7 @@ layout: default
 title: "Linux MacVLAN"
 short_description: "Sub-interfaces with their own MAC: the four modes, and why the host can't reach them"
 status: "Done"
-picture: "assets/images/linux-macvlan.png"
+picture: "assets/images/linux_macvlan_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
@@ -12,6 +12,9 @@ tags: [networking, linux]
 
 # Linux MacVLAN interface
 {: .no_toc }
+
+![MACVLAN in one picture]({{ '/assets/images/linux_macvlan_cover.jpg' | relative_url }})
+*Four modes, and the one lookup that explains why the host can't reach its own macvlans.*
 
 ## Table of contents
 {: .no_toc }

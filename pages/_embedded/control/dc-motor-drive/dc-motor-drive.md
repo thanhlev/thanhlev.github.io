@@ -3,7 +3,7 @@ layout: default
 title: "DC motor drive on a simulated bench"
 short_description: "A brushed-motor drive stack (identify, tune, home, protect, fall back) run against a simulated H-bridge and encoder, six scenarios that assert their own numbers"
 status: "In Progress"
-picture: "assets/images/control/dc-motor-drive/dcm_bringup_overview.png"
+picture: "assets/images/control/dc-motor-drive/dc_motor_drive_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page, three STAR write-ups, re-run in double and float"
 index: 31
 publish: true
@@ -13,6 +13,9 @@ tags: [motor, control, simulation, cpp, testing]
 ---
 
 # DC motor drive on a simulated bench
+
+![The DC motor drive in numbers]({{ '/assets/images/control/dc-motor-drive/dc_motor_drive_cover.jpg' | relative_url }})
+*Identify, home, protect, fall back: six parameters found within 0.7 %, a chip fault handled in 1.05 ms, back-EMF speed 5.0 ms after the encoder dies. All on the simulated bench.*
 
 ![Bring-up from power-on: identification, hard-stop homing, then the first 30 rad move]({{ '/assets/images/control/dc-motor-drive/dcm_bringup_overview.png' | relative_url }})
 

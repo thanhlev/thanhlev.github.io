@@ -3,7 +3,7 @@ layout: default
 title: "Commissioning from a datasheet that's 50 % wrong"
 short_description: "Enable, identify R, L, Kt, J, b and friction on the drive itself, re-tune from that, home on a hard stop, then move 30 rad"
 status: "Done"
-picture: "assets/images/control/dc-motor-drive/dcm_bringup_move.png"
+picture: "assets/images/control/dc-motor-drive/commissioning_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 1
 publish: true
@@ -16,6 +16,9 @@ tags: [motor, control, simulation, cpp]
 # Commissioning from a datasheet that's 50 % wrong
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/dc-motor-drive/commissioning_cover.jpg' | relative_url }})
+*The result first: all six motor parameters within 0.7 % in 4.9 s, from a datasheet that was off by up to 50 %.*
 
 ![The 30 rad move after homing: profile and true shaft]({{ '/assets/images/control/dc-motor-drive/dcm_bringup_move.png' | relative_url }})
 

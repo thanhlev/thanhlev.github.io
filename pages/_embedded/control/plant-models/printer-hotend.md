@@ -3,7 +3,7 @@ layout: default
 title: "3D printer hotend: one step test, SIMC gains, and the thermistor that falls out"
 short_description: "Fit gain, time constant and dead time from one step, compute a PI from them, and catch thermal runaway by watching response, not temperature"
 status: "Done"
-picture: "assets/images/control/plant-models/hotend_runaway.png"
+picture: "assets/images/control/plant-models/printer_hotend_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 4
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, sensor, cpp]
 # 3D printer hotend: one step test, SIMC gains, and the thermistor that falls out
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/plant-models/printer_hotend_cover.jpg' | relative_url }})
+*The result first: 5.1 % overshoot from one step test, and the fallen-out thermistor is caught in 20.0 s at 231 °C.*
 
 ![The thermistor falls out: it reads 25 °C forever while the block keeps heating, and the monitor trips at 20 s]({{ '/assets/images/control/plant-models/hotend_runaway.png' | relative_url }})
 

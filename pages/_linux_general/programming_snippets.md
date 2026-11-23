@@ -3,7 +3,7 @@ layout: default
 title: "Programming Language snippets"
 short_description: "Các snippet code hay dùng"
 status: "In Progress"
-picture: "assets/images/C_and_Python_Logos.png"
+picture: "assets/images/programming_snippets_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
@@ -12,6 +12,9 @@ tags: [linux, tools]
 
 # Programming Language snippets
 {: .no_toc }
+
+![Programming snippets]({{ '/assets/images/programming_snippets_cover.jpg' | relative_url }})
+*Mười đoạn Python, mỗi đoạn một tiêu đề, Ctrl+F là ra.*
 
 ## Table of contents
 {: .no_toc }

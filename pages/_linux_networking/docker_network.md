@@ -3,7 +3,7 @@ layout: default
 title: "Docker Networking"
 short_description: "What each Docker network driver builds out of bridges, veth, macvlan and iptables"
 status: "Done"
-picture: "assets/images/docker_network.png"
+picture: "assets/images/docker_network_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: rewritten as a STAR story"
 index: 6
 publish: true
@@ -12,6 +12,9 @@ tags: [networking, linux, docker]
 
 # Docker Networking: what each driver really builds
 {: .no_toc }
+
+![Docker networking in one picture]({{ '/assets/images/docker_network_cover.jpg' | relative_url }})
+*Six drivers, all built from bridges, veth, macvlan and iptables rules you can look at.*
 
 ## Table of contents
 {: .no_toc }

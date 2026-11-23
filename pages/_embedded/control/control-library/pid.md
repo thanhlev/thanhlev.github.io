@@ -3,7 +3,7 @@ layout: default
 title: "PID: 108 s of windup, and gains from a relay"
 short_description: "Seven configurations of one PID on one clamped plant, then a relay experiment that measures Tu and Ku instead of guessing"
 status: "Done"
-picture: "assets/images/control/control-library/pid_antiwindup.png"
+picture: "assets/images/control/control-library/pid_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run, same numbers in double and float"
 index: 1
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, cpp]
 # PID: 108 s of windup, and gains from a relay
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/control-library/pid_cover.jpg' | relative_url }})
+*The result first: back-calculation brings the loop back from saturation in 0.77 s instead of 108.55 s, same gains, in simulation.*
 
 ![Limits only (red) vs limits plus back-calculation (blue)]({{ '/assets/images/control/control-library/pid_antiwindup.png' | relative_url }})
 

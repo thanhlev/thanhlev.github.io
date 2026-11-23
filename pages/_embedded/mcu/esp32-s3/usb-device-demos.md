@@ -3,7 +3,7 @@ layout: default
 title: "Every TinyUSB device demo on the S3, checked from the PC side"
 short_description: "Seven ESP-IDF device examples plus the serial/JTAG echo, judged by what Linux enumerated, and the board that locked itself out of its own flashing port"
 status: "Done"
-picture: "assets/images/mcu/esp32-s3/usb_two_blocks.png"
+picture: "assets/images/mcu/esp32-s3/usb_device_demos_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-08: eight demos confirmed on hardware, six host demos built only"
 index: 2
 publish: true
@@ -16,6 +16,9 @@ result: "8 of 14 USB demos confirmed by enumeration: CDC, storage, NCM, MIDI, co
 # Every TinyUSB device demo on the S3, checked from the PC side
 
 [Back to the ESP32-S3 hub]({{ '/embedded/mcu/esp32-s3/' | relative_url }})
+
+![The result first]({{ '/assets/images/mcu/esp32-s3/usb_device_demos_cover.jpg' | relative_url }})
+*The result first: 8 of the 14 USB demos confirmed by what Linux bound to them: CDC, storage, NCM, MIDI, composite, HID.*
 
 ![The two USB blocks of the ESP32-S3]({{ '/assets/images/mcu/esp32-s3/usb_two_blocks.png' | relative_url }})
 

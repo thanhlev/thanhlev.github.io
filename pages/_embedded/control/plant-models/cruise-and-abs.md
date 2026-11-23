@@ -3,7 +3,7 @@ layout: default
 title: "Cruise control on a hill, and an ABS that can't be a PID"
 short_description: "Where the speed loss on a 4 % grade actually goes, and a brake plant whose gain flips sign at the friction peak"
 status: "Done"
-picture: "assets/images/control/plant-models/ev_speed.png"
+picture: "assets/images/control/plant-models/cruise_and_abs_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run in double and float"
 index: 3
 publish: true
@@ -16,6 +16,9 @@ tags: [control, simulation, cpp]
 # Cruise control on a hill, and an ABS that can't be a PID
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
+
+![The result first]({{ '/assets/images/control/plant-models/cruise_and_abs_cover.jpg' | relative_url }})
+*The result first: slip control stops from 90 km/h in 27.5 m instead of 41.3 m locked, and cruise control loses only 0.18 km/h on a 4 % grade.*
 
 ![Speed against the 100 km/h target over the hills: P, PI, PI + grade feedforward, electric drivetrain]({{ '/assets/images/control/plant-models/ev_speed.png' | relative_url }})
 
