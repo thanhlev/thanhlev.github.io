@@ -3,7 +3,7 @@ layout: default
 title: "Webcam to NPU to HDMI, with no Linux on the chip"
 short_description: "Driving the RK3568 NPU, my own xHCI/UVC host and a JPEG decoder from FreeRTOS, RetinaFace boxes on HDMI"
 status: "Done"
-picture: "assets/images/boards/rock3a/rtos_face_cores.png"
+picture: "assets/images/boards/rock3a/rtos_face_cover.jpg"   # 2026-11-23 cover (user: make it more eye-catching)
 latest_release: "2026-11-01: live webcam faces on HDMI from FreeRTOS"
 index: 13
 publish: true
