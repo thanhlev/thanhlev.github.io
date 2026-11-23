@@ -3,7 +3,7 @@ layout: default
 title: "Hokuyo URG-04LX lidar (2D, 240°)"
 short_description: "An old USB laser scanner: talking SCIP 2.0 by hand, then fixing the demos that ran on it"
 status: "In Progress"
-picture: "assets/images/robotics/hokuyo-lidar/scan_gd.png"
+picture: "assets/images/robotics/hokuyo-lidar/hok_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with two STAR write-ups"
 index: 5
 publish: true
@@ -13,6 +13,9 @@ tags: [robotics, lidar, usb]
 ---
 
 # Hokuyo URG-04LX lidar (2D, 240°)
+
+![Hokuyo cover: 682 steps per scan, 0 bad lines]({{ '/assets/images/robotics/hokuyo-lidar/hok_hub_cover.jpg' | relative_url }})
+*682 steps per scan, 0 bad checksum lines, a frame every 100.6 ms.*
 
 ![One GD scan from my desk, plotted from the raw distances]({{ '/assets/images/robotics/hokuyo-lidar/scan_gd.png' | relative_url }})
 

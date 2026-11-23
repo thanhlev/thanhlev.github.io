@@ -3,7 +3,7 @@ layout: default
 title: "A head that turns and nods at the same time"
 short_description: "At 20° of yaw the skull hit the neck after 2.8° of nod; a trim and two notches fixed it"
 status: "Done"
-picture: "assets/images/robotics/dino-robot/sail_b_r4_iso.png"
+picture: "assets/images/robotics/dino-robot/dino_head_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-19: head sweep on the CAD model, revision r4"
 index: 2
 publish: true
@@ -17,6 +17,9 @@ tags: [robotics, servo]
 {: .no_toc }
 
 [Back to the Dino robot hub](/robotics/dino-robot/)
+
+![Head cover: 18.05° nose down at every yaw]({{ '/assets/images/robotics/dino-robot/dino_head_cover.jpg' | relative_url }})
+*At every yaw from −20° to +20° the head now nods 18.05° down and 8.20° up, with 0.50 mm to spare.*
 
 1. TOC
 {:toc}

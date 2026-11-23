@@ -3,7 +3,7 @@ layout: default
 title: "An ankle roll servo made it worse"
 short_description: "I had three spare AX-12A and a robot that rocks 10° per step; in MuJoCo the extra joint lost to a smarter turn"
 status: "Done"
-picture: "assets/images/robotics/dino-robot/ankle_roll_vs_pair_turn.png"
+picture: "assets/images/robotics/dino-robot/dino_ankle_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: simulation-only study, CAD unchanged"
 index: 4
 publish: true
@@ -17,6 +17,9 @@ tags: [robotics, servo, simulation]
 {: .no_toc }
 
 [Back to the Dino robot hub](/robotics/dino-robot/)
+
+![Ankle roll cover: 0 of 30 robots finish with the roll]({{ '/assets/images/robotics/dino-robot/dino_ankle_cover.jpg' | relative_url }})
+*With the ankle roll 0 of 30 robots finish; the pair turn, with no new servo, gets 28 of 30.*
 
 1. TOC
 {:toc}

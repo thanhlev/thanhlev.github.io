@@ -3,7 +3,7 @@ layout: default
 title: "Dino robot (13 DYNAMIXEL): a two-legged dinosaur, so far in CAD and MuJoCo"
 short_description: "My own biped dinosaur on the servos I already own: drawn in CadQuery, loads checked on the model, walking in MuJoCo"
 status: "In Progress"
-picture: "assets/images/robotics/dino-robot/mujoco_roar.png"
+picture: "assets/images/robotics/dino-robot/dino_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page and four STAR write-ups"
 index: 1
 publish: true
@@ -14,6 +14,9 @@ tags: [robotics, servo, simulation, cad]
 
 # Dino robot
 {: .no_toc }
+
+![Dino robot cover: 30 of 30 perturbed robots survive in MuJoCo]({{ '/assets/images/robotics/dino-robot/dino_hub_cover.jpg' | relative_url }})
+*30 of 30 perturbed robots finish the full sequence in MuJoCo. Nothing is printed yet.*
 
 ![The dinosaur in MuJoCo, mid-roar, with the CAD shells drawn on the simulated links](/assets/images/robotics/dino-robot/mujoco_roar.png)
 *MuJoCo, November 2026: the simulated robot with the CAD shells drawn over its links. No part of it is printed yet.*

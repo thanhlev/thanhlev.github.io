@@ -3,7 +3,7 @@ layout: default
 title: "Leg IK that misses by 166 mm, and the two sign errors behind it"
 short_description: "Swapping the old NumPy solver for my C++ kinematics library, then finding the bug wasn't in the IK at all"
 status: "Done"
-picture: "assets/images/robotics/humanoid/ik.png"
+picture: "assets/images/robotics/humanoid/hum_ik_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-20: gait fixed, 600/600 frames within 1 µm"
 index: 1
 publish: true
@@ -16,6 +16,9 @@ tags: [robotics, kinematics]
 # Leg IK that misses by 166 mm, and the two sign errors behind it
 
 [Back to the humanoid hub]({{ '/robotics/humanoid/' | relative_url }})
+
+![Leg IK cover: 600 of 600 targets within 1 µm]({{ '/assets/images/robotics/humanoid/hum_ik_cover.jpg' | relative_url }})
+*600 of 600 gait targets within 1 µm (was 166 mm median), and the whole walk solves in 0.28 s.*
 
 ![One IK solve on the left leg in MuJoCo]({{ '/assets/images/robotics/humanoid/sim_ik.gif' | relative_url }})
 

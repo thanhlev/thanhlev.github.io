@@ -3,7 +3,7 @@ layout: default
 title: "A safety zone that was always CLEAR, and an intrusion alarm that never stopped"
 short_description: "Running my eight urg_cpp demos on the sensor for the first time: a step-versus-index bug and mixed pixels"
 status: "Done"
-picture: "assets/images/robotics/hokuyo-lidar/scan_gd.png"
+picture: "assets/images/robotics/hokuyo-lidar/hok_bugs_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-09-27: step-to-index fix, mixed-pixel filter in scan_diff"
 index: 2
 publish: true
@@ -16,6 +16,9 @@ tags: [robotics, lidar]
 # A safety zone that was always CLEAR, and an intrusion alarm that never stopped
 
 [Back to the Hokuyo hub]({{ '/robotics/hokuyo-lidar/' | relative_url }})
+
+![Demo bugs cover: 0 false alarms in 280 frames]({{ '/assets/images/robotics/hokuyo-lidar/hok_bugs_cover.jpg' | relative_url }})
+*0 false alarms in 280 frames, where the old scan_diff fired on every one.*
 
 ## Situation
 

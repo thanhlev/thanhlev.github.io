@@ -3,7 +3,7 @@ layout: default
 title: "It walked in MuJoCo, then I made the sim honest"
 short_description: "A model built from the CAD walked 1.2 m and roared on the first try; with real friction and torque limits it fell 8 times in 10"
 status: "Done"
-picture: "assets/images/robotics/dino-robot/r2_sequence_2of10.png"
+picture: "assets/images/robotics/dino-robot/dino_walk_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: all numbers in MuJoCo, nothing on hardware"
 index: 3
 publish: true
@@ -17,6 +17,9 @@ tags: [robotics, servo, simulation, cad]
 {: .no_toc }
 
 [Back to the Dino robot hub](/robotics/dino-robot/)
+
+![MuJoCo walking cover: 30 of 30 robots finish]({{ '/assets/images/robotics/dino-robot/dino_walk_cover.jpg' | relative_url }})
+*From 0 of 5 to 30 of 30 perturbed robots through the full sequence, walking at 40.7 mm/s.*
 
 1. TOC
 {:toc}

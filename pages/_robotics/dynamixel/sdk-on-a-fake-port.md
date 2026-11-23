@@ -3,7 +3,7 @@ layout: default
 title: "Two bugs in the DynamixelSDK Python package, found with no servo plugged in"
 short_description: "A fake serial port under the real SDK: every e-manual example matches, byte stuffing silently doesn't happen, and Bulk Read on Protocol 1.0 crashes"
 status: "Done"
-picture: "assets/images/robotics/dynamixel/write_sequence.png"
+picture: "assets/images/robotics/dynamixel/dxmx_sdk_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: re-run on the pinned SDK commit"
 index: 1
 publish: true
@@ -16,6 +16,9 @@ tags: [robotics, servo, python]
 # Two bugs in the DynamixelSDK Python package, found with no servo plugged in
 
 [Back to the DYNAMIXEL hub]({{ '/robotics/dynamixel/' | relative_url }})
+
+![SDK bugs cover: LEN 9, not 10]({{ '/assets/images/robotics/dynamixel/dxmx_sdk_cover.jpg' | relative_url }})
+*A write of FF FF FD goes out unstuffed (LEN 9, not 10), and GroupBulkRead on Protocol 1.0 raises TypeError.*
 
 ## Situation
 

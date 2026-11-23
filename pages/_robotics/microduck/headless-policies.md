@@ -3,7 +3,7 @@ layout: default
 title: "Running the official policies with no window"
 short_description: "Their play script wants a viewer and a keyboard; three swapped names and a fake clock made it run headless on a CPU"
 status: "Done"
-picture: "assets/images/robotics/microduck/rollouts_sheet.png"
+picture: "assets/images/robotics/microduck/duck_headless_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-06: four runs in CPU MuJoCo"
 index: 1
 publish: true
@@ -19,6 +19,9 @@ tags: [robotics, simulation, edge-ai]
 {: .no_toc }
 
 [Back to the Microduck hub](/robotics/microduck/)
+
+![Headless policies cover: 10 s simulated in 8.54 s]({{ '/assets/images/robotics/microduck/duck_headless_cover.jpg' | relative_url }})
+*10 s of simulation in 8.54 s on a laptop CPU, 0 falls in 4 runs, but only 0.09 to 0.11 of 0.3 m/s.*
 
 1. TOC
 {:toc}

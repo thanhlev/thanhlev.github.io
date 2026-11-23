@@ -3,7 +3,7 @@ layout: default
 title: "Walking in MuJoCo: two feet in one place, and the one feedback that paid"
 short_description: "An online LIPM walker at 50 Hz, a simulation bug that faked every torque number, and capture steps that made things worse"
 status: "Done"
-picture: "assets/images/robotics/humanoid/walk_push.png"
+picture: "assets/images/robotics/humanoid/hum_walk_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-21: re-measured with servo speed limits and the skeleton torso"
 index: 2
 publish: true
@@ -16,6 +16,9 @@ tags: [robotics, kinematics, simulation]
 # Walking in MuJoCo: two feet in one place, and the one feedback that paid
 
 [Back to the humanoid hub]({{ '/robotics/humanoid/' | relative_url }})
+
+![Walking cover: IMU feedback adds 24 % push margin]({{ '/assets/images/robotics/humanoid/hum_walk_cover.jpg' | relative_url }})
+*In MuJoCo, IMU feedback lifts the push margin from 1075 to 1338 mN·s (+24 %).*
 
 ![Same 175 mN·s sideways push: open loop falls at 3.14 s, IMU feedback stays up]({{ '/assets/images/robotics/humanoid/walk_push.gif' | relative_url }})
 
