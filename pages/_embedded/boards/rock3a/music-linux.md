@@ -12,7 +12,7 @@ board_parent: rock3a
 result: "1.44 ms per YAMNet window on the NPU at 900 MHz (Android: 2.05 ms), 32x faster than one CPU thread, piano, rock and speech all right"
 edge_ai: true   # listed on /edge-ai/
 edge_ai_index: 9
-tags: [npu]
+tags: [rockchip, arm, npu, edge-ai, linux]
 ---
 
 # The board that names the music it plays, now on Linux
