@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/intel-edison/zephyr-from-ram
 board_parent: intel-edison
 result: "Hello World 0.05 s after go; thread period 0.6038 s vs 0.6039 s expected"
+tags: [intel, x86, boot, memory]
 ---
 
 # Zephyr on the Edison: a 15 KB image over YMODEM and one wrong reg-shift

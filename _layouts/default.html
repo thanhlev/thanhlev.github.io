@@ -32,16 +32,20 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
     {% include head-custom.html %}
   </head>
 
-  {% assign is_home = false %}{% if page.url == "/" %}{% assign is_home = true %}{% endif %}
+  {% comment %} `wide: true` in front matter (About, 2026-11-22) = full-width page like home: no doc header, no contents rail. {% endcomment %}
+  {% assign is_home = false %}{% if page.url == "/" or page.wide %}{% assign is_home = true %}{% endif %}
   <body class="{% if is_home %}is-home{% else %}is-doc{% endif %}">
 
     <header class="topbar">
       <a href="{{ '/' | relative_url }}" class="brand"><b>Thanh Le</b> <span>/ bench notes</span></a>
       <nav class="topnav">
         <a href="{{ '/#boards' | relative_url }}">Boards</a>
+        <a href="{{ '/edge-ai/' | relative_url }}" {% if page.url == "/edge-ai/" %}class="active"{% endif %}>Edge AI</a>
+        <a href="{{ '/#robotics' | relative_url }}">Robotics</a>
         <a href="{{ '/#embedded-systems' | relative_url }}">Embedded</a>
         <a href="{{ '/#linux-networking' | relative_url }}">Networking</a>
         <a href="{{ '/#linux-general' | relative_url }}">Linux</a>
+        <a href="{{ '/tags/' | relative_url }}" {% if page.url == "/tags/" %}class="active"{% endif %}>Tags</a>
         <a href="{{ '/about/' | relative_url }}" {% if page.url == "/about/" %}class="active"{% endif %}>About</a>
         <a href="https://github.com/thanhlev" target="_blank" rel="noopener">GitHub</a>
         <button class="theme-toggle" aria-label="Toggle dark mode"><span class="tt-l">Dark</span><span class="tt-d">Light</span></button>
@@ -57,15 +61,17 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
       {% assign coll = page.collection | default: "page" | replace: "_", " " %}
       <section class="dochead">
         <div class="pn">
-          {{ coll | upcase }}{% if page.board_parent %} · BOARD {{ page.board_parent | upcase }}{% endif %}{% if page.board_hub %} · BOARD HUB{% endif %}{% if page.status %} · {{ page.status | upcase }}{% endif %}
+          {{ coll | upcase }}{% if page.board_parent %} · {% if page.collection == "robotics" %}ROBOT{% elsif page.path contains "/boards/" %}BOARD{% else %}SERIES{% endif %} {{ page.board_parent | upcase }}{% endif %}{% if page.board_hub %} · {% if page.collection == "robotics" %}ROBOT{% else %}BOARD{% endif %} HUB{% endif %}{% if page.status %} · {{ page.status | upcase }}{% endif %}
         </div>
         <h1 class="doctitle">{{ page.title | remove: "[🔥] - " }}</h1>
         {% if page.short_description %}<p class="docsub">{{ page.short_description }}</p>{% endif %}
+        {% comment %} 2026-11-22: tag chips, each opens /tags/ filtered on that tag. {% endcomment %}
+        {% if page.tags.size > 0 %}<div class="doctags">{% for tg in page.tags %}<a href="{{ '/tags/#' | append: tg | relative_url }}">#{{ tg }}</a>{% endfor %}</div>{% endif %}
         {% if page.result or page.latest_release %}
         <table class="docspec">
           {% if page.result %}<tr><td>Result</td><td>{{ page.result }}</td></tr>{% endif %}
           {% if page.latest_release %}<tr><td>Last change</td><td>{{ page.latest_release }}</td></tr>{% endif %}
-          {% if page.board_parent %}<tr><td>Board</td><td><a href="{{ '/embedded/boards/' | append: page.board_parent | append: '/' | relative_url }}">all stories on this board →</a></td></tr>{% endif %}
+          {% if page.board_parent %}{% comment %} 2026-11-22: the parent hub is looked up (same collection, file slug = board_parent), so board, robot and notes hubs (control/, mcu/) all link right. {% endcomment %}{% assign hubdoc = site[page.collection] | where: "slug", page.board_parent | first %}{% if hubdoc %}<tr><td>{% if page.collection == "robotics" %}Robot{% elsif hubdoc.notes_hub %}Series{% else %}Board{% endif %}</td><td><a href="{{ hubdoc.url | relative_url }}">all stories in {{ hubdoc.title | split: ":" | first }} →</a></td></tr>{% endif %}{% endif %}
         </table>
         {% endif %}
       </section>

@@ -4,18 +4,21 @@ title: "Humanoid Robot: my thesis project"
 short_description: "A small humanoid on SG90 servos: SolidWorks model, DH table, inverse kinematics, then the real thing"
 status: "Done"
 picture: "assets/images/humanoid_robot.jpg"
-latest_release: "2026-11-22: rewritten from my own videos, invented specs removed"
+latest_release: "2026-11-22: moved under Robotics, written as a STAR story"
 index: 0
 publish: true
+permalink: /robotics/humanoid/thesis
+redirect_from:
+  - /embedded/humanoid-robot
+board_parent: humanoid
+result: "17 SG90s walking on the floor from angles I computed myself, played back over 9600-baud serial"
+tags: [robotics, kinematics, servo, cad]
 ---
+<!-- 2026-11-22: moved from pages/_embedded/humanoid_robot.md into the Robotics humanoid hub (user «Humanoid
+     Robot: my thesis project nên đưa vào Robotics») and rewritten in STAR form; same facts and the same five
+     YouTube videos as before. The old URL /embedded/humanoid-robot redirects here (jekyll-redirect-from). -->
 
-# Humanoid Robot: my thesis project
-{: .no_toc }
-
-This is the robot I built for my undergraduate thesis. A small biped with blue SG90 hobby servos
-at the joints, aluminium brackets holding them together, and a ribbon cable trailing behind it on
-the floor. The first video is the real thing; the rest of the page is the design and the math
-behind it.
+[Back to the humanoid hub](/robotics/humanoid/)
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
@@ -23,37 +26,17 @@ behind it.
   </div>
 </div>
 
-## Table of Contents
-{: .no_toc }
+## Situation
 
-1. TOC
-{:toc}
+This is the robot I built for my undergraduate thesis: a small biped with 17 blue SG90 hobby servos (10 in the legs, 7 in the upper body), aluminium brackets holding them together, and a ribbon cable trailing behind it on the floor. SG90s are the tiny plastic-gear servos everyone has in a drawer. They are weak, so the whole robot had to stay small and light, because every gram on the upper body is something the hips and knees have to hold up.
 
-## Why it is so small
+## Task
 
-SG90s are the tiny plastic-gear servos everyone has in a drawer. They are weak, so the whole
-robot has to stay small and light: every gram on the upper body is something the hips and
-knees have to hold up.
+Make it walk from angles I worked out myself, not from a canned servo sequence: a model of the body, the kinematics of the legs, a planned path for the feet and hips, and only then the real servos.
 
-## From a drawing to angles on a servo
+## Action
 
-The work splits into the steps below, and each one has its own video (I uploaded those in
-March 2019).
-
-1. **Draw it.** The body is modelled in SolidWorks, so I know where every servo sits and what
-   the link lengths are.
-2. **DH table.** From the model, the Denavit-Hartenberg table for the legs, turned into the
-   transform matrices. Boring, and one wrong sign here breaks everything after it.
-3. **Kinematics, inverse kinematics, path planning.** Forward kinematics tells you where the foot
-   is for a set of joint angles. Walking needs the opposite: I want the foot *here*, which
-   angles do I send? Then plan the path for the feet and the hips.
-4. **Trajectory and simulation.** Run the trajectories in a simulation with the controller in the
-   loop, so the mistakes show up on screen instead of on the floor.
-5. **Real robot.** The angles go to the SG90s. That's the video at the top.
-
-## The videos
-
-### Design a humanoid robot with SolidWorks
+I modelled the body in SolidWorks first, so I knew where every servo sat and how long every link was.
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
@@ -61,7 +44,7 @@ March 2019).
   </div>
 </div>
 
-### Calculate the transform matrix from the DH table
+From the model came the Denavit-Hartenberg table for the legs and the transform matrices. Boring, and one wrong sign here breaks everything after it.
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
@@ -69,7 +52,7 @@ March 2019).
   </div>
 </div>
 
-### Kinematics, inverse kinematics, path planning
+Forward kinematics tells you where the foot is for a set of joint angles. Walking needs the opposite: I want the foot *here*, which angles do I send? So I solved the inverse kinematics and planned the path for the feet and the hips.
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
@@ -77,7 +60,7 @@ March 2019).
   </div>
 </div>
 
-### Trajectory design and simulation (with the controller)
+Then I ran the trajectories in a simulation with the controller in the loop, so the mistakes showed up on screen instead of on the floor. The whole walk was planned offline in MATLAB, turned into servo pulses, and uploaded frame by frame over a 9600-baud serial link to a microcontroller that played them back at a fixed delay.
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
@@ -85,7 +68,10 @@ March 2019).
   </div>
 </div>
 
-## Not on this page yet
+## Result
 
-How many servos, which board drove them, how the gait was tuned. I still owe this page those
-three.
+The angles went to the SG90s and the robot walked on the floor; that is the first video on this page. I uploaded the step-by-step videos in March 2019.
+
+## What I'd do next
+
+Because the walk was played back blind, with no feedback from the servos or an IMU, it only worked on a flat floor; and at 9600 baud a frame for all 17 servos takes about 106 ms, so it could never react fast. Years later I picked the same problem up again in simulation with my own kinematics library; that story is on the [humanoid hub](/robotics/humanoid/).

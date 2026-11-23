@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/nanopi2-fire/hang-and-l2-cache
 board_parent: nanopi2-fire
 result: "Hang fixed (417 s clean past the 186 s mark); L2 on: YuNet 42 → 27 ms"
+edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
+edge_ai_index: 4
+tags: [samsung, arm, edge-ai, memory, camera]
 ---
 
 # A hang at 186 s, and a 512 KB L2 cache nobody had switched on

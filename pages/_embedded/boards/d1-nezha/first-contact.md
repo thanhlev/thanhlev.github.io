@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/d1-nezha/first-contact
 board_parent: d1-nezha
 result: "vl=4 at e32 -> VLEN 128, vsetivli SIGILL (RVV 0.7.1); FEL via reboot efex, no button"
+tags: [allwinner, risc-v, bare-metal]
 ---
 
 # First contact: what the stock Nezha really runs, and which vector it really has

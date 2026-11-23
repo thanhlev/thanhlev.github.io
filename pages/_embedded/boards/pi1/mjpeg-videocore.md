@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/pi1/mjpeg-videocore
 board_parent: pi1
 result: "352x288 JPEG to I420 in ~5 ms on the GPU; 597 webcam frames, 0 decode errors"
+tags: [raspberry-pi, arm, gpu, freertos, bare-metal, linux]
 ---
 
 # Asking the VideoCore to decode my JPEGs, from bare metal
@@ -32,7 +33,7 @@ I had no Linux.
 Talk VCHIQ and MMAL from FreeRTOS, hand the firmware a JPEG, get I420 back. Then feed the face
 detector from it.
 
-<a href="{{ '/assets/images/boards/pi1/pi1_pipeline.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi1/pi1_pipeline.png' | relative_url }}" alt="Webcam to HDMI pipeline on the Pi 1" style="width:100%;max-width:460px"></a>
+<a href="{{ '/assets/images/boards/pi1/pi1_pipeline.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi1/pi1_pipeline.png' | relative_url }}" alt="Webcam to HDMI pipeline on the Pi 1" style="width:100%"></a>
 *Where this fits in the whole thing: webcam MJPEG through the LAN9512 and my DWC2 host code, about 74 KB a frame, then the VideoCore `video_decode` over VCHIQ/MMAL (~5 ms) before the QPUs see a pixel.*
 
 ## Action

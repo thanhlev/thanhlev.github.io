@@ -3,10 +3,11 @@ layout: default
 title: "Disk Partition Tables: MBR & GPT"
 short_description: "MBR byte by byte on a test image, then GPT, the tools, and the layouts I use on boards"
 status: "Done"
-picture: "assets/images/MBR_usecase_partitions.jpg"
-latest_release: "2026-11-22: GPT and tools added, MBR example re-run"
+picture: "assets/images/MBR_usecase_partitions.png"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
+tags: [linux, memory, testing]
 ---
 
 # Disk Partition Tables: MBR & GPT
@@ -20,14 +21,24 @@ publish: true
 
 ---
 
-## Introduction
+## Situation
 
 In [ESP8266 Flash Map & Partition Table](/embedded/esp8266-flash-map) I wrote about the partition
 table on an MCU, but that one is Espressif's own format. PCs, and most Linux boards with an SD card
-or eMMC, use one of the two standard ones instead. MBR comes first here because that's
-what I kept running into on embedded Linux.
+or eMMC, use one of the two standard ones instead, MBR or GPT. MBR is the one I kept running into on
+embedded Linux: the [Tiny210](/embedded/tiny210-information) boot block map reserves block 0 of the
+SD card, and I wanted to know exactly what sits there and why the first partition starts so far in.
 
-The two side by side:
+## Task
+
+Make an empty disk image, write an MBR into it, and look at the bytes before and after instead of
+trusting a diagram. Then partition it the way a board SD card is laid out (a gap for the
+bootloaders, a FAT32 boot partition, an ext4 rootfs) and decode the partition entries by hand. GPT
+and the partitioning tools go on the same page, because a desktop disk uses those.
+
+## Action
+
+### MBR and GPT side by side
 
 | | MBR | GPT |
 |---|-----|-----|
@@ -40,9 +51,9 @@ The two side by side:
 | **Boot firmware** | BIOS (legacy) | UEFI (or BIOS with protective MBR) |
 | **Used on** | Legacy PCs, embedded Linux, microcontrollers | Modern PCs, servers, large disks |
 
-## MBR (Master Boot Record)
+### MBR (Master Boot Record)
 
-### Structure Overview
+#### Structure Overview
 
 The MBR occupies exactly the first 512 bytes (one sector) of the storage device:
 
@@ -67,7 +78,7 @@ Total:    512 bytes
 
 Those last 2 bytes at 0x1FE are the quick check: read them, and you know whether the device has an MBR at all.
 
-### Looking at the bytes myself
+#### Looking at the bytes myself
 
 I didn't want to trust the table above blindly, so: an empty image file, an MBR written into it, and a hex view before and after.
 
@@ -94,7 +105,7 @@ parted -s test.img mklabel msdos
 
 ![MBR test parted](../../assets/images/MBR_test_parted.jpg)
 
-### Partition Entry Format (16 bytes each)
+#### Partition Entry Format (16 bytes each)
 
 Each of the 4 partition entries has this structure:
 
@@ -109,7 +120,7 @@ Each of the 4 partition entries has this structure:
 
 In practice only the LBA start and the sector count matter; CHS is there for old BIOSes.
 
-### Common Partition Type IDs
+#### Common Partition Type IDs
 
 | ID (hex) | Type |
 |----------|------|
@@ -127,7 +138,7 @@ In practice only the LBA start and the sector count matter; CHS is there for old
 | 0xEE | GPT protective MBR |
 | 0xFD | Linux RAID |
 
-### The 4-Partition Limit and Extended Partitions
+#### The 4-Partition Limit and Extended Partitions
 
 Since the partition table is only 64 bytes (4 × 16), MBR supports a maximum of **4 primary partitions**. To work around this, one primary slot can be an **extended partition**: a container holding a linked list of **logical partitions**.
 
@@ -150,7 +161,7 @@ Since the partition table is only 64 bytes (4 × 16), MBR supports a maximum of 
 
 Each Extended Boot Record (EBR) is a 512-byte structure with the same format as an MBR, but only uses 2 of the 4 entry slots: one for the current logical partition and one pointing to the next EBR.
 
-### MBR on embedded Linux
+#### MBR on embedded Linux
 
 This is where MBR clicked for me. In
 [Tiny210: SD/MMC/eSSD Device Boot Block Assignment](/embedded/tiny210-information) block 0 of the
@@ -160,9 +171,9 @@ between the MBR and the first partition stays unallocated: that's where the boot
 
 |Common partition layout|Embedded Linux partition layout|
 |:---|:---|
-|No reserved space for bootloader<br>![MBR_theory_partitions](../../assets/images/MBR_theory_partitions.jpg)|Unallocated space before first partition stores BL1/U-Boot<br>![MBR_usecase_partitions](../../assets/images/MBR_usecase_partitions.jpg)|
+|No reserved space for bootloader<br>![MBR_theory_partitions](../../assets/images/MBR_theory_partitions.png)|Unallocated space before first partition stores BL1/U-Boot<br>![MBR_usecase_partitions](../../assets/images/MBR_usecase_partitions.png)|
 
-### Making the partitions
+#### Making the partitions
 
 ```bash
 # Create a 1 GiB image
@@ -216,11 +227,11 @@ opens it. Nothing is written unless you press `w`.)
 The 16 MiB gap before sector 32768 is the unallocated space for the bootloaders from the
 Tiny210 section.
 
-## GPT (GUID Partition Table)
+### GPT (GUID Partition Table)
 
 GPT is part of the UEFI spec. Disks over 2 TiB, 128 partitions by default, CRC32 on the header and the entries, and a second copy at the end of the disk.
 
-### Structure Overview
+#### Structure Overview
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
@@ -241,11 +252,11 @@ GPT is part of the UEFI spec. Disks over 2 TiB, 128 partitions by default, CRC32
 └────────────┴───────────────────────────────────────────────────┘
 ```
 
-### Protective MBR (LBA 0)
+#### Protective MBR (LBA 0)
 
 LBA 0 holds a "protective MBR": a legacy MBR with one partition entry of type `0xEE` spanning the entire disk. So an MBR-only tool sees a full disk instead of an empty one and leaves the GPT alone.
 
-### GPT Header (LBA 1)
+#### GPT Header (LBA 1)
 
 | Offset | Size | Field |
 |--------|------|-------|
@@ -265,7 +276,7 @@ LBA 0 holds a "protective MBR": a legacy MBR with one partition entry of type `0
 | 0x58 | 4 | CRC32 of partition entry array |
 | 0x5C | * | Reserved (zero, rest of sector) |
 
-### Partition Entry Format (128 bytes each)
+#### Partition Entry Format (128 bytes each)
 
 | Offset | Size | Field |
 |--------|------|-------|
@@ -276,7 +287,7 @@ LBA 0 holds a "protective MBR": a legacy MBR with one partition entry of type `0
 | 0x30 | 8 | Attribute flags |
 | 0x38 | 72 | Partition name (UTF-16LE, up to 36 characters) |
 
-### Common Partition Type GUIDs
+#### Common Partition Type GUIDs
 
 | GUID | Type |
 |------|------|
@@ -288,7 +299,7 @@ LBA 0 holds a "protective MBR": a legacy MBR with one partition entry of type `0
 | `EBD0A0A2-B9E5-4433-87C0-68B6B72699C7` | Microsoft basic data (NTFS/FAT) |
 | `21686148-6449-6E6F-744E-656564454649` | BIOS boot partition |
 
-### Advantages Over MBR
+#### Advantages Over MBR
 
 | Feature | MBR | GPT |
 |---------|-----|-----|
@@ -301,7 +312,7 @@ LBA 0 holds a "protective MBR": a legacy MBR with one partition entry of type `0
 | Partition names | None | 36-char UTF-16 name per partition |
 | Boot firmware | BIOS | UEFI (or BIOS with `bios_grub` partition) |
 
-### GPT Backup and Recovery
+#### GPT Backup and Recovery
 
 GPT stores a complete backup at the end of the disk:
 - Backup partition entries at LBA -33 to LBA -2
@@ -321,9 +332,9 @@ sgdisk --backup=gpt-backup.bin /dev/sda
 sgdisk --load-backup=gpt-backup.bin /dev/sda
 ```
 
-## Tools for Managing Partition Tables
+### Tools for Managing Partition Tables
 
-### fdisk (MBR and GPT)
+#### fdisk (MBR and GPT)
 
 ```bash
 # Interactive partitioning
@@ -339,7 +350,7 @@ sudo fdisk -l /dev/sda
 echo -e "g\nn\n1\n2048\n+512M\nt\n1\nn\n2\n\n\nw" | sudo fdisk /dev/sda
 ```
 
-### parted (MBR and GPT)
+#### parted (MBR and GPT)
 
 ```bash
 # Interactive
@@ -361,7 +372,7 @@ sudo parted -s /dev/sda -- mkpart primary ext4 513MiB -1s
 sudo parted -s /dev/sda print
 ```
 
-### gdisk / sgdisk (GPT only)
+#### gdisk / sgdisk (GPT only)
 
 ```bash
 # Interactive GPT partitioning
@@ -388,7 +399,7 @@ sudo sgdisk --load-backup=table.bak /dev/sda
 sudo sgdisk --zap-all /dev/sda
 ```
 
-### sfdisk (scripting-friendly)
+#### sfdisk (scripting-friendly)
 
 ```bash
 # Dump partition table (for backup/cloning)
@@ -423,7 +434,7 @@ start=1050624, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, name="root"
 EOF
 ```
 
-### lsblk and blkid
+#### lsblk and blkid
 
 ```bash
 lsblk -f /dev/sda        # tree of partitions with FSTYPE, LABEL, UUID, mount point
@@ -433,9 +444,9 @@ sudo blkid /dev/sda*     # UUID, TYPE, PARTLABEL, PARTUUID per partition
 `blkid` is also where the UUID for an `/etc/fstab` line comes from (see my
 [Linux tips](/linux_general/linux-tips)).
 
-## Reading Partition Tables Programmatically
+### Reading Partition Tables Programmatically
 
-### Reading MBR with hexdump
+#### Reading MBR with hexdump
 
 ```bash
 # Read the MBR (first 512 bytes)
@@ -449,7 +460,7 @@ sudo dd if=/dev/sda bs=1 skip=510 count=2 2>/dev/null | hexdump -C
 # Should show: 55 aa
 ```
 
-### Reading GPT with hexdump
+#### Reading GPT with hexdump
 
 ```bash
 # Read GPT header (LBA 1, 512 bytes)
@@ -460,7 +471,7 @@ sudo dd if=/dev/sda bs=512 skip=1 count=1 2>/dev/null | hexdump -C
 sudo dd if=/dev/sda bs=512 skip=2 count=32 2>/dev/null | hexdump -C
 ```
 
-### Python Example
+#### Python Example
 
 ```python
 import struct
@@ -522,9 +533,9 @@ Entry 1: `80` = bootable, type `0c` = FAT32 (LBA), start `00 80 00 00` = 0x8000 
 count `00 00 10 00` = 0x100000 = 1048576 sectors. Little-endian, as promised. Type `0c` is
 FAT32 with LBA addressing, which matches the `lba` flag in the `parted` output.
 
-## BIOS Boot vs UEFI Boot
+### BIOS Boot vs UEFI Boot
 
-### BIOS + MBR (Legacy)
+#### BIOS + MBR (Legacy)
 
 ```
 Power On → BIOS POST → Read MBR (sector 0) → Execute bootstrap code (446 bytes)
@@ -532,7 +543,7 @@ Power On → BIOS POST → Read MBR (sector 0) → Execute bootstrap code (446 b
   → GRUB loads kernel from boot partition
 ```
 
-### UEFI + GPT (Modern)
+#### UEFI + GPT (Modern)
 
 ```
 Power On → UEFI firmware → Read GPT → Find EFI System Partition (ESP)
@@ -542,7 +553,7 @@ Power On → UEFI firmware → Read GPT → Find EFI System Partition (ESP)
 
 The **EFI System Partition** (ESP) is a FAT32 partition (type GUID `C12A7328-...`) with the bootloader executables in it. UEFI firmware can read FAT32 by itself, so the 446 bytes of bootstrap code aren't needed.
 
-### BIOS + GPT (Hybrid)
+#### BIOS + GPT (Hybrid)
 
 GPT works with a legacy BIOS too, but GRUB then needs a small **BIOS Boot Partition** (type GUID `21686148-...`, typically 1 MiB) where GRUB embeds its core image:
 
@@ -556,9 +567,9 @@ sudo sgdisk -n 3:0:0 -t 3:8300 -c 3:"root" /dev/sda
 sudo grub-install --target=i386-pc /dev/sda
 ```
 
-## Common Partition Layouts
+### Common Partition Layouts
 
-### Desktop Linux (UEFI)
+#### Desktop Linux (UEFI)
 
 ```bash
 # /dev/sda1: EFI System Partition (512 MiB, FAT32)
@@ -572,7 +583,7 @@ sudo parted -s /dev/sda mkpart "root" ext4 513MiB 90%
 sudo parted -s /dev/sda mkpart "swap" linux-swap 90% 100%
 ```
 
-### Server (UEFI, separate /boot and LVM)
+#### Server (UEFI, separate /boot and LVM)
 
 ```bash
 # /dev/sda1: EFI (512 MiB)
@@ -591,7 +602,7 @@ sudo parted -s /dev/sda mkpart "lvm" 1537MiB 100%
 sudo parted -s /dev/sda set 3 lvm on
 ```
 
-### Embedded Linux (MBR, ARM)
+#### Embedded Linux (MBR, ARM)
 
 ```bash
 # Sectors 1–32767: unallocated (BL1 + U-Boot)
@@ -604,7 +615,7 @@ sudo parted -s /dev/mmcblk0 set 1 boot on
 sudo parted -s /dev/mmcblk0 -- unit s mkpart primary ext4 1081344 -1s
 ```
 
-### Raspberry Pi (MBR)
+#### Raspberry Pi (MBR)
 
 ```bash
 # /dev/mmcblk0p1: boot (FAT32, 256 MiB: firmware + kernel)
@@ -616,7 +627,7 @@ sudo parted -s /dev/mmcblk0 set 1 boot on
 sudo parted -s /dev/mmcblk0 -- mkpart primary ext4 260MiB -1s
 ```
 
-## MBR or GPT?
+### MBR or GPT?
 
 | Scenario | Recommendation |
 |----------|---------------|
@@ -629,7 +640,18 @@ sudo parted -s /dev/mmcblk0 -- mkpart primary ext4 260MiB -1s
 | Dual-boot with old Windows (< Win 8) | MBR |
 | Maximum compatibility with ancient tools | MBR |
 
-## Next
+## Result
+
+The 64 bytes at offset 446 of my `test.img` decode by hand to exactly what `parted` and `gdisk`
+report: entry 1 is bootable, type `0x0c`, starts at LBA 32768 and is 1048576 sectors (512 MiB);
+entry 2 is type `0x83` from LBA 1081344. The `55 aa` at 0x1FE is the whole integrity check MBR has.
+
+The layout I use for a board SD card comes straight out of that run: MBR in sector 0, sectors 1 to
+32767 (16 MiB) left unallocated for BL1 and U-Boot, a FAT32 boot partition from sector 32768, ext4
+rootfs to the end of the card. GPT is for the other cases in the last table: UEFI firmware, more
+than four partitions, or a disk over 2 TiB.
+
+## What I'd do next
 
 I haven't done the GPT version of the experiment above yet (`mklabel gpt` on the same image and a
 hex dump of LBA 1 and the last LBA). That's the next thing for this page.

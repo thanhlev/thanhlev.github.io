@@ -9,6 +9,7 @@ index: 21
 publish: true
 permalink: /embedded/boards/nanopi2-fire/
 board_hub: true
+tags: [samsung, arm, freertos, bare-metal, boot, camera]
 ---
 
 # NanoPi 2 Fire

@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/db8074/ai-on-krait
 board_parent: db8074
 result: "Qwen2.5-0.5B at 4.15 tok/s; L2 driver lifts 4-thread memory read from 4433 to 7084 MB/s"
+edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
+edge_ai_index: 6
+tags: [qualcomm, arm, edge-ai, memory]
 ---
 
 # Local AI on a 2013 phone chip, and an L2 cache stuck at 576 MHz

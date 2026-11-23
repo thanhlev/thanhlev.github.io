@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/rock3a/android14-port
 board_parent: rock3a
 result: "Android 14 + kernel 6.1.99 + GApps booting; warm reboot back in 36 s; YOLOv5s 34.58 ms on the NPU at 1 GHz"
+edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
+edge_ai_index: 1
+tags: [rockchip, arm, edge-ai, npu, linux, android]
 ---
 
 # Porting Android 14 to the ROCK 3A myself

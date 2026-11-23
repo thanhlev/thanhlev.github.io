@@ -4,33 +4,43 @@ title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]"
 short_description: "My reading notes from TI's datasheet: memory map, SRAM, flash, ROM, the ROM bootloader, EEPROM"
 status: "Done"
 picture: "assets/images/TM4C123GH6ZRB_cpu_block_diagram.png"
-latest_release: "Copied from my old notes repo (2023-01)"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 9
 publish: true
+tags: [arm, mcu, bare-metal, boot]
 ---
 
-# Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]
+<!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
+     Same TI quotes and tables as before; nothing added. -->
 
+# Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]
 {: .no_toc }
 
-
 ## Table of contents
-
 {: .no_toc }
 
 1. TOC
 {:toc}
 
------------------------------------
+---
 
-These are my reading notes on TI's Tiva C TM4C123GH6ZRB, moved here in January 2023 from an
-older notes repo of mine. Almost everything below is quoted or condensed from TI's documents
-(the datasheet and the guides listed at the end), not something I measured. I wanted the memory
-layout and the boot path of the chip in one place: what sits in ROM, what the ROM bootloader does,
-where flash, SRAM and EEPROM are. Part 2 is the Cortex-M4F core itself:
+## Situation
+
+I needed a map of TI's Tiva C TM4C123GH6ZRB before writing code for it: what sits in ROM, where
+flash, SRAM and EEPROM are, and how the chip decides between its ROM bootloader and my code. These notes started in an older notes repo of mine and moved here in
+January 2023.
+
+## Task
+
+Put the memory layout and the boot path of the chip in one place, from TI's documents (the datasheet
+and the guides listed at the end). Part 2 does the same for the Cortex-M4F core itself:
 [TM4C123GH6ZRB part 2](/embedded/tm4c123gh6zrb-cortex-m4f-processor).
 
-## Architectural Overview
+## Action
+
+Almost everything below is quoted or condensed from TI, not something I measured.
+
+### Architectural overview
 
 | Feature     | Description  |
 |:-------------|:------------- |
@@ -42,9 +52,6 @@ where flash, SRAM and EEPROM are. Part 2 is the Cortex-M4F core itself:
 |Internal ROM|Internal ROM loaded with TivaWare™ for C Series software|
 
 !["block_diagram](../../../assets/images/ti/TM4C123GH6ZRB/block_diagram.png)
-
-
-## TM4C123GH6ZRB Microcontroller Features
 
 ### On-Chip Memory
 
@@ -137,10 +144,18 @@ Additional APIs are available for graphics and USB functions, but are not preloa
 - Interrupt support for write completion to avoid polling
 - Endurance of 500K writes (when writing at fixed offset in every alternate page in circular fashion) to 15M operations (when cycling through two pages ) per each 2-page block.
 
+## Result
+
+The piece that matters most is the reset path. At reset the chip reads BOOTCFG: if EN is clear, or
+the configured GPIO matches its polarity, it runs the ROM bootloader (UART0, SSI0, I2C0 or USB, clocked
+from PIOSC without the PLL). Otherwise it looks at 0x0000.0004: `0xFFFF.FFFF` there means empty flash
+and it falls back to the ROM bootloader; anything else is taken as the reset vector, with SP loaded
+from 0x0000.0000. So a blank chip always lands in the bootloader, and the ROM DriverLib is reachable
+through the table at 0x0100.0010. I didn't measure or check any of it on a board.
+
 ## Useful Links
 
 - Tiva™ C Series TM4C123x ROM User’s Guide (literature number [SPMU367](http://www.ti.com/lit/pdf/spmu367)).
 - TivaWare™ Boot Loader for C Series User's Guide (literature number [SPMU301](http://www.ti.com/lit/pdf/spmu301))
 - "Using the ROM" chapter of the TivaWare™ Peripheral Driver Library for C Series User's Guide (literature number [SPMU298](http://www.ti.com/lit/pdf/spmu298))
 - TivaWare™ Graphics Library for C Series User's Guide (literature number [SPMU300](http://www.ti.com/lit/pdf/spmu300))
-

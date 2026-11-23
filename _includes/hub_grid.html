@@ -1,0 +1,24 @@
+{% comment %}
+hub_grid.html - cards for the hub pages of one collection (home page, style A).
+Usage: {% include hub_grid.html coll="embedded" %} or coll="robotics".
+A hub = front matter `board_hub: true`; its stories = docs of the same collection with
+`board_parent: <hub slug>`. Card = picture, chip (text in brackets of the title), name, short
+description, story count + first result. Plain Liquid (GitHub Pages safe mode).
+2026-11-22: moved out of index.md so Boards and Robotics share it (user «tạo thêm robotics, cùng cấp với boards»).
+{% endcomment %}
+{% assign live = site[include.coll] | where_exp: "i", "i.publish != false" %}
+{% assign hubs = live | where: "board_hub", true | sort: "index" %}
+<div class="boardgrid">
+{% for h in hubs %}
+  {% assign kids = live | where: "board_parent", h.slug | sort: "index" %}
+  {% assign name = h.title | split: ":" | first %}
+  {% assign soc = "" %}{% if name contains "(" %}{% assign soc = name | split: "(" | last | remove: ")" %}{% assign name = name | split: " (" | first %}{% endif %}
+  <a class="bcard" href="{{ h.url | relative_url }}">
+    <div class="ph" style="background-image:url('{{ h.picture | prepend: '/' | relative_url }}')"></div>
+    {% if soc != "" %}<span class="chip">{{ soc }}</span>{% endif %}
+    <h3>{{ name }}</h3>
+    <p>{{ h.short_description }}</p>
+    <div class="res">{% if kids.size > 0 %}<b>{{ kids.size }} {% if kids.size == 1 %}story{% else %}stories{% endif %}</b> · {{ kids.first.result | truncate: 110 }}{% else %}<b>hub only</b> · nothing measured yet{% endif %}</div>
+  </a>
+{% endfor %}
+</div>

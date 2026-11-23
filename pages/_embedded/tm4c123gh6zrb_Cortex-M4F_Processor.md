@@ -4,40 +4,51 @@ title: "Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]"
 short_description: "My reading notes on the Cortex-M4F core: modes, stacks, registers, memory model, exceptions"
 picture: "assets/images/Cortex_M4F_Register_Set.png"
 status: "Done"
-latest_release: "Copied from my old notes repo (2023-01)"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 10
 publish: true
+tags: [arm, mcu, bare-metal]
 ---
 
-# Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]
+<!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
+     Same TI text and figures as before. Dropped: a lone "lbr sp, =0xAAAA_BBBB" block with no context
+     (not a real instruction) and a sentence that was pasted twice. -->
 
+# Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]
 {: .no_toc }
 
 ## Table of contents
-
 {: .no_toc }
 
 1. TOC
 {:toc}
 
------------------------------------
+---
 
-Part 2 of my TM4C123GH6ZRB reading notes (part 1:
-[memory, ROM and bootloader](/embedded/tm4c123gh6zrb-architecture-overview)). This half is the
-Cortex-M4F core as TI describes it in the datasheet: privilege levels, the two stacks, the register
-set, and how exceptions get in and out. The text is TI's, condensed; what's mine is the choice
-of what to keep.
+## Situation
 
-## Block Diagram
+Part 1 of these notes ([memory, ROM and bootloader](/embedded/tm4c123gh6zrb-architecture-overview))
+gave me the chip's memory and boot path. That still leaves the core: before writing startup code or an
+interrupt handler for the TM4C123GH6ZRB I needed to know which mode and stack the Cortex-M4F is in,
+what it pushes on an exception, and in what order exceptions win.
+
+## Task
+
+Condense the Cortex-M4F chapter of TI's datasheet into one page: privilege levels, the two stacks, the
+register set, the memory model, and how exceptions get in and out. The text is TI's, condensed; what's
+mine is the choice of what to keep.
+
+## Action
+
+### Block diagram
 
 - 3-stage pipeline Harvard architecture
 
 ![cpu_block_diagram](../../../assets/images/ti/TM4C123GH6ZRB/cpu_block_diagram.png)
 
+### Programming model
 
-## Programming Model
-
-### Processor Mode and Privilege Levels for Software Execution
+#### Processor Mode and Privilege Levels for Software Execution
 
 <span style="color:red"> The Cortex-M4F has two modes of operation:</span>
 
@@ -58,7 +69,7 @@ the Cortex-M4F has two privilege levels:
 >
 > Only privileged software can write to the CONTROL register to change the privilege level for software execution in Thread mode. Unprivileged software can use the SVC instruction to make a supervisor call to transfer control to privileged software
 
-### Stacks
+#### Stacks
 
 The processor uses a full descending stack, meaning that the stack pointer indicates the last stacked item on the memory.
 
@@ -73,7 +84,7 @@ In Thread mode, the CONTROL register (see page 89) controls whether the processo
 |Thread|Applications|Privileged or unprivileged|Main stack or process stack|
 |Handler|Exception handlers|Always privileged|Main stack|
 
-### Register Map
+#### Register Map
 
 - Cortex-M4F register set
 
@@ -85,9 +96,9 @@ In Thread mode, the CONTROL register (see page 89) controls whether the processo
 
 ![Processor](../../../assets/images/ti/TM4C123GH6ZRB/Processor%20Register%20Map2.png)
 
-### Register Descriptions
+#### Register Descriptions
 
-#### **Register 14: Stack Pointer (SP)**
+##### **Register 14: Stack Pointer (SP)**
 
 - Contain address of stack pointer.
 - In Thread mode, the function of this register changes depending on the ASP bit in the Control Register (CONTROL) register.
@@ -98,7 +109,7 @@ In Thread mode, the CONTROL register (see page 89) controls whether the processo
 - The MSP can only be accessed in privileged mode
 - the PSP can be accessed in either privileged or unprivileged mode.
 
-#### **Register 15: Link Register (LR)**
+##### **Register 15: Link Register (LR)**
 
 - Stores the return information for subroutines, function calls, and exceptions.
 - The Link Register can be accessed from either privileged or unprivileged mode.
@@ -106,13 +117,13 @@ In Thread mode, the CONTROL register (see page 89) controls whether the processo
 
 ![Exception](../../../assets/images/ti/TM4C123GH6ZRB/Exception%20Return%20Behavior.png)
 
-#### **Register 16: Program Counter (PC)**
+##### **Register 16: Program Counter (PC)**
 
 - Contains the current program address. On reset, the processor loads the PC with the value of reset vector, which is at address 0x0000.0004.
 - Bit 0 of the reset vector is loaded into the THUMB bit of the EPSR at reset and must be 1.
 - The PC register can be accessed in either privileged or unprivileged mode.
 
-#### **Register 17: Program Status Register (PSR)**
+##### **Register 17: Program Status Register (PSR)**
 
 >Note: This register is also referred to as xPSR.
 
@@ -127,7 +138,7 @@ The Program Status Register (PSR) has three functions, and the register bits are
 
 **APSR** contains the current state of the condition flags from previous  instruction executions.
 
-## Memory Model
+### Memory model
 
 The processor has a fixed memory map that provides up to 4 GB of addressable memory.
 
@@ -136,7 +147,7 @@ The processor has a fixed memory map that provides up to 4 GB of addressable mem
 ![MemoryMap3](../../../assets/images/ti/TM4C123GH6ZRB/MemoryMap3.png)
 ![MemoryMap4](../../../assets/images/ti/TM4C123GH6ZRB/MemoryMap4.png)
 
-### Memory Regions, Types and Attributes
+#### Memory Regions, Types and Attributes
 
 The memory map and the programming of the MPU split the memory map into regions. Each region has a defined memory type, and some regions have additional memory attributes. The memory type and attributes determine the behavior of accesses to the region
 
@@ -145,13 +156,13 @@ The memory map and the programming of the MPU split the memory map into regions.
 > **Note**
 >The Code, SRAM, and external RAM regions can hold programs. However, it is recommended that programs always use the Code region because the Cortex-M4F has separate buses that can perform instruction fetches and data accesses simultaneously.
 
-### Data Storage
+#### Data Storage
 
 Data is stored in little-endian format
 
 ![DataStorage](../../../assets/images/ti/TM4C123GH6ZRB/DataStorage.png)
 
-## Exception Model
+### Exception model
 
 The ARM Cortex-M4F processor and the Nested Vectored Interrupt Controller (NVIC) prioritize and handle all exceptions in Handler Mode
 
@@ -169,7 +180,7 @@ Internally, the highest user-programmable priority (0) is treated as fourth prio
 
 >**Important**: After a write to clear an interrupt source, it may take several processor cycles for the NVIC to see the interrupt source deassert. Thus if the interrupt clear is done as the last action in an interrupt handler, it is possible for the interrupt handler to complete while the NVIC sees the interrupt as still asserted, causing the interrupt handler to be re-entered errantly. This situation can be avoided by either clearing the interrupt source at the beginning of the interrupt handler or by performing a read or write after the write to clear the interrupt source (and flush the write buffer).
 
-### Exception States
+#### Exception States
 
 - **Inactive**. The exception is not active and not pending.
 - **Pending**. The exception is waiting to be serviced by the processor. An interrupt request from a peripheral or from software can change the state of the corresponding interrupt to pending.
@@ -180,7 +191,7 @@ case, both exceptions are in the active state.
 
 - **Active and Pending.** The exception is being serviced by the processor, and there is a pending exception from the same source.
 
-### Exception Types
+#### Exception Types
 
 ![ExceptionTypes](../../../assets/images/ti/TM4C123GH6ZRB/ExceptionTypes.png)
 
@@ -219,7 +230,7 @@ An unaligned address on a word or halfword memory access or division by zero can
 ![Interrupts3](../../../assets/images/ti/TM4C123GH6ZRB/Interrupts3.png)
 ![Interrupts4](../../../assets/images/ti/TM4C123GH6ZRB/Interrupts4.png)
 
-### Exception Handlers
+#### Exception Handlers
 
 The processor handles exceptions using:
 
@@ -227,7 +238,7 @@ The processor handles exceptions using:
 - **Fault Handlers**. Hard fault, memory management fault, usage fault, and bus fault are fault exceptions handled by the fault handlers.
 - **System Handlers**. NMI, PendSV, SVCall, SysTick, and the fault exceptions are all system exceptions that are handled by system handlers.
 
-### Vector Table
+#### Vector Table
 
 The vector table contains the reset value of the stack pointer and the start addresses, also called exception vectors, for all exception handlers
 
@@ -239,19 +250,13 @@ The vector table is constructed using the vector address or offset shown in Exce
 
 > **Note** On system reset, the vector table is fixed at address 0x0000.0000. Privileged software can write to the Vector Table Offset (VTABLE) register to relocate the vector table start address to a different memory location, in the range 0x0000.0400 to 0x3FFF.FC00 (see “Vector Table” on page 108). Note that when configuring the VTABLE register, the offset must be aligned on a 1024-byte boundary.
 
-```yml
-lbr sp, =0xAAAA_BBBB
-```
-
-### Exception Priorities
+#### Exception Priorities
 
 If multiple pending exceptions have the same priority, the pending exception with the lowest exception number takes precedence. For example, if both IRQ[0] and IRQ[1] are pending and have the same priority, **then IRQ[0] is processed before IRQ[1]**.
 
-When the processor is executing an exception handler, the exception handler is preempted if a higher priority exception occurs
-
 When the processor is executing an exception handler, the exception handler is preempted if a higher priority exception occurs. If an exception occurs with the same priority as the exception being handled, the handler is not preempted, irrespective of the exception number. However, the status of the new interrupt changes to pending
 
-### Exception Entry and Return
+#### Exception Entry and Return
 
 Descriptions of exception handling use the following terms:
 
@@ -260,7 +265,7 @@ Descriptions of exception handling use the following terms:
 - **Tail-Chaining**. This mechanism speeds up exception servicing. On completion of an exception handler, if there is a pending exception that meets the requirements for exception entry, **the stack pop is skipped and control transfers to the new exception handler.**
 - **Late-Arriving**. This mechanism speeds up preemption. If a higher priority exception occurs during state saving for a previous exception, the processor switches to handle the higher priority exception and initiates the vector fetch for that exception. State saving is not affected by late arrival because the state saved is the same for both exceptions. Therefore, the state saving continues uninterrupted. The processor can accept a late arriving exception until the first instruction of the exception handler of the original exception enters the execute stage of the processor. On return from the exception handler of the late-arriving exception, the normal tail-chaining rules apply.
 
-#### Exception Entry
+##### Exception Entry
 
 - Exception entry occurs when there is a pending exception with sufficient priority and either the processor is in Thread mode or the new exception is of higher priority than the exception being handled, in which case the new exception preempts the original exception.
 
@@ -279,3 +284,15 @@ Descriptions of exception handling use the following terms:
 - If no higher-priority exception occurs during exception entry, the processor starts executing the exception handler and automatically changes the status of the corresponding pending interrupt to active.
 - If another higher-priority exception occurs during exception entry, known as late arrival, the processor starts executing the exception handler for this exception and does not change the pending status of the earlier exception.
 
+## Result
+
+What I took away, in the order it bites when writing startup code: the core comes out of reset in
+privileged Thread mode on the main stack, with MSP loaded from 0x0000.0000 and PC from the reset vector
+at 0x0000.0004 (bit 0 must be 1 for Thumb). The vector table can move with VTABLE, anywhere from
+0x0000.0400 to 0x3FFF.FC00 on a 1024-byte boundary. On an exception the hardware stacks eight words
+(plus the FP state when floating point is in use) and puts EXC_RETURN in LR; tail-chaining skips the
+pop between back-to-back handlers. Reset, NMI (-2) and Hard Fault (-1) always beat priority 0, and
+among equal priorities the lower exception number goes first. And the one I'd forget: clear the
+interrupt source early in the handler, or the NVIC can still see it asserted and re-enter.
+
+All of this is from the datasheet; none of it was measured on a board.

@@ -4,9 +4,10 @@ title: "Linux MacVLAN"
 short_description: "Sub-interfaces with their own MAC: the four modes, and why the host can't reach them"
 status: "Done"
 picture: "assets/images/linux-macvlan.png"
-latest_release: "2026-11-22: rewritten in my own words"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
+tags: [networking, linux]
 ---
 
 # Linux MacVLAN interface
@@ -20,15 +21,24 @@ publish: true
 
 ---
 
-## What it is
+## Situation
+
+When I first wrote this page (January 2023) it was the definition, the four modes with a diagram each, and a single "disadvantage": a VM on a macvlan can't talk to its own host. That page stated it without saying why it happens, and it's the one thing about macvlan that actually bites when you use it (Docker's macvlan driver has the same problem).
+
+## Task
+
+Explain what the kernel does with a macvlan frame, closely enough that the four modes and the host blind spot follow from it, and add the commands to build, move and debug macvlans, plus the workaround for the host.
+
+## Action
+
+### What it is
 
 <div class="row">
     <div class="column">
         <img src="./../../assets/images/linux-macvlan.png" alt="MACVLAN overview">
     </div>
     <div class="column">
-    <p>Macvlan is a virtual L2 interface that you hang off a physical one. Each sub-interface gets its own MAC address, so to the switch it looks like one more machine plugged into the same port.<br><br>
-    When I first wrote this page (January 2023) it was the definition, the four modes with a diagram each, and a single "disadvantage": a VM on a macvlan can't talk to its own host. That disadvantage is the part that needs the most explaining, so this version explains why it happens and adds the commands and the workaround.</p>
+    <p>Macvlan is a virtual L2 interface that you hang off a physical one. Each sub-interface gets its own MAC address, so to the switch it looks like one more machine plugged into the same port.</p>
   </div>
 </div>
 
@@ -39,7 +49,7 @@ The short version of how it behaves:
 - Sub-interfaces can be moved into other network namespaces, which is how containers use it.
 - The parent has to accept frames for MACs other than its own. Roughly: the physical interface needs to support promiscuous mode; the details are below.
 
-## What happens inside
+### What happens inside
 
 When you create a macvlan, the kernel:
 
@@ -72,11 +82,11 @@ When you create a macvlan, the kernel:
 
 This is also why macvlan over Wi-Fi doesn't work. The NIC side is fine; the access point only accepts frames from MACs that have associated with it, and your extra macvlan MACs never did. Use ipvlan there (see [Virtual Interfaces in Linux]({{ site.baseurl }}{% link _linux_networking/virtual_interface.md %})).
 
-## Operating modes
+### Operating modes
 
 The mode only decides one thing: what happens to a frame from one sub-interface to another sub-interface on the same parent.
 
-### Private
+#### Private
 
 <div class="row">
   <div class="column">
@@ -93,7 +103,7 @@ The mode only decides one thing: what happens to a frame from one sub-interface 
 ip link add macvlan0 link eth0 type macvlan mode private
 ```
 
-### VEPA
+#### VEPA
 
 <div class="row">
   <div class="column">
@@ -110,7 +120,7 @@ ip link add macvlan0 link eth0 type macvlan mode private
 ip link add macvlan0 link eth0 type macvlan mode vepa
 ```
 
-### Bridge
+#### Bridge
 
 <div class="row">
   <div class="column">
@@ -128,7 +138,7 @@ ip link add macvlan0 link eth0 type macvlan mode vepa
 ip link add macvlan0 link eth0 type macvlan mode bridge
 ```
 
-### Passthrough
+#### Passthrough
 
 <div class="row">
     <div class="column">
@@ -145,7 +155,7 @@ ip link add macvlan0 link eth0 type macvlan mode bridge
 ip link add macvlan0 link eth0 type macvlan mode passthru
 ```
 
-### The four side by side
+#### The four side by side
 
 | | Private | VEPA | Bridge | Passthrough |
 |---|---------|------|--------|-------------|
@@ -154,7 +164,7 @@ ip link add macvlan0 link eth0 type macvlan mode passthru
 | Needs a special switch | no | yes (802.1Qbg) | no | no |
 | Sub-interfaces per parent | many | many | many | 1 |
 
-## Creating them
+### Creating them
 
 ```bash
 # Bridge mode is the usual choice
@@ -210,7 +220,7 @@ ip addr add 10.0.100.50/24 dev macvlan0
 
 Remove one with `ip link delete macvlan0`.
 
-## Why the host can't reach its own macvlans
+### Why the host can't reach its own macvlans
 
 The short version: the VM sends to the host's MAC, the kernel pushes the frame out of the parent to the switch, and the switch won't send a frame back out of the port it came in on. So VM and host can't talk.
 
@@ -250,7 +260,7 @@ Other ways out:
 
 Switching to ipvlan doesn't help with this one, by the way. Ipvlan has the same parent/child blind spot.
 
-## Macvlan or something else?
+### Macvlan or something else?
 
 **vs. a Linux bridge**
 
@@ -282,7 +292,7 @@ Switching to ipvlan doesn't help with this one, by the way. Ipvlan has the same 
 
 On speed: I haven't measured macvlan against a bridge or veth myself. The usual argument is that macvlan does less work per frame (one hash lookup, no learning, one interface instead of a pair). If it matters to you, `iperf3` between two namespaces will tell you more than any table.
 
-## Docker and Kubernetes
+### Docker and Kubernetes
 
 Docker has a macvlan driver (`docker network create -d macvlan -o parent=eth0 ...`), including VLAN parents like `eth0.100` and the host shim. All of that is in the [Docker networking post]({{ site.baseurl }}{% link _linux_networking/docker_network.md %}), so I won't repeat it here.
 
@@ -324,7 +334,7 @@ spec:
     image: alpine
 ```
 
-## When it doesn't work
+### When it doesn't work
 
 | Symptom | Likely cause | What to do |
 |---------|-------------|----------|
@@ -344,7 +354,13 @@ tcpdump -i macvlan0 -e -nn
 ip netns exec ns1 ping <ns2-IP>   # sibling test in bridge mode
 ```
 
-Not covered yet: macvtap (the macvlan variant QEMU/libvirt use for VMs), which deserves its own post with a VM attached.
+## Result
+
+The old "disadvantage" now has a reason. The macvlan lookup only runs on the parent's receive path and on the sub-interfaces' transmit path, so host-to-container frames skip it and container-to-host frames go to the wire, where a normal switch won't hairpin them back. Giving the host a macvlan of its own (or a shim with host routes) makes it a sibling, and bridge mode then delivers in the kernel. The same lookup explains why macvlan fails on Wi-Fi and why the mode only matters for sibling-to-sibling traffic. I haven't measured macvlan's speed against a bridge or veth, so there's no number for that here.
+
+## What I'd do next
+
+macvtap, the macvlan variant QEMU/libvirt use for VMs, which deserves its own post with a VM attached. And an `iperf3` run between two namespaces on macvlan, bridge and veth, so the speed argument above gets a measured number.
 
 ## References
 

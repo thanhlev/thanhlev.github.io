@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/bpi-m3/sram-blink
 board_parent: bpi-m3
 result: "1148-byte program, 4.000 s blink finished in 4.018 s, 0 failed PMIC writes"
+tags: [allwinner, arm, bare-metal, led]
 ---
 
 # Blinking an LED that lives on the PMIC, from 1148 bytes in SRAM

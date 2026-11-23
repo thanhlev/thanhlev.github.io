@@ -4,9 +4,10 @@ title: "[🔥] - Lịch sử của Linux Wi-Fi Driver"
 short_description: "Từ Wireless Extensions đến nl80211/cfg80211/mac80211: Wi-Fi driver trên Linux được thiết kế ra sao"
 status: "Done"
 picture: "assets/images/intel_wifi_module.png"
-latest_release: "2026-11-22: viết lại, sửa lệnh sai, thêm luồng kết nối và công cụ"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 4
 publish: true
+tags: [networking, linux, wifi]
 ---
 
 # Linux Wi-Fi Driver có gì đặc biệt?
@@ -19,7 +20,17 @@ publish: true
 {:toc}
 
 -----------------------------------
-## Introduction
+## Situation
+
+Gõ `ifconfig` trên máy mình thì `wlan0` và `eth0` trông y như nhau, cả hai đều ghi `(Ethernet)`. Vậy mà cắm dây mạng là có link ngay, còn Wi-Fi thì phải scan, chọn mạng, nhập mật khẩu, chờ một lúc mới lên. Phần "Wi-Fi" đó nằm ở đâu trong kernel, và ai làm việc gì, thì mình chưa nói rõ được.
+
+## Task
+
+Đi từ chỗ giống nhau (Wi-Fi interface chỉ là một net device, data path y như Ethernet) tới chỗ khác nhau (control path), theo đúng lịch sử của nó: thời mỗi hãng một kiểu, thời Wireless Extensions, rồi nl80211/cfg80211/mac80211 bây giờ. Sau đó nối lại thành chuỗi việc từ lúc `wpa_supplicant` bắt đầu tới lúc interface lên `state UP`, kèm các công cụ và cách debug.
+
+## Action
+
+### Wi-Fi interface chỉ là một net device
 
 Wi-Fi driver là một network driver, nhiệm vụ đầu tiên nó cần làm là đăng ký với Kernel để tạo ra net device.
 
@@ -92,11 +103,11 @@ cu-tèo: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 
 Gán IP được, cho vào bridge được, trỏ route vào được: đầy đủ như một net device. Tiếp theo ta sẽ tìm hiểu xem cách thức truyền nhận dữ liệu của nó như thế nào.
 
-## Data path
+### Data path
 
 Kernel sẽ cho driver đăng ký callback để khi có data đến interface hoặc kernel muốn gửi data đến interface thì thông qua callback này. Đường giao tiếp này được gọi là Data path.
 
-### Chiều nhận: từ không gian vào application
+#### Chiều nhận: từ không gian vào application
 
 ```
 Sóng radio → firmware của Wi-Fi module → DMA vào RAM của host
@@ -108,7 +119,7 @@ Khi Wi-Fi module nhận được dữ liệu từ không gian, nó chép frame v
 
 Có một bước mà Ethernet không có: frame ngoài không gian là frame 802.11, header khác hẳn 802.3. Trước khi lên net core nó phải được đổi thành frame Ethernet. Ai làm việc đó thì tuỳ loại chip: firmware làm (Full-MAC), hoặc mac80211 trong kernel làm (Soft-MAC). Hai loại này nói ở phần [mac80211](#mac80211).
 
-### Chiều gửi: từ application ra không gian
+#### Chiều gửi: từ application ra không gian
 
 ```
 Application → socket → TCP/IP stack → routing/netfilter
@@ -164,7 +175,7 @@ Thời Wi-Fi "tiền sử", không có tiêu chuẩn gì cả (chưa có khái n
 
 Để tạo được kết nối, Wi-Fi driver tạo ra một đường giao tiếp giữa module Wi-Fi và người dùng, và đường giao tiếp này gọi là Control Path, dùng để cấu hình cho thiết bị và lấy thông tin từ thiết bị.
 
-## Control path
+### Control path
 
 Để 2 module kết nối với nhau cả hai cần những thiết lập như Channel, SSID/Password (này mình lấy cho dễ hiểu, SSID mới xuất hiện sau này thôi).
 
@@ -176,7 +187,7 @@ Control path đã qua ba thời kỳ:
 | Đồ sắt | Wireless Extensions (WEXT) | 1996 đến khoảng 2007 | deprecated, chỉ còn lớp tương thích |
 | Ngày nay | nl80211 / cfg80211 / mac80211 | từ 2007 (kernel 2.6.22) | tiêu chuẩn hiện tại |
 
-### Control path thời kì đồ đá
+#### Control path thời kì đồ đá
 
 Như tiêu đề, giai đoạn này mỗi hãng tự viết tiêu chuẩn riêng để cấu hình cho module Wi-Fi của mình. Một ví dụ điển hình là các USB hoặc module 3/4/5G hiện nay:
 
@@ -185,7 +196,7 @@ Như tiêu đề, giai đoạn này mỗi hãng tự viết tiêu chuẩn riêng
 
 Các hãng sẽ viết các phần mềm để giao tiếp với thiết bị qua control path, các module đời cũ thì dùng qua tập lệnh AT, cao cấp hơn thì qua web socket ...
 
-### Control path thời kì đồ sắt
+#### Control path thời kì đồ sắt
 
 Nhận thấy sự phân mảnh của các driver cũng như phần mềm cấu hình cho module Wi-Fi, năm 1996 ông [Jean Tourrilhes](https://www.hpl.hp.com/personal/Jean_Tourrilhes/) giới thiệu bộ công cụ [Wireless Extensions for Linux](https://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html), bộ công cụ này gồm ba phần:
 
@@ -195,8 +206,8 @@ Nhận thấy sự phân mảnh của các driver cũng như phần mềm cấu 
 
 Khó khăn nhất là ở phần 3 vì các hãng luôn muốn độc quyền sản phẩm của mình hơn là đi theo tiêu chuẩn. Đầu tiên thì cần phải có vài hãng tiên phong, sau đó nếu doanh thu bị ảnh hưởng thì các hãng lớn buộc phải hỗ trợ.
 
-#### Giao tiếp giữa user và extension
-##### /proc/net/wireless
+##### Giao tiếp giữa user và extension
+###### /proc/net/wireless
 - Để lấy thông tin về tình trạng hoạt động của Wi-Fi module, [Jean Tourrilhes](https://www.hpl.hp.com/personal/Jean_Tourrilhes/) đã tạo một nhân bản từ file `/proc/net/dev`, nó là `/proc/net/wireless`, file này chỉ chứa các thông tin liên quan đến Wi-Fi Link mà device ethernet tiêu chuẩn không có.
 
 - Như đã đề cập, Wi-Fi driver là một network driver cho nên interface mà nó tạo ra có đầy đủ thuộc tính của một net device:
@@ -215,7 +226,7 @@ Inter-|   Receive                                                |  Transmit
 docker0:      0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          0
 ```
 
-##### iwconfig
+###### iwconfig
 
 - Đây là công cụ được clone ra từ công cụ `ifconfig` nổi tiếng toàn cầu (rất tiếc sắp bị đàn em là công cụ `ip` thay thế). `iwconfig` gửi các thông tin cấu hình thiết bị đến Kernel như: Channel muốn hoạt động, network ID, tên của protocol muốn dùng, kiểu mã hóa, và vô vàn các thông số khác nữa.
 
@@ -297,11 +308,11 @@ Inter- | sta-|   Quality        |   Discarded packets               | Missed | W
  wlan3: 0000    1.  -99.   -256.       0      0      0      0      0        0
 ```
 
-##### iwpriv
+###### iwpriv
 
 Trong khi `iwconfig` yêu cầu các driver cần phải hỗ trợ để làm việc được với nhau thì `iwpriv` giúp mỗi hãng có cách để cấu hình riêng cho driver của mình (chỉnh antenna, debug firmware...) mà có thể không xuất hiện trên các driver của hãng khác hoặc dòng chip khác.
 
-##### ioctl
+###### ioctl
 
 `ioctl` là cách thông dụng để user-space nói chuyện với Kernel qua một file descriptor, và nó dùng được cả với network socket. Công cụ `ifconfig` dùng đúng cách này.
 
@@ -345,7 +356,7 @@ Cấu trúc dữ liệu cho lời gọi trên nằm ở `/usr/include/linux/if.h
 /* WPA2 : PMKSA cache management */
 ```
 
-### Control path ngày nay
+#### Control path ngày nay
 
 Nhu cầu sử dụng Wi-Fi là cực kì lớn, hầu như xuất hiện ở mỗi gia đình, mỗi thiết bị. Kéo theo nó là nhiều công nghệ, nhiều tiêu chuẩn được sinh ra. Điều này cũng tạo ra áp lực cho các nhà phát triển phần mềm, với số lượng tính năng ngày càng nhiều, nhiều doanh nghiệp sử dụng. Họ cần đảm bảo ít lỗi nhất trong các bản release.
 
@@ -406,7 +417,7 @@ Vẽ gọn lại theo kiểu từ trên xuống:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-### nl80211
+#### nl80211
 
 Đặt ra các tiêu chuẩn để giao tiếp giữa user-space và kernel (thay thế cách dùng ioctl của wireless-extension), dựa trên netlink socket. Các "khách hàng" nổi tiếng đang sử dụng tiêu chuẩn nl80211 có thể kể tên như: **iw, hostapd, wpa_supplicant, Network Manager, iwd...**
 
@@ -416,13 +427,13 @@ So với ioctl, cái hay của nó:
 - Có multicast group: scan xong, kết nối, mất kết nối... kernel bắn sự kiện, ứng dụng nào đăng ký cũng nhận được, nhiều ứng dụng cùng lúc.
 - Thêm lệnh hay attribute mới không làm hỏng chương trình cũ.
 
-### cfg80211
+#### cfg80211
 
 Thiết kế mới của driver theo chuẩn của nl80211, chứa các API phục vụ cho việc config Linux 802.11, cfg80211 thay thế các Wireless extension. Nó nhận message nl80211 rồi gọi xuống driver, giữ trạng thái (đang scan, đã kết nối...), áp luật tần số theo quốc gia (regulatory domain), và lo phần xử lý kết quả scan/BSS dùng chung cho mọi driver.
 <a target="_blank" href="https://elixir.bootlin.com/linux/v6.0/source/include/net/cfg80211.h">cfg80211.h</a>
 
 
-### cfg80211_ops
+#### cfg80211_ops
 
 Là các operation struct dùng cho việc giao tiếp giữa cfg80211 và tầng bên dưới (mac80211 hoặc Full-MAC driver). <a target="_blank" href="https://elixir.bootlin.com/linux/v6.0.19/source/include/net/cfg80211.h#L4271">cfg80211_ops</a>. Rút gọn vài callback (chữ ký đầy đủ thay đổi theo version kernel, xem link):
 
@@ -441,7 +452,7 @@ struct cfg80211_ops {
 };
 ```
 
-### mac80211
+#### mac80211
 
 Các module Wi-Fi hiện nay có 2 loại hardware:
 * Full-MAC: lớp Media Access Control (L2) được implement trực tiếp trên firmware của module. Scan, xác thực, associate, mã hoá, tiết kiệm pin, roaming đều do firmware làm; driver chỉ là đường chuyển lệnh giữa firmware và cfg80211. Loại này ít tốn tài nguyên của CPU chính và thường thấy trên các Wi-Fi chipset của Broadcom (`brcmfmac`), Marvell (`mwifiex`).
@@ -482,7 +493,7 @@ struct ieee80211_ops {
 };
 ```
 
-## Flow hoạt động của driver đời mới
+### Flow hoạt động của driver đời mới
 
 |Bước     | Giải thích|
 |:---------|:----------|
@@ -559,7 +570,7 @@ Wiphy phy0
 
 Dòng `valid interface combinations` đáng đọc kỹ: card này chạy cùng lúc tối đa 1 managed + 1 AP/P2P + 1 P2P-device, tổng 3 interface, trên tối đa 2 kênh. Muốn vừa kết nối Wi-Fi nhà vừa phát AP thì phải nằm trong giới hạn đó.
 
-## Từ lúc gõ lệnh đến lúc "state UP"
+### Từ lúc gõ lệnh đến lúc "state UP"
 
 Quay lại cái "cu-tèo" đang `state DOWN`. Với chip Soft-MAC và `wpa_supplicant` dùng nl80211, chuỗi việc để có link như sau (tên lệnh lấy từ `nl80211.h`):
 
@@ -577,7 +588,7 @@ Chip Full-MAC thì bước 3 tới 4 gộp lại thành một lệnh `NL80211_CM
 
 Sau bước 7 thì `ip link` mới hết `NO-CARRIER`, và cái IP 20.10.20.10 gán từ đầu mới bắt đầu có ý nghĩa.
 
-## Một card, nhiều interface
+### Một card, nhiều interface
 
 Một card vật lý (phy) có thể có nhiều interface ảo, mỗi cái một mode, miễn nằm trong `valid interface combinations` ở trên:
 
@@ -598,9 +609,9 @@ iw dev mon0 del
 iw dev            # liệt kê interface của mọi phy
 ```
 
-## Công cụ ngày nay
+### Công cụ ngày nay
 
-### iw
+#### iw
 
 `iw` là thay thế cho `iwconfig`, nói chuyện thẳng bằng nl80211:
 
@@ -617,7 +628,7 @@ iw reg get                      # regulatory domain
 iw reg set VN
 ```
 
-### wpa_supplicant
+#### wpa_supplicant
 
 Lo phần xác thực WPA/WPA2/WPA3 ở mode station:
 
@@ -642,7 +653,7 @@ wpa_cli -i wlan0 disconnect
 wpa_cli -i wlan0 reconnect
 ```
 
-### hostapd
+#### hostapd
 
 Biến card thành access point:
 
@@ -666,7 +677,7 @@ rsn_pairwise=CCMP
 hostapd /etc/hostapd/hostapd.conf
 ```
 
-### iwd
+#### iwd
 
 `iwd` (iNet Wireless Daemon, của Intel) là thay thế cho `wpa_supplicant`, gọn hơn và tự làm luôn DHCP nếu bật:
 
@@ -679,7 +690,7 @@ iwctl
 [iwd]# known-networks list
 ```
 
-## Debug
+### Debug
 
 ```bash
 # Bật dynamic debug cho driver và mac80211 (cần debugfs)
@@ -703,7 +714,7 @@ iw dev wlan0 get power_save
 iw phy phy0 channels                      # kênh được phép theo regulatory
 ```
 
-## File kernel nên đọc
+### File kernel nên đọc
 
 | File | Chứa gì |
 |------|---------|
@@ -720,7 +731,15 @@ iw phy phy0 channels                      # kênh được phép theo regulatory
 | `drivers/net/wireless/ath/ath9k/` | Atheros ath9k (Soft-MAC) |
 | `drivers/net/wireless/broadcom/brcm80211/brcmfmac/` | Broadcom (Full-MAC) |
 
-Chưa có trong bài: theo dấu một frame thật từ `ndo_start_xmit()` xuống `iwlwifi` bằng ftrace. Phần trên vẫn là đọc code và tài liệu, chưa trace trên máy.
+## Result
+
+Câu hỏi ở tiêu đề giờ có câu trả lời gọn. Về data path, Wi-Fi driver không có gì đặc biệt: nó đăng ký `net_device_ops` như mọi driver Ethernet, nhận qua `netif_rx()`/NAPI, gửi qua `ndo_start_xmit()`, chỉ thêm một bước đổi frame 802.11 sang Ethernet (firmware làm với Full-MAC, mac80211 làm với Soft-MAC). Cái đặc biệt là control path: từ ioctl của Wireless Extensions chuyển sang nl80211 (netlink, có attribute có kiểu và sự kiện multicast), cfg80211 giữ trạng thái và luật tần số, mac80211 làm lớp MAC cho chip Soft-MAC. "Cắm dây" của Wi-Fi là bảy bước trong bảng ở trên, từ `NL80211_CMD_TRIGGER_SCAN` tới `NL80211_CMD_SET_STATION`, và chỉ sau bước cuối thì "cu-tèo" mới hết `NO-CARRIER`.
+
+Phần trên vẫn là đọc code và tài liệu, chưa trace trên máy.
+
+## What I'd do next
+
+Theo dấu một frame thật từ `ndo_start_xmit()` xuống `iwlwifi` bằng ftrace, để thay đoạn đọc code ở trên bằng log chạy thật.
 
 ## References
 

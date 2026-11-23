@@ -4,20 +4,37 @@ title: "Bluetooth Keyboard, Mouse & Media Emulator on Raspberry Pi"
 short_description: "My Raspberry Pi pretends to be a Bluetooth keyboard, mouse and media remote; started 2017, still patched in 2026"
 status: "Done"
 picture: "assets/images/rpi_bt_hid.png"
-latest_release: "2026-06: new HID descriptor, media keys, Windows audio-sink fix"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
+tags: [raspberry-pi, linux, python, bluetooth]
 ---
+
+<!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
+     Same facts as before; the dated fix list became paragraphs grouped by what broke. -->
 
 # Bluetooth Keyboard, Mouse & Media Emulator on Raspberry Pi
 {: .no_toc }
 
-In September 2017 I wanted a Raspberry Pi 3 to show up on a PC as a plain Bluetooth
-keyboard. No driver on the host, no app: you pair it like any keyboard and it types. That
-became [thanhlev/keyboard_mouse_emulate_on_raspberry](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry).
-Mouse and media keys came later. As of today (2026-11-22) it has 341 stars and
-120 forks, and some of the nastier fixes came from other people, not from me.
+## Table of Contents
+{: .no_toc }
 
+1. TOC
+{:toc}
+
+## Situation
+
+In September 2017 I wanted a Raspberry Pi 3 to show up on a PC as a plain Bluetooth keyboard. No
+driver on the host, no app: you pair it like any keyboard and it types.
+
+## Task
+
+Make the Pi a Bluetooth HID device that any host accepts as a keyboard, and later as a mouse and a
+media remote too, driven either by a real USB keyboard/mouse on the Pi or by a script.
+
+## Action
+
+The code lives in [thanhlev/keyboard_mouse_emulate_on_raspberry](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry).
 The background write-ups from back then are on my old blog:
 [Make Raspberry Pi3 as an emulator bluetooth keyboard](https://thanhle.me/make-raspberry-pi3-as-an-emulator-bluetooth-keyboard/)
 and [Emulate Bluetooth mouse with Raspberry Pi](https://thanhle.me/emulate-bluetooth-mouse-with-raspberry-pi/).
@@ -30,16 +47,10 @@ and [Emulate Bluetooth mouse with Raspberry Pi](https://thanhle.me/emulate-bluet
 
 (That video is the old keyboard-only version.)
 
-## Table of Contents
-{: .no_toc }
+### Make it work first
 
-1. TOC
-{:toc}
-
-## Make it work first
-
-You need a Pi with Bluetooth that BlueZ can drive. I started on a Pi 3. A USB keyboard or mouse
-on the Pi is optional: only the relay clients need one.
+You need a Pi with Bluetooth that BlueZ can drive. I started on a Pi 3. A USB keyboard or mouse on the
+Pi is optional: only the relay clients need one.
 
 ```bash
 git clone https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry.git
@@ -65,7 +76,7 @@ sudo ./boot.sh
 `boot.sh` also runs `updateMac.sh` and `updateName.sh ThanhLe_Keyboard_Mouse`, so that is the
 name you look for when pairing. `uninstall.sh` puts things back.
 
-## How it hangs together
+### How it hangs together
 
 One server owns the Bluetooth side. Everything else is a small client that talks to it over
 D-Bus (`org.thanhle.btkbservice`):
@@ -107,7 +118,7 @@ The clients:
 | `mouse/mouse_client.py` | reads the USB mouse on the Pi, sends moves and clicks |
 | `mouse/mouse_emulate.py` | sends one mouse report from the command line (button, X, Y, wheel) |
 
-## The bytes on the wire
+### The bytes on the wire
 
 Every report starts with `0xA1` (HID "DATA | Input") and then the report ID. These are the
 arrays the server builds:
@@ -138,38 +149,41 @@ from the descriptor in `sdp_record.xml`:
 `send_consumer` takes the first two bytes; the third is always 0 because nothing above bit 10
 is used.
 
-## Things that broke along the way
+### What broke, and how it got fixed
 
-The commit log is more honest than any feature list, so here is the short version of it.
+The commit log is more honest than any feature list, so here is the short version of it. Some of the
+nastier fixes came from other people, not from me.
 
-- **bluetoothd needs `--compat`** (June 2020). Back then `boot.sh` started its own
-  `bluetoothd --compat --nodetach --debug` in a tmux pane, and without `--compat` the server
-  didn't come up. Today `setup.sh` only adds `--noplugin=input` to `bluetooth.service`, so BlueZ's
-  own input plugin doesn't grab the HID channels before the server does.
-- **Key delay** (June 2020): `send_string.py` went down to 0.01 s per key.
-- **Device class reset to 0x400000** (April 2021, from Henri Manson's PR): registering the profile
-  resets the class, so the server now sets the class *after* `RegisterProfile`.
-- **Fresh Raspberry Pi OS broke `setup.sh`** (Bullseye, then Bookworm, 2024): Raraph84 reorganised
-  the script, PyBluez gets installed from source and pip needs `PIP_BREAK_SYSTEM_PACKAGES=1`.
-- **No reconnect to an already-paired host** ([#19](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry/issues/19),
-  open from 2020 until a fix from Woisol-ISer in 2025).
-- **The mouse didn't work with the old descriptor** ([#51](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry/issues/51)).
-  In June 2026 I replaced the descriptor with one combined keyboard + mouse + consumer
-  descriptor and added `send_consumer`. My first consumer report was 4 bytes; the descriptor says
-  3 data bytes, so it has to be 5 with the header. Fixed in the next commit, together with
-  clamping the mouse buttons to the 3 the descriptor declares.
-- **Windows saw it as a speaker** ([#42](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry/issues/42),
-  open since 2023). BlueZ loads its A2DP/AVRCP plugins by default, so Windows found audio profiles
-  next to the HID one. First I disabled those plugins; then I switched to keeping them and
-  disabling the Source/Sink/Media profiles in `/etc/bluetooth/main.conf` instead
-  (`Disable=Source,Sink,Media`). The device class went from 0x002540 (keyboard only) to
-  0x0025C0 (keyboard + pointing device).
+BlueZ itself was the first fight. In June 2020 the server didn't come up unless `bluetoothd` ran with
+`--compat`, so `boot.sh` started its own `bluetoothd --compat --nodetach --debug` in a tmux pane. Today
+`setup.sh` only adds `--noplugin=input` to `bluetooth.service`, so BlueZ's own input plugin doesn't grab
+the HID channels before the server does. In April 2021 Henri Manson's PR found that registering the
+profile resets the device class to 0x400000, so the server now sets the class *after* `RegisterProfile`.
 
-Also in June 2026: logging in every module (timestamps and levels, much easier when someone
-pastes a log into an issue) and unit tests for the keymap, the report layouts, the mouse state
-and `send_string`.
+New Raspberry Pi OS releases kept breaking `setup.sh` (Bullseye, then Bookworm, in 2024). Raraph84
+reorganised the script; PyBluez now gets installed from source and pip needs `PIP_BREAK_SYSTEM_PACKAGES=1`.
+Reconnecting to an already-paired host didn't work at all
+([#19](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry/issues/19)), and that stayed open
+from 2020 until a fix from Woisol-ISer in 2025. Smaller: `send_string.py` went down to 0.01 s per key in
+June 2020.
 
-## Python deps
+The mouse didn't work with the old descriptor
+([#51](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry/issues/51)). In June 2026 I
+replaced it with one combined keyboard + mouse + consumer descriptor and added `send_consumer`. My
+first consumer report was 4 bytes; the descriptor says 3 data bytes, so it has to be 5 with the header.
+Fixed in the next commit, together with clamping the mouse buttons to the 3 the descriptor declares.
+
+Windows saw the Pi as a speaker
+([#42](https://github.com/thanhlev/keyboard_mouse_emulate_on_raspberry/issues/42), open since 2023):
+BlueZ loads its A2DP/AVRCP plugins by default, so Windows found audio profiles next to the HID one.
+First I disabled those plugins; then I switched to keeping them and disabling the Source/Sink/Media
+profiles in `/etc/bluetooth/main.conf` instead (`Disable=Source,Sink,Media`). The device class went from
+0x002540 (keyboard only) to 0x0025C0 (keyboard + pointing device).
+
+Also in June 2026: logging in every module (timestamps and levels, much easier when someone pastes a
+log into an issue) and unit tests for the keymap, the report layouts, the mouse state and `send_string`.
+
+### Python deps
 
 From `requirements.txt`:
 
@@ -181,8 +195,14 @@ From `requirements.txt`:
 | `pyudev` | input device hot-plug |
 | `pybluez` | Bluetooth sockets |
 
-## Still open
+## Result
 
-The host MAC is still hard-coded in `btk_server.py` (the README literally says "Lazy to write
-at scipt", and it also still says line 26 while the variable now sits on line 25). And I haven't tested what hosts do with bit 2 of the media report. MIT
-licensed; issues and PRs are how most of the fixes above arrived.
+A Pi that pairs as `ThanhLe_Keyboard_Mouse` and works as keyboard, mouse and media remote on the host,
+with no driver there. As of 2026-11-22 the repo has 341 stars and 120 forks. MIT licensed; issues and PRs
+are how most of the fixes above arrived.
+
+## What I'd do next
+
+The host MAC is still hard-coded in `btk_server.py` (the README literally says "Lazy to write at
+scipt", and it also still says line 26 while the variable now sits on line 25), so a pairing script is
+the obvious next step. And I haven't tested what hosts do with bit 2 of the media report.

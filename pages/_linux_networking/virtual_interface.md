@@ -4,9 +4,10 @@ title: "Virtual Interfaces in Linux"
 short_description: "Bridge, VLAN, macvlan, ipvlan, veth, TUN/TAP, tunnels, VXLAN, WireGuard, dummy, bond: what each is and the ip commands"
 status: "Done"
 picture: "assets/images/4port_ethernet_card.webp"
-latest_release: "2026-11-22: rewritten in my own words"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
+tags: [networking, linux]
 ---
 
 # Virtual Interfaces in Linux
@@ -20,7 +21,17 @@ publish: true
 
 ---
 
-## What they have in common
+## Situation
+
+The other networking posts here keep leaning on the same building blocks: Docker is bridges and veth pairs, macvlan and ipvlan are sub-interfaces, VPNs are TUN devices or WireGuard, overlays are VXLAN. Each of them is one `ip link add ... type ...` away, but with a dozen types it's easy to lose track of which one does what and which options it takes.
+
+## Task
+
+One page with every virtual interface type I run into: what each one is, what layer it works on, what it's used for, and the `ip` commands to create it. Then put a few of them together into a small container network by hand.
+
+## Action
+
+### What they have in common
 
 To the kernel they're all normal network interfaces. They have a name, usually a MAC, they take IP addresses, show up in routing, and you can `tcpdump` them. Almost all of them are created with `ip link` from iproute2.
 
@@ -39,7 +50,7 @@ To the kernel they're all normal network interfaces. They have a name, usually a
 | Dummy | L3 | an address that's always up |
 | Bond | L2 | several NICs as one |
 
-## Bridge
+### Bridge
 
 A software L2 switch. It learns which MAC sits behind which port and forwards frames accordingly; unknown destinations get flooded to all ports, exactly like a cheap hardware switch.
 
@@ -91,7 +102,7 @@ brctl showmacs br0
 
 Bridges are everywhere once you look: KVM/QEMU bridges TAP devices with a physical NIC so VMs get LAN addresses; Docker's `docker0` is a bridge with one veth per container; LXC/LXD do the same.
 
-## 802.1Q VLAN
+### 802.1Q VLAN
 
 A VLAN interface adds a VLAN tag on the way out and takes tagged frames with its ID on the way in. The parent becomes a trunk carrying all of them.
 
@@ -134,7 +145,7 @@ ip link delete eth0.100
 
 The classic use is router-on-a-stick: one cable to a managed switch, one VLAN per subnet, the Linux box routes between them. The switch port has to be configured as a trunk for that VLAN, otherwise the tagged frames just disappear.
 
-## MACVLAN
+### MACVLAN
 
 Sub-interfaces of a physical interface, each with its own MAC. To the switch, each one is another machine on the port.
 
@@ -194,7 +205,7 @@ ip link set macvlan-host up
 
 Why that works, and everything else about the modes, is in [Linux MacVLAN]({{ site.baseurl }}{% link _linux_networking/linux_macvlan.md %}).
 
-## IPVLAN
+### IPVLAN
 
 Like macvlan, but all sub-interfaces use the parent's MAC, and the kernel tells them apart by IP. So it works where extra MACs aren't welcome: Wi-Fi, cloud VMs, switch ports with a MAC limit.
 
@@ -233,7 +244,7 @@ ip netns exec ns1 ip addr add 192.168.1.50/24 dev ipvlan0
 | iptables on the traffic | yes | `l3s` only |
 | Host reaches sub-interfaces via parent | no | no |
 
-## VETH
+### VETH
 
 Always a pair: a virtual Ethernet cable with two ends. What goes in one end comes out the other. This is the standard way to connect a network namespace to anything.
 
@@ -290,7 +301,7 @@ Docker's default bridge network is exactly this, repeated: for each container on
 
 More on that in [Docker Networking]({{ site.baseurl }}{% link _linux_networking/docker_network.md %}).
 
-## TUN
+### TUN
 
 A L3 device with a program behind it. The program opens `/dev/net/tun`, and from then on every IP packet the kernel routes to `tun0` can be `read()` by the program, and every packet it `write()`s appears as received on `tun0`. No Ethernet header anywhere.
 
@@ -329,7 +340,7 @@ ip tuntap del name tun0 mode tun
 
 OpenVPN in its usual routed setup is the classic TUN user. So is `wireguard-go`, the userspace WireGuard; the in-kernel WireGuard is its own interface type (below).
 
-## TAP
+### TAP
 
 Same as TUN, but one layer down: the program reads and writes whole Ethernet frames, MAC header included. So a TAP has a MAC, does broadcast, and can be a bridge port.
 
@@ -373,7 +384,7 @@ That's the usual VM setup: QEMU holds the TAP, the TAP is a port of `br0`, `br0`
 | Broadcast/multicast | no | yes |
 | Typical user | routed VPN | VMs, bridged VPN |
 
-## Tunnels (IPIP, GRE, SIT, VTI)
+### Tunnels (IPIP, GRE, SIT, VTI)
 
 Packets inside packets, so two sites can exchange traffic the network in between wouldn't route by itself. A 6in4 (`sit`) tunnel, with variables:
 
@@ -451,7 +462,7 @@ ip route add 10.0.2.0/24 dev vti0
 
 Deleting: `ip tunnel del tun-ab`, or `ip link delete gretap0` for the `ip link` kinds.
 
-## VXLAN
+### VXLAN
 
 Ethernet frames in UDP (port 4789), so two hosts on a routed network can share one L2 segment. The segment ID (VNI) is 24 bits, so about 16 million of them, against 4094 VLANs.
 
@@ -496,7 +507,7 @@ bridge fdb show dev vxlan100
 
 The all-zero MAC entries mean "send broadcast/unknown traffic to this peer", one entry per peer. This is the layer under Docker's overlay network, Flannel's VXLAN backend in Kubernetes, and a lot of data-center fabrics.
 
-## WireGuard
+### WireGuard
 
 An in-kernel VPN that appears as an interface (`wg0`) and carries IP packets. Keys are short, config is a handful of lines, and `wg` is the only extra tool.
 
@@ -520,7 +531,7 @@ wg set wg0 peer <public-key> remove
 
 `allowed-ips` does double duty: on the way out it picks which peer a packet goes to, on the way in it's the list of source addresses accepted from that peer. Getting it wrong is the usual reason "the handshake works but no traffic passes".
 
-## Dummy
+### Dummy
 
 An interface that's always up and drops whatever is sent to it. It's useful as a place to hang an address that shouldn't depend on any cable: a router ID for OSPF/BGP, a service IP, or a black hole for testing.
 
@@ -530,7 +541,7 @@ ip link set dummy0 up
 ip addr add 10.255.255.1/32 dev dummy0
 ```
 
-## Bond
+### Bond
 
 Several physical NICs as one logical interface, for failover, more bandwidth, or both.
 
@@ -564,7 +575,7 @@ ip link add bond0 type bond mode active-backup
 ip link set bond0 type bond primary eth0 miimon 100
 ```
 
-## Putting it together: two namespaces on a bridge
+### Putting it together: two namespaces on a bridge
 
 This is a container network without the containers: two namespaces, a veth pair each, a bridge in the middle. If this works, you understand what Docker's bridge driver does.
 
@@ -608,7 +619,7 @@ ip netns monitor            # netns add/delete events
 ip netns del red
 ```
 
-## Looking at them
+### Looking at them
 
 ```bash
 ip -d link show              # -d shows the type and its options
@@ -620,7 +631,13 @@ bridge fdb show dev vxlan100
 perf trace -e 'net:*' -- ping -c1 10.0.0.2   # kernel net tracepoints for one ping
 ```
 
-Not covered yet: macvtap/ipvtap (the TAP-like versions of macvlan/ipvlan that libvirt uses), `veth` with XDP, and VRF devices.
+## Result
+
+Twelve interface types on one page, each with its layer, its use and its `ip` recipe, and they really are all ordinary interfaces to the kernel: they take addresses, show up in routing and can be `tcpdump`ed. The two-namespace example is the one that ties it together: two veth pairs and a bridge give you what Docker's bridge driver builds, and `ip netns exec red ping 10.0.0.3` going through means you understand it. This page holds the commands, not a captured run, so there are no outputs or numbers here.
+
+## What I'd do next
+
+macvtap/ipvtap (the TAP-like versions of macvlan/ipvlan that libvirt uses), `veth` with XDP, and VRF devices.
 
 ## References
 

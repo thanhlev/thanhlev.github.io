@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/db8074/emmc-repartition
 board_parent: db8074
 result: "/data from 864 MiB to 10 GiB, 15 bytes changed per GPT copy"
+tags: [qualcomm, arm, android, memory]
 ---
 
 # Re-partitioning the eMMC without the command that would have erased it

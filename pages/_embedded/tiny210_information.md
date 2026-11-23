@@ -4,10 +4,14 @@ title: Tiny210 Information for development
 short_description: "My reading notes from the S5PV210 manual: address map, iROM/BL1/BL2 boot, boot block layout"
 status: "Done"
 picture: "assets/images/tiny210v2_i.jpg"
-latest_release: "Copied from my old notes (2023-01)"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 8
 publish: true
+tags: [samsung, arm, boot, memory]
 ---
+
+<!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
+     Same Samsung tables, diagrams and quotes as before; nothing added. -->
 
 # Tiny210 Information for development
 {: .no_toc }
@@ -15,22 +19,28 @@ publish: true
 ![](../../../assets/images/tiny210/tiny210v2_i.jpg)
 
 ## Table of contents
-
 {: .no_toc }
 
 1. TOC
 {:toc}
 
------------------------------------
+---
 
-My notes on FriendlyARM's Tiny210 (Samsung S5PV210 inside), from reading Samsung's S5PV210
-documentation. The tables and diagrams are Samsung's; what's mine is the selection and the
-order. I wanted to understand what happens between power-on and U-Boot on this board: what
-the iROM (BL0) loads, from which block of the SD card, and where it lands in memory. The block
-layout here is also why block 0 of the SD card stays free for the MBR (see
-[Disk Partition Tables](/linux_general/partition-table)).
+## Situation
 
-## **SoC**
+I had FriendlyARM's Tiny210 (Samsung S5PV210 inside) and wanted to understand what happens between
+power-on and U-Boot on it. Without that I couldn't say why the SD card has to be laid out the way it is.
+
+## Task
+
+Read Samsung's S5PV210 documentation and pull out what matters for booting: the address map, what the
+iROM (BL0) loads, from which block of the boot device, and where it lands in memory.
+
+## Action
+
+The tables and diagrams below are Samsung's; what's mine is the selection and the order.
+
+### SoC
 
 - SoC: S5PV210, Vendor: Samsung.
 - Block Diagram
@@ -39,7 +49,7 @@ layout here is also why block 0 of the SD card stays free for the MBR (see
   <img src="../../../assets/images/tiny210/tiny210_block_diagram.png" width="900" />
 </p>
 
-## **Address Map**
+### Address map
 
 - All address map
 
@@ -53,13 +63,13 @@ layout here is also why block 0 of the SD card stays free for the MBR (see
   <img src="../../../assets/images/tiny210/tiny210_internal_memory_address_map.png" width="800" />
 </p>
 
-### **Device specific address space**
+#### Device specific address space
 
 <p align="center">
   <img src="../../../assets/images/tiny210/tiny210_device_specific_address_space.png" width="800" />
 </p>
 
-### **Special function register map**
+#### Special function register map
 
 <p align="center">
   <img src="../../../assets/images/tiny210/tiny210_special_function_address_map1.png" width="800" />
@@ -67,8 +77,9 @@ layout here is also why block 0 of the SD card stays free for the MBR (see
   <img src="../../../assets/images/tiny210/tiny210_special_function_address_map3.png" width="800" />
 </p>
 
-## **Booting**
-### **Booting sequence**
+### Booting
+
+#### Booting sequence
 
 <p align="center">
   <img src="../../../assets/images/tiny210/tiny210_booting_sequence.png" width="800" />
@@ -88,7 +99,7 @@ layout here is also why block 0 of the SD card stays free for the MBR (see
   <img src="../../../assets/images/tiny210/tiny210_bootup_diagram.png" width="800" />
 </p>
 
-#### **iROM(BL0) boot-up sequence**
+##### iROM(BL0) boot-up sequence
 
 - Disable the Watch-Dog Timer
 - Initialize the instruction cache controller.
@@ -99,20 +110,20 @@ layout here is also why block 0 of the SD card stays free for the MBR (see
 - If secure booting is enabled, execute integrity check
 - If integrity check passes, then jump to the first boot loader in iRAM (0xD002_0010)
 
-#### **First stage bootloader(BL1) boot-up sequence**
+##### First stage bootloader(BL1) boot-up sequence
 
 - Load the second boot loader from boot device to iRAM.
 - If secure booting is enabled, execute integrity check.
 - If integrity check passes, then jump to the second boot loader in iRAM (The jumping address depends on user's software)
 
-#### **Second stage bootloader(BL2) boot-up sequence**
+##### Second stage bootloader(BL2) boot-up sequence
 
 - Initializes the DRAM controller.
 - Load the OS image from specific device (block number 1) to DRAM.
 - If secure booting is enabled, execute integrity check.
 - If integrity check passes, then jump to OS code in DRAM (0x2000_0000 (DRAM0) or 0x4000_0000(DRAM1))
 
-### **Boot Device Configuration**
+#### Boot device configuration
 
 The booting device can be chosen from following list:
 
@@ -130,7 +141,7 @@ iROM checks for OM pins to priority boot devices
   <img src="../../../assets/images/tiny210/tiny210_om_pin2.png" width="800" />
 </p>
 
-### **BL1 image boot block assignment**
+#### BL1 image boot block assignment
 
 - BL1 will be loaded by BL0 to internal SRAM at start address 0xD002_0000
 - BL1 has variable size, so BL0 requires 16 bytes header info to contain BL1 size, BL1 checksum. So BL0 known the size to load and use checksum to verify BL1.
@@ -145,7 +156,7 @@ iROM checks for OM pins to priority boot devices
   <img src="../../../assets/images/tiny210/tiny210_BL1_secure_boot.png" width="800" />
 </p>
 
-#### **SD/MMC/eSSD Device Boot Block Assignment**
+##### SD/MMC/eSSD Device Boot Block Assignment
 
 - The first one block shouldn’t be used (reserved), modern BL0 support searching for BL1 in a partition, so first block and be used to store MBR.
 
@@ -153,41 +164,41 @@ iROM checks for OM pins to priority boot devices
   <img src="../../../assets/images/tiny210/tiny210_mmc_block_assignment.png" width="800" />
 </p>
 
-#### **eMMC Device Boot Block Assignment**
+##### eMMC Device Boot Block Assignment
 
 <p align="center">
   <img src="../../../assets/images/tiny210/tiny210_emmc_block_assignment.png" width="800" />
 </p>
 
-#### **OneNAND/NAND Device Boot Block Assignment**
+##### OneNAND/NAND Device Boot Block Assignment
 
 <p align="center">
   <img src="../../../assets/images/tiny210/tiny210_nand_block_assignment.png" width="800" />
 </p>
 
-### **Secure boot**
+#### Secure boot
 
 > **According to the datasheet**
 > The basic criterion for security system is "The ‘root of trust’ has to be hardware. You cannot request a software system to ‘validate’ itself.”
 
 In S5PV210, the root of trust is implemented by iROM code in internal ROM. Therefore it cannot be modified by unauthorized users. The hardware design proves the integrity of iROM code. On the other hand, the first boot loader, the second boot loader and OS images are stored in external memory devices. Therefore, the iROM code (that has already been proved as secure) should verify the integrity of first boot loader. If the integrity check passes on first boot loader, the first boot loader is included in trust region. Then, first boot loader verifies the integrity of the second boot loader, the second boot loader verifies the integrity of the OS image.
 
-#### **Secure booting sequence**
+##### Secure booting sequence
 
-##### **The iROM code (BL0)**
+###### The iROM code (BL0)
 
 - Checks the integrity of RSA public key using E-fuse RSA key hash value.
 - Loads the first boot loader to iRAM.
 - Checks the integrity of first boot loader using trusted RSA public key.
 
-##### **The first boot loader (BL1)**
+###### The first boot loader (BL1)
 
 - Loads security software to iRAM.
 - Checks the integrity of software using trusted RSA public key.
 - Loads second boot loader to iRAM.
 - Checks the integrity of second boot loader using trusted RSA public key.
 
-##### **The second boot loader (BL2)**
+###### The second boot loader (BL2)
 
 - Loads security software to iRAM.
 - Checks the integrity of software using trusted RSA public key.
@@ -197,3 +208,14 @@ In S5PV210, the root of trust is implemented by iROM code in internal ROM. There
 <p align="center">
   <img src="../../../assets/images/tiny210/tiny210_secure_boot_sequence.png" width="800" />
 </p>
+
+## Result
+
+The chain on this SoC: iROM (BL0) loads BL1 (at most 16 KB, with a 16-byte header holding its size
+and checksum) from the boot device into iRAM at 0xD002_0000 and jumps to 0xD002_0010. BL1 loads BL2
+(at most 80 KB) into iRAM, BL2 brings up the DRAM controller and loads the OS to 0x2000_0000 (DRAM0) or
+0x4000_0000 (DRAM1). With secure boot on, each stage checks the next with an RSA key whose hash sits in
+e-fuse. The SD/MMC block layout is also why block 0 of the SD card stays free for the MBR (see
+[Disk Partition Tables](/linux_general/partition-table)).
+
+All of this is from the documentation; I didn't check any of it with a debugger on the board.

@@ -9,6 +9,7 @@ index: 20
 publish: true
 permalink: /embedded/boards/rock3a/
 board_hub: true
+tags: [rockchip, arm, npu, freertos, bare-metal, linux]
 ---
 
 # Radxa ROCK 3A (RK3568)

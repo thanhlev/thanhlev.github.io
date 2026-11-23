@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/d1-nezha/freertos-c906
 board_parent: d1-nezha
 result: "Task switch 19907 -> 734 cycles with the D-cache on; tick wake-up 0.50 us; idle wfi ~2.5 C cooler"
+tags: [allwinner, risc-v, freertos, bare-metal, memory]
 ---
 
 # FreeRTOS on the C906: a 27x cache surprise, and an RTOS that never slept
@@ -30,7 +31,7 @@ through OpenSBI and U-Boot, and they want GNU GCC. I'd have had to throw away my
 toolchain and my shell. FreeRTOS's generic RISC-V port runs in M-mode and leaves the timer to me.
 
 ![M-mode only vs S-mode on OpenSBI]({{ '/assets/images/boards/d1-nezha/d1_mode_pair.png' | relative_url }})
-*The two roads, from my own notes on the D1 boot chain: left, everything at physical addresses with no MMU and the CLINT mine; right, OpenSBI in M-mode and a kernel at `0xffff_ffff_8...` through page tables. (Some Vietnamese labels.)*
+*The two roads, from my own notes on the D1 boot chain: left, everything at physical addresses with no MMU and the CLINT mine; right, OpenSBI in M-mode and a kernel at `0xffff_ffff_8...` through page tables.*
 
 ## Task
 

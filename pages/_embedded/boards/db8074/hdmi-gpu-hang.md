@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/db8074/hdmi-gpu-hang
 board_parent: db8074
 result: "HDMI at 1080p60 on kernel 6.6; GPU hangs from 5 to 10 a minute down to 0 in 41 min"
+tags: [qualcomm, arm, gpu, linux, display]
 ---
 
 # HDMI from an unmerged patch, then a GPU hang that wasn't the GPU

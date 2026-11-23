@@ -6,11 +6,16 @@ picture: "assets/images/pytest_diagram.png"
 commit1: "Init document"
 commit2: "Add marks"
 commit3: "Add configuration example"
-latest_release: "Add plugin"
+latest_release: "2026-11-22: viết lại theo dạng STAR"
 status: "Done"
 index: 2
 publish: true
+tags: [testing, python]
 ---
+
+<!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
+     Cùng nội dung và output như trước. Sửa nhỏ: dòng "<<<<< Fail" trong code thành comment Python,
+     console_output_style/log_cli trong pytest.ini thành ini hợp lệ (comment nằm riêng một dòng). -->
 
 # Pytest và cách sử dụng
 {: .no_toc }
@@ -21,20 +26,27 @@ publish: true
 1. TOC
 {:toc}
 
------------------------------------
-## Introduction
+---
 
-Đây là ghi chép của mình lúc học pytest (tháng 2/2023), trước khi dùng tới
-[pytest-embedded](/embedded/pytest-embedded) để test firmware trên board thật. Output trong bài là
-mình chạy trên máy của mình, kể cả cái test fail cố ý ở ví dụ đầu.
+## Situation
 
-- Pytest là một công cụ test code miễn phí được cộng đồng phát triển.
-- Có nhiều plugin mở rộng, nên các hệ thống CI hay dùng nó để chạy test tự động.
+Tháng 2/2023 mình muốn test firmware trên board thật một cách tự động, và công cụ mình định dùng,
+[pytest-embedded](/embedded/pytest-embedded), là một plugin của pytest. Mà pytest thì mình chưa dùng bao giờ.
 
-## Hoạt động
+Pytest là công cụ test miễn phí do cộng đồng phát triển, có rất nhiều plugin mở rộng, nên các hệ thống CI
+hay dùng nó để chạy test tự động.
 
-User và pytest framework giao tiếp với nhau thông qua các test file, bên dưới là một ví dụ:
-### Example
+## Task
+
+Học pytest đủ để đọc và viết được test kiểu pytest-embedded: pytest tìm test thế nào, fixture là gì và
+sống bao lâu, mark dùng làm gì, cấu hình nằm ở đâu, plugin cắm vào ra sao. Output trong bài là mình chạy
+trên máy của mình, kể cả cái test fail cố ý ở ví dụ đầu.
+
+## Action
+
+### Test file đầu tiên
+
+User và pytest giao tiếp với nhau qua các test file. Mình bắt đầu bằng một file có một test sai cố ý:
 
 - tạo file test: `test_sample.py`
 
@@ -77,15 +89,15 @@ FAILED test_sample.py::test_answer1 - assert 9 == 8
 thanhle@thanhle ~/build/test
 
 ```
-### Giải thích
+
+pytest tìm test theo tên:
 
 - pytest là một module, khi được gọi nó sẽ tìm ở thư mục hiện tại tất cả các file có dạng `test_*.py` và thực thi nó(file `test_sample.py` thõa điều kiện)
 - Bên trong mỗi file `test_*.py`, pytest tìm các hàm có dạng `test*(x)` và chạy nó (hàm `test_answer1` và `test_answer2` thõa điều kiện)
 
+### Fixtures
 
-## Sử dụng fixtures
-
-### Example
+#### Ví dụ
 
 ```python
 # content of demo/test_sample.py
@@ -130,9 +142,9 @@ def test_answer(a_val, b_val):
     assert sumOf(a_val, b_val) == a_val + b_val
 
 ```
-### Các biến thể của fixtures
+#### Các biến thể của fixtures
 
-#### nested fixtures
+##### Nested fixtures
 - biến đầu vào của một fixtures là một fixtures khác
 
 ```python
@@ -152,7 +164,7 @@ def test_string(order):
     # Assert
     assert order == ["a", "b"]
 ```
-#### Sử dụng lại fixtures
+##### Sử dụng lại fixtures
 - giá trị `a_val` đưa vào 2 test case là giá trị ban đầu được hàm `@pytest.fixture` tạo ra, giúp các test case không bị ảnh hưởng lẫn nhau.
 
 ```python
@@ -170,10 +182,10 @@ def test_answer1(a_val):
     a_val = a_val + 1
     assert a_val == tmp + 1
 def test_answer2(a_val):
-    assert a_val == 11 <<<<< Fail ở đây, a_val = 10
+    assert a_val == 11  # fail ở đây: a_val vẫn là 10
 ```
 - Nếu một fixtures được gọi trong một test, hoặc hàm con của test, thì pytest chỉ request 1 lần, những lần sau dùng cache
-#### Autouse fixtures
+##### Autouse fixtures
 - pytest tự động gọi fixture để lấy giá trị mà không cần check có test hoặc fixture nào khác cần tới không.
 
 ```python
@@ -183,7 +195,7 @@ def a_val():
     return 10
 ```
 
-#### Fixture trả về một hàm
+##### Fixture trả về một hàm
 
 ```python
 @pytest.fixture
@@ -197,7 +209,7 @@ def test_customer_records(make_customer_record):
     customer_3 = make_customer_record("Meredith")
 ```
 
-#### Fixture có tham số [HOT]
+##### Fixture có tham số
 
 - Example
 
@@ -216,7 +228,7 @@ def smtp_connection(request):
 - Code của test sẽ không cần thay đổi gì
 
 
-#### Chia sẽ fixtures giữa các test khác nhau [HOT]
+##### Chia sẻ fixture giữa các test
 
 - Trong các ví dụ trên, fixture được tạo ta trong mỗi test, chúng là các instance độc lập nhau.
 - Có những fixture cần được tái sử dụng lại trong toàn bộ quá trình test: ví dụ một ssh connection, serial connection, Wi-Fi connection ...
@@ -244,18 +256,19 @@ def test_noop(smtp_connection):
     assert response == 250
 ```
 
-##### Phạm vi của shared fixture
-Fixture được tạo ra và bị hủy dựa trên phạm vi hoạt động của nó
+**Phạm vi của shared fixture.** Fixture được tạo ra và bị hủy dựa trên phạm vi hoạt động của nó:
+
 - function: phạm vi mặc định, fixture bị hũy sau mỗi test.
 - class: bị hủy trong lần test cuối cùng của class.
 - module: bị hủy trong lần test cuối cùng của module.
 - package: bị hủy trong lần test cuối cùng của package.
 - session: bị hủy trong lần test cuối cùng của session.
 
-### Clean up fixtures sau khi chạy test
+#### Clean up fixture sau khi chạy test
 
-Pytest hỗ trợ việc khởi tạo và clean-up fixtures bằng 2 cách: dùng `yield` và dùng `finalizer`
-#### Dùng yield
+Pytest hỗ trợ việc khởi tạo và clean-up fixtures bằng 2 cách: dùng `yield` và dùng `finalizer`.
+
+##### Dùng yield
 
 Xét ví dụ bên dưới
 ```python
@@ -271,7 +284,26 @@ def sending_user(mail_admin):
   <p><strong>Info!</strong> Thứ tự cleanup fixture sẽ ngược lại với thứ tự khởi tạo fixture</p>
 </div>
 
-### Override fixtures
+##### Dùng finalizer
+
+- Cần thêm param `request` vào cho mỗi fixture muốn dùng cleanup.
+- Cần khai báo hàm cleanup và đăng ký hàm này với object `request` thông qua api `addfinalizer`
+
+```python
+@pytest.fixture
+def receiving_user(mail_admin, request):
+    user = mail_admin.create_user()
+    def delete_user():
+        mail_admin.delete_user(user)
+    request.addfinalizer(delete_user)
+    return user
+```
+
+<div class="warning">
+  <p><strong>Warning!</strong> finalizer được đăng ký trong lúc khởi tạo fixture; nếu có lỗi gì trong quá trình đó thì test vẫn tiếp tục chạy.</p>
+</div>
+
+#### Override fixtures
 
 - Fixtures được cung cấp bới các pluggin khác nhau, có thể override lại fixtures ở file `conftest.py`
 Example
@@ -303,30 +335,11 @@ tests/
 ```
 - fixture `username` được xây dựng khác nhau ở mỗi level.
 
-
-#### Dùng finalizer
-
-- Cần thêm param `request` vào cho mỗi fixture muốn dùng cleanup.
-- Cần khai báo hàm cleanup và đăng ký hàm này với object `request` thông qua api `addfinalizer`
-
-```python
-@pytest.fixture
-def receiving_user(mail_admin, request):
-    user = mail_admin.create_user()
-    def delete_user():
-        mail_admin.delete_user(user)
-    request.addfinalizer(delete_user)
-    return user
-```
-<div class="warning">
-  <p><strong>Warning!</strong> finalizer được gọi lúc khỏi tạo fixture và nếu có lỗi gì trong quá trình thêm này thì test vẫn tiếp tục chạy.</p>
-</div>
-
-## Sử dụng marks
+### Marks
 
 - Fixture đã cung cấp khả năng khởi tạo resource cho test rất thành công. Tiếp theo `mark` cung cấp các tùy biến cho các test function bên trong mỗi test file. Sau đây là các ví dụ sử dụng `mark` để  tùy biến cho test function.
 
-### Dùng mark để cung cấp input thay cho fixture
+#### Dùng mark để cung cấp input thay cho fixture
 
 - Sử dụng built-in mark `parametrize` để cung cấp input cho hàm test.
 ```python
@@ -361,7 +374,7 @@ def test_foo(x, y):
 ```
 
 
-### Chỉ chạy test khi mark tồn tại
+#### Chỉ chạy test khi mark tồn tại
 
 - Thay vì luôn luôn chạy một test, có thể dùng mark để chỉ chạy một test khi mark name tồn tại.
 
@@ -392,7 +405,8 @@ markers =
   thanhle: test mark
 
 ```
-## Các cấu hình cho pytest
+
+### Cấu hình pytest
 
 - Các thiết lập cho pytest được ghi ở file `pytest.ini`
 - Nếu muốn thay đổi các option trong file này thì có thể overide nó bằng cách dùng option `-o/--override-ini`
@@ -419,10 +433,11 @@ addopts =
   --tb short
   --skip-check-coredump y
   --maxfail=2 -rf # exit after 2 failures, report fail info
-console_output_style =
-    classic: classic pytest output.
-    progress: like classic pytest output, but with a progress indicator
-    count: like progress, but shows progress as the number of tests completed instead of a percent
+# console_output_style takes one of:
+#   classic: classic pytest output.
+#   progress: like classic pytest output, but with a progress indicator
+#   count: like progress, but shows progress as the number of tests completed instead of a percent
+console_output_style = progress
 # ignore DeprecationWarning
 filterwarnings =
   ignore::DeprecationWarning:matplotlib.*:
@@ -431,7 +446,8 @@ filterwarnings =
 
 # log related
 
-log_cli = True # Enable log display during test run (also known as “live logging”). The default is False.
+# Enable log display during test run (also known as “live logging”). The default is False.
+log_cli = True
 log_cli_level = INFO
 log_cli_format = %(asctime)s %(levelname)s %(message)s
 log_cli_date_format = %Y-%m-%d %H:%M:%S
@@ -458,7 +474,9 @@ junit_log_passing_tests = True
 
 
 ```
-## Plugin
+
+### Plugin
+
 - Pytest đã cung cấp một frame work hỗ trợ việc test, tạo các resource cho việc test. Các dự án khác nhau sẽ có các nhu cầu test khác nhau, ví dụ test cho web app, mobile app, embedded, backend, frontend ...
 - Plugin giúp tạo công cụ chuyên biệt cho từng loại ứng dụng. Một vài ví dụ
 
@@ -468,8 +486,16 @@ junit_log_passing_tests = True
 | pytest-cov      | coverage reporting, compatible with distributed testing   |
 | pytest-embedded      | A pytest plugin that has multiple services available for various functionalities. Designed for embedded testing.|
 
-<div class="success">
-  <strong>Info! </strong> Xem thêm bài viết về <a href="/embedded/pytest-embedded"><strong>pytest-embedded</strong></a>
-</div>
+## Result
+
+Ví dụ đầu cho đúng kết quả mình chờ: `1 failed, 1 passed in 0.02s`, và pytest chỉ thẳng vào chỗ sai
+(`assert 9 == 8`, `where 9 = sumOf(3, 6)`). Quan trọng hơn với mình là phần fixture: một fixture
+`scope="module"` hay `"session"` khai báo trong `conftest.py` chính là chỗ để giữ một kết nối serial hay ssh
+tới board cho cả loạt test, và đó đúng là cách pytest-embedded đưa `dut` vào test.
+
+## What I'd do next
+
+Dùng pytest trên board thật qua plugin của Espressif: [pytest-embedded](/embedded/pytest-embedded).
+
 ## Tham khảo
 - Reference [docs.pytest.org](https://docs.pytest.org/en/latest/contents.html)

@@ -4,9 +4,10 @@ title: "Tmux Quick Reference"
 short_description: "The tmux commands I actually use: sessions, panes, send-keys scripting, my tmux.conf"
 status: "Done"
 picture: "assets/images/TMUX-Cheatsheet-Cover-Image.001.jpeg"
-latest_release: "2026-11-22: English, scripting and config added"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
+tags: [linux, tools]
 ---
 
 # Tmux Quick Reference
@@ -20,13 +21,25 @@ publish: true
 
 ---
 
-## Why I keep this page
+## Situation
 
-What I want from tmux: a serial console on `/dev/ttyUSB0`, a long build or an SSH session to a
-board keeps running when my laptop sleeps or the Wi-Fi drops, and I reattach later, from another
-machine if needed. My session is called `thanhle` almost everywhere (the `boot.sh` of my
-[Bluetooth keyboard emulator](/embedded/keyboard-mouse-emulate-rpi) opens one with that name too),
-so that's the name in the examples below.
+Most of my terminal time is spent on things that must not die with the terminal: a serial console
+on `/dev/ttyUSB0`, a long build, an SSH session to a board. Without tmux they all go away when the
+laptop sleeps or the Wi-Fi drops, and a half-done kernel build or the boot log I was waiting for
+goes with them.
+
+## Task
+
+Run all of that inside tmux so it keeps going on its own, reattach later (from another machine if
+needed), and script the layout so one command brings back the same windows. Then write down the
+commands, the key bindings and my `~/.tmux.conf` in one place, because the bindings I don't use
+every day I forget.
+
+## Action
+
+My session is called `thanhle` almost everywhere (the `boot.sh` of my
+[Bluetooth keyboard emulator](/embedded/keyboard-mouse-emulate-rpi) opens one with that name too).
+The examples below use `dev` and `embedded` as session names so they're easy to tell apart.
 
 ### Concepts
 
@@ -55,13 +68,13 @@ so that's the name in the examples below.
 ```
 
 - **Server**: the background process that owns all sessions
-- **Session**: a set of windows with a name (`thanhle`)
+- **Session**: a set of windows with a name (mine: `thanhle`)
 - **Window**: a full-screen terminal, like a tab
 - **Pane**: a split inside a window
 
 The **prefix key** is `Ctrl+b` by default. All key bindings below are typed after pressing the prefix.
 
-## Server Operations
+### Server Operations
 
 ```bash
 # Start tmux (creates default session)
@@ -77,9 +90,9 @@ tmux kill-server
 tmux -V
 ```
 
-## Session Operations
+### Session Operations
 
-### From the Shell
+#### From the Shell
 
 ```bash
 # Create a new session named "dev"
@@ -124,7 +137,7 @@ tmux kill-session -a
 tmux kill-session -a -t dev
 ```
 
-### Key Bindings (inside tmux)
+#### Key Bindings (inside tmux)
 
 | Key | Action |
 |-----|--------|
@@ -135,9 +148,9 @@ tmux kill-session -a -t dev
 | `Prefix )` | Switch to next session |
 | `Prefix L` | Switch to last (previously used) session |
 
-## Window Operations
+### Window Operations
 
-### From the Shell
+#### From the Shell
 
 ```bash
 # Create a new window in session "dev"
@@ -166,7 +179,7 @@ tmux move-window -t dev:5
 tmux swap-window -s dev:0 -t dev:1
 ```
 
-### Key Bindings
+#### Key Bindings
 
 | Key | Action |
 |-----|--------|
@@ -181,9 +194,9 @@ tmux swap-window -s dev:0 -t dev:1
 | `Prefix f` | Find window by name |
 | `Prefix .` | Move window to a new index |
 
-## Pane Operations
+### Pane Operations
 
-### From the Shell
+#### From the Shell
 
 ```bash
 # Split current pane horizontally (left/right)
@@ -218,7 +231,7 @@ tmux break-pane -t dev:editor.1
 tmux join-pane -s dev:build.0 -t dev:editor
 ```
 
-### Key Bindings
+#### Key Bindings
 
 | Key | Action |
 |-----|--------|
@@ -237,7 +250,7 @@ tmux join-pane -s dev:build.0 -t dev:editor
 | `Prefix Ctrl+Arrow` | Resize pane in direction (1 cell) |
 | `Prefix Alt+Arrow` | Resize pane in direction (5 cells) |
 
-### Preset Layouts
+#### Preset Layouts
 
 Cycle with `Prefix Space` or set explicitly:
 
@@ -249,7 +262,7 @@ tmux select-layout main-vertical      # one large left, rest right
 tmux select-layout tiled              # balanced grid
 ```
 
-## Sending Commands to Panes (Scripting)
+### Sending Commands to Panes (Scripting)
 
 `send-keys` is what makes tmux scriptable: it types into a target pane as if you did. `C-m` at the end is the Enter key.
 
@@ -271,7 +284,7 @@ tmux send-keys -t dev:logs.0 C-c
 tmux send-keys -t dev:editor.0 'vim '
 ```
 
-## Copy Mode (Scrollback & Selection)
+### Copy Mode (Scrollback & Selection)
 
 tmux maintains a scrollback buffer for each pane. Enter copy mode to scroll, search, and copy text.
 
@@ -303,7 +316,7 @@ tmux capture-pane -t dev:editor.0 -p > pane_content.txt
 tmux capture-pane -t dev:editor.0 -p -S - > full_history.txt
 ```
 
-## Scripting: a whole setup in one script
+### Scripting: a whole setup in one script
 
 Create a development environment with a single script:
 
@@ -340,7 +353,7 @@ tmux select-window -t $SESSION:editor
 tmux attach-session -t $SESSION
 ```
 
-### Embedded System Example (Boot Script)
+#### Embedded System Example (Boot Script)
 
 ```bash
 #!/bin/bash
@@ -366,9 +379,9 @@ tmux select-window -t $SESSION:serial
 tmux attach -t $SESSION
 ```
 
-## Configuration (~/.tmux.conf)
+### Configuration (~/.tmux.conf)
 
-### The settings I always set
+#### The settings I always set
 
 ```bash
 # Use Ctrl+a as prefix (more ergonomic than Ctrl+b)
@@ -401,7 +414,7 @@ setw -g monitor-activity on
 set -g visual-activity off
 ```
 
-### Better Key Bindings
+#### Better Key Bindings
 
 ```bash
 # Split panes with | and - (more intuitive)
@@ -436,7 +449,7 @@ bind -n S-Left previous-window
 bind -n S-Right next-window
 ```
 
-### Status Bar Customization
+#### Status Bar Customization
 
 ```bash
 # Status bar position
@@ -461,7 +474,7 @@ set -g pane-border-style 'fg=#45475a'
 set -g pane-active-border-style 'fg=#89b4fa'
 ```
 
-### Vi Mode for Copy
+#### Vi Mode for Copy
 
 ```bash
 # Use vi keys in copy mode
@@ -476,7 +489,7 @@ bind -T copy-mode-vi r send-keys -X rectangle-toggle
 bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -selection clipboard"
 ```
 
-## Useful Command Combinations
+### Useful Command Combinations
 
 ```bash
 # Run same command in all panes of current window
@@ -504,7 +517,7 @@ tmux display-popup -E 'htop'
 tmux show-environment -g
 ```
 
-## Target Syntax Reference
+### Target Syntax Reference
 
 tmux uses a consistent target syntax: `session:window.pane`
 
@@ -522,7 +535,7 @@ Examples:
   -1               → previous window
 ```
 
-## Plugin Manager (TPM)
+### Plugin Manager (TPM)
 
 ```bash
 # Install TPM
@@ -542,7 +555,7 @@ run '~/.tmux/plugins/tpm/tpm'
 # Then press Prefix + I to install plugins
 ```
 
-## Troubleshooting
+### Troubleshooting
 
 | Problem | Solution |
 |---------|----------|
@@ -566,6 +579,15 @@ tmux show-options -g
 # Show tmux info (debugging)
 tmux info
 ```
+
+## Result
+
+My serial consoles, builds and board SSH sessions now live in tmux sessions, so they survive a
+sleep or a dropped connection and I pick them up with `tmux a -t <name>`. The piece that turns tmux
+from a terminal splitter into a tool is `send-keys`: once you can type into a pane from a script, the layout
+(serial console, build panes, an HTTP server for images) is just a shell script like the boot
+script above. The one thing tmux does not survive is a reboot of the machine running the server;
+the sessions live in its memory, and only a plugin like `tmux-resurrect` brings them back.
 
 ## References
 

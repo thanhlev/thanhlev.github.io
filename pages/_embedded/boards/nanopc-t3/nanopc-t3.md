@@ -9,6 +9,7 @@ index: 30
 publish: true
 permalink: /embedded/boards/nanopc-t3/
 board_hub: true
+tags: [samsung, arm, boot]
 ---
 
 # NanoPC-T3

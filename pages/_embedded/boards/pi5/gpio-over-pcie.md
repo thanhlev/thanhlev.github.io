@@ -10,6 +10,7 @@ publish: true
 permalink: /embedded/boards/pi5/gpio-over-pcie
 board_parent: pi5
 result: "RP1 on PCIe x4 at 5 GT/s; idle 1.5 GHz, 47.7 C, fan off, ~1.93 W on the PMIC rails"
+tags: [raspberry-pi, arm, boot]
 ---
 
 # A GPIO write on the Pi 5 is a PCIe transaction

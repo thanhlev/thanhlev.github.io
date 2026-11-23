@@ -3,10 +3,11 @@ layout: default
 title: "Udev Quick Reference"
 short_description: "Ghi chép udev của mình: rule nằm đâu, thứ tự, ví dụ tắt touchpad khi cắm chuột, udevadm test"
 status: "Done"
-picture: "assets/images/udev_Kernel.JPG"
-latest_release: "Init document"
+picture: "assets/images/udev_kernel.png"
+latest_release: "2026-11-22: rewritten as a STAR story"
 index: 4
 publish: true
+tags: [linux, testing]
 ---
 
 # Udev Quick Reference
@@ -20,37 +21,32 @@ publish: true
 
 -----------------------------------
 
-## Thông tin
+## Situation
 
-Mình ghi lại udev vì một chuyện nhỏ: muốn laptop tự tắt touchpad khi cắm con chuột Logitech vào (ví dụ ở dưới), và tiện thể ghi luôn rule nằm ở đâu, chạy theo thứ tự nào, test bằng `udevadm` ra sao.
+Chuyện bắt đầu nhỏ thôi: mình muốn laptop tự tắt touchpad khi cắm receiver của con chuột Logitech vào. Việc kiểu "thiết bị cắm vào thì chạy lệnh gì đó" trên Linux là việc của udev, mà mình thì chưa viết rule udev nào cho ra hồn, cũng không nhớ rule nằm ở đâu hay chạy theo thứ tự nào.
 
-- Trong OS system sử dụng udev, việc quản lý các event liên quan đến các thiết bị hoạt động ở kernel được thực hiện bởi udev thông qua daemon `udevd`.
-- `udevd` chạy như một daemon ở user space, mở kết nối đến Kernel và nhận các system event từ kernel.
-- Dựa trên các rule được thiết lập, `udevd` thực hiện các hành động tương ứng với các sự kiện, ví dụ :
-    - Đổi tên 1 thiết bị
-    - Cung cấp tên gợi nhớ bằng symlink
-    - Đặt tên thiết bi dựa trên output của một program
-    - Đổi permission
-    - Chạy script khi device thêm hoặc xóa.
-    - đổi tên network interface.
+## Task
 
+Viết một rule: receiver `046d:c52f` cắm vào thì gọi `xinput --disable` cho touchpad. Tiện thể ghi lại cho mình mấy thứ hay quên: rule đặt ở thư mục nào, tên file quyết định thứ tự ra sao, tìm attribute của thiết bị bằng gì, và test rule mà không phải rút ra cắm vào cả chục lần.
 
-## How rules are organized
+## Action
 
-Rule cho udevd được cấu hình thông qua các file `*.rules`. Có 2 nơi chính lưu trữ các rule này:
+### udevd làm gì
 
-- `/usr/lib/udev/rules.d` : lưu các rule được tạo bởi system.
-- `/etc/udev/rules.d/` : cho các rule custom.
+Kernel phát event mỗi khi có thiết bị thêm, bớt hay đổi trạng thái. `udevd` là daemon ở user space, mở kết nối tới kernel, nhận các event đó và so với các rule. Rule nào khớp thì nó làm theo: đổi tên thiết bị, tạo symlink dễ nhớ, đặt tên theo output của một chương trình, đổi permission, chạy script khi cắm/rút, đổi tên network interface.
 
-Các rule được đặt tên với prefix là số, giúp user cài đặt luôn thứ tự áp dụng.
+### Rule nằm ở đâu
 
-Ngoài ra, nếu có 2 file có tên giống nhau được đặt ở `/usr/lib/udev/rules.d` và ở `/etc/udev/rules.d/` thì file ở `/etc/udev/rules.d/` sẽ overide file cài đặt bởi system
+Rule là các file `*.rules`, ở hai chỗ chính:
 
-## Example
+- `/usr/lib/udev/rules.d`: rule của hệ thống (package cài vào).
+- `/etc/udev/rules.d/`: rule tự viết.
 
-### Tự động tắt touch pad khi có chuột gắn vào
+Tên file có prefix là số, và udev đọc theo thứ tự tên, nên số đó chính là thứ tự áp dụng. Nếu hai thư mục có file trùng tên thì file trong `/etc/udev/rules.d/` thắng, file của hệ thống bị bỏ qua. Muốn tắt hẳn một rule của hệ thống thì cứ tạo file cùng tên trong `/etc`.
 
-```python
+### Rule tắt touchpad
+
+```
 ACTION=="add" \
 , ATTRS{idProduct}=="c52f" \
 , ATTRS{idVendor}=="046d" \
@@ -59,77 +55,70 @@ ACTION=="add" \
 , RUN+="/usr/bin/xinput --disable 16"
 ```
 
-- Toán tử sử dụng cho action:
-    - `= :` : Gán giá trị cho key mà chỉ chấp nhận 1 giá trị
+Khi một thiết bị có vendor ID `046d` và product ID `c52f` được cắm vào, udev gọi `/usr/bin/xinput --disable 16`, với 16 là id của touchpad trong `xinput list` trên máy mình lúc đó.
 
-    - `:=` :  Gán giá trị và không thể thay đổi bằng các rule khác.
+Ba dòng đầu là phần match (dùng `==`). Hai dòng `ENV{...}=` dùng dấu `=` đơn, tức là gán chứ không phải so: chúng đặt `DISPLAY` và `XAUTHORITY` cho lệnh trong `RUN`, vì lệnh đó chạy từ udevd chứ không từ session X của mình, không có hai biến này thì `xinput` không biết nói chuyện với X server nào.
 
-    - `+= , -=` :  thêm hoặc giá trá trị của key có chứa giá trị dạng list.
+Các toán tử:
 
-- Các key đã dùng
-    - `ACTION` :  add/remove/change:  loại hành động muốn thực hiện
-    - `ATTRS` : Khai báo các attribute muốn match
+- `==`, `!=`: so khớp (phần match).
+- `=`: gán giá trị cho key chỉ nhận một giá trị.
+- `:=`: gán và khoá lại, rule sau không đổi được nữa.
+- `+=`, `-=`: thêm vào hoặc bớt khỏi key dạng list (như `RUN`).
 
-- Hoạt động: Khi một thiết bị có product ID `c52f` và vender ID `046d` cắm vào máy tính, lệnh `/usr/bin/xinput --disable 16` sẽ được gọi để disable touch pad.
+### Cú pháp: match và action
 
-## The rules syntax
+Mỗi rule có hai phần. Phần match là các điều kiện, cách nhau bởi dấu phẩy, tất cả phải đúng thì rule mới chạy. Phần action là việc cần làm khi khớp. Trong ví dụ trên, `ACTION` chọn loại event (`add`/`remove`/`change`), `ATTRS` khớp attribute của thiết bị.
 
-Các rule được thiết kế có 2 phần:
-- `match`  : điều kiện để rule được kích hoạt, có thể áp dụng nhiều điều kiện, và ngăn cách nhau bởi dấu phẩy.
-- `action` : hành động muốn thực hiện khi rule match event
+Các key dùng để match (theo `man udev`):
 
+| KEY | Description |
+|:---------|:------------- |
+|ACTION | (add/remove/change): Match the name of the event action. |
+|DEVPATH | Match the devpath of the event device |
+|KERNEL | Match the name of the event device, KERNEL=="fb0", KERNEL=="card0" |
+|KERNELS | Search the devpath upwards for a matching device name. |
+|NAME | Match the name of a network interface. It can be used once the NAME key has been set in one of the preceding rules. |
+|SYMLINK | Match the name of a symlink targeting the node. It can be used once a SYMLINK key has been set in one of the preceding rules. There may be multiple symlinks; only one needs to match |
+|SUBSYSTEM | Match the subsystem of the event device SUBSYSTEM=="graphics", SUBSYSTEM=="drm" |
+|SUBSYSTEMS | Search the devpath upwards for a matching device subsystem name |
+|DRIVER | Match the driver name of the event device. Only set this key for devices which are bound to a driver at the time the event is generated |
+|ATTR{filename} | Match sysfs attribute value of the event device. Trailing whitespace in the attribute values is ignored unless the specified match value itself contains trailing whitespace|
+|ATTRS{filename} | Search the devpath upwards for a device with matching sysfs attribute values. If multiple ATTRS matches are specified, all of them must match on the same device. |
+|SYSCTL{kernel parameter} | Match a kernel parameter value. |
+|ENV{key} | Match (với `==`) hoặc đặt (với `=`) một biến môi trường, vd `ENV{SYSTEMD_WANTS}+="display_mywebapp@root.service"` |
+|CONST{key} | Match a system-wide constant, vd `CONST{arch}`, `CONST{virt}` |
+|TAG | Match theo tag của thiết bị, vd tag `TAG+="systemd"` |
+|TAGS | Search the devpath upwards for a device with matching tag. |
 
+### Tìm attribute bằng udevadm info
 
+Product ID và vendor ID ở trên mình lấy từ `udevadm info`, đưa nó đường dẫn sysfs của thiết bị (dưới `/sys/devices`) hoặc một class device:
 
-### Rule match
-
-- `udevd` dùng các attribute để kiểm tra rule nào thõa điều kiện, trong ví dụ ở trên , product ID và vendor ID được dùng để  kiểm tra.
-
-- You can list the attributes that a device provides through the `udevadm info` command, followed by the name or sysfs (file system representing the device). Device information can be viewed at `sys/devices`
-    - Example:
-
-```python
+```bash
 udevadm info -ap /devices/pci0000:00/0000:00:14.0/usb1/1-11/1-11:1.0/input/input15
 udevadm info /sys/class/net/wlan0 --attribute-walk
 ```
 
--  Ngoài việc dùng biến `ATTRS` để khớp thuộc tính của thiết bị, có thể dùng biến `ENV` để khớp thêm biến môi
-trường.
-    - `ENV{DISPLAY}=":0"` : khi có display chính, remote session sẽ không có biến này.
-- Các KEY dùng cho matching
+`--attribute-walk` in attribute của thiết bị và của từng thiết bị cha khi đi ngược lên devpath. `ATTRS` cũng tìm ngược lên như vậy, nên `idVendor` nằm ở thiết bị USB cha vẫn khớp được từ event của input con. Chỉ có điều mọi `ATTRS` trong một rule phải khớp trên cùng một thiết bị cha.
 
-| KEY | Description          |
-|:---------|:------------- |
-|ACTION      | (add/remove/change): Match the name of the event action.  |
-|DEVPATH      | Match the devpath of the event device  |
-|KERNEL      | Match the name of the event device, KERNEL=="fb0", KERNEL=="card0" |
-|KERNELS      | Search the devpath upwards for a matching device name. |
-|NAME      | Match the name of a network interface. It can be used once the NAME key has been set in one of the preceding rules.. |
-|SYMLINK      | Match the name of a symlink targeting the node. It can be used once a SYMLINK key has been set in one of the preceding ules. There may be multiple symlinks; only one needs to match|
-|SUBSYSTEM      | Match the subsystem of the event device SUBSYSTEM=="graphics", SUBSYSTEM=="drm" |
-|SUBSYSTEMS      | Search the devpath upwards for a matching device subsystem name |
-|DRIVER      | Match the driver name of the event device. Only set this key for devices which are bound to a driver at the time the event  is generated |
-|ATTR{filename}      | Match sysfs attribute value of the event device. Trailing whitespace in the attribute values is ignored unless the specified match value itself contains trailing whitespace|
-|ATTRS{filename}      | Search the devpath upwards for a device with matching sysfs attribute values. If multiple ATTRS matches are specified,  all of them must match on the same device. |
-|SYSCTL{kernel parameter}       | Match a kernel parameter value. |
-|ENV{key}:   | biến môi trường (ENV{SYSTEMD_WANTS}+="display_mywebapp@root.service) |
-|CONST{key}:   | biến môi trường (ENV{SYSTEMD_WANTS}+="display_mywebapp@root.service) |
-|TAG:   | Match dựa trên TAG , vd `device tag TAG+="systemd"` |
-|TAGS:   | Search the devpath upwards for a device with matching tag. |
+### Test và nạp lại
 
-### Rule Action
+`RUN` không chạy ngay khi gặp: udevd xét hết các rule cho event đó rồi mới chạy danh sách `RUN`.
 
-- Khi kiểm tra rule đã thõa điều, kiện, nội dung định nghĩa bởi biến `RUN` sẽ được thực thi.
+Test một rule mà không cần cắm rút (phần `RUN` không được chạy, chỉ in ra là nó sẽ chạy gì):
 
-<div class="info">
-  <p><strong>Info!</strong> Các RUN sẽ không được thực thi ngay mà chờ quá trình kiểm tra tất cả rule hoàn tất</p>
-</div>
-
-- Có thể test một rule. (phần action sẽ không được chạy)
-
-```python
+```bash
  udevadm test --action="add" \
   /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.2/2-1.2:1.1/0003:046D:C52F.0010/input/input39
 ```
 
-- Cấp nhật rule vừa tạo mới: `udevadm control --reload`
+Sửa hay thêm rule xong thì nạp lại: `udevadm control --reload`.
+
+## Result
+
+Rule ở trên nằm trong `/etc/udev/rules.d/`, cắm receiver vào là touchpad tắt. Cái mình hiểu ra sau vụ này: rule là một chuỗi điều kiện `==` cộng một list `RUN`; `=` đơn là gán, kể cả với `ENV`; `/etc` ghi đè `/usr/lib` theo tên file; và `udevadm test` cho xem rule nào khớp mà không phải làm gì với phần cứng.
+
+## What I'd do next
+
+Rule này có hai chỗ yếu mà mình biết. Số 16 là id `xinput` của touchpad lúc mình viết, cắm thêm thiết bị input khác thì id có thể đổi, nên gọi theo tên thiết bị sẽ chắc hơn. Và chỉ có rule `add`: rút chuột ra thì touchpad không tự bật lại, cần thêm một rule `ACTION=="remove"` gọi `xinput --enable`.

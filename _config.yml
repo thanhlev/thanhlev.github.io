@@ -59,6 +59,10 @@ collections:
   personal:
     output: true
     permalink: /:collection/:name
+  # 2026-11-22: robot projects, same hub + STAR sub-page convention as the board pages
+  robotics:
+    output: true
+    permalink: /:collection/:name
 
 # Defaults
 defaults:
