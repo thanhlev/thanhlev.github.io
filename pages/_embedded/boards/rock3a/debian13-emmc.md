@@ -664,6 +664,11 @@ measured where the remaining time goes. I'd also like to put the eMMC driver int
 small Linux and this Debian can share one kernel on the eMMC instead of one on the NOR. And the reset
 loop needs a meter on the 5 V rail, which means hands on the board.
 
+This split also costs Linux one of its four Cortex-A55 cores. The RK3568 has another place to put a
+real-time job: its own small RISC-V MCU core. I took that route later, with FreeRTOS on the RV32 core
+and Linux keeping all four A55 cores, in
+[FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores]({{ '/embedded/boards/rock3a/ws2812-riscv-mcu' | relative_url }}).
+
 ## Skills this project used
 
 - Boot chain and firmware: reading the RK3568 boot flow (BootROM idblock, DDR blob, TF-A BL31,
