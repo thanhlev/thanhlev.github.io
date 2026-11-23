@@ -381,3 +381,66 @@ body.is-doc { font-size: 19px; line-height: 1.7; }   /* 19 px Plex Sans ≈ the 
 
 /* Vietnamese pages: one font for every glyph (see the note at the top) */
 html:lang(vi) { --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+
+/* ---------- Phones and narrow tablets (2026-11-23, user: «mở trang trên điện thoại thì thấy text cũng bị
+   chia ra một nửa, hãy làm sao cho nhìn trên điện thoại cũng thật tự nhiên»).
+   Bug fixed: `.is-doc .docbody { grid-template-columns: 270px … }` above comes after the 1000 px media
+   query and beat it, so on a phone the hidden contents rail still left a 270 px first column and the
+   whole post was squeezed into it (measured with Playwright at 390 px: article 270 px wide). The rest
+   makes a phone read like a phone: 20 px side margins, the nav on one swipeable line instead of three
+   sticky lines, the Result/Board spec rows stacked label-over-value, smaller headings, wide tables,
+   code and videos scroll or fit inside the screen.
+   wiki: http://localhost:3000/wiki/claude/blog_agent#l11 ---------- */
+@media (max-width: 1000px) {
+  .is-doc .docbody { grid-template-columns: minmax(0, 1fr); }
+  .is-doc article.doc { max-width: none; }
+}
+@media (max-width: 640px) {
+  :root { --pad: 20px; }
+  /* top bar: brand on the first line, the sections wrapped in two short lines under it (a sideways
+     swipe line hid half the sections past the edge); not sticky, so it does not eat the screen */
+  .topbar { position: static; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px var(--pad); }
+  .topnav { flex-wrap: wrap; gap: 6px 16px; font-size: 11.5px; }
+  .is-doc .topbar { font-size: 11.5px; }
+  .theme-toggle { padding: 1px 7px; }
+  html { scroll-padding-top: 12px; }
+  /* post head */
+  .dochead { padding: 26px var(--pad) 22px; }
+  .is-doc .pn { font-size: 11.5px; }
+  .is-doc .doctitle { font-size: 33px; line-height: 1.05; }
+  .is-doc .docsub { font-size: 18px; line-height: 1.5; }
+  /* Result / Board / Status rows: label above its value, full width (they were two columns of 150 px +
+     the rest, so the value ran 4 words a line in a 390 px screen) */
+  .docspec, .docspec tbody, .docspec tr, .docspec td { display: block; width: 100%; }
+  .docspec tr { border-top: 1px dotted var(--rule); padding: 7px 0; }
+  .docspec td { border-top: 0; padding: 0; }
+  .is-doc .docspec { font-size: 14px; }
+  .is-doc .docspec td:first-child { width: auto; font-size: 11.5px; margin-bottom: 2px; }
+  /* body text: 17 px is what phone reading apps use; 19 px desktop size gave 5–6 words a line */
+  body.is-doc { font-size: 17px; line-height: 1.65; }
+  .is-doc article.doc { padding: 16px var(--pad) 56px; }
+  .is-doc article.doc h1 { font-size: 30px; }
+  .is-doc article.doc h2 { font-size: 26px; margin-top: 1.8em; }
+  .is-doc article.doc h3 { font-size: 21px; }
+  .is-doc article.doc h4 { font-size: 18px; }
+  .is-doc article.doc table { font-size: 15px; }
+  .is-doc article.doc th { font-size: 12px; }
+  .is-doc article.doc pre, .is-doc article.doc .highlight pre { font-size: 13.5px; }
+  .is-doc article.doc img + em, .is-doc article.doc p > em:only-child, .is-doc article.doc figcaption { font-size: 14.5px; }
+  .is-doc article.doc img { max-height: none; width: 100%; height: auto; }
+  .is-doc article.doc video { width: 100% !important; max-width: 100% !important; }
+  article.doc pre { overflow-x: auto; }
+  /* hub story lists (_includes/board_children.html, a 4-column project_table): on a phone each row
+     becomes a card, number on the left, title + description, then the result line and the status
+     badge under it (as columns they were ~6 words of 3 lines each, 2026-11-23 screenshot) */
+  .is-doc article.doc table.project_table, .project_table tbody, .project_table tr, .project_table td { display: block; width: auto; }
+  .project_table thead { display: none; }
+  .project_table tr { position: relative; padding: 14px 0 14px 30px; border-bottom: 1px solid var(--rule); }
+  .project_table td { border: 0 !important; padding: 0 !important; background: none !important; }
+  .project_table td:first-child { position: absolute; left: 0; top: 17px; font: 500 12px var(--f-mono); color: var(--mute); }
+  .is-doc article.doc .project_table td strong { font-size: 19px; line-height: 1.25; }
+  .is-doc article.doc .project_table .article-description { font-size: 15px; line-height: 1.45; display: block; margin-top: 4px; }
+  .project_table td:nth-child(3) { margin-top: 8px; font: 13px/1.5 var(--f-mono); color: var(--ink); }
+  .project_table td:nth-child(4) { margin-top: 8px; }
+  .is-doc .foot { font-size: 12px; }
+}
