@@ -3,7 +3,7 @@ layout: default
 title: "Lending core 3 of a running Linux to FreeRTOS (QEMU so far)"
 short_description: "A kernel module that unplugs one A76, starts FreeRTOS on it with PSCI, and gives it back, with no reboot"
 status: "In Progress"
-picture: "assets/images/boards/pi5/pi5_amp_arch.png"
+picture: "assets/images/boards/pi5/pi5_amp_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-30: selftest passes on QEMU, board run pending"
 index: 20
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, freertos, linux, simulation]
 # Lending core 3 of a running Linux to FreeRTOS (QEMU so far)
 
 [Back to the Pi 5 hub]({{ '/embedded/boards/pi5/' | relative_url }}) · QEMU runs 2026-10-30, board run not done
+
+![The AMP story in one picture]({{ '/assets/images/boards/pi5/pi5_amp_cover.jpg' | relative_url }})
+*The whole story in one picture: 13 of 13 checks pass on QEMU, core 3 starts in 54.8 ms and comes back in 28.3 ms. Not run on the board yet.*
 
 ![Who runs where: cores 0-2 Linux, core 3 FreeRTOS]({{ '/assets/images/boards/pi5/pi5_amp_arch.png' | relative_url }})
 

@@ -3,7 +3,7 @@ layout: default
 title: "Radxa ROCK 3A (RK3568)"
 short_description: "Bare metal, FreeRTOS on four A55s, a 154 ms boot, NPU without Linux, Android 14, a hidden RISC-V MCU"
 status: "In Progress"
-picture: "assets/images/boards/rock3a/rock-3a.jpg"
+picture: "assets/images/boards/rock3a/r3a_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with seven STAR write-ups"
 index: 20
 publish: true
@@ -13,6 +13,9 @@ tags: [rockchip, arm, npu, freertos, bare-metal, linux]
 ---
 
 # Radxa ROCK 3A (RK3568)
+
+![The ROCK 3A in numbers]({{ '/assets/images/boards/rock3a/r3a_hub_cover.jpg' | relative_url }})
+*What came out of it: FreeRTOS on core 3 at 154 ms, 25.09 fps of NPU face detection with no Linux, CoreMark 7634.83 on one A55, and a LED ring driven from the RISC-V MCU.*
 
 ![ROCK 3A on my desk]({{ '/assets/images/boards/rock3a/rock-3a.jpg' | relative_url }})
 

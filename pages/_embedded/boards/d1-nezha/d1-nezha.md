@@ -3,7 +3,7 @@ layout: default
 title: "Allwinner D1-H Nezha (RISC-V C906)"
 short_description: "A single-core RISC-V board: my own boot0 on SPI-NAND, FreeRTOS, a webcam on HDMI with no Linux, XR829 Wi-Fi on mainline"
 status: "In Progress"
-picture: "assets/images/boards/d1-nezha/d1_chip_photo.jpg"   # 2026-11-22: real D1 chip (Wikimedia Commons, CC BY-SA 4.0); no own Nezha photo yet
+picture: "assets/images/boards/d1-nezha/d1_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with five STAR write-ups"
 index: 25
 publish: true
@@ -13,6 +13,9 @@ tags: [allwinner, risc-v, freertos, bare-metal, boot, camera]
 ---
 
 # Allwinner D1-H Nezha (RISC-V C906)
+
+![The D1 Nezha in numbers]({{ '/assets/images/boards/d1-nezha/d1_hub_cover.jpg' | relative_url }})
+*1080p from a USB webcam to HDMI at 29.4 fps with no Linux, on a chain that starts with my own boot0. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![The Allwinner D1 chip]({{ '/assets/images/boards/d1-nezha/d1_chip_photo.jpg' | relative_url }})
 *The D1 itself, the chip at the centre of the Nezha. Photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0 (I have no good photo of my own board yet).*

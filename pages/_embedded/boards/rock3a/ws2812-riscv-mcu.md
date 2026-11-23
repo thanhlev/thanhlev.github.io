@@ -3,7 +3,7 @@ layout: default
 title: "FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores"
 short_description: "FreeRTOS on the SoC's own RV32 core under Android 14, SPI3 as the LED wire, and four faults between me and a lit ring"
 status: "Done"
-picture: "assets/images/boards/rock3a/ws2812_ring_lit.png"
+picture: "assets/images/boards/rock3a/r3a_ws_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-20: ring lit at 6 MHz SPI, 3.3 V"
 index: 15
 publish: true
@@ -16,6 +16,9 @@ tags: [rockchip, arm, freertos, linux, android, risc-v]
 # FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The RISC-V MCU story in one picture]({{ '/assets/images/boards/rock3a/r3a_ws_cover.jpg' | relative_url }})
+*The whole story in one picture: 16 of 16 LEDs lit by the SoC's RV32 core at 50.00 frames/s while Android keeps all four A55s.*
 
 ![The ring lit: all red, all green, rainbow]({{ '/assets/images/boards/rock3a/ws2812_ring_lit.png' | relative_url }})
 

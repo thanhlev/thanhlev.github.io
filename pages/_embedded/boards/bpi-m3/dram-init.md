@@ -3,7 +3,7 @@ layout: default
 title: "DRAM init over FEL, and the probe that froze the boot ROM"
 short_description: "xfel ddr doesn't know the A83T, so I ported U-Boot's LPDDR3 init into a 4 KiB SRAM program"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_dram_order.png"
+picture: "assets/images/boards/bpi-m3/bpim3_dram_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-04: 2 GiB up and tested, blink runs from 0x40000000"
 index: 3
 publish: true
@@ -17,6 +17,9 @@ tags: [allwinner, arm, bare-metal, boot, memory, testing]
 {: .no_toc }
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
+
+![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_dram_cover.jpg' | relative_url }})
+*The result first: all 2 GiB of LPDDR3 up, 294 896 words tested with 0 errors, 3.44 s for init and test.*
 
 1. TOC
 {:toc}

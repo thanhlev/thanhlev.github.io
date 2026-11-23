@@ -3,7 +3,7 @@ layout: default
 title: "FreeRTOS on four Cortex-A9 cores: AMP, SMP and one CPSIE too many"
 short_description: "A FreeRTOS shell, then one kernel per core, then one kernel on all four, and the lock leak in between"
 status: "Done"
-picture: "assets/images/boards/nanopi2-fire/np2f_rtos_test.png"
+picture: "assets/images/boards/nanopi2-fire/np2f_smp_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-01: SMP on 4 cores, 3.93× on four busy tasks"
 index: 2
 publish: true
@@ -17,6 +17,9 @@ tags: [samsung, arm, freertos, linux]
 {: .no_toc }
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
+
+![The four-core story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_smp_cover.jpg' | relative_url }})
+*The whole story in one picture: 3.93 times the speed on four cores under one SMP kernel, and a 10 µs AMP round trip. The board is my 3D model of it.*
 
 1. TOC
 {:toc}

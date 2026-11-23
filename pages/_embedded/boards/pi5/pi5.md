@@ -3,7 +3,7 @@ layout: default
 title: "Raspberry Pi 5 (BCM2712 + RP1)"
 short_description: "A read-only survey of my Pi 5, and FreeRTOS borrowing one of its cores from a running Linux (QEMU so far)"
 status: "In Progress"
-picture: "assets/images/boards/pi5/pi5_soc_inside.png"
+picture: "assets/images/boards/pi5/pi5_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page with two STAR write-ups"
 index: 24
 publish: true
@@ -13,6 +13,9 @@ tags: [raspberry-pi, arm, freertos, linux, simulation]
 ---
 
 # Raspberry Pi 5 (BCM2712 + RP1)
+
+![The Pi 5 in numbers]({{ '/assets/images/boards/pi5/pi5_hub_cover.jpg' | relative_url }})
+*What came out of it so far: the RP1 behind PCIe x4 at 5 GT/s, about 1.93 W on the PMIC rails at idle, and 13 of 13 AMP checks passing, on QEMU only for now.*
 
 ![Every block the BCM2712 device tree lists, with its CPU address]({{ '/assets/images/boards/pi5/pi5_soc_inside.png' | relative_url }})
 

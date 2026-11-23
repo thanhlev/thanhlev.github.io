@@ -3,7 +3,7 @@ layout: default
 title: "Twelve QPUs from bare metal, no Linux"
 short_description: "Queueing my own programs on the VideoCore IV shader cores from FreeRTOS, and checking every lane against the ARM"
 status: "Done"
-picture: "assets/images/boards/pi-zero/pz_qpu_mflops.png"
+picture: "assets/images/boards/pi-zero/pz_qpu_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-20: qpu command in rtos_cli"
 index: 30
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, gpu, freertos, bare-metal]
 # Twelve QPUs from bare metal, no Linux
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-20
+
+![The QPU story in one picture]({{ '/assets/images/boards/pi-zero/pz_qpu_cover.jpg' | relative_url }})
+*The whole story in one picture: 4799 MFLOPS on the 12 QPUs, 66 times the ARM with its VFP, every one of the 192 lanes bit-exact.*
 
 ## Situation
 

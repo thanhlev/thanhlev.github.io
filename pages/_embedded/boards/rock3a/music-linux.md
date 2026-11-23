@@ -3,7 +3,7 @@ layout: default
 title: "The board that names the music it plays, now on Linux"
 short_description: "The YAMNet genre demo moved from Android 14 to Debian 11: a PipeWire monitor tap, one C program and the same INT8 model on the RK3568 NPU"
 status: "Done"
-picture: "assets/images/boards/rock3a/music_linux_chain.png"
+picture: "assets/images/boards/rock3a/r3a_music_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-23: three clips right, NPU 1.44 ms per window at 900 MHz"
 index: 17
 publish: true
@@ -18,6 +18,9 @@ tags: [rockchip, arm, npu, edge-ai, linux]
 # The board that names the music it plays, now on Linux
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The music story in one picture]({{ '/assets/images/boards/rock3a/r3a_music_cover.jpg' | relative_url }})
+*The whole story in one picture: 1.44 ms per YAMNet window on the NPU under Debian, 32 times one CPU thread and faster than the 2.05 ms I had on Android.*
 
 ## Situation
 

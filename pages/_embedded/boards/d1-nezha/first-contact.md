@@ -3,7 +3,7 @@ layout: default
 title: "First contact: what the stock Nezha really runs, and which vector it really has"
 short_description: "Checking the vendor docs against the board over UART and OTG: RVV 0.7.1 not 1.0, ADB as root, FEL with no button"
 status: "Done"
-picture: "assets/images/boards/d1-nezha/d1_nand_layout.png"
+picture: "assets/images/boards/d1-nezha/d1_first_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-09-27: UART + OTG measurements"
 index: 10
 publish: true
@@ -16,6 +16,9 @@ tags: [allwinner, risc-v, bare-metal]
 # First contact: what the stock Nezha really runs, and which vector it really has
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-27
+
+![The result first]({{ '/assets/images/boards/d1-nezha/d1_first_cover.jpg' | relative_url }})
+*The result first: VLEN 128 and a SIGILL on vsetivli, so the vector unit is RVV 0.7.1, not 1.0. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![The first 1 MiB of the SPI-NAND: boot0 copies per 128 KiB block]({{ '/assets/images/boards/d1-nezha/d1_nand_layout.png' | relative_url }})
 

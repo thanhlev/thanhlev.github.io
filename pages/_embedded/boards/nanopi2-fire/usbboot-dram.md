@@ -3,7 +3,7 @@ layout: default
 title: "USB boot ROM, a UART running 9 % slow, and 1 GiB of DDR3"
 short_description: "From an empty SD slot to my own code in SRAM, then the DRAM controller brought up by hand"
 status: "Done"
-picture: "assets/images/boards/nanopi2-fire/np2f_dram_memtest.png"
+picture: "assets/images/boards/nanopi2-fire/np2f_dram_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-09-30: 1 GiB DDR3 at 800 MHz, 0 errors over 2 × 1 GiB"
 index: 1
 publish: true
@@ -17,6 +17,9 @@ tags: [samsung, arm, bare-metal, boot, memory, usb]
 {: .no_toc }
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
+
+![The DRAM story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_dram_cover.jpg' | relative_url }})
+*The whole story in one picture: 1 GiB of DDR3 at 800 MHz with 0 errors over two full passes, brought up in 68 ms by a 12 KB program in SRAM.*
 
 1. TOC
 {:toc}

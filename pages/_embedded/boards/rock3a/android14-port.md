@@ -3,7 +3,7 @@ layout: default
 title: "Porting Android 14 to the ROCK 3A myself"
 short_description: "Radxa ships Android 14 for the ROCK 3C only: a new product from its tree, 13 kinds of build failure, a DDR blob that hangs on reboot"
 status: "Done"
-picture: "assets/images/boards/rock3a/android14_home.png"
+picture: "assets/images/boards/rock3a/r3a_a14_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-19: services in the image, /dev/mem gone"
 index: 14
 publish: true
@@ -18,6 +18,9 @@ tags: [rockchip, arm, edge-ai, npu, linux, android]
 # Porting Android 14 to the ROCK 3A myself
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The Android 14 port in one picture]({{ '/assets/images/boards/rock3a/r3a_a14_cover.jpg' | relative_url }})
+*The whole story in one picture: Android 14 with GApps on the ROCK 3A, a warm reboot back in 36 s, and YOLOv5s in 34.58 ms on the NPU at 1 GHz.*
 
 ![Android 14 home screen on the ROCK 3A]({{ '/assets/images/boards/rock3a/android14_home.png' | relative_url }})
 

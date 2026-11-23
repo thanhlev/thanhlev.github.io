@@ -3,7 +3,7 @@ layout: default
 title: "Blinking an LED that lives on the PMIC, from 1148 bytes in SRAM"
 short_description: "Bare metal over FEL: the user LEDs hang off the AXP813, so a blink means bringing up the RSB bus by hand"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_led_path.png"
+picture: "assets/images/boards/bpi-m3/bpim3_blink_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-03: four runs over FEL, all writes acknowledged"
 index: 2
 publish: true
@@ -17,6 +17,9 @@ tags: [allwinner, arm, bare-metal, led]
 {: .no_toc }
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
+
+![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_blink_cover.jpg' | relative_url }})
+*The result first: 1148 bytes in SRAM, 12 PMIC writes and none failed, a 4.000 s blink done in 4.018 s.*
 
 1. TOC
 {:toc}

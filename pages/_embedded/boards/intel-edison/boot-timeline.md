@@ -3,7 +3,7 @@ layout: default
 title: "Timing the Edison boot ROM from the outside, 0.1 s at a time"
 short_description: "The ROM prints nothing for 13 s. Polling lsusb during one reboot showed what it does in that time"
 status: "Done"
-picture: "assets/images/boards/intel-edison/ied_q6_chain.png"
+picture: "assets/images/boards/intel-edison/ied_boot_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-12: one timed reboot, read-only"
 index: 1
 publish: true
@@ -17,6 +17,9 @@ tags: [intel, x86, bare-metal, boot, usb]
 {: .no_toc }
 
 [Back to the Intel Edison hub](/embedded/boards/intel-edison/)
+
+![The result first]({{ '/assets/images/boards/intel-edison/ied_boot_cover.jpg' | relative_url }})
+*The result first: 59.52 s from reset to login, 8.92 s of it the ROM waiting on USB for a flasher.*
 
 1. TOC
 {:toc}

@@ -3,7 +3,7 @@ layout: default
 title: "NanoPi 2 Fire (S5P4418): bare metal to face detection"
 short_description: "An old quad Cortex-A9 board from FriendlyELEC, taken from the boot ROM up to a FreeRTOS webcam that finds faces"
 status: "In Progress"
-picture: "assets/images/boards/nanopi2-fire/np2f_bench.jpg"
+picture: "assets/images/boards/nanopi2-fire/np2f_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-22: hub page and six STAR write-ups"
 index: 21
 publish: true
@@ -14,6 +14,9 @@ tags: [samsung, arm, freertos, bare-metal, boot, camera]
 
 # NanoPi 2 Fire
 {: .no_toc }
+
+![The NanoPi 2 Fire in numbers]({{ '/assets/images/boards/nanopi2-fire/np2f_hub_cover.jpg' | relative_url }})
+*What came out of it: YuNet faces in 27 ms on the four A9s, the webcam on HDMI for 1.5 % of a core, 3.4 s from reset to picture, and 3.93 times the speed on four cores.*
 
 ![My bench: the NanoPi 2 Fire, a 16-LED ring, the webcam and the HDMI screen](/assets/images/boards/nanopi2-fire/np2f_bench.jpg)
 

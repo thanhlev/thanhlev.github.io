@@ -3,7 +3,7 @@ layout: default
 title: "HDMI from an unmerged patch, then a GPU hang that wasn't the GPU"
 short_description: "Porting the MSM8974 HDMI PLL to kernel 6.6, and chasing 'gpu lockup' down to the memory shrinker"
 status: "Done"
-picture: "assets/images/boards/db8074/d8k_l19_evict.png"
+picture: "assets/images/boards/db8074/d8k_hdmi_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-17: 41 minutes with HDMI on, 0 GPU hangs"
 index: 3
 publish: true
@@ -17,6 +17,9 @@ tags: [qualcomm, arm, gpu, linux, display]
 {: .no_toc }
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
+
+![The result first]({{ '/assets/images/boards/db8074/d8k_hdmi_cover.jpg' | relative_url }})
+*The result first: HDMI at 1080p60 on kernel 6.6, and 0 GPU hangs in 41 minutes after 5 to 10 a minute.*
 
 1. TOC
 {:toc}

@@ -3,7 +3,7 @@ layout: default
 title: "A bare-metal command line for every peripheral on the board"
 short_description: "29 KiB of my own code in DRAM, loaded over FEL: one command per block, from the PMIC to the IR receiver"
 status: "Done"
-picture: "assets/images/boards/bpi-m3/bpim3_cli_after.png"
+picture: "assets/images/boards/bpi-m3/bpim3_cli_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-04: every command measured on the board"
 index: 4
 publish: true
@@ -17,6 +17,9 @@ tags: [allwinner, arm, bare-metal, memory, wifi]
 {: .no_toc }
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
+
+![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_cli_cover.jpg' | relative_url }})
+*The result first: eMMC, Wi-Fi, BT, the PHY and the IR receiver all answer, and 64 MiB of memtest gives 0 errors.*
 
 1. TOC
 {:toc}

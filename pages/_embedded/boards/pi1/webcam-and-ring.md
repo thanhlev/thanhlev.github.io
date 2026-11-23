@@ -3,7 +3,7 @@ layout: default
 title: "The webcam that kept dropping, and the LED ring that went dark"
 short_description: "A DWC2 isochronous bug I first blamed on the faces, and a WS2812 bit that was 160 ns too short"
 status: "Done"
-picture: "assets/images/boards/pi1/pi1_tasks.png"
+picture: "assets/images/boards/pi1/pi1_ring_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-27: led task, 0xF8, new kernel on the card"
 index: 40
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, camera, led]
 # The webcam that kept dropping, and the LED ring that went dark
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26 and 2026-10-27
+
+![The webcam and ring story in one picture]({{ '/assets/images/boards/pi1/pi1_ring_cover.jpg' | relative_url }})
+*The whole story in one picture: from about 9 stream restarts a minute to 0 in 121 s (2117 detector runs), and the ring lit again with 0xF8.*
 
 ![The FreeRTOS tasks: USB IRQ, watchdog, face, led]({{ '/assets/images/boards/pi1/pi1_tasks.png' | relative_url }})
 

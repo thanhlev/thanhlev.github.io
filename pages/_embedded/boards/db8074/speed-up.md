@@ -3,7 +3,7 @@ layout: default
 title: "From 264 s to 64 s: touch, a real GPU, and the Krait cores at 2.15 GHz"
 short_description: "The board ran very slowly. A GPU driver, ported CPU tables and one interrupt firing 59 000 times a second"
 status: "Done"
-picture: "assets/images/boards/db8074/d8k_l8_boots.png"
+picture: "assets/images/boards/db8074/d8k_speed_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-16: ten boot cycles measured"
 index: 2
 publish: true
@@ -17,6 +17,9 @@ tags: [qualcomm, arm, gpu, boot]
 {: .no_toc }
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
+
+![The result first]({{ '/assets/images/boards/db8074/d8k_speed_cover.jpg' | relative_url }})
+*The result first: boot to the home screen from 264 s to 64 s, with the Krait cores at 2.15 GHz instead of 0.80.*
 
 1. TOC
 {:toc}

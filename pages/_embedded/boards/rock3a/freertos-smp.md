@@ -3,7 +3,7 @@ layout: default
 title: "FreeRTOS on all four Cortex-A55 cores, with my own shell"
 short_description: "rtos_cli from Maskrom: GICv3 at Secure EL1, cpufreq up to 1992 MHz, CoreMark, then an AArch64 SMP port"
 status: "Done"
-picture: "assets/images/boards/rock3a/rtos_cli_banner.png"
+picture: "assets/images/boards/rock3a/r3a_smp_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-18: SMP heartbeat and four-core CoreMark"
 index: 11
 publish: true
@@ -16,6 +16,9 @@ tags: [rockchip, arm, freertos, bare-metal]
 # FreeRTOS on all four Cortex-A55 cores, with my own shell
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
+
+![The SMP story in one picture]({{ '/assets/images/boards/rock3a/r3a_smp_cover.jpg' | relative_url }})
+*The whole story in one picture: CoreMark 7634.83 on one A55 at 1992 MHz, 15.33 per MHz on all four, and a tick that stays within ±0.5 µs.*
 
 ![rtos_cli boot banner on the UART]({{ '/assets/images/boards/rock3a/rtos_cli_banner.png' | relative_url }})
 

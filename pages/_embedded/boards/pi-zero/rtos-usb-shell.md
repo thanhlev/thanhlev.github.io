@@ -3,7 +3,7 @@ layout: default
 title: "A FreeRTOS shell on the boot cable, and the USB device that left after 170 ms"
 short_description: "FreeRTOS + TinyUSB CDC on the Zero W with no UART cable; three bugs found one bit at a time"
 status: "Done"
-picture: "assets/images/boards/pi-zero/pz_reset_seq.png"
+picture: "assets/images/boards/pi-zero/pz_shell_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-12: shell stable, I-cache on"
 index: 20
 publish: true
@@ -16,6 +16,9 @@ tags: [raspberry-pi, arm, freertos, boot, usb]
 # A FreeRTOS shell on the boot cable, and the USB device that left after 170 ms
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-12
+
+![The USB shell story in one picture]({{ '/assets/images/boards/pi-zero/pz_shell_cover.jpg' | relative_url }})
+*The whole story in one picture: a FreeRTOS shell on /dev/ttyACM0 about 0.8 s after hand-over, and 11.3 µs per task switch.*
 
 ![What happens between start.elf releasing the ARM and kmain]({{ '/assets/images/boards/pi-zero/pz_reset_seq.png' | relative_url }})
 
