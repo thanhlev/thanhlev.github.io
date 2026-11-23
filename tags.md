@@ -32,7 +32,7 @@ from a post header opens the page already filtered. Several tags = posts that ha
 
 <div class="tg-bar" id="tg-bar">
   <button class="tg-btn tg-clear" data-tag="">All</button>
-  {% for t in uniq %}{% assign n = 0 %}{% for p in all %}{% if p.tags contains t %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}<button class="tg-btn" data-tag="{{ t }}">{{ t }} <span>{{ n }}</span></button>{% endfor %}
+  {% for t in uniq %}{% assign n = 0 %}{% for p in all %}{% if p.tags contains t %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}<button class="tg-btn" data-tag="{{ t }}">{{ site.data.tag_labels[t] | default: t }} <span>{{ n }}</span></button>{% endfor %}
 </div>
 
 <div class="boardgrid" id="tg-grid">
@@ -42,7 +42,7 @@ from a post header opens the page already filtered. Several tags = posts that ha
     <span class="chip">{% if p.board_parent %}{{ p.board_parent | replace: "-", " " | upcase }}{% else %}{{ p.collection | replace: "_", " " | upcase }}{% endif %}</span>
     <h3>{{ p.title | remove: "[🔥] - " }}</h3>
     <p>{{ p.short_description }}</p>
-    <div class="res">{% for t in p.tags %}<i>#{{ t }}</i> {% endfor %}</div>
+    <div class="res">{% for t in p.tags %}<i>#{{ site.data.tag_labels[t] | default: t }}</i> {% endfor %}</div>
   </a>
 {% endfor %}
 </div>
