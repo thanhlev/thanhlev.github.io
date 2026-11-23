@@ -1,0 +1,6 @@
+# tag_labels.yml: how a tag is SHOWN on the site, when it differs from the tag itself.
+# Why: tags stay lowercase in front matter (they are the /tags/#<tag> anchors and must match across pages),
+#   but acronyms read better upper-case. Lookup: site.data.tag_labels[tag] | default: tag
+#   (used in _layouts/default.html page chips and tags.md buttons + cards).
+# 2026-11-23 · new (user «tôi muốn hiện NPU chữ hoa»)
+npu: NPU
