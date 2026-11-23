@@ -17,7 +17,6 @@ tags: [rockchip, arm, npu, freertos, bare-metal, linux]
 ![The ROCK 3A in numbers]({{ '/assets/images/boards/rock3a/r3a_hub_cover.jpg' | relative_url }})
 *What came out of it: FreeRTOS on core 3 at 154 ms, 25.09 fps of NPU face detection with no Linux, CoreMark 7634.83 on one A55, and a LED ring driven from the RISC-V MCU.*
 
-![ROCK 3A on my desk]({{ '/assets/images/boards/rock3a/rock-3a.jpg' | relative_url }})
 
 The ROCK 3A is Radxa's Pi-sized board with a Rockchip RK3568: four Cortex-A55 cores, a Mali-G52,
 an NPU (Rockchip says 0.8 or 1 TOPS, depending on which doc you read), LPDDR4X (mine has 8 GB), eMMC and a 16 MiB SPI NOR. I bought it because I wanted an

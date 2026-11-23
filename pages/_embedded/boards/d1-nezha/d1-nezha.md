@@ -17,8 +17,6 @@ tags: [allwinner, risc-v, freertos, bare-metal, boot, camera]
 ![The D1 Nezha in numbers]({{ '/assets/images/boards/d1-nezha/d1_hub_cover.jpg' | relative_url }})
 *1080p from a USB webcam to HDMI at 29.4 fps with no Linux, on a chain that starts with my own boot0. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
-![The Allwinner D1 chip]({{ '/assets/images/boards/d1-nezha/d1_chip_photo.jpg' | relative_url }})
-*The D1 itself, the chip at the centre of the Nezha. Photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0 (I have no good photo of my own board yet).*
 
 ![My FreeRTOS OSD over the webcam picture on HDMI]({{ '/assets/images/boards/d1-nezha/d1_uvc_osd.png' | relative_url }})
 

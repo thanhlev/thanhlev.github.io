@@ -3,7 +3,7 @@ layout: default
 title: "My own Debian 13 on the eMMC, next to FreeRTOS on core 3"
 short_description: "Mainline Linux 7.2.11 and a self-built Debian 13 on cores 0-2, booted by U-Boot from the NOR chain that already gave core 3 to FreeRTOS, and Rockchip's NPU driver ported to it"
 status: "Done"
-picture: "assets/images/boards/rock3a/debian_boot_chain.png"
+picture: "assets/images/boards/rock3a/rock3a_debian13_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-10-24: NPU probes clean under mainline 7.2.11, YOLOv5s runs next to the RTOS"
 index: 12.5
 publish: true
@@ -14,6 +14,9 @@ tags: [rockchip, arm, linux, freertos, npu, bare-metal]
 ---
 
 # My own Debian 13 on the eMMC, next to FreeRTOS on core 3
+
+![Debian 13 next to FreeRTOS on the ROCK 3A]({{ '/assets/images/boards/rock3a/rock3a_debian13_cover.jpg' | relative_url }})
+*The result first: Debian 13 on cores 0-2 while FreeRTOS keeps core 3, its 1 kHz task never more than 4.7 µs late.*
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
