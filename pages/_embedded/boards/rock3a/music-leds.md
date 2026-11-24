@@ -626,6 +626,10 @@ tracker isn't confident on solo piano.*
 
 ## Result
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_music_leds_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/rock3a/r3a_music_leds_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*The demo on the bench, the first 2:13 of one take with no edits: music plays on the board, the UI shows each stage live (the tempo card reads 120.0 on the click track), and the two rings follow, one with the genre effect, the other with the drum flashes.*
+
 The rings follow the music, and the number I care most about is the timing: a predicted beat latches the LEDs
 **0.12 ms** after the click on average (max 3.55 ms over 76 beats), where the reactive version was about 16 ms
 late. Through live PipeWire, with the computed sound clock, it's +0.28 ms mean and 3.61 ms max over 36 beats.
