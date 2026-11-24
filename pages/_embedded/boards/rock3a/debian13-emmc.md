@@ -618,6 +618,10 @@ hatch stays, though. It works for any boot loop that comes from Linux.
 
 ## Result
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_debian13_npu_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/rock3a/r3a_debian13_npu_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*From my facecam film (Vietnamese narration, 76 s): Debian 13 written to the eMMC next to FreeRTOS on core 3, the NPU driver's four errors, the clock fix (YOLOv5s 50.5 → 36.0 ms) and the last model layers moved off the CPU.*
+
 Debian 13 runs from the eMMC on cores 0 to 2 under mainline 7.2.11, while FreeRTOS keeps core 3 from
 the NOR chain that hands it over at 0.154 s (timed on the earlier build; I didn't re-time it with
 U-Boot behind it) and never notices Linux arriving. Debian came up the first time on the board:
