@@ -92,6 +92,10 @@ The dialog every boot greeted me with (HDMI screencap, 7:52 PM on 2026-11-19, be
 
 ## Result
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_android14_boot_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/rock3a/r3a_android14_boot_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*One minute of the port on the bench, filmed with the camera: power on, the Rockchip kernel logo, the Android boot animation, then the launcher and the app drawer on the HDMI screen.*
+
 Android 14 (UQ1A.240205.004.B1, security patch 2025-01-05, kernel 6.1.99, userdebug) runs on the
 ROCK 3A with HDMI, Ethernet and GApps. Warm reboot works again: `adb reboot` is back in **36 s** with DDR
 blob v1.26.
