@@ -454,3 +454,20 @@ html:lang(vi) { --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI',
 .is-doc article.doc { max-width: none; }
 .is-doc article.doc img.img-wide { width: 100%; max-width: 100%; height: auto; max-height: none; }
 .is-doc article.doc video { width: 100% !important; max-width: 100% !important; height: auto; }
+
+/* ---------- More room on phones and tablets (2026-11-25, user «trên mobile cũng làm tương tự, có thể phải bỏ
+   cột 3 trên mobile để tăng hiển thị»): up to 1200 px there is one column only (no contents rail, no post
+   rail; a tablet in landscape got the 270 px rail before); on phones the side margin is 16 px and wide
+   figures and videos run edge to edge (no border), captions keep the text margin.
+   wiki: http://localhost:3000/wiki/claude/blog_agent#l11 ---------- */
+@media (max-width: 1200px) {
+  .is-doc .docbody { grid-template-columns: minmax(0, 1fr); }
+  .is-doc .rail, .is-doc .prail { display: none; }
+}
+@media (max-width: 640px) {
+  :root { --pad: 16px; }
+  .is-doc article.doc img.img-wide, .is-doc article.doc video {
+    width: calc(100% + 32px) !important; max-width: calc(100% + 32px) !important;
+    margin-left: -16px; margin-right: -16px; border-left: 0; border-right: 0;
+  }
+}
