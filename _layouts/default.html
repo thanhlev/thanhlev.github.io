@@ -104,6 +104,16 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
         });
       });
 
+      // Wide pictures fill the post column (2026-11-25, user screenshot: «phần hình và nội dung ở cột giữa
+      // nên phủ kín khoảng không gian»). CSS cannot tell a landscape figure from a tall phone screenshot,
+      // so each image is classed once it has loaded: aspect >= 1.15 -> .img-wide (width 100 %); taller ones
+      // keep the max-height cap so a 9:16 capture does not become a whole screen high.
+      // wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+      document.querySelectorAll('article.doc img').forEach(function (im) {
+        function mark() { if (im.naturalWidth && im.naturalWidth / im.naturalHeight >= 1.15) im.classList.add('img-wide'); }
+        if (im.complete) mark(); else im.addEventListener('load', mark);
+      });
+
       // Contents rail: one entry per h2/h3 of the article. The first h1 of a post repeats the
       // page title (already in the doc header), so it is hidden and skipped here.
       (function () {
