@@ -41,7 +41,6 @@ more tools. · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
       <tr><td>Board stories (STAR)</td><td>{{ stories.size }}</td></tr>
       <tr><td>Robots</td><td>{{ robots.size }}</td></tr>
       <tr><td>AI on the board</td><td>{{ ai_all.size }} stories</td></tr>
-      <tr><td>Favourite level</td><td>boot ROM → RTOS</td></tr>
       <tr><td>Writing here since</td><td>2017</td></tr>
     </table>
   </div>
