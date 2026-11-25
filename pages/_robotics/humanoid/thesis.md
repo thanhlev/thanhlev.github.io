@@ -21,7 +21,7 @@ tags: [robotics, kinematics, servo, cad]
 [Back to the humanoid hub](/robotics/humanoid/)
 
 ![Thesis humanoid cover: 17 SG90 servos walking]({{ '/assets/images/robotics/humanoid/hum_thesis_cover.jpg' | relative_url }})
-*17 SG90s walking on the floor from angles I computed myself.*
+*17 SG90s walking on the floor from angles I computed myself. The photo is version 2: I 3D-printed the frame again, same size, same servos.*
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">

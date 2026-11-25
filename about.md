@@ -53,7 +53,7 @@ more tools. · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
     <p>One wrong angle in a matrix and the leg goes somewhere you didn't expect. I've liked working at that level ever since: close to the hardware, where a number is either right or the thing falls over.</p>
     <p><a href="{{ '/robotics/humanoid/thesis' | relative_url }}">The thesis robot and its videos →</a></p>
   </div>
-  <a class="ab-photo" href="{{ '/robotics/humanoid/thesis' | relative_url }}"><img src="{{ '/assets/images/about/thesis_robot.jpg' | relative_url }}" alt="My thesis humanoid robot"><span>Thesis robot · SG90 servos · SolidWorks + IK</span></a>
+  <a class="ab-photo" href="{{ '/robotics/humanoid/thesis' | relative_url }}"><img src="{{ '/assets/images/about/thesis_robot.jpg' | relative_url }}" alt="Version 2 of my thesis humanoid, 3D-printed, next to a toy robot dog"><span>Thesis robot, version 2: 3D-printed again, same size and SG90 servos</span></a>
 </section>
 
 <div class="sec"><h2>What's on the bench</h2><span>§2 · one page per board, one story per milestone</span><a class="more btn" href="{{ '/#boards' | relative_url }}">All {{ hubs.size }} boards</a></div>
