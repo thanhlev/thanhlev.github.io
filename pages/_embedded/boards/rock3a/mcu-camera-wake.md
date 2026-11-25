@@ -685,29 +685,3 @@ goes away.
 
 And a longer test with real people, now that I know the chain notices me. The privacy rule stays: the
 board reports numbers and boxes, never pictures.
-
-## Skills this project used
-
-- Reading a TRM critically: finding the register a figure names without an address, the counting
-  direction of a timer, the source field of a low-power request, and an access list that turned out
-  incomplete; writing down when my reading was wrong (sections 1, 2, 7, 9).
-- Secure-world configuration on Rockchip: SGRF security regions found by bisecting bits on the board,
-  the DDR firewall, the reset-vector remap in PMU SGRF (sections 1, 8).
-- Bare-metal RISC-V: FreeRTOS on an SCR1 with no cache and no atomics, code placement between DRAM and
-  SRAM by linker section, measuring that instruction fetch dominates (sections 1, 2).
-- USB host internals: reusing my own xHCI/UVC stack on a second CPU architecture, isochronous ring
-  overruns, a UVC frame-boundary quirk, pausing a stream with Stop Endpoint and Set TR Dequeue Pointer
-  (sections 2, 9).
-- Driving hardware blocks without a driver: RGA2 from its field tables, the NPU's program controller,
-  power domains and the hang a powered-off domain causes (sections 3, 4).
-- ARMv8 power management by hand: `CPUPWRCTLR_EL1`, cache clean by set/way, GIC redistributor sleep,
-  a warm-boot stub, `CPU_OFF`/`CPU_ON` semantics taken from TF-A, an EL3 detour through an SMC
-  (sections 8, 10).
-- DRAM low-power: the PMU's self-refresh request, the controller's own state as proof, a hold loop that
-  never touches DRAM (section 7).
-- Multi-master rules: one writer per register and per cache line, a UART hand-over with no atomics,
-  mailbox doorbells and which interrupt line ends a WFI (sections 5, 9, 11).
-- Testing without the real input: a public-domain test face swapped in after capture, PC host tests
-  against independent references before the board run (sections 3, 6).
-- Measuring honestly: every number here comes from a log on the board, and the one I don't have
-  (watts) is left as a temperature.

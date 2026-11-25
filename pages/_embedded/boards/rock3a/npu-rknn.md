@@ -220,6 +220,10 @@ runtime. I haven't tried the other direction.
 
 ## Result
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_npu_rknn_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/rock3a/r3a_npu_rknn_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*From my explainer film on this NPU (Vietnamese narration, 73 s): the block inside the RK3568, Rockchip's four software layers on Linux, how the CPU hands the NPU a command list (one conv layer = 137 commands), and the same list replayed from FreeRTOS.*
+
 **The NPU is 32 times faster than one A55 thread on YAMNet** (1.44 against 45.68 ms per window) and
 **6.5 times faster than all four cores on Real-ESRGAN** (219.2 against 1433.0 ms per frame). The Mali-G52
 GPU was the slowest option I tried, slower even than one CPU thread.

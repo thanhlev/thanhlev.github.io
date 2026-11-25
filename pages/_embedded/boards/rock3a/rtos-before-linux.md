@@ -96,6 +96,10 @@ record only shows as a board that doesn't boot.
 
 ## Result
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_rtos_before_linux_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/rock3a/r3a_rtos_before_linux_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*From my film on this boot (Vietnamese narration, 70 s): the four problems in order, the 1 kHz loop that had to wait for Linux, BL31 switching core 3 off, the slow hand-off through the cache, the big first image, then the UART log of the 154 ms start.*
+
 | Milestone | First NOR build | Kernel split off | Packed 472 |
 |---|---|---|---|
 | Image the BootROM reads | ~10.7 MB | 366 125 B | **110 832 B** |

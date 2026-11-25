@@ -250,6 +250,10 @@ demo runs.
 
 ## Result
 
+<video controls muted playsinline preload="metadata" poster="{{ '/assets/images/boards/rock3a/r3a_music_linux_169_poster.jpg' | relative_url }}" style="width:100%;max-width:720px"><source src="{{ '/assets/videos/boards/rock3a/r3a_music_linux_169.mp4' | relative_url }}" type="video/mp4"></video>
+
+*90 s of the same YAMNet pipeline a few days later, inside the LED demo of the [next post]({{ '/embedded/boards/rock3a/music-leds' | relative_url }}), with the sound taken out (the music was a YouTube song): the NPU card's top-3 labels and the scene change with the music.*
+
 **1.44 ms per window** on the NPU at 900 MHz (1.39 to 1.46), against 45.7 ms on one A55 thread: the NPU is
 32 times faster, or 17 times against all four cores. All three clips came out right: piano gave Music in 64 of 65
 windows with Piano and Keyboard in the top 3, rock gave Music in 63 of 65, and speech gave Speech in 55
