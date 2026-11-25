@@ -351,7 +351,9 @@ body.is-doc { font-size: 19px; line-height: 1.7; }   /* 19 px Plex Sans ≈ the 
 @media (max-width: 1000px) { body.is-doc { font-size: 18px; } .is-doc article.doc h2 { font-size: 30px; } }
 /* paragraphs stop at ~75 characters a line at 20 px (comfortable reading measure); pictures, code and
    tables keep the full 1180 px column. 2026-11-23, same change as above. */
-.is-doc article.doc > p, .is-doc article.doc > ul, .is-doc article.doc > ol, .is-doc article.doc > blockquote { max-width: 44em; }
+/* 2026-11-25: the 44em measure is lifted again: the user wants the text and the pictures to fill the
+   middle column (screenshot 14-43-29: ~370 px empty on the right at 1850 px). */
+.is-doc article.doc > p, .is-doc article.doc > ul, .is-doc article.doc > ol, .is-doc article.doc > blockquote { max-width: none; }
 
 /* ---------- Right post rail (2026-11-23, user: empty right side; keep the post list in view while
    scrolling and across pages). Wide screens only: three columns contents | post | posts. ---------- */
@@ -444,3 +446,11 @@ html:lang(vi) { --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI',
   .project_table td:nth-child(4) { margin-top: 8px; }
   .is-doc .foot { font-size: 12px; }
 }
+
+/* ---------- Middle column filled (2026-11-25, user «phần hình và nội dung ở cột giữa nên phủ kín khoảng
+   không gian»): the post column has no 1180 px cap any more, wide figures (.img-wide, set by the layout's
+   script for aspect >= 1.15) and the 16:9 videos take its full width. Tall pictures keep their 740 px cap.
+   wiki: http://localhost:3000/wiki/claude/blog_agent#l11 ---------- */
+.is-doc article.doc { max-width: none; }
+.is-doc article.doc img.img-wide { width: 100%; max-width: 100%; height: auto; max-height: none; }
+.is-doc article.doc video { width: 100% !important; max-width: 100% !important; height: auto; }
