@@ -674,27 +674,3 @@ and Linux keeping all four A55 cores, in
 [FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores]({{ '/embedded/boards/rock3a/ws2812-riscv-mcu' | relative_url }}),
 and later had it watch a webcam on its own while the A55s are powered off, in
 [The RISC-V MCU keeps watch]({{ '/embedded/boards/rock3a/mcu-camera-wake' | relative_url }}).
-
-## Skills this project used
-
-- Boot chain and firmware: reading the RK3568 boot flow (BootROM idblock, DDR blob, TF-A BL31,
-  BL33), fitting U-Boot in as a raw BL33 payload behind my own loader, getting back to Maskrom
-  through the boot-mode word and PSCI reset (section 1, traps).
-- Device tree: writing overlays against mainline's labels (`-@`), `reserved-memory` with
-  `no-map` and why it matters for speculation, a power-domain node from a vendor tree, patching
-  U-Boot's DTB with `fdtput` (sections 1, 2, 6).
-- Kernel configuration for AMP: keeping CPU idle, hotplug and suspend off despite Kconfig selects,
-  a single fixed cpufreq governor for a clock shared with the RTOS, a build that checks itself
-  (section 1).
-- Driver porting: an out-of-tree vendor module across five kernel API changes, and debugging
-  genpd, regulators and runtime PM from dmesg alone, including an external abort (section 6).
-- U-Boot: Kconfig fragments, `sysboot`/extlinux, the fastboot gadget, a DRAM layout that stays
-  clear of a running RTOS (section 2).
-- Build systems without root: debootstrap split across PC and board, fakeroot state carried into
-  `mke2fs -d`, make quoting bugs (section 3).
-- Tools and formats: the Android sparse format from its header, written in 42 lines of Python;
-  UART automation that types into U-Boot reliably at 1.5 Mbaud (sections 4, 7).
-- Linux/RTOS IPC: a console carried over shared-memory rings, a session reset so the Linux side can
-  come and go, udev permissions (section 5).
-- Measuring instead of guessing: every number on this page comes from a log on the board,
-  including the RTOS latency while the NPU loads the memory bus.

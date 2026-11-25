@@ -671,12 +671,3 @@ A photodiode on one LED and the jack into a logic analyser, with the 120 BPM cli
 a measured number or show me what my clock misses. The 74AHCT125 and a 5 V supply would end the 3.3 V
 compromise and let me drop the 500 mA cap. The snare needs a better feature than a band ratio. Then the move to
 Debian 13: the same build script, with spidev on SPI3 in my own device tree instead of Radxa's overlay.
-
-## Skills this project used
-
-Linux audio plumbing (PipeWire monitors, quanta, ALSA delay), real-time DSP in C (FFT, spectral flux, median
-HPSS, autocorrelation tempo, a PLL-style beat scheduler), running an INT8 model on the RK3568 NPU through
-librknnrt and finding where the clock really is, turning a classifier's 521 scores into a stable decision,
-producing a WS2812 waveform from an SPI controller and verifying it through the LED chain's own output, reading
-pad registers to find a pull-up, power budgeting on a 3.3 V rail, fixing an X server after an expired APT key,
-and a GTK/cairo UI that shows what's really on the wire.
