@@ -15,7 +15,9 @@
 
 /* 2026-11-23: body font Source Serif 4 -> IBM Plex Sans (user found the serif «có móc»; tech blogs mostly read
    in a sans). Same Plex family as the condensed headings and the mono labels, so the page is one family. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+/* 2026-11-27: the Google Fonts @import that stood here is now a <link rel=stylesheet> (+ preconnect) in
+   _layouts/default.html, same URL: an @import is only discovered after this sheet has loaded.
+   wiki: http://localhost:3000/wiki/claude/blog_agent#l11 */
 /* 2026-11-23 (later the same day): body font -> Atkinson Hyperlegible Next (user «qua cái này Atkinson Hyperlegible»).
    It has no Vietnamese glyphs (48 of ơ ư ạ ế ộ … missing, checked with fontTools on the Google Fonts files), so
    pages with `lang: vi` keep IBM Plex Sans, and a stray Vietnamese word in an English page falls back to it. */
@@ -25,11 +27,11 @@
   --sheet: #fbfaf6;      /* raised areas: cards on hover, code */
   --ink: #15171a;        /* text and the main rules */
   --ink2: #33363b;       /* body text */
-  --mute: #6b6f76;       /* labels */
+  --mute: #62666d;       /* labels. 2026-11-27: #6b6f76 -> #62666d, 4.59 -> 5.24:1 on --paper (computed, WCAG formula; small mono labels need AA 4.5) */
   --rule: #d9d5ca;       /* light rules */
   --acc: #e0531f;        /* signal orange */
   --acc2: #1f6f5c;       /* teal: done, chips */
-  --warn: #b7791f;
+  --warn: #8a5a12;       /* 2026-11-27: #b7791f -> #8a5a12; 3.31 -> 5.38:1 on --paper (computed); "In Progress" badges failed AA */
   --code: #efece3;
   --f-head: 'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif;
   --f-mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -470,4 +472,105 @@ html:lang(vi) { --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI',
     width: calc(100% + 32px) !important; max-width: calc(100% + 32px) !important;
     margin-left: -16px; margin-right: -16px; border-left: 0; border-right: 0;
   }
+}
+
+/* ==========================================================================
+   2026-11-27 · site review, group A (navigation, search, accessibility). Same Datasheet language: 1 px rules,
+   mono uppercase labels, condensed headings, no shadows, no radius. Accent, fonts, measure and layout direction
+   are unchanged. wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+   ========================================================================== */
+[data-theme="dark"] ::selection { color: var(--paper); }   /* white on the dark-mode orange #ff7a45 was 2.59:1, --paper on it is 6.88:1 (computed) */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* skip link (first in <body>): off screen until it gets keyboard focus */
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 8px 14px; background: var(--ink); color: var(--paper);
+  font: 600 13px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; text-decoration: none; }
+.skip:focus { top: 10px; color: var(--paper); }
+#main_content:focus { outline: none; }
+
+/* scrollable code / tables marked focusable by the layout script */
+article.doc [data-scrollmark]:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+
+/* the cover (first picture of a story, 1600x900): its box is reserved before the file arrives, no jump */
+.is-doc article.doc img[src*="_cover"] { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; height: auto; max-height: none; object-fit: cover; }
+
+/* mostly-white pictures (set .img-light by the layout script) are dimmed in dark mode only */
+[data-theme="dark"] article.doc img.img-light { filter: brightness(.82) contrast(1.05); }
+
+/* collapsible contents box at the top of a post, only where the left rail is hidden */
+.toc-m { display: none; }
+@media (max-width: 1200px) {
+  .toc-m { display: block; margin: 8px 0 26px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); }
+  .toc-m summary { cursor: pointer; padding: 10px 0; font: 600 12.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+  .toc-m summary::marker { color: var(--acc); }
+  .toc-m ul { list-style: none; margin: 0 0 12px; padding: 0; }
+  .toc-m li { margin: 0; }
+  .toc-m a { display: block; padding: 6px 0 6px 10px; border-left: 2px solid var(--rule); text-decoration: none; font: 14px/1.4 var(--f-mono); color: var(--ink2); }
+  .toc-m .toc-h3 a { padding-left: 24px; font-size: 13px; color: var(--mute); }
+  .toc-m a:hover { color: var(--acc); border-left-color: var(--acc); }
+}
+
+/* end-of-story navigation (_includes/story_nav.html) and related stories (_includes/related.html) */
+.storynav { margin-top: 64px; border-top: 1px solid var(--ink); }
+.sn-pn { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+.sn-pn a { display: block; padding: 18px 20px 20px 0; text-decoration: none; color: inherit; }
+.sn-pn .sn-next { text-align: right; padding: 18px 0 20px 20px; border-left: 1px solid var(--rule); }
+.sn-pn a:hover { background: var(--sheet); }
+.sn-pn a:hover b { color: var(--acc); }
+.sn-l { display: block; font: 600 11.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--acc); margin-bottom: 6px; }
+.sn-pn b, .rl-card b, .srch-c b { display: block; font: 700 20px/1.2 var(--f-head); color: var(--ink); }
+.sn-r { display: block; font: 13px/1.5 var(--f-mono); color: var(--mute); margin-top: 6px; }
+.sn-all { padding: 22px 0 0; }
+.sn-h { font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin-bottom: 10px; }
+.sn-h a { color: var(--ink); }
+.sn-all ol { margin: 0; padding: 0; list-style: none; counter-reset: sn; border-top: 1px solid var(--ink); }
+.sn-all li { counter-increment: sn; position: relative; margin: 0; padding: 7px 0 7px 34px; border-bottom: 1px dotted var(--rule); font: 15px/1.4 var(--f-mono); }
+.sn-all li::before { content: counter(sn, decimal-leading-zero); position: absolute; left: 0; top: 8px; font-size: 12px; color: var(--mute); }
+.sn-all li a { color: var(--ink2); text-decoration: none; }
+.sn-all li a:hover { color: var(--acc); }
+.sn-all li.on { background: var(--sheet); color: var(--acc); font-weight: 600; }
+.sn-all li.on::before { color: var(--acc); }
+.sn-all li.on em { font-style: normal; font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); margin-left: 6px; }
+.sn-hub { display: inline-block; margin-top: 14px; font: 600 13px var(--f-mono); letter-spacing: .04em; }
+.related { margin-top: 44px; }
+.rl-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+.rl-card { display: block; padding: 16px 18px 20px 0; text-decoration: none; color: inherit; border-bottom: 1px solid var(--rule); }
+.rl-card + .rl-card { border-left: 1px solid var(--rule); padding-left: 18px; }
+.rl-card:hover { background: var(--sheet); }
+.rl-card:hover b { color: var(--acc); }
+.rl-card .sn-l { color: var(--acc2); }
+.rl-card b { font-size: 18px; }
+@media (max-width: 760px) {
+  .sn-pn, .rl-grid { grid-template-columns: 1fr; }
+  .sn-pn .sn-next { text-align: left; padding: 18px 0 20px; border-left: 0; border-top: 1px solid var(--rule); }
+  .sn-pn .sn-none { display: none; }
+  .rl-card + .rl-card { border-left: 0; padding-left: 0; }
+}
+
+/* search page (search.md, assets/js/search.js) and the 404 search box */
+.srch { padding: 48px var(--pad) 80px; max-width: 1180px; }
+.srch .doctitle { margin-bottom: 22px; }
+.srch-f input { width: 100%; max-width: 720px; font: 500 18px var(--f-mono); color: var(--ink); background: var(--sheet);
+  border: 1px solid var(--ink); border-radius: 0; padding: 12px 14px; -webkit-appearance: none; appearance: none; }
+.srch-f input:focus { outline: 2px solid var(--acc); outline-offset: 1px; }
+.srch-n { font: 13px var(--f-mono); color: var(--mute); margin: 16px 0 8px; min-height: 1.2em; }
+.srch-r { border-top: 1px solid var(--ink); }
+.srch-r:empty { border-top: 0; }
+.srch-c { display: block; padding: 14px 0 16px; border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; }
+.srch-c:hover { background: var(--sheet); }
+.srch-c:hover b { color: var(--acc); }
+.srch-d { display: block; font-size: 15.5px; color: var(--ink2); margin-top: 4px; }
+.err-srch { margin: 0 0 40px; text-align: left; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.err-srch label { width: 100%; font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.err-srch input { flex: 1 1 220px; font-size: 16px; padding: 10px 12px; }
+.err-srch .btn { margin: 0; }
+
+/* phones: bigger touch targets for the top nav, the theme button and the footer links (were ~17 px high) */
+@media (max-width: 640px) {
+  .topnav a { display: inline-block; padding: 6px 0; }
+  .theme-toggle { padding: 5px 9px; }
+  .foot a { display: inline-block; padding: 6px 0; }
+  .srch { padding: 26px var(--pad) 56px; }
+  .srch-f input { font-size: 16px; }   /* 16 px: iOS does not zoom into the field */
+  .sn-pn b { font-size: 18px; }
 }

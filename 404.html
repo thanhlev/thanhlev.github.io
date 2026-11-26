@@ -7,7 +7,7 @@ permalink: /404.html
 <div class="error-page">
   <div class="error-content">
     <h1 class="error-code">404</h1>
-    <h2 class="error-message">Page Not Found</h2>
+    <h2 class="error-message toc-skip">Page Not Found</h2>
     <p class="error-description">
       Sorry, the page you're looking for doesn't exist. It might have been moved, deleted, or the URL might be incorrect.
     </p>
@@ -17,19 +17,36 @@ permalink: /404.html
       <a href="/about" class="btn btn-secondary">About Me</a>
     </div>
     
+    <!-- 2026-11-27: the "/#yocto-project" item went (the Yocto block left the home page on 2026-11-22, so it
+         pointed nowhere); a search box sends ?q= to /search/. wiki: http://localhost:3000/wiki/claude/blog_agent#l11 -->
+    <form class="srch-f err-srch" role="search" action="{{ '/search/' | relative_url }}" method="get">
+      <label for="err-q">Search the site</label>
+      <input id="err-q" name="q" type="search" placeholder="npu, freertos, u-boot ...">
+      <button type="submit" class="btn">Search</button>
+    </form>
+
     <div class="suggested-content">
-      <h3>You might be interested in:</h3>
+      <h3 class="toc-skip">You might be interested in:</h3>
       <ul>
         <li><a href="/#linux-networking">Linux Networking Articles</a></li>
         <li><a href="/#linux-general">Linux General Topics</a></li>
         <li><a href="/#embedded-systems">Embedded Systems</a></li>
-        <li><a href="/#yocto-project">Yocto Project</a></li>
       </ul>
     </div>
   </div>
 </div>
 
 <style>
+/* 2026-11-27: the old sheet's --primary-color/--secondary-color/--text-color/--light-gray no longer exist since the
+   2026-11-22 Datasheet redesign, so "Go to Homepage" was white text on no background (invisible, Playwright
+   screenshot 404_1850_light). They are mapped onto the Datasheet colours here, and the post-style "§1" number and
+   rule above the h2 are switched off. wiki: http://localhost:3000/wiki/claude/blog_agent#l11 */
+.error-page { --primary-color: var(--ink); --secondary-color: var(--ink); --text-color: var(--ink); --light-gray: var(--sheet); }
+article.doc .error-page h2 { border-top: 0; padding-top: 0; }
+article.doc .error-page h2::before { content: none; }
+.error-page .btn-primary, .error-page .btn-primary:hover { color: var(--paper); }
+.error-page .btn-secondary:hover { color: var(--paper); }
+.error-page .btn { border-radius: 0; }
 .error-page {
   text-align: center;
   padding: 60px 20px;

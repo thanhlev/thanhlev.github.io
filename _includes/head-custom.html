@@ -1,8 +1,7 @@
 <!-- Additional custom head elements -->
 
-<!-- Preconnect to external domains -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<!-- 2026-11-27: the font preconnects moved to _layouts/default.html next to the font stylesheet (+ gstatic,
+     crossorigin); the cdnjs one went with Font Awesome. wiki: http://localhost:3000/wiki/claude/blog_agent#l11 -->
 
 <!-- Additional Meta Tags -->
 <meta name="robots" content="index, follow">
@@ -33,6 +32,6 @@
 }
 </script>
 
-<!-- RSS feed link removed 2026-11-22: the feed file was never generated (jekyll-feed is not in
-     the Gemfile), so the tag pointed at a 404. Add jekyll-feed to Gemfile + plugins first if a
-     feed is wanted again. -->
+<!-- 2026-11-27: Atom feed again, now a hand-written /feed.xml (Liquid, safe mode; the 2026-11-22 tag pointed at a
+     jekyll-feed file that was never built). wiki: http://localhost:3000/wiki/claude/blog_agent#l11 -->
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">

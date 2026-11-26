@@ -1,5 +1,7 @@
 ---
-title: Thanh Le - Technical Blog
+# 2026-11-27: "Thanh Le - Technical Blog" -> "Thanh Le": only the <title> suffix, og:site_name and the feed title
+# use it (the top bar brand is written in _layouts/default.html). wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+title: Thanh Le
 description: "Linux, Embedded Systems, Networking, and DevOps Engineering"
 author: Thanh Le (Lê Quang Thành)
 email: thanhlev@amazon.com.vn
@@ -8,7 +10,8 @@ email: thanhlev@amazon.com.vn
 url: https://thanhlev.github.io
 baseurl: ""
 show_downloads: false
-google_analytics: UA-121634256-1
+# 2026-11-27: the google_analytics UA-... line was removed: Universal Analytics stopped collecting in 2023 and no
+# layout of this site reads it. wiki: http://localhost:3000/wiki/claude/blog_agent#l11
 theme: jekyll-theme-slate
 
 # SEO and Social
@@ -91,3 +94,23 @@ defaults:
       type: "yocto"
     values:
       layout: "default"
+  # 2026-11-27: share picture for the plain pages that have no `picture` (home, tags, search, 404): seo-tag reads
+  # page.image and then prints og:image + twitter:image + a large card. Not set site-wide on purpose: a doc with
+  # its own `picture` would get this cover as page.image too (see the head of _layouts/default.html).
+  # wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+  - scope:
+      path: "index.md"
+    values:
+      image: /assets/images/boards/rock3a/rtos_face_cover.jpg
+  - scope:
+      path: "tags.md"
+    values:
+      image: /assets/images/boards/rock3a/rtos_face_cover.jpg
+  - scope:
+      path: "search.md"
+    values:
+      image: /assets/images/boards/rock3a/rtos_face_cover.jpg
+  - scope:
+      path: "404.html"
+    values:
+      image: /assets/images/boards/rock3a/rtos_face_cover.jpg

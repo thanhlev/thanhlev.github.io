@@ -15,17 +15,30 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <meta name="author" content="{{ site.author }}">
+    {% comment %} 2026-11-27: author, og:title, og:url, og:type and twitter:card are no longer written here: the seo tag
+       below prints them (measured in a built page: the two copies differed, og:type website vs article).
+       Kept, because seo-tag cannot make them from this site's front matter:
+       - description / og:description: seo-tag reads page.description or the excerpt; our docs have neither
+         (the excerpt is the "# Title" line), so its description is only the title. short_description is the real one.
+       - og:image (+ twitter:image, twitter:card summary_large_image): seo-tag reads page.image only; docs have
+         `picture`, so for them seo-tag prints no image and a small "summary" card. Plain pages without a picture
+         get `image:` from _config.yml defaults and seo-tag prints all three itself, so this block is skipped when
+         page.image is set. (On docs twitter:card is still printed twice, ours first; the clean fix is an
+         `image:` line in each doc's front matter.)
+       wiki: http://localhost:3000/wiki/claude/blog_agent#l11 {% endcomment %}
     <meta name="description" content="{{ page.short_description | default: page.description | default: site.description }}">
-    <meta property="og:title" content="{{ page.title | default: site.title }}">
-    <meta property="og:description" content="{{ page.short_description | default: site.description }}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-    {% if page.picture %}<meta property="og:image" content="{{ site.url }}/{{ page.picture }}">{% endif %}
-    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="{{ page.short_description | default: page.description | default: site.description }}">
+    {% if page.picture and page.image == nil %}<meta property="og:image" content="{{ site.url }}/{{ page.picture }}">
+    <meta name="twitter:image" content="{{ site.url }}/{{ page.picture }}">
+    <meta name="twitter:card" content="summary_large_image">{% endif %}
     <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
-    <!-- Font Awesome stays only for the few icons inside older posts (GitHub/LinkedIn in About). -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% comment %} 2026-11-27: Font Awesome (cdnjs, ~100 KB CSS + fonts) removed: 0 "fa-" classes in the built site
+       (grep on _site). The Google Fonts @import moved here from style.scss: an @import inside the CSS is only
+       found after the CSS itself has loaded (two round trips before the fonts start). Same URL, display=swap.
+       wiki: http://localhost:3000/wiki/claude/blog_agent#l11 {% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,500;0,700;1,400&display=swap">
     <!-- Theme is set before first paint so a dark-mode reader never sees a white flash. -->
     <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
 {% seo %}
@@ -35,6 +48,8 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
   {% comment %} `wide: true` in front matter (About, 2026-11-22) = full-width page like home: no doc header, no contents rail. {% endcomment %}
   {% assign is_home = false %}{% if page.url == "/" or page.wide %}{% assign is_home = true %}{% endif %}
   <body class="{% if is_home %}is-home{% else %}is-doc{% endif %}">
+    {% comment %} 2026-11-27: skip link, first focusable element (keyboard users jumped through 10 nav links on every page). wiki: http://localhost:3000/wiki/claude/blog_agent#l11 {% endcomment %}
+    <a class="skip" href="#main_content">Skip to content</a>
 
     <header class="topbar">
       <a href="{{ '/' | relative_url }}" class="brand"><b>Thanh Le</b> <span>/ bench notes</span></a>
@@ -47,13 +62,16 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
         <a href="{{ '/#linux-general' | relative_url }}">Linux</a>
         <a href="{{ '/tags/' | relative_url }}" {% if page.url == "/tags/" %}class="active"{% endif %}>Tags</a>
         <a href="{{ '/about/' | relative_url }}" {% if page.url == "/about/" %}class="active"{% endif %}>About</a>
+        {% comment %} 2026-11-27: client-side search (search.md + assets/js/search.js). wiki: http://localhost:3000/wiki/claude/blog_agent#l11 {% endcomment %}
+        <a href="{{ '/search/' | relative_url }}" {% if page.url == "/search/" %}class="active"{% endif %}>Search</a>
         <a href="https://github.com/thanhlev" target="_blank" rel="noopener">GitHub</a>
-        <button class="theme-toggle" aria-label="Toggle dark mode"><span class="tt-l">Dark</span><span class="tt-d">Light</span></button>
+        {% comment %} 2026-11-27: aria-label removed (it hid the visible "Dark"/"Light" word from screen readers); aria-pressed = dark mode on, set by the script at the end. {% endcomment %}
+        <button class="theme-toggle" type="button" aria-pressed="false"><span class="tt-l">Dark</span><span class="tt-d">Light</span></button>
       </nav>
     </header>
 
     {% if is_home %}
-      <main id="main_content" class="home">
+      <main id="main_content" class="home" tabindex="-1">
         {{ content }}
       </main>
     {% else %}
@@ -80,8 +98,15 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
           <div class="rail-h">Contents</div>
           <ul id="toc-list"></ul>
         </aside>
-        <article id="main_content" class="doc">
-          {{ content }}
+        <article id="main_content" class="doc" tabindex="-1">
+          {% comment %} 2026-11-27: every picture in a post is loading="lazy" decoding="async" (a long story has 10-20
+             figures and all were fetched at once), except the first one: in our posts that is the 16:9 cover at the
+             top, so replace_first puts it back to eager with fetchpriority="high" (it is the LCP element).
+             wiki: http://localhost:3000/wiki/claude/blog_agent#l11 {% endcomment %}
+          {{ content | replace: '<img ', '<img loading="lazy" decoding="async" ' | replace_first: '<img loading="lazy" decoding="async" ', '<img fetchpriority="high" ' }}
+          {% comment %} 2026-11-27: end-of-story navigation (prev/next + all stories of the hub) and 3 related stories from other hubs; both render only on pages with board_parent. wiki: http://localhost:3000/wiki/claude/blog_agent#l11 {% endcomment %}
+          {% include story_nav.html %}
+          {% include related.html %}
         </article>
         {% include post_rail.html %}
       </div>
@@ -90,17 +115,27 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
     <footer class="foot">
       <!-- 2026-11-22: range from the first post (2017) to the build year (user chose «© 2017–2026»). -->
       <span>© 2017–{{ site.time | date: "%Y" }} Thanh Le (Lê Quang Thành)</span>
-      <span><a href="mailto:thanhlevvn@gmail.com">thanhlevvn@gmail.com</a> · <a href="https://www.linkedin.com/in/thanhlev" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/thanhlev" target="_blank" rel="noopener">GitHub</a></span>
+      <span><a href="mailto:thanhlevvn@gmail.com">thanhlevvn@gmail.com</a> · <a href="https://www.linkedin.com/in/thanhlev" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/thanhlev" target="_blank" rel="noopener">GitHub</a> · <a href="{{ '/feed.xml' | relative_url }}" type="application/atom+xml">RSS</a></span>
       <span>Every number here was measured on the board.</span>
     </footer>
 
     <script>
       // Dark/light toggle; the choice is kept in localStorage (set before paint in <head>).
+      // 2026-11-27: also keeps aria-pressed (true = dark) and <meta name="theme-color"> (the phone's browser bar)
+      // in step with the theme, on load and on every click. wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+      function syncTheme() {
+        var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.querySelectorAll('.theme-toggle').forEach(function (b) { b.setAttribute('aria-pressed', dark ? 'true' : 'false'); });
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', dark ? '#16181b' : '#f6f4ee');   // = --paper of each theme (style.scss)
+      }
+      syncTheme();
       document.querySelectorAll('.theme-toggle').forEach(function (b) {
         b.addEventListener('click', function () {
           var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
           document.documentElement.setAttribute('data-theme', t);
           localStorage.setItem('theme', t);
+          syncTheme();
         });
       });
 
@@ -109,10 +144,45 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
       // so each image is classed once it has loaded: aspect >= 1.15 -> .img-wide (width 100 %); taller ones
       // keep the max-height cap so a 9:16 capture does not become a whole screen high.
       // wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+      // 2026-11-27: the same pass also marks mostly-white pictures (diagrams, datasheet crops) .img-light; in dark
+      // mode the CSS dims them (they glared on the dark page). Test: draw the picture at 40x40 on a canvas, mean
+      // luminance (Rec. 601 weights) > 200 of 255. Pictures are same-origin; a cross-origin one taints the canvas,
+      // getImageData throws and the picture is simply left as it is.
+      // wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+      function lightTest(im) {
+        try {
+          var c = document.createElement('canvas'); c.width = c.height = 40;
+          var x = c.getContext('2d'); x.drawImage(im, 0, 0, 40, 40);
+          var d = x.getImageData(0, 0, 40, 40).data, sum = 0;
+          for (var i = 0; i < d.length; i += 4) sum += 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+          if (sum / (d.length / 4) > 200) im.classList.add('img-light');
+        } catch (e) { /* tainted or not decodable: leave it */ }
+      }
       document.querySelectorAll('article.doc img').forEach(function (im) {
-        function mark() { if (im.naturalWidth && im.naturalWidth / im.naturalHeight >= 1.15) im.classList.add('img-wide'); }
+        function mark() {
+          if (im.naturalWidth && im.naturalWidth / im.naturalHeight >= 1.15) im.classList.add('img-wide');
+          if (im.naturalWidth) lightTest(im);
+        }
         if (im.complete) mark(); else im.addEventListener('load', mark);
       });
+
+      // 2026-11-27: code blocks and tables that scroll sideways get tabindex=0 + role=region + a label, so a
+      // keyboard user can focus and scroll them (WCAG 2.1.1); only the ones that really overflow, checked on
+      // load (after fonts and pictures) and on resize. wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+      function markScroll() {
+        document.querySelectorAll('article.doc pre, article.doc table').forEach(function (el) {
+          var over = el.scrollWidth > el.clientWidth + 1;
+          if (over && !el.hasAttribute('tabindex')) {
+            el.setAttribute('tabindex', '0'); el.setAttribute('role', 'region');
+            el.setAttribute('aria-label', el.tagName === 'PRE' ? 'Code, scrolls sideways' : 'Table, scrolls sideways');
+            el.setAttribute('data-scrollmark', '1');
+          } else if (!over && el.getAttribute('data-scrollmark')) {
+            el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label'); el.removeAttribute('data-scrollmark');
+          }
+        });
+      }
+      window.addEventListener('load', markScroll);
+      var rsT; window.addEventListener('resize', function () { clearTimeout(rsT); rsT = setTimeout(markScroll, 200); });
 
       // Contents rail: one entry per h2/h3 of the article. The first h1 of a post repeats the
       // page title (already in the doc header), so it is hidden and skipped here.
@@ -122,8 +192,17 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
         if (!doc || !list) return;
         var h1 = doc.querySelector('h1');
         if (h1) h1.classList.add('dup-title');
-        var hs = doc.querySelectorAll('h2:not(.no_toc), h3:not(.no_toc)');
+        // 2026-11-27: .toc-skip = left out of the contents but still shown (.no_toc also hides the heading);
+        // used by 404.html, whose two headings made a pointless "Contents" box. wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+        var hs = doc.querySelectorAll('h2:not(.no_toc):not(.toc-skip), h3:not(.no_toc):not(.toc-skip)');
         if (hs.length < 2) { document.querySelector('.rail').classList.add('empty'); return; }
+        // 2026-11-27: the same entries also go into a collapsible "Contents" box at the top of the article
+        // (<details class="toc-m">), shown by CSS only at <= 1200 px where the left rail is hidden: phones and
+        // tablets had no contents at all. Closed by default; a tap on an entry closes it again.
+        // wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+        var dm = document.createElement('details'); dm.className = 'toc-m';
+        var sm = document.createElement('summary'); sm.textContent = 'Contents'; dm.appendChild(sm);
+        var ulm = document.createElement('ul'); dm.appendChild(ulm);
         hs.forEach(function (h) {
           if (!h.id) h.id = h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
           var li = document.createElement('li');
@@ -131,7 +210,11 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
           var a = document.createElement('a');
           a.href = '#' + h.id; a.textContent = h.textContent;
           li.appendChild(a); list.appendChild(li);
+          var lm = li.cloneNode(true); lm.firstChild.addEventListener('click', function () { dm.open = false; });
+          ulm.appendChild(lm);
         });
+        // after the hidden duplicate h1 if there is one, else first in the article
+        if (h1 && h1.parentNode === doc) doc.insertBefore(dm, h1.nextSibling); else doc.insertBefore(dm, doc.firstChild);
         var links = list.querySelectorAll('a');
         window.addEventListener('scroll', function () {
           var cur = '';
