@@ -17,7 +17,7 @@ permalink: /embedded/esp8266-flash-map   # 2026-11-27: = the URL the collection 
 # ESP8266 Flash Map & Partition Table
 {: .no_toc }
 
-![ESP8266 flash map in one picture]({{ '/assets/images/esp8266_flash_cover.jpg' | relative_url }})
+![ESP8266 cover, "ESP8266 flash map": 960 KB per OTA slot, the 1 MB rule that bites]({{ '/assets/images/esp8266_flash_cover.jpg' | relative_url }})
 *The default two-OTA layout: a 3072-byte table at 0x8000, and two 960 KB app slots because of the 1 MB rule.*
 
 ## Table of contents

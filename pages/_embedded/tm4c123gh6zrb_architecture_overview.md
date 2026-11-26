@@ -17,7 +17,7 @@ permalink: /embedded/tm4c123gh6zrb-architecture-overview   # 2026-11-27: = the U
 # Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]
 {: .no_toc }
 
-![TM4C123 part 1 in one picture]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_overview_cover.jpg' | relative_url }})
+![TI Tiva C TM4C123 cover, "TM4C123 at reset": 256 KB flash, 32 KB SRAM, a blank chip lands in ROM]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_overview_cover.jpg' | relative_url }})
 *256 KB of flash, 32 KB of SRAM, and the reset path: a blank chip always lands in the ROM boot loader.*
 
 ## Table of contents

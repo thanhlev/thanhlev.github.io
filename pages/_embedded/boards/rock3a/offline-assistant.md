@@ -19,7 +19,7 @@ tags: [rockchip, arm, edge-ai, android]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The result first]({{ '/assets/images/boards/rock3a/assist_cover.jpg' | relative_url }})
+![ROCK 3A cover, "Offline voice assistant": 11.8 s to the first word, Vietnamese, network unplugged]({{ '/assets/images/boards/rock3a/assist_cover.jpg' | relative_url }})
 *The result first: 11.8 s from my question to the first spoken word, everything on the board, network unplugged.*
 
 ![The assistant's HDMI screen mid-answer]({{ '/assets/images/boards/rock3a/offline_assistant.png' | relative_url }})

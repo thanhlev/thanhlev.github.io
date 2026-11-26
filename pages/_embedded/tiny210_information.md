@@ -17,10 +17,10 @@ permalink: /embedded/tiny210-information   # 2026-11-27: = the URL the collectio
 # Tiny210 Information for development
 {: .no_toc }
 
-![S5PV210 boot in one picture]({{ '/assets/images/tiny210/tiny210_cover.jpg' | relative_url }})
+![Tiny210 cover, "S5PV210 boot": 16 KB, the most BL1 can be, why block 0 stays free]({{ '/assets/images/tiny210/tiny210_cover.jpg' | relative_url }})
 *The chain from the manual: iROM loads at most 16 KB of BL1 into iRAM, BL1 loads BL2, BL2 brings up DRAM and the OS.*
 
-![](../../../assets/images/tiny210/tiny210v2_i.jpg)
+![Tiny210V2 SDK board with its connectors labelled: UARTs, HDMI, Ethernet, USB hosts, LCD headers, SD slot, boot mode switch](../../../assets/images/tiny210/tiny210v2_i.jpg)
 
 ## Table of contents
 {: .no_toc }
@@ -50,7 +50,7 @@ The tables and diagrams below are Samsung's; what's mine is the selection and th
 - Block Diagram
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_block_diagram.png" width="900" />
+  <img src="../../../assets/images/tiny210/tiny210_block_diagram.png" width="900" alt="S5PV210 block diagram: Cortex-A8 core with L2 and NEON, multimedia blocks, memory interfaces, connectivity and system peripherals on the AHB/AXI bus" />
 </p>
 
 ### Address map
@@ -58,27 +58,27 @@ The tables and diagrams below are Samsung's; what's mine is the selection and th
 - All address map
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_address_map.png" width="300" />
+  <img src="../../../assets/images/tiny210/tiny210_address_map.png" width="300" alt="S5PV210 address map from 0x0000_0000 to 0xFFFF_FFFF: boot area, DRAM 0 and 1, SROM banks, OneNAND/NAND, IROM and IRAM, SFRs" />
 </p>
 
 - Internal address map
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_internal_memory_address_map.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_internal_memory_address_map.png" width="800" alt="S5PV210 internal memory map: 64 KB iROM at 0xD000_0000, 96 KB iRAM at 0xD002_0000 with secure and non-secure parts, DMZ ROM" />
 </p>
 
 #### Device specific address space
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_device_specific_address_space.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_device_specific_address_space.png" width="800" alt="Table of the S5PV210 device address space: address range, size and what sits there, from the boot area to the SFR region" />
 </p>
 
 #### Special function register map
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_special_function_address_map1.png" width="800" />
-  <img src="../../../assets/images/tiny210/tiny210_special_function_address_map2.png" width="800" />
-  <img src="../../../assets/images/tiny210/tiny210_special_function_address_map3.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_special_function_address_map1.png" width="800" alt="S5PV210 special function register map, part 1: 0xE000_0000 to 0xE80F_FFFF (CHIPID, SYSCON, GPIO, DMA, UART, SROM and more)" />
+  <img src="../../../assets/images/tiny210/tiny210_special_function_address_map2.png" width="800" alt="S5PV210 special function register map, part 2: 0xE820_0000 to 0xF1EF_FFFF (SDMMC, USB OTG and host, audio, DMC, MFC)" />
+  <img src="../../../assets/images/tiny210/tiny210_special_function_address_map3.png" width="800" alt="S5PV210 special function register map, part 3: 0xF1F0_0000 to 0xFB6F_FFFF (VIC, TZIC, G3D, HDMI, display, camera, JPEG)" />
 </p>
 
 ### Booting
@@ -86,7 +86,7 @@ The tables and diagrams below are Samsung's; what's mine is the selection and th
 #### Booting sequence
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_booting_sequence.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_booting_sequence.png" width="800" alt="S5PV210 boot-up diagram: iROM (BL0) loads BL1 and BL2 from the boot device into the 96 KB internal SRAM, then BL2 brings up SDRAM and loads the OS" />
 </p>
 
 > **Note**
@@ -100,7 +100,7 @@ The tables and diagrams below are Samsung's; what's mine is the selection and th
 - **⑤** - Finally, jump to start address of OS. That will make good environment to use system.
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_bootup_diagram.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_bootup_diagram.png" width="800" alt="Flowchart of the S5PV210 boot: iROM checks the OM pins and the BL1 checksum, BL1 checks and loads BL2, BL2 initialises DRAM and loads the OS" />
 </p>
 
 ##### iROM(BL0) boot-up sequence
@@ -141,8 +141,8 @@ The booting device can be chosen from following list:
 iROM checks for OM pins to priority boot devices
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_om_pin1.png" width="800" />
-  <img src="../../../assets/images/tiny210/tiny210_om_pin2.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_om_pin1.png" width="800" alt="S5PV210 OM pin table: each OM[5:0] combination and the boot device it selects (NAND, OneNAND, SD/MMC, eMMC, eSSD, NOR, UART/USB), with X-TAL or X-TAL(USB)" />
+  <img src="../../../assets/images/tiny210/tiny210_om_pin2.png" width="800" alt="Part of the OM pin table: OM[5:0] values for OneNAND demux, SD/MMC and 4-bit eMMC boot, X-TAL or X-TAL(USB)" />
 </p>
 
 #### BL1 image boot block assignment
@@ -151,13 +151,13 @@ iROM checks for OM pins to priority boot devices
 - BL1 has variable size, so BL0 requires 16 bytes header info to contain BL1 size, BL1 checksum. So BL0 known the size to load and use checksum to verify BL1.
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_BL1_memory_map.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_BL1_memory_map.png" width="800" alt="BL1 memory map in the internal SRAM: BL1 from 0xD002_0010 after a 16-byte header, then heap, exception vectors, globals, signature, stacks" />
 </p>
 
 - BL0 supports secure boot, in case of using secure boot, BL1 need to include signature at the end of raw BL1 binary.
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_BL1_secure_boot.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_BL1_secure_boot.png" width="800" alt="BL1 image layout: 16-byte header (size, checksum) and the binary for a non-secure boot, plus a 512-byte signature for a secure boot" />
 </p>
 
 ##### SD/MMC/eSSD Device Boot Block Assignment
@@ -165,19 +165,19 @@ iROM checks for OM pins to priority boot devices
 - The first one block shouldn’t be used (reserved), modern BL0 support searching for BL1 in a partition, so first block and be used to store MBR.
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_mmc_block_assignment.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_mmc_block_assignment.png" width="800" alt="SD/MMC/eSSD boot block layout: 512-byte reserved block, BL1 (mandatory), then BL2, kernel and user file system (recommended)" />
 </p>
 
 ##### eMMC Device Boot Block Assignment
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_emmc_block_assignment.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_emmc_block_assignment.png" width="800" alt="eMMC boot block layout: BL1 from block 0 (mandatory), then BL2, kernel and user file system (recommended)" />
 </p>
 
 ##### OneNAND/NAND Device Boot Block Assignment
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_nand_block_assignment.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_nand_block_assignment.png" width="800" alt="OneNAND/NAND boot block layout, counted in pages: BL1 from page 0 (mandatory), then BL2, kernel and user file system" />
 </p>
 
 #### Secure boot
@@ -210,7 +210,7 @@ In S5PV210, the root of trust is implemented by iROM code in internal ROM. There
 - Checks the integrity of OS kernel and application using trusted RSA public key.
 
 <p align="center">
-  <img src="../../../assets/images/tiny210/tiny210_secure_boot_sequence.png" width="800" />
+  <img src="../../../assets/images/tiny210/tiny210_secure_boot_sequence.png" width="800" alt="S5PV210 secure boot: iROM checks the second-level bootloader with the RSA public key hashed in the e-fuse, then each stage verifies the next before running it" />
 </p>
 
 ## Result

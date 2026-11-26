@@ -14,7 +14,7 @@ permalink: /linux_networking/network-management   # 2026-11-27: = the URL the co
 # Linux Network Management
 {: .no_toc }
 
-![Network managers in one picture]({{ '/assets/images/network_management_cover.jpg' | relative_url }})
+![Linux networking cover, "Network management": 5 managers, 5 formats, who brings the interface up]({{ '/assets/images/network_management_cover.jpg' | relative_url }})
 *Five managers, five config formats, one rule: one owner per interface.*
 
 ## Table of contents

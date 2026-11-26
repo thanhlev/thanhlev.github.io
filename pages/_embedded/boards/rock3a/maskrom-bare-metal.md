@@ -17,7 +17,7 @@ tags: [rockchip, arm, bare-metal, boot, memory]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The Maskrom story in one picture]({{ '/assets/images/boards/rock3a/r3a_maskrom_cover.jpg' | relative_url }})
+![ROCK 3A cover, "Bare metal, BootROM up": 8 GB DRAM from my code, no hands on the board]({{ '/assets/images/boards/rock3a/r3a_maskrom_cover.jpg' | relative_url }})
 *The whole story in one picture: all 8 GB of DRAM answering my own code, and the board back in Maskrom about 3 s later without me touching it.*
 
 ![RK3568 boot sequence]({{ '/assets/images/boards/rock3a/boot_seq.png' | relative_url }})

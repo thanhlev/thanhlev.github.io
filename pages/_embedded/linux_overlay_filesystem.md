@@ -56,7 +56,7 @@ Kernel chồng 2 filesystem này lên nhau và đưa ra một filesystem mới l
 Ví dụ, nếu user chỉ đọc một file mà không sửa thì file đó được lấy thẳng từ Lower. Khi sửa file, kernel tạo một bản copy trên Upper rồi ghi vào bản copy đó (copy-up).<br><br>
 Vậy là image gốc được dùng luôn, qua các file read-only của nó. Upper cũng nhỏ hơn, vì không phải copy toàn bộ những file chỉ đọc đó.</p>
   </div><div class="column">
-        <img  src="./../../../assets/images/OverlayFS_Image.png" width="100%" height="100%">
+        <img src="./../../../assets/images/OverlayFS_Image.png" alt="Sơ đồ overlayfs: lớp lower chỉ đọc (file A-D), lớp upper ghi được (file B đã sửa, file E mới), lớp overlay mà user space thấy lấy file từ upper nếu có, không thì từ lower">
     </div>
 
 </div>

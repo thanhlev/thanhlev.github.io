@@ -17,7 +17,7 @@ tags: [motor, control, simulation, cpp]
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/dc-motor-drive/commissioning_cover.jpg' | relative_url }})
+![DC motor drive cover, "Datasheet 50 % wrong": 0.7 % on six parameters, the drive measures the motor]({{ '/assets/images/control/dc-motor-drive/commissioning_cover.jpg' | relative_url }})
 *The result first: all six motor parameters within 0.7 % in 4.9 s, from a datasheet that was off by up to 50 %.*
 
 ![The 30 rad move after homing: profile and true shaft]({{ '/assets/images/control/dc-motor-drive/dcm_bringup_move.png' | relative_url }})

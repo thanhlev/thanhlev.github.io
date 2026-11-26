@@ -17,7 +17,7 @@ tags: [control, simulation, motor, cpp]
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/rls_identification_cover.jpg' | relative_url }})
+![Control library cover, "RLS finds the inertia": 5.3 % error on J, the datasheet was 10× off]({{ '/assets/images/control/control-library/rls_identification_cover.jpg' | relative_url }})
 *The result first: RLS finds the servo inertia to 5.3 % from 12 s of ordinary motion, where the datasheet was 10× off.*
 
 ![The inertia estimate leaving the datasheet value behind in about two seconds]({{ '/assets/images/control/control-library/rls_motor_inertia.png' | relative_url }})

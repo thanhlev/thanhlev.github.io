@@ -20,7 +20,7 @@ tags: [samsung, arm, edge-ai, freertos, bare-metal, camera]
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
-![The result first]({{ '/assets/images/boards/nanopi2-fire/np2f_face_cover.jpg' | relative_url }})
+![NanoPi 2 Fire cover, "Faces on 4 × Cortex-A9": 42 ms per face pass, no NPU, no Linux]({{ '/assets/images/boards/nanopi2-fire/np2f_face_cover.jpg' | relative_url }})
 *The result first: faces in 42 ms per pass on four 2016 Cortex-A9 cores, no NPU and no Linux.*
 
 1. TOC

@@ -17,7 +17,7 @@ tags: [control, simulation, cpp]
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/pid_cover.jpg' | relative_url }})
+![Control library cover, "PID: 108 s of windup": 0.77 s (was 108.55), back-calculation fixes it]({{ '/assets/images/control/control-library/pid_cover.jpg' | relative_url }})
 *The result first: back-calculation brings the loop back from saturation in 0.77 s instead of 108.55 s, same gains, in simulation.*
 
 ![Limits only (red) vs limits plus back-calculation (blue)]({{ '/assets/images/control/control-library/pid_antiwindup.png' | relative_url }})

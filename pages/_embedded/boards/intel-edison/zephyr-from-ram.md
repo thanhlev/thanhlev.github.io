@@ -18,7 +18,7 @@ tags: [intel, x86, boot, memory]
 
 [Back to the Intel Edison hub](/embedded/boards/intel-edison/)
 
-![The result first]({{ '/assets/images/boards/intel-edison/ied_zephyr_cover.jpg' | relative_url }})
+![Intel Edison cover, "Zephyr from RAM": 0.05 s, go to Hello World, 15 KB over YMODEM]({{ '/assets/images/boards/intel-edison/ied_zephyr_cover.jpg' | relative_url }})
 *The result first: "Hello World" 0.05 s after `go`, from a 15 KB Zephyr image loaded into RAM over YMODEM.*
 
 1. TOC

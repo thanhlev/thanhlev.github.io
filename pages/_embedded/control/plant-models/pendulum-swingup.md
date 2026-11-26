@@ -17,7 +17,7 @@ tags: [control, simulation, robotics, cpp]
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/pendulum_swingup_cover.jpg' | relative_url }})
+![Plant models cover, "Swing-up, then LQR": 1.98 s to upright, one mode switch]({{ '/assets/images/control/plant-models/pendulum_swingup_cover.jpg' | relative_url }})
 *The result first: upright 1.98 s after release with 4.63 N of the 12 N belt; LQR alone never gets closer than 2.77 rad.*
 
 ![Pole angle: pumping from hanging, the hand-over at 1.98 s, then LQR holds it]({{ '/assets/images/control/plant-models/swingup_angle.png' | relative_url }})

@@ -17,7 +17,7 @@ tags: [motor, control, simulation, cpp, testing]
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/dc-motor-drive/protection_cover.jpg' | relative_url }})
+![DC motor drive cover, "When it goes wrong": 1.05 ms to Fault, fault, heat, dead encoder]({{ '/assets/images/control/dc-motor-drive/protection_cover.jpg' | relative_url }})
 *The result first: Fault in 1.05 ms, the winding peaks at 95.6 °C under a 110 °C limit, and a dead encoder hands over to back-EMF speed in 5.0 ms.*
 
 ![Encoder line dies at 1.0 s: true shaft, the frozen encoder estimate, the back-EMF estimate]({{ '/assets/images/control/dc-motor-drive/dcm_encoderloss_switch.png' | relative_url }})

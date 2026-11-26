@@ -18,7 +18,7 @@ permalink: /embedded/esp8266-boot-up   # 2026-11-27: = the URL the collection de
 # Esp8266 Bootup Sequence
 {: .no_toc }
 
-![ESP8266 boot in one picture]({{ '/assets/images/esp8266_boot_cover.jpg' | relative_url }})
+![ESP8266 cover, "ESP8266 boot": BL1 reads the table, who reads the partition table]({{ '/assets/images/esp8266_boot_cover.jpg' | relative_url }})
 *The answer of this page: the ROM only knows offset 0; BL1 is the one that reads the partition table at 0x8000.*
 
 ## Table of contents

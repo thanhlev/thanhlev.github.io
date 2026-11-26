@@ -17,7 +17,7 @@ tags: [rockchip, arm, freertos, linux, android, risc-v]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The RISC-V MCU story in one picture]({{ '/assets/images/boards/rock3a/r3a_ws_cover.jpg' | relative_url }})
+![ROCK 3A cover, "LEDs from the RV32 MCU": 50.00 frames/s, Android keeps all four A55s]({{ '/assets/images/boards/rock3a/r3a_ws_cover.jpg' | relative_url }})
 *The whole story in one picture: 16 of 16 LEDs lit by the SoC's RV32 core at 50.00 frames/s while Android keeps all four A55s.*
 
 ![The ring lit: all red, all green, rainbow]({{ '/assets/images/boards/rock3a/ws2812_ring_lit.png' | relative_url }})

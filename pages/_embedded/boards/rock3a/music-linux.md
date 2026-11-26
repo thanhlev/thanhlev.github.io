@@ -19,7 +19,7 @@ tags: [rockchip, arm, npu, edge-ai, linux]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The music story in one picture]({{ '/assets/images/boards/rock3a/r3a_music_cover.jpg' | relative_url }})
+![ROCK 3A cover, "Naming music, on Linux": 1.44 ms per window, same YAMNet INT8, off Android]({{ '/assets/images/boards/rock3a/r3a_music_cover.jpg' | relative_url }})
 *The whole story in one picture: 1.44 ms per YAMNet window on the NPU under Debian, 32 times one CPU thread and faster than the 2.05 ms I had on Android.*
 
 ## Situation

@@ -14,7 +14,7 @@ permalink: /linux_general/linux-tips   # 2026-11-27: = the URL the collection de
 # Linux Tips & Tricks
 {: .no_toc }
 
-![Linux tips in one picture]({{ '/assets/images/linux_tips_cover.jpg' | relative_url }})
+![Linux cover, "Linux tips & tricks": 13 groups of one-liners, the lines I never remember]({{ '/assets/images/linux_tips_cover.jpg' | relative_url }})
 *Thirteen groups of shell lines I never remember; the fstab block is the one I open most.*
 
 ## Table of contents

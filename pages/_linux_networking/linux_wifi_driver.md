@@ -381,7 +381,7 @@ Ngoài chuyện khó hiểu, WEXT còn mấy cái hạn chế nữa:
 Các kỹ sư đã cho ra đời 1 thiết kế mới `nl80211`, đọc là netlink 80211:
 
 
-![](/assets/images/nl80211_block_diagram.png)
+![Sơ đồ Wi-Fi trên Linux: user space (iw, wpa_supplicant) qua nl80211 xuống cfg80211, rồi tới driver full-MAC hoặc qua mac80211 tới driver soft-MAC và phần cứng](/assets/images/nl80211_block_diagram.png)
 
 Vẽ gọn lại theo kiểu từ trên xuống:
 

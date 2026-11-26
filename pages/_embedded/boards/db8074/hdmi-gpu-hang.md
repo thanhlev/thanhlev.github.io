@@ -18,7 +18,7 @@ tags: [qualcomm, arm, gpu, linux, display]
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
-![The result first]({{ '/assets/images/boards/db8074/d8k_hdmi_cover.jpg' | relative_url }})
+![DragonBoard 8074 cover, "HDMI, then a GPU hang": 0 GPU hangs in 41 min, the shrinker, not the GPU]({{ '/assets/images/boards/db8074/d8k_hdmi_cover.jpg' | relative_url }})
 *The result first: HDMI at 1080p60 on kernel 6.6, and 0 GPU hangs in 41 minutes after 5 to 10 a minute.*
 
 1. TOC

@@ -17,7 +17,7 @@ tags: [allwinner, risc-v, bare-metal, boot, memory, led]
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-28
 
-![The result first]({{ '/assets/images/boards/d1-nezha/d1_boot0_cover.jpg' | relative_url }})
+![D1 Nezha cover, "My own boot0": 51 ms to train 1 GiB DDR3, no Tina, no U-Boot]({{ '/assets/images/boards/d1-nezha/d1_boot0_cover.jpg' | relative_url }})
 *The result first: my code straight from the boot ROM out of NAND, and my SPL training 1 GiB of DDR3 in 51 ms. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![Where my image sits in the first 1 MiB of SPI-NAND]({{ '/assets/images/boards/d1-nezha/d1_nand_layout.png' | relative_url }})

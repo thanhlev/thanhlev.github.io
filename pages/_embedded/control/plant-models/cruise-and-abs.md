@@ -17,7 +17,7 @@ tags: [control, simulation, cpp]
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/cruise_and_abs_cover.jpg' | relative_url }})
+![Plant models cover, "Cruise control and ABS": 27.5 m (locked 41.3), an ABS can't be a PID]({{ '/assets/images/control/plant-models/cruise_and_abs_cover.jpg' | relative_url }})
 *The result first: slip control stops from 90 km/h in 27.5 m instead of 41.3 m locked, and cruise control loses only 0.18 km/h on a 4 % grade.*
 
 ![Speed against the 100 km/h target over the hills: P, PI, PI + grade feedforward, electric drivetrain]({{ '/assets/images/control/plant-models/ev_speed.png' | relative_url }})

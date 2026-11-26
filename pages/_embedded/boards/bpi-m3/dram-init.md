@@ -18,7 +18,7 @@ tags: [allwinner, arm, bare-metal, boot, memory, testing]
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
 
-![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_dram_cover.jpg' | relative_url }})
+![Banana Pi M3 cover, "DRAM init over FEL": 3.44 s, init + test, U-Boot's init in a 4 KiB program]({{ '/assets/images/boards/bpi-m3/bpim3_dram_cover.jpg' | relative_url }})
 *The result first: all 2 GiB of LPDDR3 up, 294 896 words tested with 0 errors, 3.44 s for init and test.*
 
 1. TOC

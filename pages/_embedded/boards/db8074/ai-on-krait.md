@@ -20,7 +20,7 @@ tags: [qualcomm, arm, edge-ai, memory]
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
-![The result first]({{ '/assets/images/boards/db8074/d8k_ai_cover.jpg' | relative_url }})
+![DragonBoard 8074 cover, "AI on a 2013 phone chip": 4.15 tok/s, Qwen2.5-0.5B, no NPU, no GPU compute]({{ '/assets/images/boards/db8074/d8k_ai_cover.jpg' | relative_url }})
 *The result first: Qwen2.5-0.5B at 4.15 tok/s on four Krait cores, and my L2 driver taking memory reads from 4433 to 7084 MB/s.*
 
 1. TOC

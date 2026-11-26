@@ -17,7 +17,7 @@ tags: [raspberry-pi, arm, gpu, freertos, bare-metal]
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-20
 
-![The QPU story in one picture]({{ '/assets/images/boards/pi-zero/pz_qpu_cover.jpg' | relative_url }})
+![Pi Zero W cover, "Twelve QPUs, no Linux": 4799 MFLOPS, my programs on the GPU]({{ '/assets/images/boards/pi-zero/pz_qpu_cover.jpg' | relative_url }})
 *The whole story in one picture: 4799 MFLOPS on the 12 QPUs, 66 times the ARM with its VFP, every one of the 192 lanes bit-exact.*
 
 ## Situation

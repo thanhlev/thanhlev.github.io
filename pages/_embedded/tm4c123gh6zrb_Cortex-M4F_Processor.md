@@ -18,7 +18,7 @@ permalink: /embedded/tm4c123gh6zrb-cortex-m4f-processor   # 2026-11-27: = the UR
 # Tiva ™ TM4C123GH6ZRB Microcontroller [part 2]
 {: .no_toc }
 
-![TM4C123 part 2 in one picture]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_core_cover.jpg' | relative_url }})
+![TI Tiva C TM4C123 cover, "The Cortex-M4F core": 8 words stacked per exception, what bites in startup code]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_core_cover.jpg' | relative_url }})
 *What the core does on an exception: eight words stacked, EXC_RETURN in LR, and tail-chaining skips the pop.*
 
 ## Table of contents

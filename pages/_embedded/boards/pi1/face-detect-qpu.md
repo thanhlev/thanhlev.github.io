@@ -19,7 +19,7 @@ tags: [raspberry-pi, arm, edge-ai, gpu, camera]
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26
 
-![The result first]({{ '/assets/images/boards/pi1/pi1_face_cover.jpg' | relative_url }})
+![Raspberry Pi 1 B cover, "Faces on a 2012 Pi": 43.5 ms (was 2374), the 12 QPUs do the work]({{ '/assets/images/boards/pi1/pi1_face_cover.jpg' | relative_url }})
 *The result first: one picture from 2374 ms to 43.5 ms once the 12 QPUs do the work.*
 
 ![One picture through YuNet, step by step]({{ '/assets/images/boards/pi1/pi1_face_ms.png' | relative_url }})

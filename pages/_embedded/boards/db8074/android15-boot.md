@@ -18,7 +18,7 @@ tags: [qualcomm, arm, linux, android, boot, memory]
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
-![The result first]({{ '/assets/images/boards/db8074/d8k_a15_cover.jpg' | relative_url }})
+![DragonBoard 8074 cover, "Android 15 boots": 66 s, eMMC to home screen, on a board from Android 4.3]({{ '/assets/images/boards/db8074/d8k_a15_cover.jpg' | relative_url }})
 *The result first: Android 15 boots from the eMMC by itself and reaches the home screen in 66 s.*
 
 1. TOC

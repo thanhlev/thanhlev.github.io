@@ -19,7 +19,7 @@ tags: [rockchip, arm, edge-ai, npu, linux, android]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The Android 14 port in one picture]({{ '/assets/images/boards/rock3a/r3a_a14_cover.jpg' | relative_url }})
+![ROCK 3A cover, "Android 14, my own port": 36 s warm reboot, Radxa ships it for the 3C only]({{ '/assets/images/boards/rock3a/r3a_a14_cover.jpg' | relative_url }})
 *The whole story in one picture: Android 14 with GApps on the ROCK 3A, a warm reboot back in 36 s, and YOLOv5s in 34.58 ms on the NPU at 1 GHz.*
 
 ![Android 14 home screen on the ROCK 3A]({{ '/assets/images/boards/rock3a/android14_home.png' | relative_url }})

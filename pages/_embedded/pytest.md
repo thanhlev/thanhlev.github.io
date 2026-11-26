@@ -25,7 +25,7 @@ permalink: /embedded/pytest   # 2026-11-27: = the URL the collection default gav
 ![Pytest tóm tắt]({{ '/assets/images/pytest_cover.jpg' | relative_url }})
 *Ví dụ đầu cho đúng kết quả mình chờ: 1 failed, 1 passed in 0.02s, và fixture là chỗ giữ kết nối tới board.*
 
-![](../../../assets/images/pytest_diagram.png)
+![Sơ đồ pytest: các fixture (ssh, Wi-Fi, JTAG, browser, serial) đi vào pytest, pytest chạy các file test_app1 tới test_appN](../../../assets/images/pytest_diagram.png)
 ## Table of contents
 {: .no_toc }
 

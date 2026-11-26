@@ -17,7 +17,7 @@ tags: [control, simulation, cpp]
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/mpc_tanks_cover.jpg' | relative_url }})
+![Control library cover, "MPC on two tanks": 14.4 m·s error (PI 54.8), closer to the overflow]({{ '/assets/images/control/control-library/mpc_tanks_cover.jpg' | relative_url }})
 *The result first: 14.4 m·s of integrated error with MPC against 54.8 and 58.9 for the two PIs, with tank one taken to 0.458 m of 0.50.*
 
 ![Tank one: MPC fills it further than either PI and still stops short of the overflow line]({{ '/assets/images/control/control-library/mpc_level_one.png' | relative_url }})

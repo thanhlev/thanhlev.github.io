@@ -17,7 +17,7 @@ tags: [control, simulation, sensor, cpp]
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/printer_hotend_cover.jpg' | relative_url }})
+![Plant models cover, "Hotend from one step": 20.0 s to the trip, SIMC gains, runaway check]({{ '/assets/images/control/plant-models/printer_hotend_cover.jpg' | relative_url }})
 *The result first: 5.1 % overshoot from one step test, and the fallen-out thermistor is caught in 20.0 s at 231 °C.*
 
 ![The thermistor falls out: it reads 25 °C forever while the block keeps heating, and the monitor trips at 20 s]({{ '/assets/images/control/plant-models/hotend_runaway.png' | relative_url }})

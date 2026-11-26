@@ -17,7 +17,7 @@ tags: [rockchip, arm, freertos, bare-metal]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The SMP story in one picture]({{ '/assets/images/boards/rock3a/r3a_smp_cover.jpg' | relative_url }})
+![ROCK 3A cover, "FreeRTOS on four A55s": 7634.83 iter/s, CoreMark at 1992 MHz]({{ '/assets/images/boards/rock3a/r3a_smp_cover.jpg' | relative_url }})
 *The whole story in one picture: CoreMark 7634.83 on one A55 at 1992 MHz, 15.33 per MHz on all four, and a tick that stays within ±0.5 µs.*
 
 ![rtos_cli boot banner on the UART]({{ '/assets/images/boards/rock3a/rtos_cli_banner.png' | relative_url }})

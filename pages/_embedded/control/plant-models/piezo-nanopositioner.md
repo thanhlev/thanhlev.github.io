@@ -17,7 +17,7 @@ tags: [control, simulation, cpp]
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/piezo_nanopositioner_cover.jpg' | relative_url }})
+![Plant models cover, "Learning vs a model": 118 nm RMS per line, the inverse model wins]({{ '/assets/images/control/plant-models/piezo_nanopositioner_cover.jpg' | relative_url }})
 *The result first: 118 nm RMS per scan line with the inverse model, 168 nm with learning, 567 nm open loop.*
 
 ![Learning pass by pass: Q-filter at 0.08 converges, the same gain at 0.30 diverges]({{ '/assets/images/control/plant-models/piezo_learning.png' | relative_url }})

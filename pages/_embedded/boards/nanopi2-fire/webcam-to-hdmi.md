@@ -18,7 +18,7 @@ tags: [samsung, arm, freertos, boot, usb, camera]
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
-![The webcam story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_uvc_cover.jpg' | relative_url }})
+![NanoPi 2 Fire cover, "Webcam to HDMI": 1.5 % CPU (was 66.5), copy on DMA, decode on the JPU]({{ '/assets/images/boards/nanopi2-fire/np2f_uvc_cover.jpg' | relative_url }})
 *The whole story in one picture: MJPEG to HDMI for 1.5 % of one core instead of 66.5 %, and 3.4 s from reset to the webcam on screen.*
 
 1. TOC

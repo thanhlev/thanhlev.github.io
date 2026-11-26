@@ -14,7 +14,7 @@ permalink: /linux_general/partition-table   # 2026-11-27: = the URL the collecti
 # Disk Partition Tables: MBR & GPT
 {: .no_toc }
 
-![MBR and GPT in one picture]({{ '/assets/images/partition_table_cover.jpg' | relative_url }})
+![Linux cover, "MBR byte by byte": 64 bytes at offset 446, then GPT and board layouts]({{ '/assets/images/partition_table_cover.jpg' | relative_url }})
 *The 64 bytes at offset 446 of my test image, decoded by hand, say exactly what parted and gdisk say.*
 
 ## Table of contents

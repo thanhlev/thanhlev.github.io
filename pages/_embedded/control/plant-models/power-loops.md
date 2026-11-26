@@ -17,7 +17,7 @@ tags: [control, simulation, cpp]
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/power_loops_cover.jpg' | relative_url }})
+![Plant models cover, "Three power loops": 99.5 % full, vs 90.0, a charger with no states]({{ '/assets/images/control/plant-models/power_loops_cover.jpg' | relative_url }})
 *The result first: the two-loop charger ends 99.5 % full against 90.0 % for the state machine; MPPT harvests 99.97 %.*
 
 ![Charge current: the CC-CV state machine vs the minimum of two loops]({{ '/assets/images/control/plant-models/charger_current.png' | relative_url }})

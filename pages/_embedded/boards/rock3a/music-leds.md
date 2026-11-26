@@ -19,7 +19,7 @@ tags: [rockchip, npu, edge-ai, linux, led]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The music rings in one picture]({{ '/assets/images/boards/rock3a/r3a_leds_cover.jpg' | relative_url }})
+![ROCK 3A cover, "32 LEDs, on the beat": +0.12 ms late, genre on the NPU, beats on the CPU]({{ '/assets/images/boards/rock3a/r3a_leds_cover.jpg' | relative_url }})
 *The demo window on the board's desktop next to the number I'm proudest of: a predicted beat lights the LEDs 0.12 ms after the click on average.*
 
 ## Situation

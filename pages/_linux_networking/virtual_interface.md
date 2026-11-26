@@ -14,7 +14,7 @@ permalink: /linux_networking/virtual-interface   # 2026-11-27: = the URL the col
 # Virtual Interfaces in Linux
 {: .no_toc }
 
-![Virtual interfaces in one picture]({{ '/assets/images/virtual_interface_cover.jpg' | relative_url }})
+![Linux networking cover, "Virtual interfaces": 12 interface types, bridge to WireGuard]({{ '/assets/images/virtual_interface_cover.jpg' | relative_url }})
 *Twelve interface types, each with its ip recipe; two veth pairs and a bridge are what Docker's bridge driver builds.*
 
 ## Table of contents

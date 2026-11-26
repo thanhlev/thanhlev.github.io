@@ -18,7 +18,7 @@ tags: [samsung, arm, android, led]
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
-![The WS2812 story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_ws_cover.jpg' | relative_url }})
+![NanoPi 2 Fire cover, "A WS2812 ring, Android": 16 LEDs, every effect smooth, and why LED 0 flickered]({{ '/assets/images/boards/nanopi2-fire/np2f_ws_cover.jpg' | relative_url }})
 *The whole story in one picture: 16 LEDs running every effect smoothly from Android, 480 of 480 bytes read back clean, from a 33 KB app.*
 
 1. TOC

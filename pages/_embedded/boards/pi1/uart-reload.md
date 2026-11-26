@@ -17,7 +17,7 @@ tags: [raspberry-pi, arm, freertos, linux, boot]
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-20 and 2026-10-26
 
-![The UART reload story in one picture]({{ '/assets/images/boards/pi1/pi1_uload_cover.jpg' | relative_url }})
+![Raspberry Pi 1 B cover, "No more SD card swaps": 6.7 s for a new build, same kernel, older board]({{ '/assets/images/boards/pi1/pi1_uload_cover.jpg' | relative_url }})
 *The whole story in one picture: a new 921 224-byte build on the Pi 1 B in 6.7 s over the UART, instead of a card swap.*
 
 ![The 26-pin header of my Pi 1 B rev 2, with the PL2303 on pins 8/10]({{ '/assets/images/boards/pi1/pi1_header.png' | relative_url }})

@@ -17,7 +17,7 @@ tags: [rockchip, arm, freertos, bare-metal, linux, boot]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The NOR boot story in one picture]({{ '/assets/images/boards/rock3a/r3a_nor_cover.jpg' | relative_url }})
+![ROCK 3A cover, "FreeRTOS before Linux": 0.154 s (was 3.90), core 3 first, Linux on three]({{ '/assets/images/boards/rock3a/r3a_nor_cover.jpg' | relative_url }})
 *The whole story in one picture: FreeRTOS owns core 3 at 0.154 s instead of 3.90 s, Linux still reaches its prompt at 2.49 s, and the 1 kHz loop is never more than 0.25 µs late.*
 
 ![Three NOR boot builds on one time axis]({{ '/assets/images/boards/rock3a/nor_boot_timeline.png' | relative_url }})

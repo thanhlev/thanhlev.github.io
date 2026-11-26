@@ -14,7 +14,7 @@ permalink: /linux_networking/linux-macvlan   # 2026-11-27: = the URL the collect
 # Linux MacVLAN interface
 {: .no_toc }
 
-![MACVLAN in one picture]({{ '/assets/images/linux_macvlan_cover.jpg' | relative_url }})
+![Linux networking cover, "Linux MACVLAN": 4 modes, own MAC, one blind spot]({{ '/assets/images/linux_macvlan_cover.jpg' | relative_url }})
 *Four modes, and the one lookup that explains why the host can't reach its own macvlans.*
 
 ## Table of contents

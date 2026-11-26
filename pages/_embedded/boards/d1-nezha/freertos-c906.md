@@ -17,7 +17,7 @@ tags: [allwinner, risc-v, freertos, bare-metal, memory]
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-29 and 2026-10-01
 
-![The result first]({{ '/assets/images/boards/d1-nezha/d1_rtos_cover.jpg' | relative_url }})
+![D1 Nezha cover, "FreeRTOS on the C906": 734 cycles per task switch, one cache bit: 27× faster]({{ '/assets/images/boards/d1-nezha/d1_rtos_cover.jpg' | relative_url }})
 *The result first: one task switch went from 19 907 to 734 cycles once the D-cache was on. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![One task switch on the C906, cache off vs on]({{ '/assets/images/boards/d1-nezha/d1_rtos_switch.png' | relative_url }})

@@ -18,7 +18,7 @@ tags: [qualcomm, arm, gpu, boot]
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
-![The result first]({{ '/assets/images/boards/db8074/d8k_speed_cover.jpg' | relative_url }})
+![DragonBoard 8074 cover, "From 264 s to 64 s": 2.15 GHz (was 0.80), boot to the home screen]({{ '/assets/images/boards/db8074/d8k_speed_cover.jpg' | relative_url }})
 *The result first: boot to the home screen from 264 s to 64 s, with the Krait cores at 2.15 GHz instead of 0.80.*
 
 1. TOC

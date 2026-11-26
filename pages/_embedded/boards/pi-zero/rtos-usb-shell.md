@@ -17,7 +17,7 @@ tags: [raspberry-pi, arm, freertos, boot, usb]
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-12
 
-![The USB shell story in one picture]({{ '/assets/images/boards/pi-zero/pz_shell_cover.jpg' | relative_url }})
+![Pi Zero W cover, "A shell on the boot cable": 11.3 µs per task switch, no UART cable]({{ '/assets/images/boards/pi-zero/pz_shell_cover.jpg' | relative_url }})
 *The whole story in one picture: a FreeRTOS shell on /dev/ttyACM0 about 0.8 s after hand-over, and 11.3 µs per task switch.*
 
 ![What happens between start.elf releasing the ARM and kmain]({{ '/assets/images/boards/pi-zero/pz_reset_seq.png' | relative_url }})

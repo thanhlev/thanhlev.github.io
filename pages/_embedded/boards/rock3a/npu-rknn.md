@@ -19,7 +19,7 @@ tags: [rockchip, arm, npu, edge-ai, linux, android]
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The result first]({{ '/assets/images/boards/rock3a/npu_rknn_cover.jpg' | relative_url }})
+![ROCK 3A cover, "The RK3568 NPU": 32 × one CPU thread, Radxa's docs vs my runs]({{ '/assets/images/boards/rock3a/npu_rknn_cover.jpg' | relative_url }})
 *The result first: YAMNet runs 32 times faster on the NPU than on one A55 thread (1.44 against 45.68 ms), about 0.49 TOPS of real work.*
 
 ## Situation

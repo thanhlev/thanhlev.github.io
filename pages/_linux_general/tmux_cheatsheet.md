@@ -14,7 +14,7 @@ permalink: /linux_general/tmux-cheatsheet   # 2026-11-27: = the URL the collecti
 # Tmux Quick Reference
 {: .no_toc }
 
-![Tmux in one picture]({{ '/assets/images/tmux_cheatsheet_cover.jpg' | relative_url }})
+![Linux cover, "Tmux quick reference": 4 levels, server to pane, sessions that survive]({{ '/assets/images/tmux_cheatsheet_cover.jpg' | relative_url }})
 *Four levels, server to pane, and send-keys to script all of it.*
 
 ## Table of contents

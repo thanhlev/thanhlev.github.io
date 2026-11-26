@@ -17,7 +17,7 @@ tags: [control, simulation, cpp]
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/robust_control_cover.jpg' | relative_url }})
+![Control library cover, "Plant gain 3× off": 0.171 IAE (PID 0.275), ADRC is fine to 6×, gone at 7×]({{ '/assets/images/control/control-library/robust_control_cover.jpg' | relative_url }})
 *The result first: with the plant gain 3× what it was told, ADRC's integrated error is 0.171 against the PID's 0.275. At 7× it falls apart. In simulation.*
 
 ![PID and ADRC on the same plant, gain 3× off, load step at 5 s]({{ '/assets/images/control/control-library/adv_adrc_vs_pid.png' | relative_url }})

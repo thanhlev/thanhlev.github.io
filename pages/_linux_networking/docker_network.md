@@ -14,7 +14,7 @@ permalink: /linux_networking/docker-network   # 2026-11-27: = the URL the collec
 # Docker Networking: what each driver really builds
 {: .no_toc }
 
-![Docker networking in one picture]({{ '/assets/images/docker_network_cover.jpg' | relative_url }})
+![Linux networking cover, "Docker networking": 6 drivers, what each driver builds]({{ '/assets/images/docker_network_cover.jpg' | relative_url }})
 *Six drivers, all built from bridges, veth, macvlan and iptables rules you can look at.*
 
 ## Table of contents
