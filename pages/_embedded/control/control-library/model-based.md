@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Computed torque, MRAC, Smith predictor: 0.14 % overshoot with the right model, and what a wrong one costs"
+title: "Computed torque, MRAC, Smith predictor: right, wrong or missing model"
 short_description: "Three laws that lean on a model, each run with the true model, a wrong one and none: a one-link arm, a first-order plant that isn't what I seeded, and a 0.5 s dead time"
 status: "Done"
 picture: "assets/images/control/control-library/model_based_cover.jpg"   # 2026-11-23 cover, story_cover.py
@@ -13,7 +13,7 @@ result: "Computed torque 0.14 % overshoot from both poses (9.5 % and 1.5 % witho
 tags: [control, simulation, cpp]
 ---
 
-# Computed torque, MRAC, Smith predictor: 0.14 % overshoot with the right model, and what a wrong one costs
+# Computed torque, MRAC, Smith predictor: right, wrong or missing model
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 

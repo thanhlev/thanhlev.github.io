@@ -27,8 +27,8 @@ no UART cable either. Just the USB data cable to my PC.
 <a href="{{ '/assets/images/boards/pi-zero/pz_board_model.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_board_model.png' | relative_url }}" alt="3D model of my Pi Zero W" style="width:100%;max-width:540px"></a>
 *My Zero W as a 3D model I made for the video series (no photo of mine yet): 65 x 30 mm, the BCM2835 with the 512 MB stacked on it, two micro-USB, no header.*
 
-The question I started with in October 2026 was simple: what does "bare metal" even mean on this
-chip? On a microcontroller the reset vector is yours. Here it isn't. The VideoCore GPU boots first
+I started in October 2026 with something simple: working out what "bare metal" even means on this
+chip. On a microcontroller the reset vector is yours. Here it isn't. The VideoCore GPU boots first
 from its own ROM, runs closed firmware, and only then lets the ARM out of reset at `0x8000`. I wanted
 to see how much of that I could poke at from my side of the cable.
 

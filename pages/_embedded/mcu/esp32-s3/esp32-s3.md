@@ -25,7 +25,7 @@ it has both of Espressif's USB blocks: the fixed USB-Serial-JTAG port that every
 a real full-speed OTG controller the application can drive.
 
 That second block is where all the fun is, and also where I lost the most time. Most of what's here
-came out of one question in October 2026: what can this chip pretend to be when I plug it into my PC?
+came out of one idea in October 2026: finding out what this chip can pretend to be when I plug it into my PC.
 
 The ESP8266 posts on this site are older and are about the boot flow, not apps; they stay where they are.
 

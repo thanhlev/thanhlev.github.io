@@ -28,10 +28,10 @@ tags: [qualcomm, arm, edge-ai, memory]
 
 ## Situation
 
-November 2026. The board had a working Android 15 and a GPU. My question was simple: this
-hardware has a GPU, so which AI models can it run? Then I looked closer. The Adreno 330 has no compute,
+November 2026. The board had a working Android 15 and a GPU. My first idea was simple: this
+hardware has a GPU, so I'd see which AI models it can run. Then I looked closer. The Adreno 330 has no compute,
 OpenCL or Vulkan path in Mesa, and the Hexagon DSP has no FastRPC node in the device tree. There's no
-NPU. So the honest version of the question is: what can four 32-bit Krait cores with NEON do?
+NPU. So the real question became what four 32-bit Krait cores with NEON can do.
 
 ## Task
 

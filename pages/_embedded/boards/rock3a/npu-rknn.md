@@ -241,7 +241,7 @@ Log scale, so every bar fits: YAMNet from 1.44 ms on the NPU to 45.68 ms on one 
 | YOLOv5s 640 | 34.58 ms INT8 at 1 GHz | not measured | not measured | my Android 14 |
 | RetinaFace 320 | 2.76 ms INT8 at 1 GHz | not measured | not measured | my Android 14 |
 
-How close is that to the spec? Rockchip quotes 0.8 or 1 TOPS depending on the document. The upscaler is
+Against the spec: Rockchip quotes 0.8 or 1 TOPS depending on the document. The upscaler is
 easy to count by hand: 47.55 GMAC per frame, done in the 192.6 ms of `rknn_run`. That's 247 GMAC/s, or
 0.49 TOPS, about half the advertised number, on a model that is nothing but 3 x 3 convolutions. The
 bigger variant with twice the layers reached 300 GMAC/s, so longer graphs keep the NPU busier.

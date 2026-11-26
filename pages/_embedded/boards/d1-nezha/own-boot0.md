@@ -71,13 +71,13 @@ SPI0 at 50 MHz, reads an app header at NAND `0x10000`, copies the app straight i
 and blinks.
 
 ![What my SPL does]({{ '/assets/images/boards/d1-nezha/d1_spl_flow.png' | relative_url }})
-*The SPL in five steps, numbers from its UART output: PLL to 1008 MHz, DDR3 trained in 51 124 us, SPI0 at 50 MHz, the app header at NAND `0x10000`, jump to `0x40000000`.*
+*The SPL in five steps, numbers from its UART output: PLL to 1008 MHz, DDR3 trained in 51 124 µs, SPI0 at 50 MHz, the app header at NAND `0x10000`, jump to `0x40000000`.*
 
 ## Result
 
 My code runs **straight from the boot ROM out of NAND**: no Tina, no OpenSBI, no U-Boot. The blink
 image is 1160 bytes of code and data, padded to 16 KiB. The SPL trains **1024 MiB of DDR3 in
-51 124 us**, reads SPI-NAND ID `c226`, and the app runs at `pc=0x4000005a` with the 8 MiB `.bss`
+51 124 µs**, reads SPI-NAND ID `c226`, and the app runs at `pc=0x4000005a` with the 8 MiB `.bss`
 check at **0 bad words**.
 
 The ROM's fallback is real and measured: with block 0 empty it boots **copy 1** (`boot_media 0x14`).

@@ -26,7 +26,7 @@ tags: [raspberry-pi, arm, freertos, linux, simulation]
 
 Linux is good at almost everything except promising a deadline. The usual trick is AMP: give one core
 to a small RTOS that only does the timed work, keep Linux on the rest. I'd done that on my ROCK 3A
-(RK3568) and measured 2.3 to 7.8 us wake-up latency for a 1 kHz task there. The Pi 5 has four A76
+(RK3568) and measured 2.3 to 7.8 µs wake-up latency for a 1 kHz task there. The Pi 5 has four A76
 cores, so it's the obvious next board.
 
 But the usual way of doing AMP means changing the boot setup: reserved memory in the device tree,
@@ -95,4 +95,4 @@ Run it on the Pi 5 the day I'm allowed to write to it: copy only our sources ove
 build the module against the Pi's own headers (it runs 6.18.50, I built against 6.18.59), then
 `insmod`, `ampctl selftest`, `rmmod`. Things QEMU can't prove: whether the firmware puts the timer PPI
 in a group core 3 can use, and the cache maintenance (QEMU models no caches, so a missing clean would
-still pass). Then the real wake-up latency, next to the ROCK 3A's 2.3 to 7.8 us.
+still pass). Then the real wake-up latency, next to the ROCK 3A's 2.3 to 7.8 µs.

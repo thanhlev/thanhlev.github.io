@@ -9,7 +9,7 @@ index: 30
 publish: true
 permalink: /embedded/boards/d1-nezha/freertos-c906
 board_parent: d1-nezha
-result: "Task switch 19907 -> 734 cycles with the D-cache on; tick wake-up 0.50 us; idle wfi ~2.5 C cooler"
+result: "Task switch 19907 -> 734 cycles with the D-cache on; tick wake-up 0.50 µs; idle wfi ~2.5 C cooler"
 tags: [allwinner, risc-v, freertos, bare-metal, memory]
 ---
 
@@ -29,7 +29,7 @@ loaded from my [own SPL]({{ '/embedded/boards/d1-nezha/own-boot0' | relative_url
 runs in M-mode, no SBI firmware under it, built with zig. I wanted an RTOS under that shell, and real
 latency numbers for the C906, because I couldn't find any published.
 
-Why FreeRTOS and not RT-Thread, which has D1 BSPs? Those are RT-Smart: S-mode with the MMU, entered
+I chose FreeRTOS, not RT-Thread, even though RT-Thread has D1 BSPs. Those are RT-Smart: S-mode with the MMU, entered
 through OpenSBI and U-Boot, and they want GNU GCC. I'd have had to throw away my boot path, my
 toolchain and my shell. FreeRTOS's generic RISC-V port runs in M-mode and leaves the timer to me.
 
@@ -109,11 +109,11 @@ lied.) The temperature sensor also read -10 C at first; it needed a trim value f
 
 | Measurement | D-cache off | D-cache on | On, CPU + memory load |
 |---|---|---|---|
-| task switch | 19 907 cycles (19.7 us) | **734 cycles (0.71 us)** | |
-| tick wake-up, 10 000 samples | 14.96 / 15.58 / 18.04 us | **0.500 / 0.500 / 0.541 us** | 0.92 / 2.92 / 5.29 us |
+| task switch | 19 907 cycles (19.7 µs) | **734 cycles (0.71 µs)** | |
+| tick wake-up, 10 000 samples | 14.96 / 15.58 / 18.04 µs | **0.500 / 0.500 / 0.541 µs** | 0.92 / 2.92 / 5.29 µs |
 | wake-ups that slipped a tick | 0 | 0 | 0 |
 
-So one bit in `mhcr` made the task switch **27x** faster. Under load the worst wake-up is 5.3 us
+So one bit in `mhcr` made the task switch **27x** faster. Under load the worst wake-up is 5.3 µs
 and no tick is ever missed. Every `d1_cli` command gives the same result under the RTOS (DMA 1 MiB at
 345 MB/s, 0 mismatches).
 

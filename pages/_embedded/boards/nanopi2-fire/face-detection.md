@@ -100,7 +100,7 @@ the same bits. `tools/fdet_same.py` runs the old and new ARM builds under qemu a
 byte for byte: 0 of 12 runs differ.
 
 I also tried the JPU decoding a half-size copy just for the network. It saved 0.9 ms of core 0 per run
-(7.42 → 6.50 ms). Honest result: small.
+(7.42 → 6.50 ms). The gain is small.
 
 ## Result
 

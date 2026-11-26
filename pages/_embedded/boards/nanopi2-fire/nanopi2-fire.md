@@ -25,7 +25,7 @@ It has a Samsung S5P4418: four Cortex-A9 cores rated at 1.4 GHz, 1 GB of DDR3 on
 Gigabit Ethernet, HDMI, a microSD slot, one micro-USB and a Raspberry-Pi-style 40-pin header. No eMMC,
 no Wi-Fi. The PMIC is an AXP228.
 
-Why bother with a board this old? Two reasons. Its vendor software is only lightly maintained, so if I
+I picked a board this old for two reasons. Its vendor software is only lightly maintained, so if I
 want something modern on it I have to build it myself. And the S5P4418 boot ROM falls back to USB when
 there's no card, which means I can push code into SRAM from my PC and start from zero: no U-Boot, no
 Linux, just my own code and the Cortex-A9 manual.

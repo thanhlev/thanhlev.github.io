@@ -9,7 +9,7 @@ index: 20
 publish: true
 permalink: /embedded/boards/pi-zero/rtos-usb-shell
 board_parent: pi-zero
-result: "Shell on /dev/ttyACM0 ~0.8 s after hand-over; 11.3 us per task switch; tick jitter 999-1001 us"
+result: "Shell on /dev/ttyACM0 ~0.8 s after hand-over; 11.3 µs per task switch; tick jitter 999-1001 µs"
 tags: [raspberry-pi, arm, freertos, boot, usb]
 ---
 
@@ -158,7 +158,7 @@ pz> rt switch
 
 The shell is on `/dev/ttyACM0` about **0.8 s** after the firmware hands over, stable, and all
 **13 commands** check out on the board. `vTaskDelay(1)` x 1000 on the board gives **min 999, avg
-1000, max 1001 us**. A task switch went from **13.9 to 11.3 us** with the I-cache on, and IDLE sits
+1000, max 1001 µs**. A task switch went from **13.9 to 11.3 µs** with the I-cache on, and IDLE sits
 at 98.8 %.
 
 The lesson I keep: the USB power-on through the mailbox takes **527 ms**, so initialise the DWC2 only
@@ -171,6 +171,6 @@ and a task switch of 11247 ns against 11261.
 
 ## What I'd do next
 
-The D-cache and the MMU. 11 us per switch is slow for this core, and I'd bet most of it is uncached
+The D-cache and the MMU. 11 µs per switch is slow for this core, and I'd bet most of it is uncached
 stack traffic (on the D1 the same kind of fix was worth 27x). And a place to keep a crash record that
 survives the watchdog reset, because DRAM doesn't.

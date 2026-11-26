@@ -39,7 +39,7 @@ one number in my gallery demo: ADRC, sliding mode and super-twisting against a w
 torque, MRAC and the Smith predictor with a right, wrong or missing model; a motion profile with
 feedforward, and pure pursuit against Stanley; the complementary filter, EKF and UKF. For those I wrote a
 small measurement demo that pushes each law past its comfortable case, and ran it in both precisions on
-2026-11-23. The unit tests ran alongside: 805,780 checks in double, 805,783 in float, no failures.
+2026-11-23. The unit tests ran alongside: 805 780 checks in double, 805 783 in float, no failures.
 
 ## The stories
 

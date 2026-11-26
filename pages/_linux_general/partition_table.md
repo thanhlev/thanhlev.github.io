@@ -8,6 +8,7 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
 tags: [linux, memory, testing]
+permalink: /linux_general/partition-table   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 # Disk Partition Tables: MBR & GPT
@@ -196,7 +197,7 @@ parted -s test.img -- unit s mkpart primary ext2 1081344 -1s
 Checking it with `parted` (the output I saved in 2023):
 
 ```
-Disk /home/thanh/build/thanhle/ws/learns/mkfs_mmd_mcopy/test.img: 1049MB
+Disk ~/test.img: 1049MB
 Sector size (logical/physical): 512B/512B
 Partition Table: msdos
 Disk Flags:

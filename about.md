@@ -119,7 +119,7 @@ counted too: 63 vs 43); row "Boards on the bench" -> "Board pages" (3 hubs were 
   <div class="ab-ncard"><span class="chip">Board</span><h3>Pi 5 off QEMU</h3><p>FreeRTOS borrowing core 3 of a running Linux passes all its checks in QEMU. Next it has to run on the real board.</p></div>
 </div>
 
-<div class="sec"><h2>Get in touch</h2><span>§5 · stuck on the same board, or spotted a mistake? I'd rather hear it.</span></div>
+<div class="sec"><h2>Get in touch</h2><span>§5 · stuck on the same board, or spotted a mistake: I'd rather hear it.</span></div>
 <div class="ab-contact">
   <a href="mailto:thanhlevvn@gmail.com"><span>Email</span><b>thanhlevvn@gmail.com</b></a>
   <a href="mailto:thanhlev@amazon.com.vn"><span>Work email</span><b>thanhlev@amazon.com.vn</b></a>

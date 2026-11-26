@@ -24,7 +24,7 @@ RK3568 I could afford, with an NPU I could poke at and a datasheet-level manual 
 actually public.
 
 The first thing I did with it, a few years ago, was a Yocto port. In October 2026 I came back to it
-with a different question: how far down can I go on this chip? Not "install
+with a different goal: to go as far down this chip as I could. Not "install
 Debian and run a demo", but start from the BootROM and own every stage I can.
 
 It went further than I planned. Most of what follows was done in about five weeks of evenings and a

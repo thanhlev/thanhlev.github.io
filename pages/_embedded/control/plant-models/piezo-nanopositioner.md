@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Piezo stage: learning control vs an inverse model, and the answer I didn't expect"
+title: "Piezo stage: learning control vs an inverse model, 168 nm vs 118 nm RMS"
 short_description: "13 % hysteresis on a sub-nanometre actuator; iterative learning with no model against a closed-form Prandtl-Ishlinskii inverse"
 status: "Done"
 picture: "assets/images/control/plant-models/piezo_nanopositioner_cover.jpg"   # 2026-11-23 cover, story_cover.py
@@ -13,7 +13,7 @@ result: "RMS error per scan line 567 nm open loop, 168 nm with learning, 118 nm 
 tags: [control, simulation, cpp]
 ---
 
-# Piezo stage: learning control vs an inverse model, and the answer I didn't expect
+# Piezo stage: learning control vs an inverse model, 168 nm vs 118 nm RMS
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 

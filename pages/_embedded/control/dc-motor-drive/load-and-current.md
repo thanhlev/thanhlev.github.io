@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "A load step, a disturbance observer, and a current sensor that can't tell direction"
+title: "A load step, a disturbance observer, and a current sensor with no sign"
 short_description: "What a disturbance observer buys (and costs) under a 0.02 N·m step, and running the inner loop on a magnitude-only current signal"
 status: "Done"
 picture: "assets/images/control/dc-motor-drive/load_and_current_cover.jpg"   # 2026-11-23 cover, story_cover.py
@@ -13,7 +13,7 @@ result: "Observer: dip 2.49 -> 1.51 rad/s, recovery 18.0 -> 3.1 ms, at 2.8x the 
 tags: [motor, control, sensor, simulation, cpp]
 ---
 
-# A load step, a disturbance observer, and a current sensor that can't tell direction
+# A load step, a disturbance observer, and a current sensor with no sign
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
 
@@ -25,9 +25,9 @@ tags: [motor, control, sensor, simulation, cpp]
 ## Situation
 
 Two things I couldn't answer from the block diagram. A disturbance observer is supposed to reject load
-torque faster than the integrator, but it differentiates the encoder speed (J·dω/dt), so it must be noisier;
-by how much? And the cheap integrated H-bridges report current through a mirror pin that gives |i| only,
-and only while the bridge is driving. Without a sign you can't close a current PI. Is the drive still usable?
+torque faster than the integrator, but it differentiates the encoder speed (J·dω/dt), so it must be noisier,
+and I didn't know by how much. And the cheap integrated H-bridges report current through a mirror pin that gives |i| only,
+and only while the bridge is driving. Without a sign you can't close a current PI, so I wanted to know if the drive is still usable.
 
 ## Task
 

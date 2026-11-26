@@ -87,7 +87,7 @@ registers read back what the previous run had left (0, not the power-on value 7)
 *Where the 1148 bytes sit in SRAM A2, and the only clock I had: the ROM answered USB again 4.018 s after a 4.000 s blink.*
 
 
-Honest gap: the program proves the PMIC took the writes. I didn't note down whether I watched the LEDs
+One gap: the program proves the PMIC took the writes. I didn't note down whether I watched the LEDs
 blink.
 
 ## What I'd do next

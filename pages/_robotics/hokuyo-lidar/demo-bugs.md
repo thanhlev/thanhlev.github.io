@@ -88,5 +88,5 @@ nothing else.
 
 ## What I'd do next
 
-The other direction is untested: does `scan_diff` still catch a real change? That needs a hand in
+The other direction is untested: I don't know yet if `scan_diff` still catches a real change. That needs a hand in
 the beam. And I want to settle which side "LEFT" really is before anyone trusts these zone names.

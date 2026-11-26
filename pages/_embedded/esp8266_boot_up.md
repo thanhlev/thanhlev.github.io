@@ -8,6 +8,7 @@ latest_release: "2026-11-22: rewritten as a STAR story; ROM addresses re-checked
 index: 6
 publish: true
 tags: [esp8266, boot, memory, mcu]
+permalink: /embedded/esp8266-boot-up   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
@@ -53,7 +54,7 @@ has to be ROM.
 
 A CPU executes instructions (add, shift, copy, compare...); which instructions and how fast depends on
 its architecture (Arm, x86, RISC-V, and the Tensilica L106 here). It can't decide what to run by itself,
-so something has to hold the first instructions. Why not an SD card, eMMC, USB or an SSD? All of those
+so something has to hold the first instructions. It can't be an SD card, eMMC, USB or an SSD: all of those
 need a controller that must be initialised first, by code, so putting the first-stage code there is a
 chicken-and-egg problem. ROM needs nothing.
 

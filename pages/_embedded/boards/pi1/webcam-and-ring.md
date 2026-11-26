@@ -85,7 +85,7 @@ Linux's dwc2 driver arms for the *next* frame's parity. I switched to one channe
 (I also tried a lighter recovery, resetting only the core. The hub port was lost after `CSftRst`, so
 the full bring-up stays as the fallback.)
 
-**The dark ring.** First question: does SPI0 even move the pin?
+**The dark ring.** First check: whether SPI0 even moves the pin.
 
 ```
 ring probe

@@ -12,6 +12,7 @@ index: 2
 publish: true
 tags: [testing, python]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
+permalink: /embedded/pytest   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
@@ -74,7 +75,7 @@ pytest
 
 ============================= test session starts ==============================
 platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
-rootdir: /home/thanhle/build/test
+rootdir: ~/build/test
 collected 2 items
 
 test_sample.py F.                                                        [100%]

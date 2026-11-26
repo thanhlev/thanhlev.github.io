@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "32 LEDs that follow the music: genre on the NPU, beats on the CPU, SPI from Linux"
+title: "32 LEDs that follow the music: genre on the NPU, beats on the CPU, SPI on Linux"
 short_description: "Whatever the ROCK 3A plays goes through YAMNet on the NPU and a beat tracker on the CPU, and comes out on two WS2812 rings driven straight from Linux spidev, with a demo window on the board's own desktop"
 status: "Done"
 picture: "assets/images/boards/rock3a/r3a_leds_cover.jpg"   # 2026-11-24 cover, story_cover.py r3a_leds_cover
@@ -15,7 +15,7 @@ edge_ai_index: 12
 tags: [rockchip, npu, edge-ai, linux, led]
 ---
 
-# 32 LEDs that follow the music: genre on the NPU, beats on the CPU, SPI from Linux
+# 32 LEDs that follow the music: genre on the NPU, beats on the CPU, SPI on Linux
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 

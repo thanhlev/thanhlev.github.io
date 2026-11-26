@@ -36,8 +36,8 @@ one still frame, nothing on the UART. And the watchdog, which I'd armed weeks be
 
 *My screen on a normal card boot: the webcam looking at two toy dinosaurs, the ring lit on the right. On the bad days it looked exactly like this, except the picture never moved again.*
 
-The day after, with the hang gone, I asked myself a different question: is there anything on this SoC
-that should be on and isn't?
+The day after, with the hang gone, I went looking for something different: anything on this SoC
+that should be on and isn't.
 
 ## Task
 

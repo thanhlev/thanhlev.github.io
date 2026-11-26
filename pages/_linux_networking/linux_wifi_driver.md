@@ -9,9 +9,10 @@ index: 4
 publish: true
 tags: [networking, linux, wifi]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
+permalink: /linux_networking/linux-wifi-driver   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
-# Linux Wi-Fi Driver có gì đặc biệt?
+# Linux Wi-Fi Driver có gì đặc biệt
 {: .no_toc }
 
 ![Wi-Fi driver trên Linux trong một hình]({{ '/assets/images/linux_wifi_driver_cover.jpg' | relative_url }})
@@ -171,7 +172,7 @@ ip link l
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP ....
 3: cu-tèo: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN ...
 ```
-`state DOWN ...` Thôi toang, quên mất nếu là ethernet thì cắm sợi dây vô switch hoặc router đang hoạt động thì có kết nối ngay (link connection), còn cái "cu-tèo" interface kia thì làm sao?
+`state DOWN ...` Thôi toang, quên mất nếu là ethernet thì cắm sợi dây vô switch hoặc router đang hoạt động thì có kết nối ngay (link connection), còn cái "cu-tèo" interface kia thì chưa biết làm sao.
 
 Bể khổ bắt đầu từ đây, thế là Wi-Fi driver phải nghĩ ra cách để tạo được Link connection đến thiết bị khác. Với Wi-Fi, "cắm dây" gồm cả một chuỗi việc: quét tìm mạng, xác thực (open, WPA2, WPA3, 802.1X), associate với AP, trao đổi khoá (4-way handshake), rồi còn chọn kênh, tiết kiệm pin, roaming...
 

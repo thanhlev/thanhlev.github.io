@@ -55,7 +55,7 @@ From the model came the Denavit-Hartenberg table for the legs and the transform 
   </div>
 </div>
 
-Forward kinematics tells you where the foot is for a set of joint angles. Walking needs the opposite: I want the foot *here*, which angles do I send? So I solved the inverse kinematics and planned the path for the feet and the hips.
+Forward kinematics tells you where the foot is for a set of joint angles. Walking needs the opposite: I want the foot *here* and need the angles that put it there. So I solved the inverse kinematics and planned the path for the feet and the hips.
 
 <div style="max-width: 560px; margin: 24px 0;">
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">

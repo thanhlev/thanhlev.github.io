@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "XR829 Wi-Fi on mainline Linux 6.8: from 2 to 22 Mbit/s, and the culprit was the console"
+title: "XR829 Wi-Fi on mainline Linux 6.8: 2 to 22 Mbit/s once the console went quiet"
 short_description: "A community port of the vendor driver, booted through my own FEL chain, five bugs before a ping, then one printk"
 status: "Done"
 picture: "assets/images/boards/d1-nezha/d1_wifi_cover.jpg"   # 2026-11-23 cover, story_cover.py
@@ -13,7 +13,7 @@ result: "WPA2 + DHCP + TCP on mainline 6.8; PC -> board 2.1 -> 22 Mbit/s once th
 tags: [allwinner, risc-v, bare-metal, linux, boot, wifi]
 ---
 
-# XR829 Wi-Fi on mainline Linux 6.8: from 2 to 22 Mbit/s, and the culprit was the console
+# XR829 Wi-Fi on mainline Linux 6.8: 2 to 22 Mbit/s once the console went quiet
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-10-01
 
@@ -67,7 +67,7 @@ struct. Passing the frame, its length, the request IEs, the BSS and the status (
 did) fixed it. WPA2-PSK, DHCP, ping.
 
 **Then iperf3.** About 21 Mbit/s from the board, about 2 to it. Every encrypted frame also logged
-`Slowpath: tailroom is not big enough. Req: 8`. Was it the radio? The SDIO interrupt? About 7000
+`Slowpath: tailroom is not big enough. Req: 8`. I suspected the radio, then the SDIO interrupt. About 7000
 interrupts for 3 MB, only 2 missed. UDP from the PC at 20 Mbit/s: 0 % loss. So receive was fine and
 only TCP was slow, and TCP needs the board to send ACKs. Power save off: no change (2.37 Mbit/s).
 
