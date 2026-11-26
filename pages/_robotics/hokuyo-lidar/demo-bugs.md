@@ -11,6 +11,9 @@ permalink: /robotics/hokuyo-lidar/demo-bugs
 board_parent: hokuyo-lidar
 result: "zone_monitor now flags the object at 113 mm it used to call CLEAR; scan_diff: 0 false alarms in 280 frames (before: every frame)"
 tags: [robotics, lidar]
+description: "Running my eight urg_cpp demos on the sensor for the first time: a step-versus-index bug and mixed pixels"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A safety zone that was always CLEAR, and an intrusion alarm that never stopped

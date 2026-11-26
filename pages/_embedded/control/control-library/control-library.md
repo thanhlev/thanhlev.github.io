@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/control/control-library/
 notes_hub: true
 tags: [control, simulation, cpp, testing]
+description: "A header-only C++ control library I wrote for small MCUs, and the demos that check every law against a plant instead of a promise"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # My control library (ctl): PID to MPC, in simulation

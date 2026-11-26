@@ -5,7 +5,7 @@ short_description: "Speech to text, a 0.6B LLM and Vietnamese TTS on the RK3568'
 status: "Done"
 picture: "assets/images/boards/rock3a/assist_cover.jpg"   # 2026-11-23 cover, story_cover.py
 latest_release: "2026-11-19: 17 recorded runs, 16 fully offline"
-index: 16
+index: 16.5   # 2026-11-27: was 16 like mcu-camera-wake; the tie broke differently once pages got a date: keeps the old order
 publish: true
 permalink: /embedded/boards/rock3a/offline-assistant
 board_parent: rock3a
@@ -13,6 +13,9 @@ result: "First spoken word 11.8 s after the question (median of 12), LLM 4.0 tok
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 2
 tags: [rockchip, arm, edge-ai, android]
+description: "Speech to text, a 0.6B LLM and Vietnamese TTS on the RK3568's four A55 cores under Android 14, recorded 17 times"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A Vietnamese voice assistant with the network unplugged

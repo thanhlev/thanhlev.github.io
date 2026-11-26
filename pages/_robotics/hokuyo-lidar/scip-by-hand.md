@@ -11,6 +11,9 @@ permalink: /robotics/hokuyo-lidar/scip-by-hand
 board_parent: hokuyo-lidar
 result: "682 steps per scan with 0 bad checksum lines, 100.6 ms per frame, σ 3 to 4 mm at 14 cm (the spec allows ±30 mm)"
 tags: [robotics, lidar, python]
+description: "A raw client in Python and C++: 6-bit text encoding, a checksum that skips the semicolon, and two stream bugs of my own"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Talking SCIP 2.0 to the URG-04LX by hand

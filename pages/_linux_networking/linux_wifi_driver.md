@@ -10,6 +10,9 @@ publish: true
 tags: [networking, linux, wifi]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 permalink: /linux_networking/linux-wifi-driver   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Từ Wireless Extensions đến nl80211/cfg80211/mac80211: Wi-Fi driver trên Linux được thiết kế ra sao"
+date: 2023-01-11
+last_modified_at: 2026-11-27
 ---
 
 # Linux Wi-Fi Driver có gì đặc biệt

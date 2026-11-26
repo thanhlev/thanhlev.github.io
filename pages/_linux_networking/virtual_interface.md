@@ -9,6 +9,9 @@ index: 3
 publish: true
 tags: [networking, linux]
 permalink: /linux_networking/virtual-interface   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Bridge, VLAN, macvlan, ipvlan, veth, TUN/TAP, tunnels, VXLAN, WireGuard, dummy, bond: what each is and the ip commands"
+date: 2023-02-05
+last_modified_at: 2026-11-27
 ---
 
 # Virtual Interfaces in Linux

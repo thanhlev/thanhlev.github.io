@@ -11,6 +11,9 @@ permalink: /embedded/control/plant-models/piezo-nanopositioner
 board_parent: plant-models
 result: "RMS error per scan line 567 nm open loop, 168 nm with learning, 118 nm with the inverse model; opening the Q-filter makes learning diverge to 38.8 µm"
 tags: [control, simulation, cpp]
+description: "13 % hysteresis on a sub-nanometre actuator; iterative learning with no model against a closed-form Prandtl-Ishlinskii inverse"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Piezo stage: learning control vs an inverse model, 168 nm vs 118 nm RMS

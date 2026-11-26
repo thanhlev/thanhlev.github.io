@@ -11,6 +11,9 @@ permalink: /embedded/boards/bpi-m3/dram-init
 board_parent: bpi-m3
 result: "2 GiB LPDDR3, 294 896 words tested, 0 errors, 3.44 s"
 tags: [allwinner, arm, bare-metal, boot, memory, testing]
+description: "xfel ddr doesn't know the A83T, so I ported U-Boot's LPDDR3 init into a 4 KiB SRAM program"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # DRAM init over FEL, and the probe that froze the boot ROM

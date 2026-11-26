@@ -13,6 +13,9 @@ result: "Predicted beats latch the LEDs +0.12 ms after the click on average (max
 edge_ai: true   # listed on /edge-ai/
 edge_ai_index: 12
 tags: [rockchip, npu, edge-ai, linux, led]
+description: "Whatever the ROCK 3A plays goes through YAMNet on the NPU and a beat tracker on the CPU, and comes out on two WS2812 rings driven straight from Linux spidev, with a demo window on the board's own desktop"
+date: 2026-11-24
+last_modified_at: 2026-11-27
 ---
 
 # 32 LEDs that follow the music: genre on the NPU, beats on the CPU, SPI on Linux

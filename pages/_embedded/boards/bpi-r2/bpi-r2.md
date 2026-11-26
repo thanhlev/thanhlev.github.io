@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/bpi-r2/
 board_hub: true
 tags: [arm, networking]
+description: "Five Ethernet jacks on two MACs, a quad Cortex-A7, and nothing measured on the board yet"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Banana Pi R2

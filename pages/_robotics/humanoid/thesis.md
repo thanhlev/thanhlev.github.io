@@ -13,6 +13,9 @@ redirect_from:
 board_parent: humanoid
 result: "17 SG90s walking on the floor from angles I computed myself, played back over 9600-baud serial"
 tags: [robotics, kinematics, servo, cad]
+description: "A small humanoid on SG90 servos: SolidWorks model, DH table, inverse kinematics, then the real thing"
+date: 2026-06-12
+last_modified_at: 2026-11-27
 ---
 <!-- 2026-11-22: moved from pages/_embedded/humanoid_robot.md into the Robotics humanoid hub (user «Humanoid
      Robot: my thesis project nên đưa vào Robotics») and rewritten in STAR form; same facts and the same five

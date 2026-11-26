@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/pi1/
 board_hub: true
 tags: [raspberry-pi, arm, gpu, freertos, bare-metal, camera]
+description: "A 2012 Pi with no Linux: FreeRTOS, MJPEG decoded by the VideoCore, a face detector on the 12 QPUs, a WS2812 ring"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Raspberry Pi 1 Model B (BCM2835)

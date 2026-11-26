@@ -11,6 +11,9 @@ permalink: /embedded/control/plant-models/cruise-and-abs
 board_parent: plant-models
 result: "Speed loss on a 4 % grade 11.99 -> 0.18 km/h; stopping from 90 km/h 41.3 m locked vs 27.5 m with slip control, +35 % wet, +18 % snow"
 tags: [control, simulation, cpp]
+description: "Where the speed loss on a 4 % grade actually goes, and a brake plant whose gain flips sign at the friction peak"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Cruise control on a hill, and an ABS that can't be a PID

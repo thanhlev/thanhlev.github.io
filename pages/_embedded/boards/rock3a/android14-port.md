@@ -13,6 +13,9 @@ result: "Android 14 + kernel 6.1.99 + GApps booting; warm reboot back in 36 s; Y
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 1
 tags: [rockchip, arm, edge-ai, npu, linux, android]
+description: "Radxa ships Android 14 for the ROCK 3C only: a new product from its tree, 13 kinds of build failure, a DDR blob that hangs on reboot"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Porting Android 14 to the ROCK 3A myself

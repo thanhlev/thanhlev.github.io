@@ -9,6 +9,9 @@ index: 9
 publish: true
 tags: [arm, mcu, bare-metal, boot]
 permalink: /embedded/tm4c123gh6zrb-architecture-overview   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "My reading notes from TI's datasheet: memory map, SRAM, flash, ROM, the ROM bootloader, EEPROM"
+date: 2023-01-11
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

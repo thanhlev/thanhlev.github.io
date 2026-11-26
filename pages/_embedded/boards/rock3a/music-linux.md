@@ -13,6 +13,9 @@ result: "1.44 ms per YAMNet window on the NPU at 900 MHz (Android: 2.05 ms), 32x
 edge_ai: true   # listed on /edge-ai/
 edge_ai_index: 9
 tags: [rockchip, arm, npu, edge-ai, linux]
+description: "The YAMNet genre demo moved from Android 14 to Debian 11: a PipeWire monitor tap, one C program and the same INT8 model on the RK3568 NPU"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # The board that names the music it plays, now on Linux

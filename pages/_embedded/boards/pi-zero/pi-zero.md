@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/pi-zero/
 board_hub: true
 tags: [raspberry-pi, arm, gpu, freertos, bare-metal, boot]
+description: "Bare metal with no SD card, a FreeRTOS shell on the boot cable, and the 12 QPUs driven from my own code"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Raspberry Pi Zero W (BCM2835)

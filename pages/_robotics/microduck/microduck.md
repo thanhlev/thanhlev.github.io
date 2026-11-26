@@ -10,6 +10,9 @@ publish: true
 permalink: /robotics/microduck/
 board_hub: true
 tags: [robotics, simulation]
+description: "Pollen Robotics' small open biped that learns to walk in simulation; I run their pipeline before building one"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Microduck

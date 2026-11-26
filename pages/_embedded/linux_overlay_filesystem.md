@@ -10,6 +10,9 @@ publish: true
 tags: [memory, linux]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 permalink: /embedded/linux-overlay-filesystem   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Ghi chép của mình về overlayfs: lower/upper, whiteout, và factory reset bằng cách xoá upper"
+date: 2023-02-28
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

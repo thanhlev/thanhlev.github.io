@@ -11,6 +11,9 @@ permalink: /embedded/boards/db8074/android15-boot
 board_parent: db8074
 result: "Launcher3 home screen on the panel; boot from eMMC in 66 s"
 tags: [qualcomm, arm, linux, android, boot, memory]
+description: "Building AOSP 15 + kernel 6.6 for the APQ8074, booting it from RAM first, and the long list of things between it and a home screen"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Android 15 on a board that shipped with Android 4.3

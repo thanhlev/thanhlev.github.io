@@ -11,6 +11,9 @@ permalink: /embedded/control/control-library/pid
 board_parent: control-library
 result: "Recovery after saturation 108.55 s -> 0.77 s with back-calculation; relay test hits Tu within 1.3 %, Ku within 2 %"
 tags: [control, simulation, cpp]
+description: "Seven configurations of one PID on one clamped plant, then a relay experiment that measures Tu and Ku instead of guessing"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # PID: 108 s of windup, and gains from a relay

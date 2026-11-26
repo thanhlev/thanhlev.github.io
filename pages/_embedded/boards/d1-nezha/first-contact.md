@@ -11,6 +11,9 @@ permalink: /embedded/boards/d1-nezha/first-contact
 board_parent: d1-nezha
 result: "vl=4 at e32 -> VLEN 128, vsetivli SIGILL (RVV 0.7.1); FEL via reboot efex, no button"
 tags: [allwinner, risc-v, bare-metal]
+description: "Checking the vendor docs against the board over UART and OTG: RVV 0.7.1 not 1.0, ADB as root, FEL with no button"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # First contact: what the stock Nezha really runs, and which vector it really has

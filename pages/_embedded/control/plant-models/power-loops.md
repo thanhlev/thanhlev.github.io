@@ -11,6 +11,9 @@ permalink: /embedded/control/plant-models/power-loops
 board_parent: plant-models
 result: "Charger 99.5 % full vs 90.0 % with a state machine; MPPT 92.7 % -> 99.97 % of available energy; inverter RMS error 0.225 -> 0.067 A, THD 0.085 %"
 tags: [control, simulation, cpp]
+description: "CC-CV as the minimum of two loops, perturb-and-observe on a panel that heats up, and resonant vs repetitive control on a grid-tie inverter"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Power loops: a charger with no state machine, MPPT, and an inverter's sine

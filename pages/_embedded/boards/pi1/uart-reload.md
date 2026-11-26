@@ -11,6 +11,9 @@ permalink: /embedded/boards/pi1/uart-reload
 board_parent: pi1
 result: "Unchanged image boots; next build over UART: 921 KB in 6.7 s instead of a card swap"
 tags: [raspberry-pi, arm, freertos, linux, boot]
+description: "The Zero W's FreeRTOS image on a Pi 1 B, pins per revision, then a loader inside the firmware at 1.5 Mbaud"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Same kernel, older board, and no more SD card swaps

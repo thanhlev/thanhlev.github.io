@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/control/plant-models/
 notes_hub: true
 tags: [simulation, control, motor, cpp, testing]
+description: "My act library of plants with the ugly parts switchable (backlash, stiction, delay, heat), and product-sized demos that drive them"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Plant models and fourteen small products

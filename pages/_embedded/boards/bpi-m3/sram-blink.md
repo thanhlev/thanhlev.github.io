@@ -11,6 +11,9 @@ permalink: /embedded/boards/bpi-m3/sram-blink
 board_parent: bpi-m3
 result: "1148-byte program, 4.000 s blink finished in 4.018 s, 0 failed PMIC writes"
 tags: [allwinner, arm, bare-metal, led]
+description: "Bare metal over FEL: the user LEDs hang off the AXP813, so a blink means bringing up the RSB bus by hand"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Blinking an LED that lives on the PMIC, from 1148 bytes in SRAM

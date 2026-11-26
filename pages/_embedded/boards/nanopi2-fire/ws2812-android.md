@@ -11,6 +11,9 @@ permalink: /embedded/boards/nanopi2-fire/ws2812-android
 board_parent: nanopi2-fire
 result: "16 LEDs, every effect smooth, readback 480/480 bytes clean; app APK 33 KB"
 tags: [samsung, arm, android, led]
+description: "FriendlyELEC's Android on a card, a 16-LED ring on the 40-pin header, a root daemon and a 33 KB app built without Android Studio"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A WS2812 ring from Android 7 over spidev, and why it flickered

@@ -11,6 +11,9 @@ permalink: /embedded/control/control-library/model-based
 board_parent: control-library
 result: "Computed torque 0.14 % overshoot from both poses (9.5 % and 1.5 % without gravity); MRAC model error 0.245 -> 0.0011; Smith predictor turns a 6.81 swing into a settled loop while its delay is 0.45-0.60 s of the true 0.50"
 tags: [control, simulation, cpp]
+description: "Three laws that lean on a model, each run with the true model, a wrong one and none: a one-link arm, a first-order plant that isn't what I seeded, and a 0.5 s dead time"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # Computed torque, MRAC, Smith predictor: right, wrong or missing model

@@ -11,6 +11,9 @@ permalink: /embedded/control/control-library/rls-identification
 board_parent: control-library
 result: "Servo J to 5.3 % from 12 s of normal motion (datasheet was 10x off); cart-pole Ad to 0.024 %, LQR gain within 0.6 % of the true design"
 tags: [control, simulation, motor, cpp]
+description: "Recursive least squares on a servo axis (physics) and on an unstable cart-pole in closed loop (state-space), and the two ways it lies"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # RLS: finding the inertia the datasheet doesn't know

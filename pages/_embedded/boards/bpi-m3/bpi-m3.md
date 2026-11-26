@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/bpi-m3/
 board_hub: true
 tags: [allwinner, arm, bare-metal, boot, memory, usb]
+description: "An octa-core Allwinner board I drove from the FEL boot ROM: my own code in SRAM, then DRAM, then a CLI for every peripheral"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Banana Pi M3

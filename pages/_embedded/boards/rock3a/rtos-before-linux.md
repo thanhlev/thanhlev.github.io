@@ -11,6 +11,9 @@ permalink: /embedded/boards/rock3a/rtos-before-linux
 board_parent: rock3a
 result: "FreeRTOS takes core 3 at 0.154 s (was 3.90 s); Linux prompt at 2.49 s; 1 kHz loop worst lateness 0.25 µs"
 tags: [rockchip, arm, freertos, bare-metal, linux, boot]
+description: "Boot from SPI NOR, a 1 kHz loop through DDR training, a patched BL31 handover, and cutting the image the BootROM reads"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # FreeRTOS on core 3 at 154 ms, Linux on the other three

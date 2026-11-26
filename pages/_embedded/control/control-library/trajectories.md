@@ -11,6 +11,9 @@ permalink: /embedded/control/control-library/trajectories
 board_parent: control-library
 result: "Same gains, exact feedforward: peak tracking error 0.301 m with D on the measurement, 0.0015 m with D on the error; at 24 m/s pure pursuit is inside 10 cm after 1.30 s, Stanley after 2.32 s"
 tags: [control, simulation, cpp]
+description: "An S-curve move with exact feedforward that still missed by 0.30 m, the one PID setting that fixed it, and pure pursuit against Stanley at 6, 12 and 24 m/s"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # Motion profile and feedforward: 0.30 m to 1.5 mm by moving the derivative

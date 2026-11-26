@@ -13,6 +13,9 @@ result: "Hang fixed (417 s clean past the 186 s mark); L2 on: YuNet 42 → 27 ms
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 4
 tags: [samsung, arm, edge-ai, memory, camera]
+description: "A watchdog black box that pointed at one bad MJPEG frame, then the PL310 L2 that hung the board until I read the vendor's sources"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A hang at 186 s, and a 512 KB L2 cache nobody had switched on

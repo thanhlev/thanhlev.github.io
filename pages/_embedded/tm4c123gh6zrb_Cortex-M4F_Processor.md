@@ -9,6 +9,9 @@ index: 10
 publish: true
 tags: [arm, mcu, bare-metal]
 permalink: /embedded/tm4c123gh6zrb-cortex-m4f-processor   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "My reading notes on the Cortex-M4F core: modes, stacks, registers, memory model, exceptions"
+date: 2023-01-12
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

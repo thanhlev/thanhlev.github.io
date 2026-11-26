@@ -11,6 +11,9 @@ permalink: /embedded/boards/pi-zero/usb-boot
 board_parent: pi-zero
 result: "Power-on to my code in ~10 s over USB; stable firmware fails, 1.20241126 works"
 tags: [raspberry-pi, arm, linux, boot, usb]
+description: "My 1381-byte kernel over USB with rpiboot, a firmware regression, and a lsusb that breaks the next boot"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Booting a Pi Zero W with no SD card

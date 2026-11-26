@@ -11,6 +11,9 @@ permalink: /embedded/control/control-library/robust-control
 board_parent: control-library
 result: "Plant gain 3× off: ADRC IAE 0.171 vs PID 0.275; ADRC holds to 6× and limit-cycles at 7×; sliding mode lands within 0.33 % over a 5× range; super-twisting's biggest output step 0.35 vs 12 for the sign law"
 tags: [control, simulation, cpp]
+description: "ADRC against a PID while the plant gain drifts from 0.5× to 8× of what both were told, sliding mode over a 5× range, and super-twisting against two sliding-mode baselines"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # ADRC and sliding mode on a plant 3× off, and the 7× where ADRC breaks

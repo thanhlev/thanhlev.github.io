@@ -11,6 +11,9 @@ permalink: /embedded/control/dc-motor-drive/commissioning
 board_parent: dc-motor-drive
 result: "Six motor parameters identified within 0.7 % (datasheet off by 17-50 %) in 4.9 s; origin exact to the count, final error 0.7 counts"
 tags: [motor, control, simulation, cpp]
+description: "Enable, identify R, L, Kt, J, b and friction on the drive itself, re-tune from that, home on a hard stop, then move 30 rad"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Commissioning from a datasheet that's 50 % wrong

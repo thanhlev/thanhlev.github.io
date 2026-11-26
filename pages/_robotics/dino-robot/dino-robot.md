@@ -10,6 +10,9 @@ publish: true
 permalink: /robotics/dino-robot/
 board_hub: true
 tags: [robotics, servo, simulation, cad]
+description: "My own biped dinosaur on the servos I already own: drawn in CadQuery, loads checked on the model, walking in MuJoCo"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Dino robot

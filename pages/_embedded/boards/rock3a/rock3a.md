@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/rock3a/
 board_hub: true
 tags: [rockchip, arm, npu, freertos, bare-metal, linux]
+description: "Bare metal, FreeRTOS on four A55s, a 154 ms boot, NPU without Linux, Android 14, a hidden RISC-V MCU"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Radxa ROCK 3A (RK3568)

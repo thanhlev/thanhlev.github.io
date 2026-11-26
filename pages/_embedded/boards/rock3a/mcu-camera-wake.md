@@ -13,6 +13,9 @@ result: "DRAM in self-refresh 74.0 % of a 1 s camera cycle with all four A55s po
 edge_ai: true
 edge_ai_index: 11
 tags: [rockchip, risc-v, edge-ai, npu, freertos, bare-metal]
+description: "The RK3568's own RV32 core drives the USB webcam, RGA2 and the NPU by itself, keeps DRAM in self-refresh between frames and powers an A55 back on only when it finds a face"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # The RISC-V MCU keeps watch: webcam to NPU with all four A55s off

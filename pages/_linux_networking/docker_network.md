@@ -9,6 +9,9 @@ index: 6
 publish: true
 tags: [networking, linux, docker]
 permalink: /linux_networking/docker-network   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "What each Docker network driver builds out of bridges, veth, macvlan and iptables"
+date: 2023-02-04
+last_modified_at: 2026-11-27
 ---
 
 # Docker Networking: what each driver really builds

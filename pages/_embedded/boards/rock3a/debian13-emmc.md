@@ -11,6 +11,9 @@ permalink: /embedded/boards/rock3a/debian13-emmc
 board_parent: rock3a
 result: "Debian 13 on cores 0-2 with FreeRTOS on core 3 the whole time; eMMC written in 60.4 s (rockusb: 16 % in 8 min); YOLOv5s on the NPU 50.5 ms, RTOS 1 kHz task max 4.7 µs late"
 tags: [rockchip, arm, linux, freertos, npu, bare-metal]
+description: "Mainline Linux 7.2.11 and a self-built Debian 13 on cores 0-2, booted by U-Boot from the NOR chain that already gave core 3 to FreeRTOS, and Rockchip's NPU driver ported to it"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # My own Debian 13 on the eMMC, next to FreeRTOS on core 3

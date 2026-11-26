@@ -10,6 +10,9 @@ publish: true
 tags: [linux, docker, tools]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 permalink: /linux_general/docker-snippet   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Các lệnh Docker thường dùng"
+date: 2023-02-08
+last_modified_at: 2026-11-27
 ---
 
 # Docker Snippet

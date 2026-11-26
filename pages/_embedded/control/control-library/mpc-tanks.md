@@ -11,6 +11,9 @@ permalink: /embedded/control/control-library/mpc-tanks
 board_parent: control-library
 result: "Integrated error 14.4 m·s with MPC vs 54.8 and 58.9 for the two PIs; tank one peaks at 0.458 m of 0.50, 19 ADMM iterations worst case"
 tags: [control, simulation, cpp]
+description: "A 7 kB constrained MPC against two tuned PIs on a two-tank rig where the pump can't run backwards and the tank overflows for real"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # MPC on two tanks: closer to the overflow than a PI dares

@@ -11,6 +11,9 @@ permalink: /embedded/boards/pi1/webcam-and-ring
 board_parent: pi1
 result: "Stream restarts ~9/min -> 0 (2117 runs in 121 s, 0 errors); ring lit again with 0xF8"
 tags: [raspberry-pi, arm, camera, led]
+description: "A DWC2 isochronous bug I first blamed on the faces, and a WS2812 bit that was 160 ns too short"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # The webcam that kept dropping, and the LED ring that went dark

@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/nanopi2-fire/
 board_hub: true
 tags: [samsung, arm, freertos, bare-metal, boot, camera]
+description: "An old quad Cortex-A9 board from FriendlyELEC, taken from the boot ROM up to a FreeRTOS webcam that finds faces"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # NanoPi 2 Fire

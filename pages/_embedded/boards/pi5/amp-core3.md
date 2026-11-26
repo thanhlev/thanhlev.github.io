@@ -11,6 +11,9 @@ permalink: /embedded/boards/pi5/amp-core3
 board_parent: pi5
 result: "QEMU: 13/13 selftest checks pass, start 54.8 ms, stop 28.3 ms; not run on the board yet"
 tags: [raspberry-pi, arm, freertos, linux, simulation]
+description: "A kernel module that unplugs one A76, starts FreeRTOS on it with PSCI, and gives it back, with no reboot"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Lending core 3 of a running Linux to FreeRTOS (QEMU so far)

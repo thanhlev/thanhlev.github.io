@@ -11,6 +11,9 @@ permalink: /embedded/boards/d1-nezha/wifi-xr829
 board_parent: d1-nezha
 result: "WPA2 + DHCP + TCP on mainline 6.8; PC -> board 2.1 -> 22 Mbit/s once the console went quiet"
 tags: [allwinner, risc-v, bare-metal, linux, boot, wifi]
+description: "A community port of the vendor driver, booted through my own FEL chain, five bugs before a ping, then one printk"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # XR829 Wi-Fi on mainline Linux 6.8: 2 to 22 Mbit/s once the console went quiet

@@ -11,6 +11,9 @@ permalink: /embedded/boards/nanopi2-fire/webcam-to-hdmi
 board_parent: nanopi2-fire
 result: "MJPEG to HDMI for 1.5–1.7 % CPU (was 66.5 %); reset to picture in 3.4 s"
 tags: [samsung, arm, freertos, boot, usb, camera]
+description: "EHCI isochronous by hand, then the copy moved to DMA and the decode to the JPEG unit; the card boots straight into it"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # USB webcam to HDMI on FreeRTOS, from 66 % CPU to 1.5 %

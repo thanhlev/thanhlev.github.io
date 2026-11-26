@@ -10,6 +10,9 @@ publish: true
 permalink: /robotics/humanoid/
 board_hub: true
 tags: [robotics, kinematics, simulation, servo]
+description: "My thesis robot, brought back as a model: my own C++ kinematics library, MuJoCo physics, an online walker with IMU feedback"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Humanoid (17-servo biped)

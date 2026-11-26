@@ -11,6 +11,9 @@ permalink: /embedded/boards/d1-nezha/freertos-c906
 board_parent: d1-nezha
 result: "Task switch 19907 -> 734 cycles with the D-cache on; tick wake-up 0.50 µs; idle wfi ~2.5 C cooler"
 tags: [allwinner, risc-v, freertos, bare-metal, memory]
+description: "The generic RISC-V port in M-mode, loaded over FEL; two things only the measurements caught"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # FreeRTOS on the C906: a 27x cache surprise, and an RTOS that never slept

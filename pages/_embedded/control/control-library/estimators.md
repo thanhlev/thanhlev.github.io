@@ -11,6 +11,9 @@ permalink: /embedded/control/control-library/estimators
 board_parent: control-library
 result: "Complementary filter 0.0151 -> 0.0044 rad RMS with tau 0.1 s instead of 0.5 s (gyro alone 1.039, accelerometer alone 0.046); EKF and UKF find an unmeasured pendulum rate in 0.08 s and hold it to 0.0051 rad/s RMS, identically"
 tags: [control, simulation, cpp]
+description: "A complementary filter on a biased gyro and a noisy accelerometer, swept over its one parameter, and an EKF and a UKF finding a pendulum rate they never measure"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # Complementary filter at 0.0044 rad, once I stopped trusting the gyro for 0.5 s

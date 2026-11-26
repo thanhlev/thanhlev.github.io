@@ -10,6 +10,9 @@ publish: true
 tags: [linux, tools]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 permalink: /linux_general/programming-snippets   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Các snippet code hay dùng"
+date: 2023-02-21
+last_modified_at: 2026-11-27
 ---
 
 # Programming Language snippets

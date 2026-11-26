@@ -13,6 +13,9 @@ result: "Qwen2.5-0.5B at 4.15 tok/s; L2 driver lifts 4-thread memory read from 4
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 6
 tags: [qualcomm, arm, edge-ai, memory]
+description: "No NPU, no GPU compute: LLM, speech and vision on four Krait cores, then a new driver so the L2 follows the CPU"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Local AI on a 2013 phone chip, and an L2 cache stuck at 576 MHz

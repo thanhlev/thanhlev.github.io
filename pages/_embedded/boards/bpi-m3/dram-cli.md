@@ -11,6 +11,9 @@ permalink: /embedded/boards/bpi-m3/dram-cli
 board_parent: bpi-m3
 result: "eMMC, Wi-Fi, BT, PHY and IR all answer; 64 MiB memtest, 0 errors"
 tags: [allwinner, arm, bare-metal, memory, wifi]
+description: "29 KiB of my own code in DRAM, loaded over FEL: one command per block, from the PMIC to the IR receiver"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A bare-metal command line for every peripheral on the board

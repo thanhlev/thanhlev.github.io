@@ -9,6 +9,9 @@ index: 1
 publish: true
 tags: [linux, memory, testing]
 permalink: /linux_general/partition-table   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "MBR byte by byte on a test image, then GPT, the tools, and the layouts I use on boards"
+date: 2023-01-10
+last_modified_at: 2026-11-27
 ---
 
 # Disk Partition Tables: MBR & GPT

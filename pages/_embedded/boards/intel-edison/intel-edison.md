@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/intel-edison/
 board_hub: true
 tags: [intel, x86, boot, usb]
+description: "Two Atom cores at 500 MHz on a Mini Breakout: its boot measured from the USB side, then Zephyr run from RAM"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Intel Edison

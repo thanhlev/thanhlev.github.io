@@ -11,6 +11,9 @@ permalink: /embedded/boards/rock3a/ws2812-riscv-mcu
 board_parent: rock3a
 result: "16/16 LEDs lit from the MCU at 50.00 frames/s, 523-525 µs per frame on the wire; no blue at 3.3 V"
 tags: [rockchip, arm, freertos, linux, android, risc-v]
+description: "FreeRTOS on the SoC's own RV32 core under Android 14, SPI3 as the LED wire, and four faults between me and a lit ring"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A WS2812 ring from the RK3568's RISC-V MCU, with Android on all four A55s

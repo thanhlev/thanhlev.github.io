@@ -13,6 +13,9 @@ result: "718 webcam frames in 30 s (25.09 fps at 320x240), faces in 703, JPEG to
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 0
 tags: [rockchip, arm, edge-ai, npu, freertos, bare-metal]
+description: "Driving the RK3568 NPU, my own xHCI/UVC host and a JPEG decoder from FreeRTOS, RetinaFace boxes on HDMI"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Webcam to NPU to HDMI, with no Linux on the chip

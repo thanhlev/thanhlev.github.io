@@ -11,6 +11,9 @@ permalink: /embedded/boards/pi1/mjpeg-videocore
 board_parent: pi1
 result: "352x288 JPEG to I420 in ~5 ms on the GPU; 597 webcam frames, 0 decode errors"
 tags: [raspberry-pi, arm, gpu, freertos, bare-metal, linux]
+description: "VCHIQ and MMAL rewritten from Linux's staging driver so a FreeRTOS app can use the GPU firmware's MJPEG decoder"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Asking the VideoCore to decode my JPEGs, from bare metal

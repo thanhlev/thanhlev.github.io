@@ -11,6 +11,9 @@ permalink: /embedded/control/dc-motor-drive/load-and-current
 board_parent: dc-motor-drive
 result: "Observer: dip 2.49 -> 1.51 rad/s, recovery 18.0 -> 3.1 ms, at 2.8x the current noise; magnitude-only sensing holds the 3 A limit with 2.2x the speed noise"
 tags: [motor, control, sensor, simulation, cpp]
+description: "What a disturbance observer buys (and costs) under a 0.02 N·m step, and running the inner loop on a magnitude-only current signal"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A load step, a disturbance observer, and a current sensor with no sign

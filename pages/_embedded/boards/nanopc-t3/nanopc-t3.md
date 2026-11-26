@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/nanopc-t3/
 board_hub: true
 tags: [samsung, arm, boot]
+description: "The 64-bit big sister of my NanoPi 2 Fire. Everything so far comes from the schematic, U-Boot and the boot files, not the board"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # NanoPC-T3

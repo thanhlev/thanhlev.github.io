@@ -11,6 +11,9 @@ permalink: /embedded/boards/pi-zero/rtos-usb-shell
 board_parent: pi-zero
 result: "Shell on /dev/ttyACM0 ~0.8 s after hand-over; 11.3 µs per task switch; tick jitter 999-1001 µs"
 tags: [raspberry-pi, arm, freertos, boot, usb]
+description: "FreeRTOS + TinyUSB CDC on the Zero W with no UART cable; three bugs found one bit at a time"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A FreeRTOS shell on the boot cable, and the USB device that left after 170 ms

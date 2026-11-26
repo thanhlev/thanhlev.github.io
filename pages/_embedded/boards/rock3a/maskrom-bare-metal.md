@@ -11,6 +11,9 @@ permalink: /embedded/boards/rock3a/maskrom-bare-metal
 board_parent: rock3a
 result: "8 GB DRAM seen from my own code; download to Maskrom again in ~3 s, 0 hands"
 tags: [rockchip, arm, bare-metal, boot, memory]
+description: "sram_hello and dram_hello loaded over Maskrom, and a reset that drops the chip straight back into Maskrom"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Bare metal from the BootROM, no hands on the board

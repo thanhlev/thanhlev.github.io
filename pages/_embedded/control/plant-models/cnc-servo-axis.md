@@ -11,6 +11,9 @@ permalink: /embedded/control/plant-models/cnc-servo-axis
 board_parent: plant-models
 result: "Peak following error 264 mm -> 248 µm -> 26.5 µm -> 1.48 µm; gain margin -18.1 dB without the notch, +6.3 dB with it"
 tags: [motor, servo, control, simulation, cpp]
+description: "A ballscrew axis with a 220 Hz resonance: profile, prewarped notch, feedforward, and a gain margin that was negative all along"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # CNC axis: 264 mm to 1.5 µm with the same gains

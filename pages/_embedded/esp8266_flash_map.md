@@ -9,6 +9,9 @@ index: 7
 publish: true
 tags: [esp8266, boot, memory, mcu]
 permalink: /embedded/esp8266-flash-map   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Where the ESP8266 keeps what on its external SPI flash: bootloader, partition table, NVS, OTA slots"
+date: 2023-01-11
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

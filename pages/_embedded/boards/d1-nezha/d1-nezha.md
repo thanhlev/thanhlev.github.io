@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/d1-nezha/
 board_hub: true
 tags: [allwinner, risc-v, freertos, bare-metal, boot, camera]
+description: "A single-core RISC-V board: my own boot0 on SPI-NAND, FreeRTOS, a webcam on HDMI with no Linux, XR829 Wi-Fi on mainline"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Allwinner D1-H Nezha (RISC-V C906)

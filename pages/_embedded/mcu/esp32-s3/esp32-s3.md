@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/mcu/esp32-s3/
 notes_hub: true
 tags: [esp32, usb, camera, freertos]
+description: "Small ESP-IDF apps on my ESP32-S3 devkits: a fake USB webcam that plays video files, and every TinyUSB device demo checked from the PC side"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # ESP32-S3 demo apps

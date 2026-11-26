@@ -9,6 +9,9 @@ index: 1
 publish: true
 tags: [networking, linux]
 permalink: /linux_networking/linux-table-chain   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Where a packet goes inside the kernel: the five chains, the tables in each, conntrack, iptables and nftables"
+date: 2023-02-21
+last_modified_at: 2026-11-27
 ---
 
 # Linux Packet Filtering

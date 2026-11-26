@@ -11,6 +11,9 @@ permalink: /embedded/boards/nanopi2-fire/usbboot-dram
 board_parent: nanopi2-fire
 result: "1 GiB DDR3 at 800 MHz, 0 errors over two full passes"
 tags: [samsung, arm, bare-metal, boot, memory, usb]
+description: "From an empty SD slot to my own code in SRAM, then the DRAM controller brought up by hand"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # USB boot ROM, a UART running 9 % slow, and 1 GiB of DDR3

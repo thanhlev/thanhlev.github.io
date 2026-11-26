@@ -10,6 +10,9 @@ publish: true
 tags: [linux, testing]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
 permalink: /linux_general/udev   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Ghi chép udev của mình: rule nằm đâu, thứ tự, ví dụ tắt touchpad khi cắm chuột, udevadm test"
+date: 2023-02-15
+last_modified_at: 2026-11-27
 ---
 
 # Udev Quick Reference

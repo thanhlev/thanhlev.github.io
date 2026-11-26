@@ -13,6 +13,9 @@ result: "NPU INT8 32x one CPU thread on YAMNet (1.44 vs 45.68 ms), 6.5x four thr
 edge_ai: true   # listed on /edge-ai/
 edge_ai_index: 10
 tags: [rockchip, arm, npu, edge-ai, linux, android]
+description: "Radxa's RKNN guide for the ROCK 3A read side by side with my own runs: converting with rknn-toolkit2, calling librknnrt from C, NPU against CPU and GPU, and the traps the docs don't mention"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # The RK3568 NPU: what Radxa's docs say, and what it did on my boards

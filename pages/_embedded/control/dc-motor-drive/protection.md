@@ -11,6 +11,9 @@ permalink: /embedded/control/dc-motor-drive/protection
 board_parent: dc-motor-drive
 result: "Fault in 1.05 ms; winding peaks at 95.6 °C under a 110 °C limit with nothing tripped; dead encoder to back-EMF speed in 5.0 ms, still running"
 tags: [motor, control, simulation, cpp, testing]
+description: "Three failure scenarios on the simulated drive: fault and reset through CiA 402, I²t derating on a pump, back-EMF fallback when the encoder line dies"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # When it goes wrong: chip fault, a hot winding, a dead encoder

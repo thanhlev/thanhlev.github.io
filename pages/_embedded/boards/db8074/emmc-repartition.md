@@ -11,6 +11,9 @@ permalink: /embedded/boards/db8074/emmc-repartition
 board_parent: db8074
 result: "/data from 864 MiB to 10 GiB, 15 bytes changed per GPT copy"
 tags: [qualcomm, arm, android, memory]
+description: "Android said storage was full. /data was 864 MiB. The fix needed a new GPT, and fastboot was the wrong tool"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Re-partitioning the eMMC without the command that would have erased it

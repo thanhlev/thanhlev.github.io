@@ -11,6 +11,9 @@ permalink: /embedded/control/plant-models/pendulum-swingup
 board_parent: plant-models
 result: "Upright 1.98 s after release, settled to 0.000 rad / 0.000 m, peak force 4.63 N of 12 N, zero rail hits; LQR alone never gets closer than 2.77 rad"
 tags: [control, simulation, robotics, cpp]
+description: "Why one controller isn't enough, and the catch condition people forget (the rate, not the angle)"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Cart-pole swing-up: energy pump, then a hand-over to LQR

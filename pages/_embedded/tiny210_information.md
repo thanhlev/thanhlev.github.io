@@ -9,6 +9,9 @@ index: 8
 publish: true
 tags: [samsung, arm, boot, memory]
 permalink: /embedded/tiny210-information   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "My reading notes from the S5PV210 manual: address map, iROM/BL1/BL2 boot, boot block layout"
+date: 2023-01-12
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

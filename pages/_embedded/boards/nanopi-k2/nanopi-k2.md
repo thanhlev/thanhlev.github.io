@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/nanopi-k2/
 board_hub: true
 tags: [arm, linux]
+description: "A quad A53 TV-box chip on a Pi-sized board. I've read it, fixed my demos against mainline, and not run them on hardware yet"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # NanoPi K2

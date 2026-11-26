@@ -11,6 +11,9 @@ permalink: /embedded/control/plant-models/printer-hotend
 board_parent: plant-models
 result: "PI from one step test: 5.1 % overshoot, 0.10 K steady error, 2.1 K dip when the fan starts; runaway caught in 20.0 s at 231 °C"
 tags: [control, simulation, sensor, cpp]
+description: "Fit gain, time constant and dead time from one step, compute a PI from them, and catch thermal runaway by watching response, not temperature"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # 3D printer hotend: one step test, SIMC gains, and the thermistor that falls out

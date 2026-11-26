@@ -11,6 +11,9 @@ permalink: /embedded/boards/intel-edison/zephyr-from-ram
 board_parent: intel-edison
 result: "Hello World 0.05 s after go; thread period 0.6038 s vs 0.6039 s expected"
 tags: [intel, x86, boot, memory]
+description: "An out-of-tree Zephyr board for an x86 module, loaded into RAM by the old U-Boot, nothing written to eMMC"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Zephyr on the Edison: a 15 KB image over YMODEM and one wrong reg-shift

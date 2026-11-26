@@ -9,6 +9,9 @@ index: 3
 publish: true
 tags: [linux, tools]
 permalink: /linux_general/tmux-cheatsheet   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "The tmux commands I actually use: sessions, panes, send-keys scripting, my tmux.conf"
+date: 2023-02-14
+last_modified_at: 2026-11-27
 ---
 
 # Tmux Quick Reference

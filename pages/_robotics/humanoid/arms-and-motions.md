@@ -11,6 +11,9 @@ permalink: /robotics/humanoid/arms-and-motions
 board_parent: humanoid
 result: "In MuJoCo wave, squat, dance and kick stay up (tilt ≤ 2°); the jump is 0.08 s in the air with the CoM 2.1 mm up"
 tags: [robotics, kinematics, simulation, servo]
+description: "Two 3-joint AX-12A arms, five whole-body motions on the same balance, and servo speed limits that keep the jump honest"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Arms, a dance and a 2 mm jump
