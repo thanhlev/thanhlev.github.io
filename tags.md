@@ -12,6 +12,8 @@ Lists every published post of the four collections that has `tags:` (written by
 from the tags actually used, with counts; clicking one filters the cards in the browser (no plugin,
 GitHub Pages safe mode). The choice is kept in the URL hash (#freertos, #esp32+usb) so a tag link
 from a post header opens the page already filtered. Several tags = posts that have ALL of them.
+2026-11-27: cards show the 640 px thumbnail assets/images/card/<path>.jpg made by ~/new_ws/social/blog/tools/card_thumbs.py
+(full-size covers made the home page load 9.5 MB of pictures) · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
 {% endcomment %}
 {% assign all = site.embedded | concat: site.robotics | concat: site.linux_networking | concat: site.linux_general | where_exp: "i", "i.publish != false" | where_exp: "i", "i.tags.size > 0" %}
 {% assign taglist = "" %}{% for p in all %}{% for t in p.tags %}{% assign taglist = taglist | append: t | append: "|" %}{% endfor %}{% endfor %}
@@ -38,7 +40,7 @@ from a post header opens the page already filtered. Several tags = posts that ha
 <div class="boardgrid" id="tg-grid">
 {% for p in all %}
   <a class="bcard" href="{{ p.url | relative_url }}" data-tags="{{ p.tags | join: ' ' }}">
-    <div class="ph" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | prepend: '/' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | replace_first: 'assets/images/', 'assets/images/card/' | replace: '.png', '.jpg' | replace: '.jpeg', '.jpg' | replace: '.webp', '.jpg' | prepend: '/' | relative_url }}')"></div>
     <span class="chip">{% if p.board_parent %}{{ p.board_parent | replace: "-", " " | upcase }}{% else %}{{ p.collection | replace: "_", " " | upcase }}{% endif %}</span>
     <h3>{{ p.title | remove: "[🔥] - " }}</h3>
     <p>{{ p.short_description }}</p>

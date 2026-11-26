@@ -5,11 +5,13 @@ Card = picture, chip (board or robot the story belongs to), title, short descrip
 2026-11-22: added for Edge AI (user «Thêm 1 page là "Edge AI" cùng cấp với Board, … có thể trùng với
 các category khác»): stories keep their home under their board/robot hub and are only listed here,
 selected by front matter `edge_ai: true`, ordered by `edge_ai_index`. Plain Liquid (safe mode).
+2026-11-27: cards show the 640 px thumbnail assets/images/card/<path>.jpg made by ~/new_ws/social/blog/tools/card_thumbs.py
+(full-size covers made the home page load 9.5 MB of pictures) · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
 {% endcomment %}
 <div class="boardgrid">
 {% for p in include.items %}
   <a class="bcard" href="{{ p.url | relative_url }}">
-    <div class="ph" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | prepend: '/' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | replace_first: 'assets/images/', 'assets/images/card/' | replace: '.png', '.jpg' | replace: '.jpeg', '.jpg' | replace: '.webp', '.jpg' | prepend: '/' | relative_url }}')"></div>
     {% if p.board_parent %}<span class="chip">{{ p.board_parent | replace: "-", " " | upcase }}</span>{% endif %}
     <h3>{{ p.title | remove: "[🔥] - " }}</h3>
     <p>{{ p.short_description }}</p>

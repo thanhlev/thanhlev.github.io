@@ -3,11 +3,13 @@ note_rows.html - one "datasheet row" per post of a collection (home page, style 
 Usage: {% include note_rows.html items=some_sorted_array %}
 Row = thumbnail · title + short_description · latest_release · status. Drafts (publish: false)
 must already be filtered out by the caller. Plain Liquid only (GitHub Pages safe mode).
+2026-11-27: cards show the 640 px thumbnail assets/images/card/<path>.jpg made by ~/new_ws/social/blog/tools/card_thumbs.py
+(full-size covers made the home page load 9.5 MB of pictures) · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
 {% endcomment %}
 <div class="rows">
 {% for p in include.items %}
   <a class="rowi" href="{{ p.url | relative_url }}">
-    <span class="th" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | prepend: '/' | relative_url }}')"></span>
+    <span class="th" style="background-image:url('{{ p.picture | default: 'assets/images/apple-touch-icon.png' | replace_first: 'assets/images/', 'assets/images/card/' | replace: '.png', '.jpg' | replace: '.jpeg', '.jpg' | replace: '.webp', '.jpg' | prepend: '/' | relative_url }}')"></span>
     <span><b>{{ p.title | remove: "[🔥] - " }}</b><span class="d">{{ p.short_description }}</span></span>
     <span class="u">{{ p.latest_release }}</span>
     <span class="s">{% if p.status %}<span class="status-badge status-{{ p.status | downcase | replace: ' ', '-' }}">{{ p.status }}</span>{% endif %}</span>
