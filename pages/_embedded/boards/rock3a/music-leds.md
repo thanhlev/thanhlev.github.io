@@ -663,8 +663,6 @@ checks used a camera; the evidence is the DO readback and the wire bytes, which 
 about how a 3.3 V-fed LED renders blue. The 32-LED chain hasn't been through the 500-run verify that the single
 module passed. And the whole thing runs on Radxa's Debian 11; the port to my own Debian 13 image isn't done.
 
-I've filmed the demo with a camera; a cut of it will come to this page later.
-
 ## What I'd do next
 
 A photodiode on one LED and the jack into a logic analyser, with the 120 BPM click, would turn the 0.12 ms into

@@ -18,10 +18,12 @@ Blender render) -> §4 contact cards -> tools strip. Text from the 2026-11-22 pr
 the control library and counts them; ROCK 3A card gets the MCU / Debian / music stories; new §3 "Beyond the
 boards" (4 cards, numbers from the hubs' stories' result: lines); dino card with its MuJoCo numbers;
 more tools. · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+2026-11-27: "Board stories" counts only stories under /boards/ (as index.md does; control/MCU stories were
+counted too: 63 vs 43); row "Boards on the bench" -> "Board pages" (3 hubs were never on the bench).
 {% endcomment %}
 {% assign live_emb = site.embedded | where_exp: "i", "i.publish != false" %}
 {% assign hubs = live_emb | where: "board_hub", true %}
-{% assign stories = live_emb | where_exp: "i", "i.board_parent != nil" %}
+{% assign stories = live_emb | where_exp: "i", "i.board_parent != nil" | where_exp: "i", "i.path contains '/boards/'" %}
 {% assign robots = site.robotics | where: "board_hub", true %}
 {% assign ai_a = site.embedded | where: "edge_ai", true %}{% assign ai_b = site.robotics | where: "edge_ai", true %}{% assign ai_all = ai_a | concat: ai_b %}
 
@@ -37,7 +39,7 @@ more tools. · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
     <table>
       <tr><td>Day job</td><td>Embedded / firmware engineer</td></tr>
       <tr><td>Employer</td><td>Amazon</td></tr>
-      <tr><td>Boards on the bench</td><td>{{ hubs.size }}</td></tr>
+      <tr><td>Board pages</td><td>{{ hubs.size }}</td></tr>
       <tr><td>Board stories (STAR)</td><td>{{ stories.size }}</td></tr>
       <tr><td>Robots</td><td>{{ robots.size }}</td></tr>
       <tr><td>AI on the board</td><td>{{ ai_all.size }} stories</td></tr>

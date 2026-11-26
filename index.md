@@ -13,6 +13,7 @@ Drafts: `publish: false` is skipped everywhere; a missing `publish` counts as pu
 STAR sub-pages (`board_parent`) are listed on their hub only. Anchors #boards,
 #embedded-systems, #linux-networking, #linux-general are linked from the top bar
 and from older posts: keep them.
+2026-11-27: spec row "Boards on the bench" -> "Board pages" (3 hubs were never on the bench).
 {% endcomment %}
 {% assign live_emb = site.embedded | where_exp: "i", "i.publish != false" %}
 {% assign hubs = live_emb | where: "board_hub", true | sort: "index" %}
@@ -31,7 +32,7 @@ and from older posts: keep them.
   </div>
   <div class="spec">
     <table>
-      <tr><td>Boards on the bench</td><td>{{ hubs.size }}</td></tr>
+      <tr><td>Board pages</td><td>{{ hubs.size }}</td></tr>
       <tr><td>Board stories (STAR)</td><td>{{ stories.size }}</td></tr>
       <tr><td>Linux notes</td><td>{{ net.size | plus: gen.size }}</td></tr>
       <tr><td>Power-on to RTOS (ROCK 3A)</td><td>154 ms</td></tr>

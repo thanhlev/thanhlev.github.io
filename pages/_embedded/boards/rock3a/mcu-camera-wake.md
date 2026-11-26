@@ -40,7 +40,7 @@ my code counts `mcycle` against a timer: under my Debian boot it was the 100 MHz
 measured), under Android the 150 MHz one (148.5 MHz measured). Every number in this post is at
 100 MHz; I never switched the mux up to 150 or 200 MHz for these runs. I'd already used it for
 something small, a WS2812 LED ring under Android
-([FreeRTOS on RISC-V MCU, Linux on full 4 Cortex-A55 cores]({{ '/embedded/boards/rock3a/ws2812-riscv-mcu' | relative_url }})),
+([A WS2812 ring from the RK3568's RISC-V MCU, with Android on all four A55s]({{ '/embedded/boards/rock3a/ws2812-riscv-mcu' | relative_url }})),
 where it ran FreeRTOS at 148.5 MHz and talked to Android through the mailbox. That post is
 the base for this one; I won't repeat the boot of the MCU here beyond what matters.
 

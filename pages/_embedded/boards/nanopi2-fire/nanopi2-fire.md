@@ -43,8 +43,8 @@ The USB boot ROM let me load my own code into SRAM, and from there I brought up 
 hand. On top of that went FreeRTOS with a shell, first one kernel per core and then one kernel on all
 four. Then the USB webcam on HDMI, with the copy on DMA and the decode on the JPEG unit, and a microSD
 card that boots straight into it. On a different card I ran FriendlyELEC's Android 7.1.2 and drove a
-WS2812 ring from it. The last big piece was person and face detection on the webcam stream, which went
-from 642 ms a run down to 27 ms.
+WS2812 ring from it. The last big piece was detection on the webcam stream: person detection went from 642 ms a
+run to 87 ms, and faces from 85 ms to 27 ms.
 
 ## The write-ups
 

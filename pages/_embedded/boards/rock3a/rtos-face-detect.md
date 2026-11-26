@@ -9,7 +9,7 @@ index: 13
 publish: true
 permalink: /embedded/boards/rock3a/rtos-face-detect
 board_parent: rock3a
-result: "718 webcam frames in 30 s (25.09 fps), faces in 703, JPEG to screen 28.0 ms avg, 0 dropped"
+result: "718 webcam frames in 30 s (25.09 fps at 320x240), faces in 703, JPEG to screen 28.0 ms avg, 0 dropped"
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 0
 tags: [rockchip, arm, edge-ai, npu, freertos, bare-metal]
@@ -103,7 +103,7 @@ rock3a> face cam 9601 320 30
 | Boxes on HDMI from still pictures | 602 frames in 10.04 s = **59.97 fps**, 0 missed flips |
 | USB bring-up | port up in 409 to 429 ms (400 ms are deliberate waits), hub + 2 cameras enumerated in 743 ms |
 | MJPEG stream | **30.04 fps**, 259 good frames in 10 s, 80 000 isochronous TDs = exactly 8000/s, 0 errors |
-| Live webcam to HDMI | 718 frames in 30 s, **25.09 fps** (30.05 fps in an earlier run with nobody in view), faces in 703 of 718, 0 dropped |
+| Live webcam to HDMI | 718 frames in 30 s, **25.09 fps** at 320x240 (30.05 fps in an earlier run with nobody in view), faces in 703 of 718, 0 dropped |
 | JPEG to page flip | **28.0 ms** average (19.6 to 36.4) |
 
 The framebuffer read back over the UART matches the PC's render of the same JPEG in every pixel that

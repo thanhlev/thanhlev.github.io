@@ -4,7 +4,7 @@ title: "The board that names the music it plays, now on Linux"
 short_description: "The YAMNet genre demo moved from Android 14 to Debian 11: a PipeWire monitor tap, one C program and the same INT8 model on the RK3568 NPU"
 status: "Done"
 picture: "assets/images/boards/rock3a/r3a_music_cover.jpg"   # 2026-11-23 cover, story_cover.py
-latest_release: "2026-11-24: the build in more depth (front end, INT8 input, tap); next: the LED post"
+latest_release: "2026-11-24: the build in more depth (front end, INT8 input, tap)"
 index: 17
 publish: true
 permalink: /embedded/boards/rock3a/music-linux
