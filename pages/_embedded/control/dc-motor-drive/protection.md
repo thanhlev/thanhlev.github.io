@@ -18,9 +18,10 @@ tags: [motor, control, simulation, cpp, testing]
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
 
 ![DC motor drive cover, "When it goes wrong": 1.05 ms to Fault, fault, heat, dead encoder]({{ '/assets/images/control/dc-motor-drive/protection_cover.jpg' | relative_url }})
-*The result first: Fault in 1.05 ms, the winding peaks at 95.6 °C under a 110 °C limit, and a dead encoder hands over to back-EMF speed in 5.0 ms.*
+*Fault in 1.05 ms, the winding peaks at 95.6 °C under a 110 °C limit, and a dead encoder hands over to back-EMF speed in 5.0 ms.*
 
 ![Encoder line dies at 1.0 s: true shaft, the frozen encoder estimate, the back-EMF estimate]({{ '/assets/images/control/dc-motor-drive/dcm_encoderloss_switch.png' | relative_url }})
+*The encoder line dies at 1.0 s; the back-EMF estimate takes over in 5.0 ms and the drive keeps running.*
 
 ## Situation
 
@@ -56,6 +57,7 @@ to come up idle (torque mode, 0 A), not resume the old move, then stop the shaft
 take the new position command.
 
 ![The winding temperature on four pump cycles, and the I²t estimate on top of it]({{ '/assets/images/control/dc-motor-drive/dcm_thermal_temperature.png' | relative_url }})
+*Four pump cycles: the winding peaks at 95.6 °C under the 110 °C limit, with the I²t estimate drawn on top.*
 
 Thermal: from 80 °C the protection derates the current limit towards 1.5 A at 110 °C. The speed loop then runs
 into its limit and the pump just gets slower, which is the right thing to give up:

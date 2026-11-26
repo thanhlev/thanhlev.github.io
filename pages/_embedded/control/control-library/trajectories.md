@@ -18,7 +18,7 @@ tags: [control, simulation, cpp]
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
 ![Control library cover, "0.30 m to 1.5 mm": 1.5 mm (was 301), by moving the derivative]({{ '/assets/images/control/control-library/trajectories_cover.jpg' | relative_url }})
-*The result first: the same PID and the same feedforward follow a 1 m S-curve to 1.5 mm instead of 301 mm, once the derivative looks at the error. In simulation.*
+*The same PID and the same feedforward follow a 1 m S-curve to 1.5 mm instead of 301 mm, once the derivative looks at the error. In simulation.*
 
 ![Tracking error of the 1 m move for four configurations, log scale]({{ '/assets/images/control/control-library/adv_profile_feedforward.png' | relative_url }})
 *Red: derivative on the measurement, with and without feedforward, both near 0.3 m. Solid blue: derivative on the error plus feedforward, 0.0015 m at worst.*

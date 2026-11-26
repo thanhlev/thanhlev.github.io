@@ -19,7 +19,7 @@ tags: [samsung, arm, bare-metal, boot, memory, usb]
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
 ![NanoPi 2 Fire cover, "USB boot to 1 GiB DDR3": 0 errors over 2 × 1 GiB, and a UART 9 % slow]({{ '/assets/images/boards/nanopi2-fire/np2f_dram_cover.jpg' | relative_url }})
-*The whole story in one picture: 1 GiB of DDR3 at 800 MHz with 0 errors over two full passes, brought up in 68 ms by a 12 KB program in SRAM.*
+*1 GiB of DDR3 at 800 MHz with 0 errors over two full passes, brought up in 68 ms by a 12 KB program in SRAM.*
 
 1. TOC
 {:toc}
@@ -163,7 +163,7 @@ bit work" test, not a bandwidth number. The DLL lock value also moves a bit from
 
 ![dram_init memtest on the UART](/assets/images/boards/nanopi2-fire/np2f_dram_memtest.png)
 
-(That screenshot is a later run of the same test, with the coloured shell I added afterwards.)
+*The `dram_init` memtest on the UART, from a later run of the same test with the coloured shell I added afterwards.*
 
 ## What I'd do next
 

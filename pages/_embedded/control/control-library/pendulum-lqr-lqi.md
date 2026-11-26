@@ -18,9 +18,10 @@ tags: [control, simulation, cpp]
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
 ![Control library cover, "Five laws, one pendulum": 0.0008 rad, LQI, LQR parks 0.36 rad off]({{ '/assets/images/control/control-library/pendulum_lqr_lqi_cover.jpg' | relative_url }})
-*The result first: under the same 3 N torque LQR parks 0.36 rad off, LQI ends at 0.0008 rad with 6.1 N.*
+*Under the same 3 N torque LQR parks 0.36 rad off, LQI ends at 0.0008 rad with 6.1 N.*
 
 ![Angle after a constant 3 N torque at t = 1 s: PID, LQR, LQI]({{ '/assets/images/control/control-library/pendulum_lqr_lqi.png' | relative_url }})
+*The angle after a constant 3 N torque at t = 1 s: LQR parks 0.36 rad off, LQI comes back to 0.0008 rad.*
 
 ## Situation
 

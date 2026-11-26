@@ -19,7 +19,7 @@ tags: [samsung, arm, freertos, boot, usb, camera]
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
 ![NanoPi 2 Fire cover, "Webcam to HDMI": 1.5 % CPU (was 66.5), copy on DMA, decode on the JPU]({{ '/assets/images/boards/nanopi2-fire/np2f_uvc_cover.jpg' | relative_url }})
-*The whole story in one picture: MJPEG to HDMI for 1.5 % of one core instead of 66.5 %, and 3.4 s from reset to the webcam on screen.*
+*MJPEG to HDMI for 1.5 % of one core instead of 66.5 %, and 3.4 s from reset to the webcam on screen.*
 
 1. TOC
 {:toc}
@@ -108,6 +108,7 @@ fill. And `uvc ae manual <ms>` locks the exposure: at 30 ms I get exactly 30.00 
 *How the board asks the webcam about exposure: one USB control transfer per question, the real answer bytes, then SET_CUR to manual at 300 × 100 µs. Result on the board: 150 frames in 5 s = 30.00. (Vietnamese on-screen text, no sound.)*
 
 ![The OSD font, Vietnamese by default](/assets/images/boards/nanopi2-fire/np2f_osd.png)
+*The OSD font my FreeRTOS draws with, Vietnamese by default.*
 
 For the microSD image I wrote `mksdimg.py`: loader at sector 1 where the ROM looks, then app, clip and
 settings. No card reader on the PC that day, so the running board wrote its own card. First attempt

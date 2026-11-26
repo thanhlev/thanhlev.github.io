@@ -21,7 +21,7 @@ tags: [robotics, simulation, edge-ai, gpu]
 [Back to the Microduck hub](/robotics/microduck/)
 
 ![Microduck cover, "How the duck learns": 16 reward terms, no reference motion]({{ '/assets/images/robotics/microduck/duck_learn_cover.jpg' | relative_url }})
-*The result first: the walk comes from 16 reward terms and no reference motion. Read from the code, not trained yet; the duck is my MuJoCo render of the open model (Microduck · Pollen Robotics · CC BY-NC-SA 4.0).*
+*The walk comes from 16 reward terms and no reference motion. Read from the code, not trained yet; the duck is my MuJoCo render of the open model (Microduck · Pollen Robotics · CC BY-NC-SA 4.0).*
 
 1. TOC
 {:toc}

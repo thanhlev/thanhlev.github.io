@@ -18,9 +18,10 @@ tags: [raspberry-pi, arm, freertos, linux, simulation]
 [Back to the Pi 5 hub]({{ '/embedded/boards/pi5/' | relative_url }}) · QEMU runs 2026-10-30, board run not done
 
 ![Raspberry Pi 5 cover, "Core 3 lent to FreeRTOS": 13 / 13 checks, and given back, no reboot]({{ '/assets/images/boards/pi5/pi5_amp_cover.jpg' | relative_url }})
-*The whole story in one picture: 13 of 13 checks pass on QEMU, core 3 starts in 54.8 ms and comes back in 28.3 ms. Not run on the board yet.*
+*13 of 13 checks pass on QEMU, core 3 starts in 54.8 ms and comes back in 28.3 ms. Not run on the board yet.*
 
 ![Who runs where: cores 0-2 Linux, core 3 FreeRTOS]({{ '/assets/images/boards/pi5/pi5_amp_arch.png' | relative_url }})
+*Cores 0 to 2 run Linux, core 3 runs FreeRTOS; in QEMU core 3 starts in 54.8 ms and comes back in 28.3 ms.*
 
 ## Situation
 

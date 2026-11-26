@@ -18,9 +18,10 @@ tags: [control, simulation, motor, cpp]
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
 ![Control library cover, "RLS finds the inertia": 5.3 % error on J, the datasheet was 10× off]({{ '/assets/images/control/control-library/rls_identification_cover.jpg' | relative_url }})
-*The result first: RLS finds the servo inertia to 5.3 % from 12 s of ordinary motion, where the datasheet was 10× off.*
+*RLS finds the servo inertia to 5.3 % from 12 s of ordinary motion, where the datasheet was 10× off.*
 
 ![The inertia estimate leaving the datasheet value behind in about two seconds]({{ '/assets/images/control/control-library/rls_motor_inertia.png' | relative_url }})
+*The inertia estimate leaves the datasheet value behind in about two seconds and ends within 5.3 % of the true J.*
 
 ## Situation
 
@@ -84,6 +85,7 @@ fit lands within 0.6 % of the true design. Both identifiability failures are mea
 one-way motion (3200 % on the split) and no dither (336 %, unstable design).
 
 ![Feedforward from the drawing, from the identified model and from the truth]({{ '/assets/images/control/control-library/rls_motor_tracking.png' | relative_url }})
+*Feedforward built from the drawing, from the identified model (J within 5.3 %) and from the truth.*
 
 ## What I'd do next
 

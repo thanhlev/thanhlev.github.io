@@ -21,6 +21,7 @@ tags: [robotics, kinematics]
 *600 of 600 gait targets within 1 µm (was 166 mm median), and the whole walk solves in 0.28 s.*
 
 ![One IK solve on the left leg in MuJoCo]({{ '/assets/images/robotics/humanoid/sim_ik.gif' | relative_url }})
+*One IK solve on the left leg in MuJoCo; all 600 gait targets now land within 1 µm.*
 
 ## Situation
 

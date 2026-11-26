@@ -18,12 +18,12 @@ tags: [rockchip, arm, freertos, linux, android, risc-v]
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![ROCK 3A cover, "LEDs from the RV32 MCU": 50.00 frames/s, Android keeps all four A55s]({{ '/assets/images/boards/rock3a/r3a_ws_cover.jpg' | relative_url }})
-*The whole story in one picture: 16 of 16 LEDs lit by the SoC's RV32 core at 50.00 frames/s while Android keeps all four A55s.*
+*16 of 16 LEDs lit by the SoC's RV32 core at 50.00 frames/s while Android keeps all four A55s.*
 
 ![The ring lit: all red, all green, rainbow]({{ '/assets/images/boards/rock3a/ws2812_ring_lit.png' | relative_url }})
 
-Crops from the webcam on my desk: fill red (16/16), fill green (16/16), and the rainbow effect, where the
-blue part stays dark.
+*Crops from the webcam on my desk: fill red (16/16), fill green (16/16), and the rainbow effect, where the
+blue part stays dark.*
 
 ## Situation
 
@@ -41,7 +41,7 @@ MCU, for effects that follow a song.
 
 ![My NanoPi LED app, unchanged]({{ '/assets/images/boards/rock3a/ws_app_breathe.png' | relative_url }})
 
-The phone app I'd written for the NanoPi 2 Fire, pointed at the ROCK 3A: 16 LEDs on a ring, "thở" (breathe) selected, the effect list filtered to 80 of 109. It talks to `r3a_ringd` on the board without knowing an MCU is behind it.
+*The phone app I'd written for the NanoPi 2 Fire, pointed at the ROCK 3A: 16 LEDs on a ring, "thở" (breathe) selected, the effect list filtered to 80 of 109. It talks to `r3a_ringd` on the board without knowing an MCU is behind it.*
 
 ## Action
 
@@ -60,7 +60,7 @@ flat. It turned out to be four separate faults stacked on top of each other, and
 
 ![Saleae: DI flat while the MCU sends frames]({{ '/assets/images/boards/rock3a/ws_saleae_flat.png' | relative_url }})
 
-The capture that ended my "dead LEDs" theory (Saleae Logic Pro 8, 2026-11-20 22:08): the MCU sends solid-red frames at 50 fps and DI (blue) sits at 0 V, even with pin 19 held high. Fault 1, an open wire.
+*The capture that ended my "dead LEDs" theory (Saleae Logic Pro 8, 2026-11-20 22:08): the MCU sends solid-red frames at 50 fps and DI (blue) sits at 0 V, even with pin 19 held high. Fault 1, an open wire.*
 
 | # | What I saw | Cause | Fix |
 |---|---|---|---|
@@ -75,7 +75,7 @@ WS2812B GRB, 24 bits per LED.
 
 ![One byte at a time to find the colour order]({{ '/assets/images/boards/rock3a/ws_byte_order.jpg' | relative_url }})
 
-Lighting one byte at a time: byte 0 gives LED 0 green, byte 1 LED 0 red, and so on. That's how I settled GRB rather than guessing.
+*Lighting one byte at a time: byte 0 gives LED 0 green, byte 1 LED 0 red, and so on. That's how I settled GRB rather than guessing.*
 
 One trap I set for myself along the way: loading a new MCU image with `mcuctl load` while `r3a_ringd`
 was running left the MCU unable to start any image, the vendor one included, until a full board reboot.
@@ -100,7 +100,7 @@ period, 384 bits = 16 pixels.
 
 ![The working waveform at 6 MHz]({{ '/assets/images/boards/rock3a/ws_final_wave.png' | relative_url }})
 
-The waveform once it worked: SPI3 at 6 MHz, 0 = 333 ns high, 1 = 833 ns, bit period 1333 ns, DI swinging to 3.4 V with the resistor bypassed and the ring on 3.3 V.
+*The waveform once it worked: SPI3 at 6 MHz, 0 = 333 ns high, 1 = 833 ns, bit period 1333 ns, DI swinging to 3.4 V with the resistor bypassed and the ring on 3.3 V.*
 
 The 78 effects render on the MCU in 259 µs per frame on average, worst 990 µs (bounce). The NanoPi app
 works unchanged: tapping "thở" (breathe) made the MCU report effect 2 running. The music hook carries

@@ -19,7 +19,7 @@ tags: [qualcomm, arm, gpu, linux, display]
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
 ![DragonBoard 8074 cover, "HDMI, then a GPU hang": 0 GPU hangs in 41 min, the shrinker, not the GPU]({{ '/assets/images/boards/db8074/d8k_hdmi_cover.jpg' | relative_url }})
-*The result first: HDMI at 1080p60 on kernel 6.6, and 0 GPU hangs in 41 minutes after 5 to 10 a minute.*
+*HDMI at 1080p60 on kernel 6.6, and 0 GPU hangs in 41 minutes after 5 to 10 a minute.*
 
 1. TOC
 {:toc}
@@ -86,6 +86,7 @@ still pointing at the old address. The next allocation gets the same range, and 
 memory.
 
 ![Why the Adreno 330 hung once zram swapped, and where patch 0100 cuts the chain](/assets/images/boards/db8074/d8k_l19_evict.png)
+*How zram swapping led to the Adreno 330 hang, and the point where patch 0100 breaks the chain.*
 
 Patch 0100 keeps carveout buffers that are in use off the shrinker's list. A second small one adds
 `/sys/kernel/debug/dri/0/vram` so I can see the carveout.

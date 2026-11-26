@@ -18,9 +18,10 @@ tags: [raspberry-pi, arm, linux, boot, usb]
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-12
 
 ![Pi Zero W cover, "Booting with no SD card": ~10 s to my code, a 1381-byte kernel over USB]({{ '/assets/images/boards/pi-zero/pz_usbboot_cover.jpg' | relative_url }})
-*The whole story in one picture: about 10 s from power-on to my 1381-byte kernel over USB, with no SD card in the board.*
+*About 10 s from power-on to my 1381-byte kernel over USB, with no SD card in the board.*
 
 ![BCM2835 boot sources: SD first, then USB device mode]({{ '/assets/images/boards/pi-zero/pz_boot_sources.png' | relative_url }})
+*The BCM2835 tries the SD card first, then USB device mode; with no card in, my code runs about 10 s after power-on.*
 
 ## Situation
 

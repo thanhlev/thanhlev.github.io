@@ -18,7 +18,7 @@ tags: [control, simulation, cpp]
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
 ![Control library cover, "What a model buys": 0.14 % overshoot, and what a wrong one costs]({{ '/assets/images/control/control-library/model_based_cover.jpg' | relative_url }})
-*The result first: with the exact model, computed torque gives 0.14 % overshoot from 0.2 rad and from 1.4 rad alike. In simulation.*
+*With the exact model, computed torque gives 0.14 % overshoot from 0.2 rad and from 1.4 rad alike. In simulation.*
 
 ![Normalised arm angle for three models and two starting angles]({{ '/assets/images/control/control-library/adv_computed_torque.png' | relative_url }})
 *Blue, exact model: both starts on one curve. Red, no gravity in the model: two different shapes, and 0.019 rad of sag at the end.*

@@ -18,9 +18,10 @@ tags: [allwinner, risc-v, bare-metal, linux, boot, wifi]
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-10-01
 
 ![D1 Nezha cover, "XR829 Wi-Fi": 22 Mbit/s (was 2.1), the culprit was the console]({{ '/assets/images/boards/d1-nezha/d1_wifi_cover.jpg' | relative_url }})
-*The result first: TCP from the PC to the board went from 2.1 to 22 Mbit/s once the console went quiet. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
+*TCP from the PC to the board went from 2.1 to 22 Mbit/s once the console went quiet. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![TCP from the PC to the board, before and after]({{ '/assets/images/boards/d1-nezha/d1_wifi_mbit.png' | relative_url }})
+*TCP from the PC to the board: 2.1 Mbit/s before, 22 once the console went quiet.*
 
 ## Situation
 

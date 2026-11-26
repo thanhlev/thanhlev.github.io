@@ -20,13 +20,13 @@ tags: [rockchip, arm, edge-ai, android]
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![ROCK 3A cover, "Offline voice assistant": 11.8 s to the first word, Vietnamese, network unplugged]({{ '/assets/images/boards/rock3a/assist_cover.jpg' | relative_url }})
-*The result first: 11.8 s from my question to the first spoken word, everything on the board, network unplugged.*
+*11.8 s from my question to the first spoken word, everything on the board, network unplugged.*
 
 ![The assistant's HDMI screen mid-answer]({{ '/assets/images/boards/rock3a/offline_assistant.png' | relative_url }})
 
-The board's HDMI output during one of the runs. The question was "who was the first person to set foot
+*The board's HDMI output during one of the runs. The question was "who was the first person to set foot
 on the Moon", the speech model heard "Mặt Trăng" (Moon) as "mặt trắng" (white face), and the LLM
-politely repeated the question back as its answer. The red badge says "no network".
+politely repeated the question back as its answer. The red badge says "no network".*
 
 ## Situation
 
@@ -42,7 +42,7 @@ honestly how good it is.
 
 ![The assistant chain on the board]({{ '/assets/images/boards/rock3a/assist_chain.png' | relative_url }})
 
-The whole chain on the four A55s, with the medians: question WAV in, ASR in `r3a_speech` (1009 ms), `llama-server` on `127.0.0.1` with Qwen3-0.6B (first token 1624 ms, 4.0 tok/s), Piper TTS sentence by sentence (RTF 1.45), then the app on HDMI. First voice 11.8 s after the question.
+*The whole chain on the four A55s, with the medians: question WAV in, ASR in `r3a_speech` (1009 ms), `llama-server` on `127.0.0.1` with Qwen3-0.6B (first token 1624 ms, 4.0 tok/s), Piper TTS sentence by sentence (RTF 1.45), then the app on HDMI. First voice 11.8 s after the question.*
 
 ## Action
 
@@ -89,11 +89,11 @@ times slower.
 
 ![17 times 23 is 339, says Qwen3]({{ '/assets/images/boards/rock3a/assist_math.png' | relative_url }})
 
-One of the wrong ones, as it showed on HDMI: "17 times 23 is how much?" and Qwen3-0.6B answers 339 (it's 391), first voice after 10.9 s.
+*One of the wrong ones, as it showed on HDMI: "17 times 23 is how much?" and Qwen3-0.6B answers 339 (it's 391), first voice after 10.9 s.*
 
 ![The ROCK 3A uses a Snapdragon 660, says Qwen3]({{ '/assets/images/boards/rock3a/assist_chip.png' | relative_url }})
 
-And my favourite: asked (typed this time) which chip the ROCK 3A uses, it said a Snapdragon 660. Fast though: 4.4 tok/s, voice at 9.5 s.
+*And my favourite: asked (typed this time) which chip the ROCK 3A uses, it said a Snapdragon 660. Fast though: 4.4 tok/s, voice at 9.5 s.*
 
 
 ## What I'd do next

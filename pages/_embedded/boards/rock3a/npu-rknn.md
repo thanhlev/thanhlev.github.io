@@ -20,7 +20,7 @@ tags: [rockchip, arm, npu, edge-ai, linux, android]
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![ROCK 3A cover, "The RK3568 NPU": 32 × one CPU thread, Radxa's docs vs my runs]({{ '/assets/images/boards/rock3a/npu_rknn_cover.jpg' | relative_url }})
-*The result first: YAMNet runs 32 times faster on the NPU than on one A55 thread (1.44 against 45.68 ms), about 0.49 TOPS of real work.*
+*YAMNet runs 32 times faster on the NPU than on one A55 thread (1.44 against 45.68 ms), about 0.49 TOPS of real work.*
 
 ## Situation
 
@@ -36,9 +36,9 @@ the pages it pulls in, and then put my own runs next to it.
 
 ![Convert on the PC, run on the board]({{ '/assets/images/boards/rock3a/npu_flow.png' | relative_url }})
 
-The flow both of us follow. Left: rknn-toolkit2 turns a model into a `.rknn` file on an x86 PC. Right:
+*The flow both of us follow. Left: rknn-toolkit2 turns a model into a `.rknn` file on an x86 PC. Right:
 the board loads it through the runtime and the `rknpu` driver. The blocks with a yellow marker are the
-path I took: the C API, not the Python one the docs use, and an NPU clock I pin before I measure anything.
+path I took: the C API, not the Python one the docs use, and an NPU clock I pin before I measure anything.*
 
 ## Task
 
@@ -230,8 +230,8 @@ GPU was the slowest option I tried, slower even than one CPU thread.
 
 ![ms per inference on NPU, CPU and GPU]({{ '/assets/images/boards/rock3a/npu_ms_models.png' | relative_url }})
 
-Log scale, so every bar fits: YAMNet from 1.44 ms on the NPU to 45.68 ms on one thread; Real-ESRGAN from
-219.2 ms as INT8 to 3.5 s on the GPU; YOLOv5s only gains 1.3 ms from the 1 GHz overclock.
+*Log scale, so every bar fits: YAMNet from 1.44 ms on the NPU to 45.68 ms on one thread; Real-ESRGAN from
+219.2 ms as INT8 to 3.5 s on the GPU; YOLOv5s only gains 1.3 ms from the 1 GHz overclock.*
 
 | Model, one run | NPU | CPU | GPU (Mali-G52) | Where |
 |---|---|---|---|---|

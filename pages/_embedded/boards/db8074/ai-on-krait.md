@@ -21,7 +21,7 @@ tags: [qualcomm, arm, edge-ai, memory]
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
 ![DragonBoard 8074 cover, "AI on a 2013 phone chip": 4.15 tok/s, Qwen2.5-0.5B, no NPU, no GPU compute]({{ '/assets/images/boards/db8074/d8k_ai_cover.jpg' | relative_url }})
-*The result first: Qwen2.5-0.5B at 4.15 tok/s on four Krait cores, and my L2 driver taking memory reads from 4433 to 7084 MB/s.*
+*Qwen2.5-0.5B at 4.15 tok/s on four Krait cores, and my L2 driver taking memory reads from 4433 to 7084 MB/s.*
 
 1. TOC
 {:toc}
@@ -63,6 +63,7 @@ echo 576000 > /sys/module/qcom_krait_l2/parameters/l2_max_khz
 
 
 ![Run 1 vs run 2 for every model, and LLM tokens/s by thread count](/assets/images/boards/db8074/d8k_l27_ai.png)
+*Run 1 against run 2 for every model, and the LLM's tokens/s by thread count (Qwen2.5-0.5B: 4.15 tok/s).*
 
 ## Result
 

@@ -18,9 +18,10 @@ tags: [motor, control, sensor, simulation, cpp]
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
 
 ![DC motor drive cover, "A load step, observed": 3.1 ms recovery (was 18.0), and a sensor that reads |i|]({{ '/assets/images/control/dc-motor-drive/load_and_current_cover.jpg' | relative_url }})
-*The result first: with the observer the load step costs 1.51 rad/s instead of 2.49 and recovers in 3.1 ms instead of 18.0.*
+*With the observer the load step costs 1.51 rad/s instead of 2.49 and recovers in 3.1 ms instead of 18.0.*
 
 ![Speed at 200 rad/s when 0.02 N·m lands at 0.5 s: PI alone vs with the observer]({{ '/assets/images/control/dc-motor-drive/dcm_loadstep_speed.png' | relative_url }})
+*Speed at 200 rad/s when 0.02 N·m lands at 0.5 s: the dip goes from 2.49 to 1.51 rad/s with the observer.*
 
 ## Situation
 
@@ -65,9 +66,9 @@ $ ./build/dc_motor/dc-motor currentsense
 
 ![The reversal: true current in both drives and what the magnitude-only sensor reports]({{ '/assets/images/control/dc-motor-drive/dcm_currentsense_reversal.png' | relative_url }})
 
-The magnitude sensor (orange in the plot) reads a positive 3 A while the true current is −3 A, and it
+*The magnitude sensor (orange in the plot) reads a positive 3 A while the true current is −3 A, and it
 still holds the limit, because the limit only needs |i|. What you lose is the current loop's stiffness:
-voltage mode is about twice as noisy at speed.
+voltage mode is about twice as noisy at speed.*
 
 ## Result
 

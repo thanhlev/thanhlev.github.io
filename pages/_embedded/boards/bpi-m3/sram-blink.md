@@ -19,7 +19,7 @@ tags: [allwinner, arm, bare-metal, led]
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
 
 ![Banana Pi M3 cover, "Blink via the PMIC": 1148 bytes in SRAM, the LEDs hang off the AXP813]({{ '/assets/images/boards/bpi-m3/bpim3_blink_cover.jpg' | relative_url }})
-*The result first: 1148 bytes in SRAM, 12 PMIC writes and none failed, a 4.000 s blink done in 4.018 s.*
+*1148 bytes in SRAM, 12 PMIC writes and none failed, a 4.000 s blink done in 4.018 s.*
 
 1. TOC
 {:toc}

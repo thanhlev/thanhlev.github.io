@@ -19,7 +19,7 @@ tags: [samsung, arm, freertos, linux]
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
 ![NanoPi 2 Fire cover, "FreeRTOS on four A9s": 3.93 × on four cores, AMP, SMP and one CPSIE]({{ '/assets/images/boards/nanopi2-fire/np2f_smp_cover.jpg' | relative_url }})
-*The whole story in one picture: 3.93 times the speed on four cores under one SMP kernel, and a 10 µs AMP round trip. The board is my 3D model of it.*
+*3.93 times the speed on four cores under one SMP kernel, and a 10 µs AMP round trip. The board is my 3D model of it.*
 
 1. TOC
 {:toc}
@@ -60,7 +60,7 @@ checks:
 
 ![rtos_cli test: 11 passed, 0 failed](/assets/images/boards/nanopi2-fire/np2f_rtos_test.png)
 
-(The prompt in that screenshot is from a later, coloured version of the shell.)
+*My shell's self-test: 11 passed, 0 failed. The prompt is from a later, coloured version of the shell.*
 
 ### AMP: waking core 1
 

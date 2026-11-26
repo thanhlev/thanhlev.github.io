@@ -19,9 +19,10 @@ permalink: /embedded/rock3a-porting-yocto   # 2026-11-27: = the URL the collecti
 [Back to the ROCK 3A hub](/embedded/boards/rock3a/)
 
 ![ROCK 3A cover, "Yocto on the Rock-3A": 2 images boot on the board, a new machine for meta-radxa]({{ '/assets/images/rock3a/rock3a_yocto_cover.jpg' | relative_url }})
-*The result first: both meta-radxa images, console and desktop, boot on the board from my port, sent upstream as PR #29.*
+*Both meta-radxa images, console and desktop, boot on the board from my port, sent upstream as PR #29.*
 
 ![The Radxa ROCK 3A on my desk](../../../assets/images/rock3a/rock-3a.jpg)
+*My ROCK 3A on the desk, the board both meta-radxa images boot on.*
 
 ## Situation
 

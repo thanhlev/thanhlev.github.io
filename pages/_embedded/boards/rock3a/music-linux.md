@@ -20,7 +20,7 @@ tags: [rockchip, arm, npu, edge-ai, linux]
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![ROCK 3A cover, "Naming music, on Linux": 1.44 ms per window, same YAMNet INT8, off Android]({{ '/assets/images/boards/rock3a/r3a_music_cover.jpg' | relative_url }})
-*The whole story in one picture: 1.44 ms per YAMNet window on the NPU under Debian, 32 times one CPU thread and faster than the 2.05 ms I had on Android.*
+*1.44 ms per YAMNet window on the NPU under Debian, 32 times one CPU thread and faster than the 2.05 ms I had on Android.*
 
 ## Situation
 
@@ -37,8 +37,8 @@ timing was the NPU and how much was Android. So I wanted the same thing on plain
 
 ![The Android chain above, the Linux chain below]({{ '/assets/images/boards/rock3a/music_linux_chain.png' | relative_url }})
 
-Top row: what I had on Android, with the 39.5 ms the loopback takes before my app even sees a block.
-Bottom row: the Linux version from this post, six boxes and only one of them is my own program.
+*Top row: what I had on Android, with the 39.5 ms the loopback takes before my app even sees a block.
+Bottom row: the Linux version from this post, six boxes and only one of them is my own program.*
 
 ## Task
 
@@ -122,7 +122,7 @@ When I wrote it for Android I compared it with a NumPy port of Google's feature 
 number of frames, and a maximum difference of 1.1·10⁻³ in the log values. Here's the end of one frame:
 
 ```c
-/* yamnet_tap.c, fe_frame() (lines 99-104) */
+/* fe_frame(): magnitudes, mel bands, log */
 for (int k = 0; k < NBIN; k++) mag[k] = sqrtf(re[k] * re[k] + im[k] * im[k]);
 for (int j = 0; j < NMEL; j++) {
     float s = 0;
@@ -141,7 +141,7 @@ always one contiguous block of memory and the window can be handed over without 
 runs when there are 96 rows and 48 of them are new: 0.975 s of audio every 0.48 s.
 
 ```c
-/* yamnet_tap.c (lines 244-246) */
+/* a window every 48 new rows */
 if (total_rows >= PATCH && since >= PATCH_HOP) {
     since = 0;
     /* contiguous 96 rows ending at `row`: rows [row, row+96) of the doubled buffer hold them in order */
@@ -157,7 +157,7 @@ I quantise the patch myself and hand it over with `pass_through = 1`, which tell
 already in the model's format:
 
 ```c
-/* yamnet_tap.c (lines 248-253) */
+/* quantise the patch to INT8 myself */
 for (int i = 0; i < PATCH * NMEL; i++) {
     float v = roundf(src[i] / ia.scale) + ia.zp;
     q[i] = (int8_t)(v < -128 ? -128 : v > 127 ? 127 : v);
@@ -228,8 +228,8 @@ rock3a$ sudo sh -c 'echo performance > /sys/class/devfreq/fde40000.npu/governor'
 
 ![Milliseconds per YAMNet window, five ways]({{ '/assets/images/boards/rock3a/music_linux_npu_ms.png' | relative_url }})
 
-The same 0.975 s window five ways: 45.68 ms on one CPU thread, 23.93 ms on four, 5.0 ms on the NPU at the
-default governor, 2.05 ms on Android and 1.44 ms on Linux with the NPU pinned at 900 MHz.
+*The same 0.975 s window five ways: 45.68 ms on one CPU thread, 23.93 ms on four, 5.0 ms on the NPU at the
+default governor, 2.05 ms on Android and 1.44 ms on Linux with the NPU pinned at 900 MHz.*
 
 ### The CPU fallback
 

@@ -20,12 +20,12 @@ tags: [rockchip, arm, edge-ai, npu, freertos, bare-metal]
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![ROCK 3A cover, "Webcam → NPU → HDMI": 25.09 fps, no Linux on the chip]({{ '/assets/images/boards/rock3a/rtos_face_cover.jpg' | relative_url }})
-*The whole story in one picture: 25.09 fps from webcam to HDMI, the NPU doing the faces, no Linux on the chip.*
+*25.09 fps from webcam to HDMI, the NPU doing the faces, no Linux on the chip.*
 
 ![What each core does for one frame]({{ '/assets/images/boards/rock3a/rtos_face_cores.png' | relative_url }})
 
-Per-core time for one frame, averaged over the 718 frames of the final run (labels in Vietnamese, from
-my wiki): JPEG decode on core 0, the NPU on core 1, decode of the boxes and drawing on core 2.
+*Per-core time for one frame, averaged over the 718 frames of the final run (labels in Vietnamese, from
+my wiki): JPEG decode on core 0, the NPU on core 1, decode of the boxes and drawing on core 2.*
 
 ## Situation
 
@@ -36,7 +36,7 @@ ships the runtime as a closed `.so` for Linux and Android.
 
 ![NPU stack on Linux vs what the RTOS does itself]({{ '/assets/images/boards/rock3a/face_npu_linux_vs_rtos.png' | relative_url }})
 
-The NPU stack on Debian (left) and what my FreeRTOS has to do itself for each layer (right). The top half happens on every job; the bottom five (regulator, clock, power domain, DDR firewall, IOMMU) are what Linux and TF-A quietly did at boot.
+*The NPU stack on Debian (left) and what my FreeRTOS has to do itself for each layer (right). The top half happens on every job; the bottom five (regulator, clock, power domain, DDR firewall, IOMMU) are what Linux and TF-A quietly did at boot.*
 
 ## Task
 
@@ -67,11 +67,11 @@ RTOS read are byte-identical to what Linux shows in sysfs (43, 699 and 699 bytes
 
 ![Which USB port goes to which controller]({{ '/assets/images/boards/rock3a/face_usb_map.png' | relative_url }})
 
-Measured on Debian first, on 2026-11-01: the webcam's port is on the USB 2.0 side of the xHCI at `0xfd000000`, behind a 4-port hub with the two cameras of the stereo pair (`05a3:9601`, `05a3:9602`). So no SuperSpeed needed.
+*Measured on Debian first, on 2026-11-01: the webcam's port is on the USB 2.0 side of the xHCI at `0xfd000000`, behind a 4-port hub with the two cameras of the stereo pair (`05a3:9601`, `05a3:9602`). So no SuperSpeed needed.*
 
 ![usb on the RTOS: nine steps from Maskrom to descriptors]({{ '/assets/images/boards/rock3a/face_usb_bringup.png' | relative_url }})
 
-The nine steps my `usb` command goes through, measured on the board: SoC + DWC3 up in 409/429 ms (400 ms of it deliberate waits), xHCI reset 3 ms, hub and both cameras enumerated in 743 ms, descriptors identical to Linux's 43 + 699 + 699 bytes.
+*The nine steps my `usb` command goes through, measured on the board: SoC + DWC3 up in 409/429 ms (400 ms of it deliberate waits), xHCI reset 3 ms, hub and both cameras enumerated in 743 ms, descriptors identical to Linux's 43 + 699 + 699 bytes.*
 
 MJPEG frames come over isochronous transfers: one TD per 125 µs microframe, a ring of 128 kept full,
 UVC probe/commit to agree on 640x480 MJPEG, then the payloads glued into frames using the FID/EOF bits.

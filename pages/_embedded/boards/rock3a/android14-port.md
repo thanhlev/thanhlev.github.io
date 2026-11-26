@@ -20,11 +20,11 @@ tags: [rockchip, arm, edge-ai, npu, linux, android]
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![ROCK 3A cover, "Android 14, my own port": 36 s warm reboot, Radxa ships it for the 3C only]({{ '/assets/images/boards/rock3a/r3a_a14_cover.jpg' | relative_url }})
-*The whole story in one picture: Android 14 with GApps on the ROCK 3A, a warm reboot back in 36 s, and YOLOv5s in 34.58 ms on the NPU at 1 GHz.*
+*Android 14 with GApps on the ROCK 3A, a warm reboot back in 36 s, and YOLOv5s in 34.58 ms on the NPU at 1 GHz.*
 
 ![Android 14 home screen on the ROCK 3A]({{ '/assets/images/boards/rock3a/android14_home.png' | relative_url }})
 
-That's a screen capture from the board, a few days later, after I'd given it my own wallpaper.
+*That's a screen capture from the board, a few days later, after I'd given it my own wallpaper.*
 
 ## Situation
 
@@ -39,7 +39,7 @@ from scratch by scripts I keep in git, so I can rebuild it later without remembe
 
 ![The build chain, script by script]({{ '/assets/images/boards/rock3a/a14_build_chain.png' | relative_url }})
 
-The chain the scripts ended up as, with what broke at each step: 1236 projects sorted by `fix_manifest.py`, the 134-byte LFS pointer at 60 %, eight patch files to turn the ROCK 3C product into a ROCK 3A, and the DDR blob swap from v1.23 to v1.26.
+*The chain the scripts ended up as, with what broke at each step: 1236 projects sorted by `fix_manifest.py`, the 134-byte LFS pointer at 60 %, eight patch files to turn the ROCK 3C product into a ROCK 3A, and the DDR blob swap from v1.23 to v1.26.*
 
 ## Action
 
@@ -81,7 +81,7 @@ which fails Android's VINTF check. The MCU now goes through two UIO devices inst
 
 ![Android System: There's an internal problem with your device]({{ '/assets/images/boards/rock3a/a14_devmem_dialog.jpg' | relative_url }})
 
-The dialog every boot greeted me with (HDMI screencap, 7:52 PM on 2026-11-19, before the fix). It's `CONFIG_DEVMEM=y` failing the VINTF check, nothing to do with the hardware.
+*The dialog every boot greeted me with (HDMI screencap, 7:52 PM on 2026-11-19, before the fix). It's `CONFIG_DEVMEM=y` failing the VINTF check, nothing to do with the hardware.*
 
 ```
 ~/$ adb shell 'getprop ro.build.version.security_patch; getprop ro.build.version.release; uname -r'
@@ -102,7 +102,7 @@ blob v1.26.
 
 ![Home screen after the fix, no dialog]({{ '/assets/images/boards/rock3a/a14_no_dialog.jpg' | relative_url }})
 
-First boot with the UIO kernel: home screen at 8:04 PM, no dialog. Boots 2 and 3 (8:11 and 8:13 PM) had no dialog either.
+*First boot with the UIO kernel: home screen at 8:04 PM, no dialog. Boots 2 and 3 (8:11 and 8:13 PM) had no dialog either.*
 
 With the NPU clocked to 1 GHz in the DTS (0.95 V from the chip's bin, 40 °C), YOLOv5s went from
 35.91 to **34.58 ms** and RetinaFace 320 runs in 2.76 ms. On the CPU, llama.cpp with 4 threads runs

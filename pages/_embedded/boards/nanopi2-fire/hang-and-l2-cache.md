@@ -21,7 +21,7 @@ tags: [samsung, arm, edge-ai, memory, camera]
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
 ![NanoPi 2 Fire cover, "A hang, then the L2": 27 ms YuNet (was 42), 512 KB nobody switched on]({{ '/assets/images/boards/nanopi2-fire/np2f_l2_cover.jpg' | relative_url }})
-*The whole story in one picture: 417 s clean past the old 186 s hang, and YuNet down from 42 to 27 ms once the L2 was on. The board is my 3D model of it.*
+*417 s clean past the old 186 s hang, and YuNet down from 42 to 27 ms once the L2 was on. The board is my 3D model of it.*
 
 1. TOC
 {:toc}

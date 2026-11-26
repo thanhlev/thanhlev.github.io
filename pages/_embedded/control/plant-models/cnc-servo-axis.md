@@ -18,9 +18,10 @@ tags: [motor, servo, control, simulation, cpp]
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
 ![Plant models cover, "264 mm to 1.5 µm": 1.48 µm peak error, with the same gains]({{ '/assets/images/control/plant-models/cnc_servo_axis_cover.jpg' | relative_url }})
-*The result first: peak following error from 264 mm down to 1.48 µm with the same gains, in simulation.*
+*Peak following error from 264 mm down to 1.48 µm with the same gains, in simulation.*
 
 ![Following error: profile only (red), plus notch (orange), plus feedforward (blue)]({{ '/assets/images/control/plant-models/cnc_following_error.png' | relative_url }})
+*Following error for the profile only (red), plus the notch (orange) and plus feedforward (blue), which ends at a 1.48 µm peak.*
 
 ## Situation
 

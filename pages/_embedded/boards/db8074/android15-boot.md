@@ -19,7 +19,7 @@ tags: [qualcomm, arm, linux, android, boot, memory]
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
 ![DragonBoard 8074 cover, "Android 15 boots": 66 s, eMMC to home screen, on a board from Android 4.3]({{ '/assets/images/boards/db8074/d8k_a15_cover.jpg' | relative_url }})
-*The result first: Android 15 boots from the eMMC by itself and reaches the home screen in 66 s.*
+*Android 15 boots from the eMMC by itself and reaches the home screen in 66 s.*
 
 1. TOC
 {:toc}
@@ -31,6 +31,7 @@ device tree for it (`qcom-apq8074-dragonboard.dts`), and a community bootloader,
 MSM8974.
 
 ![Launcher3 on the board's own panel, 540 × 960, grabbed with adb screencap](/assets/images/boards/db8074/d8k_l7_launcher.png)
+*Launcher3 on the board's own 540 × 960 panel, grabbed with `adb screencap`.*
 
 ## Task
 

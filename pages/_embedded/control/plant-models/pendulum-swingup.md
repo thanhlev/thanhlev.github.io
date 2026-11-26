@@ -18,9 +18,10 @@ tags: [control, simulation, robotics, cpp]
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
 ![Plant models cover, "Swing-up, then LQR": 1.98 s to upright, one mode switch]({{ '/assets/images/control/plant-models/pendulum_swingup_cover.jpg' | relative_url }})
-*The result first: upright 1.98 s after release with 4.63 N of the 12 N belt; LQR alone never gets closer than 2.77 rad.*
+*Upright 1.98 s after release with 4.63 N of the 12 N belt; LQR alone never gets closer than 2.77 rad.*
 
 ![Pole angle: pumping from hanging, the hand-over at 1.98 s, then LQR holds it]({{ '/assets/images/control/plant-models/swingup_angle.png' | relative_url }})
+*Pole angle: pumping from hanging, the hand-over at 1.98 s, then LQR holds it upright.*
 
 ## Situation
 
@@ -62,9 +63,9 @@ $ ./build/products/pendulum_swingup
 
 ![The same LQR started from hanging: it pushes confidently the wrong way]({{ '/assets/images/control/plant-models/swingup_lqr_alone.png' | relative_url }})
 
-That last line is the LQR alone from hanging. At θ = π the linearised model thinks gravity restores rather
+*That last line is the LQR alone from hanging. At θ = π the linearised model thinks gravity restores rather
 than topples, the feedback sign is effectively inverted, and the controller pushes the pole away from upright
-for the whole run.
+for the whole run.*
 
 ## Result
 

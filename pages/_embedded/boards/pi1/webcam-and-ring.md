@@ -18,9 +18,10 @@ tags: [raspberry-pi, arm, camera, led]
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26 and 2026-10-27
 
 ![Raspberry Pi 1 B cover, "Webcam drops, dark ring": 0 restarts in 121 s, two bugs, one wrong theory]({{ '/assets/images/boards/pi1/pi1_ring_cover.jpg' | relative_url }})
-*The whole story in one picture: from about 9 stream restarts a minute to 0 in 121 s (2117 detector runs), and the ring lit again with 0xF8.*
+*From about 9 stream restarts a minute to 0 in 121 s (2117 detector runs), and the ring lit again with 0xF8.*
 
 ![The FreeRTOS tasks: USB IRQ, watchdog, face, led]({{ '/assets/images/boards/pi1/pi1_tasks.png' | relative_url }})
+*The FreeRTOS tasks: USB IRQ, watchdog, face and led. After the fix the stream ran 121 s with 0 restarts.*
 
 ## Situation
 

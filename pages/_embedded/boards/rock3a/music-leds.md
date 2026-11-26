@@ -119,7 +119,7 @@ The ring daemon needs root for `/dev/spidev3.0`. So the start script opens the r
 the pipeline under `runuser`:
 
 ```sh
-# board/music_ring (line 72)
+# start script: PipeWire capture piped into music_ring
 "pw-record -P stream.capture.sink=true --rate 48000 --channels 2 --format s16 --latency 10ms - \
  | exec '$HERE/bin/music_ring' --dir '$HERE/model' $MR_ARGS" >"$F" 2>"$L"
 ```
@@ -146,7 +146,7 @@ itself and passes it through, because this runtime gives garbage for float input
 are in the [NPU post]({{ '/embedded/boards/rock3a/npu-rknn' | relative_url }})):
 
 ```c
-/* music_ring.c, npu_thread() (lines 282-289) */
+/* npu_thread(): quantise the patch to INT8 */
 for (int i = 0; i < MD_PATCH * MD_NMEL; i++) {          /* q = round(x / scale) + zp, clamped */
 	float v = roundf(src[i] / ia.scale) + ia.zp;
 	q[i] = (int8_t)(v < -128 ? -128 : v > 127 ? 127 : v);
@@ -166,7 +166,7 @@ There's no `userspace` governor on this kernel, so the start script pins the clo
 `max_freq` and puts the old value back on stop:
 
 ```sh
-# board/music_ring (lines 47-48, 64)
+# start script: pin the NPU clock, restore it on stop
 [ -f "$NPUSAVE" ] || cat "$NPU/min_freq" > "$NPUSAVE"
 cat "$NPU/max_freq" > "$NPU/min_freq" 2>/dev/null || true
 ...
@@ -203,7 +203,7 @@ take over a song. A group, though, is a set of related classes, and their scores
 now the sum of its members:
 
 ```c
-/* music_core.c, md_scene_push() (lines 470-478) */
+/* md_scene_push(): a group scores the best of its members */
 float best_member[MG_COUNT];
 for (int g = 0; g < MG_COUNT; g++) best_member[g] = 0;
 for (int k = 0; k < MD_NCLS; k++) {
@@ -225,7 +225,7 @@ meant the speech scene: a dim VU, drum layer off, and a ring that didn't react t
 eight unclaimed windows in a row (about 4 s) fall back to the generic music scene:
 
 ```c
-/* music_core.c, md_scene_push() (lines 500-505) */
+/* md_scene_push(): fall back to the music scene */
 if (win == MG_NONE) {
 	if (++s->none_n >= 8) win = MG_MUSIC;
 } else {
@@ -278,7 +278,7 @@ given audio sample *sounds*, and PipeWire hands me blocks in bursts. The bridge 
 8.89 ms live).
 
 ```c
-/* music_extra.h, mx_clock_push() / mx_clock_at() (lines 298-311) */
+/* mx_clock_push() / mx_clock_at(): sample clock against wall clock */
 c->env[c->n % 200] = read_ns - end_sample * 1000000000LL / MD_RATE;
 c->n++;
 int64_t m = c->env[0];
@@ -298,7 +298,7 @@ The tracker's grid frame is the block *after* the onset block, because the onset
 next block is in, and I had taken the grid block itself. One `- 2` instead of `- 1`:
 
 ```c
-/* music_ring.c, per-block loop (lines 424-425) */
+/* per-block loop: which block the grid belongs to */
 int64_t gblk = (int64_t)g_blocks - 2 + g_beat.lead;
 int64_t target = mx_clock_at(&g_clk, gblk * MD_HOP);
 ```
@@ -315,7 +315,7 @@ reacting late. So the bridge scores its own predictions against the onsets that 
 exponential average 0.3) and only sends while that score is at least 0.5:
 
 ```c
-/* music_ring.c (lines 150, 157-158) */
+/* locked(): send beats only while the grid hits onsets */
 static int locked(void) { return g_beat.conf >= g_conf_min && g_beat.period > 0 && g_hit >= 0.5f; }
 ...
 			if (g_onset_t[k] && llabs(g_onset_t[k] - g_chk[i]) <= 35000000LL) hit = 1;
@@ -350,7 +350,7 @@ ratios of every hit and found that piano "hits" have almost nothing above 6 kHz 
 low end, while real kicks have kick/snare ≥ 0.6. The gates in the code are those measurements:
 
 ```c
-/* music_extra.h, mx_hpss_push() (lines 171-172) */
+/* mx_hpss_push(): the kick and snare gates */
 const float ks = db3[0] / (db3[1] + 1e-20f), sh = db3[1] / (db3[2] + 1e-20f);
 const int gate[3] = {ks >= 0.7f, sh >= 1.0f && sh <= 1000.0f && ks <= 3.0f, sh <= 1000.0f};
 ```
@@ -388,7 +388,7 @@ noise and hits while a crescendo on a piano is harmonic; the builds in my track 
 drop needs a percussive onset within 5 frames:
 
 ```c
-/* music_extra.h, mx_drop (lines 270-279) */
+/* mx_drop: the drop detector */
 const int kick_gone = x->bass_s < 0.3f * x->bass_base;
 if (x->rise_db >= 4 && kick_gone && x->perc_share >= 0.30f) {
 	...
@@ -418,7 +418,7 @@ They are EUPL-1.2, GPL-3.0 and MIT, so I read how each effect behaves and wrote 
 style; no code was copied. Each scene now has its own base effect:
 
 ```c
-/* music_ring.c, kSceneFx (lines 333-339) */
+/* kSceneFx: the base effect of each scene */
 [MG_DRUMS] = "fx_ripple",       /* hits ripple round the ring */
 [MG_ROCK] = "fx_grav",          /* a loud VU with a falling peak */
 [MG_ELECTRONIC] = "fx_bar",     /* a beat-locked wipe */
@@ -443,7 +443,7 @@ seizure. The usual guideline is no more than three flashes a second (WCAG 2.3.1)
 source for that number, so it's a cap I chose, not one I measured. Every full-ring flash goes through one gate:
 
 ```c
-/* audio_fx.h (lines 187-194) */
+/* afxFullFlashOk(): at most three full flashes a second */
 bool afxFullFlashOk(uint32_t now)
 {
     if (g_full_ms && now - g_full_ms < 333) { g_full_refused++; return false; }
@@ -505,7 +505,7 @@ frame lands one bit late. The fix went into my library as an option: start every
 bytes, in the same `ioctl`, so the stray bit is followed by a reset and thrown away.
 
 ```cpp
-// led_strip_port.cpp, SpidevBus transfer (lines 465, 497-499, 510)
+// SpidevBus transfer: reset bytes in front of the data
 size_t lead = m_cfg.lead_reset ? resetBytes() : 0;
 ...
 memset(m_tx, 0, lead);
@@ -569,7 +569,7 @@ one effect over 32 pixels, but two rings side by side invite a split, so the dae
 alone; `mirror` shows the composite on both; `chain` stretches it over all 32.
 
 ```cpp
-// audio_fx.h, afxDraw() output layout (line 469)
+// afxDraw(): what each ring shows in split layout
 else if (g_alayout == 0) c = i < kAfxBands ? base_only[i] : (i < 2 * kAfxBands ? drum_only[i - kAfxBands] : 0);
 ```
 
@@ -592,7 +592,7 @@ order), and the UI draws those. To prove the file really is the wire, `ring mirr
 back into bytes and compares:
 
 ```cpp
-// audio_fx.h, cmdMirror() (line 572)
+// cmdMirror(): decode the sent SPI stream back into bytes
 for (unsigned b = 0; b < 8; b++) v = v << 1 | (__builtin_popcount(sb.stream[i * 8 + b]) >= 4 ? 1u : 0u);
 ```
 

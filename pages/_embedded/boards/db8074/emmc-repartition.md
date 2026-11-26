@@ -19,7 +19,7 @@ tags: [qualcomm, arm, android, memory]
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
 ![DragonBoard 8074 cover, "A new partition table": 10 GiB /data (was 864 MiB), without erasing the eMMC]({{ '/assets/images/boards/db8074/d8k_emmc_cover.jpg' | relative_url }})
-*The result first: /data from 864 MiB to 10 GiB, and only 15 bytes changed in each GPT copy.*
+*/data from 864 MiB to 10 GiB, and only 15 bytes changed in each GPT copy.*
 
 1. TOC
 {:toc}
@@ -86,6 +86,7 @@ expected 0x35ffda00. Entry 20 turned out identical in old and new GPT, so the ex
 was wrong, not the disk. Fixed the number, went on: flash super (100 s), erase userdata, flash boot.
 
 ![The eMMC GPT before and after, to scale](/assets/images/boards/db8074/d8k_l26_gpt.png)
+*The eMMC's GPT before and after, to scale: /data grows from 864 MiB to 10 GiB.*
 
 ## Result
 

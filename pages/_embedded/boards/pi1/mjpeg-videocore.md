@@ -18,9 +18,10 @@ tags: [raspberry-pi, arm, gpu, freertos, bare-metal, linux]
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26
 
 ![Raspberry Pi 1 B cover, "JPEG on the VideoCore": 5.3 ms per decode, asked from bare metal]({{ '/assets/images/boards/pi1/pi1_mjpeg_cover.jpg' | relative_url }})
-*The whole story in one picture: a webcam JPEG decoded on the VideoCore in 5.3 ms from bare metal, 597 frames with 0 decode errors.*
+*A webcam JPEG decoded on the VideoCore in 5.3 ms from bare metal, 597 frames with 0 decode errors.*
 
 ![Inside the BCM2835: the ARM side and the VideoCore side]({{ '/assets/images/boards/pi1/pi1_soc.png' | relative_url }})
+*Inside the BCM2835: the ARM side and the VideoCore side, where a webcam JPEG decodes in about 5 ms.*
 
 ## Situation
 

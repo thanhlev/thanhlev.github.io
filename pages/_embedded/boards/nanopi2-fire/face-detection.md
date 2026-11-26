@@ -21,7 +21,7 @@ tags: [samsung, arm, edge-ai, freertos, bare-metal, camera]
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
 ![NanoPi 2 Fire cover, "Faces on 4 × Cortex-A9": 42 ms per face pass, no NPU, no Linux]({{ '/assets/images/boards/nanopi2-fire/np2f_face_cover.jpg' | relative_url }})
-*The result first: faces in 42 ms per pass on four 2016 Cortex-A9 cores, no NPU and no Linux.*
+*Faces in 42 ms per pass on four 2016 Cortex-A9 cores, no NPU and no Linux.*
 
 1. TOC
 {:toc}
@@ -58,6 +58,7 @@ The checker also found my bug: a crowd photo gave 73 candidate cells and my list
 0.657 box fell out before NMS. 256 slots now.
 
 ![The detect pipeline: webcam, JPU, display task, detector task, boxes back onto the video layer](/assets/images/boards/nanopi2-fire/np2f_detect_pipeline.png)
+*The detect pipeline: webcam, JPU, display task, detector task, and the boxes back on the video layer. Faces end at 42 ms a pass.*
 
 ### First run on the board
 

@@ -16,15 +16,15 @@ tags: [rockchip, arm, linux, freertos, npu, bare-metal]
 # My own Debian 13 on the eMMC, next to FreeRTOS on core 3
 
 ![Debian 13 next to FreeRTOS on the ROCK 3A]({{ '/assets/images/boards/rock3a/rock3a_debian13_cover.jpg' | relative_url }})
-*The result first: Debian 13 on cores 0-2 while FreeRTOS keeps core 3, its 1 kHz task never more than 4.7 µs late.*
+*Debian 13 on cores 0-2 while FreeRTOS keeps core 3, its 1 kHz task never more than 4.7 µs late.*
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![Power-on to a Debian login, core 0 path and core 3 path]({{ '/assets/images/boards/rock3a/debian_boot_chain.png' | relative_url }})
 
-One boot of the finished image. Core 0 walks the top row from the BootROM to Debian; core 3 drops out
+*One boot of the finished image. Core 0 walks the top row from the BootROM to Debian; core 3 drops out
 before the DDR blob runs and never comes back to Linux. If the eMMC has no `extlinux.conf`, U-Boot
-waits in fastboot instead, which is how I write the eMMC in 60 seconds.
+waits in fastboot instead, which is how I write the eMMC in 60 seconds.*
 
 ## Situation
 
@@ -65,9 +65,9 @@ Concretely, done meant all of this, measured on the board:
 
 ![What sits on the NOR, the eMMC and the DRAM]({{ '/assets/images/boards/rock3a/debian_memory_map.png' | relative_url }})
 
-The three storage layers of the finished image (not to scale). The NOR keeps only the boot chain and
+*The three storage layers of the finished image (not to scale). The NOR keeps only the boot chain and
 U-Boot now; the kernel moved to the eMMC. In DRAM, FreeRTOS and its 1 MiB shared window are carved out
-with `no-map`, and the fastboot buffer sits well below them.
+with `no-map`, and the fastboot buffer sits well below them.*
 
 ## Action
 
@@ -100,7 +100,7 @@ never brings core 3 online. The DT overlay from the AMP work, which reserves the
 as `no-map`:
 
 ```dts
-/* amp/linux/dts/rock3a-amp.dtso:29-38 */
+/* overlay: FreeRTOS's DRAM kept away from Linux */
 			amp_image: amp-rtos@30000000 {
 				compatible = "rock3a,amp-image";
 				reg = <0x0 0x30000000 0x0 0x01000000>;
@@ -131,7 +131,7 @@ dragging these back in through `select` (ACPI selects CPU_IDLE, PM_SLEEP_SMP sel
 the Makefile refuses to build if any of them sneaks back:
 
 ```make
-# debian/Makefile:41-43
+# Makefile: refuse a kernel config with these options on
 	@for c in CPU_IDLE HOTPLUG_CPU SUSPEND ACPI CPU_FREQ_GOV_SCHEDUTIL CPU_FREQ_GOV_ONDEMAND CPU_FREQ_GOV_USERSPACE; do \
 	    ! grep -q "^CONFIG_$$c=y" $@ || { echo "$$c is on"; exit 1; }; done
 	@grep -q '^CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y' $@ || { echo "cpufreq governor is not performance"; exit 1; }
@@ -151,7 +151,7 @@ U-Boot is mainline 2026.07 with `rock-3a-rk3568_defconfig` plus a small fragment
 is one line: try the eMMC, and if that fails, say why and become a fastboot device on the OTG port.
 
 ```
-# debian/uboot.config:6-9
+# U-Boot config: boot the eMMC, else fastboot
 CONFIG_BOOTDELAY=0
 # sysboot reads extlinux.conf (the defconfig leaves the command out: bootstd does it its own way)
 CONFIG_CMD_SYSBOOT=y
@@ -176,7 +176,7 @@ kernel takes 310 ms (123.3 MiB/s), the DTB 15 ms.
 The fastboot part needed more thought, because U-Boot runs with FreeRTOS already alive in DRAM:
 
 ```
-# debian/uboot.config:17-27
+# U-Boot config: the fastboot part
 # fastboot: a 256 MiB download buffer at 0x10000000 (below the RTOS at 0x30000000 and its window),
 # sparse images, the whole eMMC user area as "mmc0"
 CONFIG_USB_FUNCTION_FASTBOOT=y
@@ -202,7 +202,7 @@ U-Boot: device mode, high speed, USB 2 PHY only, and the blue LED disabled becau
 RTOS (it's how core 3 tells me it's alive):
 
 ```make
-# debian/Makefile:180-187
+# Makefile: a U-Boot copy with the OTG port as a device
 $(B)/u-boot-amp.bin: $(B)/u-boot/u-boot.bin
 	cp $(B)/u-boot/u-boot.dtb $(B)/u-boot-amp.dtb
 	fdtput -t s $(B)/u-boot-amp.dtb /usb@fcc00000 dr_mode peripheral
@@ -221,7 +221,7 @@ Without root I had neither. What I could do is split debootstrap the way it was 
 records the ownership it would have set (everything root-owned) in a state file:
 
 ```make
-# debian/Makefile:115-117
+# Makefile: debootstrap's first stage under fakeroot
 	fakeroot -s $(B)/fakeroot.state debootstrap --foreign --arch=arm64 --variant=minbase \
 	    --keyring=$(B)/keyring/x/usr/share/keyrings/debian-archive-keyring.gpg --include=$(PKGS) \
 	    trixie $(B)/rootfs http://deb.debian.org/debian > $(B)/debootstrap.log 2>&1
@@ -237,10 +237,10 @@ The second half, which runs the package maintainer scripts, has to execute arm64
 the board. The image boots once with `init=/sbin/rock3a-firstboot`, a shell script as PID 1:
 
 ```sh
-# debian/files/rock3a-firstboot:11
+# first boot script: debootstrap's second stage
 /debootstrap/debootstrap --second-stage || { echo "SECOND STAGE FAILED: /debootstrap/debootstrap.log"; exec /bin/sh; }
 # ...
-# debian/files/rock3a-firstboot:31-36
+# then: grow the partition, switch extlinux.conf to Debian
 printf ', +\n' | sfdisk -N 1 --no-reread /dev/mmcblk0
 systemctl enable rock3a-growfs.service
 sed -i 's/^DEFAULT firstboot/DEFAULT debian/' /boot/extlinux/extlinux.conf
@@ -248,7 +248,7 @@ rm -rf /debootstrap
 sync
 echo "rock3a-firstboot: done, rebooting into Debian"
 # ...
-# debian/files/rock3a-firstboot:40
+# and reboot
 echo b > /proc/sysrq-trigger
 ```
 
@@ -261,7 +261,7 @@ my AMP unit.
 `init=`; the script flips it to `debian` before it reboots:
 
 ```sh
-# debian/Makefile:156-160 (the lines that write extlinux.conf)
+# Makefile: the lines that write extlinux.conf
 	    { echo "DEFAULT firstboot"; echo "TIMEOUT 0"; \
 	      echo "LABEL debian"; echo "  KERNEL /boot/Image-$$rel"; echo "  FDT /boot/rk3568-rock-3a-amp.dtb"; \
 	      echo "  APPEND root=/dev/mmcblk0p1 rootwait rw console=ttyS2,1500000 maxcpus=3 clk_ignore_unused cma=256M panic=10 nokaslr"; \
@@ -308,7 +308,7 @@ second half of the list as the suite name. The list is now plain words, joined w
 itself:
 
 ```make
-# debian/Makefile:104-108
+# Makefile: the package list
 PKGS_LIST := systemd systemd-sysv systemd-timesyncd systemd-resolved udev dbus kmod iproute2 iputils-ping netbase \
 	ca-certificates openssh-server sudo less nano procps psmisc file wget curl i2c-tools usbutils pciutils \
 	python3 python3-numpy locales bash-completion e2fsprogs fdisk
@@ -320,9 +320,9 @@ PKGS := $(subst $() $(),$(comma),$(strip $(PKGS_LIST)))
 
 ![rockusb against fastboot with a sparse image]({{ '/assets/images/boards/rock3a/debian_emmc_write.png' | relative_url }})
 
-Both measured on the board. rockusb from Maskrom reached 16 % in about eight minutes and I stopped it;
+*Both measured on the board. rockusb from Maskrom reached 16 % in about eight minutes and I stopped it;
 the dashed part is that pace continued (my estimate, never run). Fastboot with my sparse image wrote
-the whole thing in 60.4 s, and only 403.6 MiB of it went over the cable.
+the whole thing in 60.4 s, and only 403.6 MiB of it went over the cable.*
 
 I first wrote the image the Rockchip way, `rkdeveloptool wl` from Maskrom. It moves 64 KiB per USB
 command (its default of 128 sectors), and it crawled at about 0.7 MB/s. After eight minutes it said
@@ -334,7 +334,7 @@ mostly empty ext4, so that matters. The PC has no `img2simg` and I couldn't inst
 I wrote the converter. It's 42 lines; the core is this:
 
 ```python
-# debian/mksparse.py:23-40
+# my sparse-image converter, the core loop
 chunks, i = [], 0
 while i < nblk:
     z = data[i * BLK:(i + 1) * BLK] == zero
@@ -412,7 +412,7 @@ The first time I tried it as my normal user, it failed with `Permission denied`:
 talk to serial ports" on Debian:
 
 ```
-# debian/files/60-rock3a-amp.rules:7
+# udev rule for /dev/amp
 KERNEL=="amp", SUBSYSTEM=="misc", GROUP="dialout", MODE="0660"
 ```
 
@@ -420,8 +420,8 @@ KERNEL=="amp", SUBSYSTEM=="misc", GROUP="dialout", MODE="0660"
 
 ![The NPU stack and where each error came from]({{ '/assets/images/boards/rock3a/debian_npu_fixes.png' | relative_url }})
 
-Top to bottom, what one inference goes through. The red badges are where each probe error came from;
-the green lines on the right are what fixed it. Errors 2 and 3 came out of the same boot.
+*Top to bottom, what one inference goes through. The red badges are where each probe error came from;
+the green lines on the right are what fixed it. Errors 2 and 3 came out of the same boot.*
 
 Mainline has an NPU driver now, but only for the RK3588 (`rocket`). For the RK3568 there is nothing
 upstream. What exists is Rockchip's `rknpu`, which is GPL source in their kernel tree, and the
@@ -458,7 +458,7 @@ domain, but the dtsi never lists it, so nothing could ever provide it. I copied 
 Rockchip's tree:
 
 ```dts
-/* debian/dts/rock3a-npu.dtso:24-31 */
+/* overlay: the NPU power domain */
 &power {
 	power-domain@RK3568_PD_NPU {
 		reg = <RK3568_PD_NPU>;
@@ -478,7 +478,7 @@ The clean fix would be a `domain-supply` on the power domain, but mainline's `pm
 take one for any RK3568 domain (`need_regulator` is false). So the rail is simply on from boot:
 
 ```dts
-/* debian/dts/rock3a-npu.dtso:45-50 */
+/* overlay: the NPU rail, always on */
 &vdd_npu {
 	regulator-always-on;
 	regulator-boot-on;
@@ -494,7 +494,7 @@ The third one showed up in the same boot as the second, a few lines further down
 dtsi uses `interrupts` and the driver uses `platform_get_irq_byname()`, so the name has to be there:
 
 ```dts
-/* debian/dts/rock3a-npu.dtso:56-63 */
+/* overlay: the NPU node with its interrupt name */
 	rknpu: npu@fde40000 {
 		compatible = "rockchip,rk3568-rknpu", "rockchip,rknpu";
 		reg = <0x0 0xfde40000 0x0 0x10000>;
@@ -512,7 +512,7 @@ did, and every `pm_runtime_get_sync()` failed with -95. With no devfreq there's 
 restore, so success is the honest answer:
 
 ```c
-/* debian/rknpu/src/include/rknpu_devfreq.h, from mainline-7.2.patch:23-33 */
+/* rknpu_devfreq.h, my patch for mainline 7.2 */
  static inline int rknpu_devfreq_runtime_suspend(struct device *dev)
  {
 -	return -EOPNOTSUPP;
@@ -591,7 +591,7 @@ U-Boot's prompt, then types the two commands one character every 2 ms (U-Boot's 
 to spare at 1.5 Mbaud):
 
 ```python
-# debian/to_maskrom.py:44-47
+# the Maskrom script: one U-Boot command, a character at a time
 for c in b'mw.l 0xfdc20200 0xef08a53c; reset\r':
     s.write(bytes([c]))
     time.sleep(0.002)

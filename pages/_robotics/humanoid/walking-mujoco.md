@@ -21,6 +21,7 @@ tags: [robotics, kinematics, simulation]
 *In MuJoCo, IMU feedback lifts the push margin from 1075 to 1338 mN·s (+24 %).*
 
 ![Same 175 mN·s sideways push: open loop falls at 3.14 s, IMU feedback stays up]({{ '/assets/images/robotics/humanoid/walk_push.gif' | relative_url }})
+*The same 175 mN·s sideways push in MuJoCo: open loop falls at 3.14 s, IMU feedback stays up.*
 
 ## Situation
 
@@ -29,6 +30,7 @@ put the robot in MuJoCo with gravity and position servos. The thesis gait, with 
 hip sway, went over sideways.
 
 ![The old gait with 15 mm hip sway, falling]({{ '/assets/images/robotics/humanoid/sim_physics_dhong15.gif' | relative_url }})
+*The thesis gait with 15 mm of hip sway, falling over sideways in MuJoCo.*
 
 I own DYNAMIXEL MX-28 and AX-12A servos, so I modelled those per joint: MX-28 at 77 g and
 2.5 N·m stall, AX-12A at 54.6 g and 1.5 N·m, a plastic body around 1.3 kg. The masses are guesses.

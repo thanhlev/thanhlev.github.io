@@ -18,9 +18,10 @@ result: "8 of 14 USB demos confirmed by enumeration: CDC, storage, NCM, MIDI, co
 [Back to the ESP32-S3 hub]({{ '/embedded/mcu/esp32-s3/' | relative_url }})
 
 ![ESP32-S3 cover, "Every device demo": 8 / 14 confirmed, checked from the PC side]({{ '/assets/images/mcu/esp32-s3/usb_device_demos_cover.jpg' | relative_url }})
-*The result first: 8 of the 14 USB demos confirmed by what Linux bound to them: CDC, storage, NCM, MIDI, composite, HID.*
+*8 of the 14 USB demos confirmed by what Linux bound to them: CDC, storage, NCM, MIDI, composite, HID.*
 
 ![The two USB blocks of the ESP32-S3]({{ '/assets/images/mcu/esp32-s3/usb_two_blocks.png' | relative_url }})
+*The two USB blocks of the ESP32-S3; 8 of the 14 device demos were confirmed from the PC side.*
 
 ## Situation
 

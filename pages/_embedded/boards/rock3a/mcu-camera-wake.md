@@ -20,7 +20,7 @@ tags: [rockchip, risc-v, edge-ai, npu, freertos, bare-metal]
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![The MCU keeps watch]({{ '/assets/images/boards/rock3a/r3a_mcu_cam_cover.jpg' | relative_url }})
-*The result first: with the four Cortex-A55 cores powered off, the RV32 MCU kept DRAM in self-refresh 74.0 % of the time and still caught every face frame.*
+*With the four Cortex-A55 cores powered off, the RV32 MCU kept DRAM in self-refresh 74.0 % of the time and still caught every face frame.*
 
 ![What the MCU drives while the A55s are off]({{ '/assets/images/boards/rock3a/mcu_soc_map.png' | relative_url }})
 *The blocks on the chip that the MCU programs by itself (the yellow markers) and the path of one webcam frame. Every frame still goes through DRAM; the trick is how little of each second DRAM has to be awake.*
@@ -118,7 +118,7 @@ the BootROM, region 0 covers all 64 KiB. A second test showed both bits sit on t
 the master: with either one cleared, the MCU still couldn't read secure DRAM. The fix is one write:
 
 ```c
-// rtos_mcu/a55/mcu_cmd.c:153-159
+// A55 side: open the system SRAM to the MCU
 static void sram_open(void)
 {
 	REG(SGRF_SRAM_SEC) = 0x00010000u;                   /* bit 0 := 0, rgn0 non-secure */
@@ -163,7 +163,7 @@ clock: I'd used TIMER4 as an up-counter, and two reads of its `CURRENT_VALUE0` w
 incremental". I'd read that line only after the fact.
 
 ```c
-// rtos_mcu/mcu/uvc_mcu.c:44
+// the MCU's time stamp, read from TIMER4
 uint32_t t4_now(void) { return ~REG(TIMER4 + T_CUR0); }
 ```
 
@@ -191,7 +191,7 @@ So the MCU's share is small. The A55 powers the NPU, opens the DDR firewall and 
 for the end, the same sequence my A55 code uses, which itself follows the `rknpu` kernel driver:
 
 ```c
-// rtos_mcu/mcu/rtos_main.c:229-238 (from npu_job)
+// MCU side: start an NPU job, the rknpu driver's sequence
 	REG(NPU + PC_DATA_ADDR) = 1;                     /* rknpu: "switch to slave mode" first */
 	REG(NPU + PC_DATA_ADDR) = SHM->npu_cmd;
 	REG(NPU + PC_DATA_AMOUNT) = SHM->npu_regcfg + 4 - 1;
@@ -236,7 +236,7 @@ powered it the way I power the NPU (power on, release the bus idle request, rese
 Then the MCU writes 32 registers and the start bit:
 
 ```c
-// rtos_mcu/mcu/rga_mcu.c:30-49
+// MCU side: fill the RGA registers and start it
 uint32_t rga_start(uint32_t src, uint32_t dst)
 {
 	volatile struct mcu_xarg *a = &SHM->xarg;
@@ -281,7 +281,7 @@ then data, which sets `B2A_STATUS` bit 1 and raises the A55's interrupt (Part 1 
 Element 0 stays for command replies.
 
 ```c
-// rtos_mcu/mcu/cam.c:362-367
+// MCU side: ring the bell, record first
 	if (a->flags & MCU_CAM_F_BELL) {
 		cs->bells++;
 		cs->t_bell = t4_now();
@@ -304,7 +304,7 @@ public-domain picture, fetched at a pinned sha256 and cut to 320 × 240. The mot
 the score and the bell all see the swapped frame and do their real work.
 
 ```c
-// rtos_mcu/mcu/cam.c:266-275
+// MCU side: swap in the fake frame for a test
 	uint32_t ff = con_on() ? con_fake_flags(a->flags) : a->flags;
 	if ((ff & MCU_CAM_F_FAKE) && cs->fmt == MCU_CAM_FMT_YUYV && SHM->xarg.fake_addr) {
 		if (!(ff & MCU_CAM_F_FAKE_ALT) || (cs->processed & 1u)) {
@@ -353,8 +353,8 @@ modes. The reset value is `0xE410`: the GRF bit. My PMU request went nowhere bec
 listening to the PMU. TF-A's suspend code writes `0x00600020` first. Mine does now:
 
 ```c
-// rtos_mcu/a55/mcu_cmd.c:1395-1397
-	/* 2026-11-04 (mcu#l10): the PMU, not the GRF bit, drives the controller's csysreq (DDR_GRF_CON3
+// A55 side, in the DDR sleep setup
+	/* the PMU, not the GRF bit, drives the controller's csysreq (DDR_GRF_CON3
 	 * [6:5] = 1, TRM P1 p.219; reset 0 = GRF), as TF-A's pmu_ddr_suspend_config() does */
 	REG(DDR_GRF_CON3_A) = MC_HIWORD(0x60u, 0x20u);
 ```
@@ -363,7 +363,7 @@ and the MCU, from SRAM, asks and checks the controller's own state, `DDR_GRF_STA
 `selfref_type` (p.221), where 2 means "in self-refresh by request":
 
 ```c
-// rtos_mcu/mcu/pmu_slp.c:94-99
+// MCU side: ask for DDR self-refresh and wait for it
 	REG(PMU + PMU_DDR_PWR_SFTCON) = 1u << 16 | 1u;      /* 2. sw_ddr_sref_req = 1 (p.492) */
 	for (;;) {
 		ADVANCE();
@@ -405,7 +405,7 @@ read `0x8888fc80`, every core's power channel still saying "on" (p.510).
 TF-A's system suspend does one more thing on its last core, and it's three lines:
 
 ```c
-// TF-A plat/rockchip/rk3568/drivers/pmu/pmu.c:46-57
+// TF-A's RK3568 suspend, the last core before WFI
 void __dead2 rockchip_soc_sys_pd_pwr_dn_wfi(void)
 {
 	uint64_t ctrl;
@@ -427,7 +427,7 @@ off, cleans every level by set/way, sets `CORE_PWRDN_EN`, arms the FSM with its 
 executes WFI:
 
 ```
-// rtos_mcu/a55/mcu_pwr.S:252, 267-269
+// A55 side: the last core arms power-down, then WFI
 	orr	x9, x9, #1		/* CORE_PWRDN_EN */
 ...
 	str	w24, [x23]		/* the last store: FSM armed / the ack / a stamp */
@@ -479,7 +479,7 @@ controller does no DMA while DRAM sleeps; resume is a fresh ring, Set TR Dequeue
 doorbell:
 
 ```c
-// rtos_face/app/usb/xhci.c:614-637 (pause and resume, trimmed)
+// my xHCI driver: pause and resume the isochronous endpoint (trimmed)
 int xhci_isoc_pause(void)
 {
 	...
@@ -538,7 +538,7 @@ patched the loop's own EL3 vector to jump to a short piece of assembly in free P
 power-down there. Core 0 goes last, under the FSM as before. Waking is TF-A's `CPU_ON` in two writes:
 
 ```c
-// rtos_mcu/mcu/cam.c:450-455
+// MCU side: wake A55 core 0 through the PMU
 static void a55_wake0(void)
 {
 	REG(PMU + 0x310) = 1u << 16;
@@ -576,7 +576,7 @@ atomic instructions anyway (RV32IMC). So UART2 gets an owner word in SYSTEM_SRAM
 read while DRAM sleeps and the A55 maps as device memory, so no stale cache line can hold it:
 
 ```c
-// rtos_mcu/shared/mcu_ipc.h:102-104
+// shared header: the console owner word and its two magics
 #define MCU_CON_OWNER    0xFDCC4100   /* u32: 0 / MCU_CON_A55 = the A55's, MCU_CON_MCU = the MCU's */
 #define MCU_CON_A55      0x35354341u  /* "AC55" little endian (C only: .S files never use the two magics) */
 #define MCU_CON_MCU      0x4e4f434du  /* "MCON" little endian */

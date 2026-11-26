@@ -16,7 +16,7 @@ tags: [samsung, arm, freertos, bare-metal, boot, camera]
 {: .no_toc }
 
 ![The NanoPi 2 Fire in numbers]({{ '/assets/images/boards/nanopi2-fire/np2f_hub_cover.jpg' | relative_url }})
-*What came out of it: YuNet faces in 27 ms on the four A9s, the webcam on HDMI for 1.5 % of a core, 3.4 s from reset to picture, and 3.93 times the speed on four cores.*
+*YuNet faces in 27 ms on the four A9s, the webcam on HDMI for 1.5 % of a core, 3.4 s from reset to picture, and 3.93 times the speed on four cores.*
 
 ![My bench: the NanoPi 2 Fire, a 16-LED ring, the webcam and the HDMI screen](/assets/images/boards/nanopi2-fire/np2f_bench.jpg)
 

@@ -18,9 +18,10 @@ tags: [allwinner, risc-v, freertos, bare-metal, usb, camera]
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-30 and 2026-10-01
 
 ![D1 Nezha cover, "Webcam → HDMI, 1080p": 29.4 fps at 1.2 % CPU, the Video Engine decodes]({{ '/assets/images/boards/d1-nezha/d1_webcam_cover.jpg' | relative_url }})
-*The result first: 1080p MJPEG from the webcam to HDMI at 29.4 fps, with the CPU about 1.2 % busy. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
+*1080p MJPEG from the webcam to HDMI at 29.4 fps, with the CPU about 1.2 % busy. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![The OSD panel my FreeRTOS draws over the video, at 640x480]({{ '/assets/images/boards/d1-nezha/d1_uvc_osd.png' | relative_url }})
+*The OSD panel my FreeRTOS draws over the video, here at 640x480.*
 
 ## Situation
 
