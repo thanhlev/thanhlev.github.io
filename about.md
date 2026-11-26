@@ -20,6 +20,7 @@ boards" (4 cards, numbers from the hubs' stories' result: lines); dino card with
 more tools. · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
 2026-11-27: "Board stories" counts only stories under /boards/ (as index.md does; control/MCU stories were
 counted too: 63 vs 43); row "Boards on the bench" -> "Board pages" (3 hubs were never on the bench).
+Same day: the 8 .ab-card .ph backgrounds use the small thumbnails in assets/images/card/ (same relative path).
 {% endcomment %}
 {% assign live_emb = site.embedded | where_exp: "i", "i.publish != false" %}
 {% assign hubs = live_emb | where: "board_hub", true %}
@@ -62,22 +63,22 @@ counted too: 63 vs 43); row "Boards on the bench" -> "Board pages" (3 hubs were 
 <section class="ab-lead"><p>The two I spent the most time on are the ROCK 3A and the NanoPi 2 Fire. Then there are the old boards I like pushing past what their vendors shipped. Each card is the one number that board is known for on this site.</p></section>
 <div class="ab-feat">
   <a class="ab-card" href="{{ '/embedded/boards/rock3a/' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/boards/rock3a/rock-3a.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/boards/rock3a/rock-3a.jpg' | relative_url }}')"></div>
     <span class="chip">RK3568</span><b class="num">154 ms</b>
     <h3>Radxa ROCK 3A</h3><p>FreeRTOS on core 3 at 154 ms after power-on, my own Debian 13 on the other three; the NPU with no Linux; a RISC-V MCU that watches the webcam with all four A55s off; LEDs that follow the music; Android 14.</p>
   </a>
   <a class="ab-card" href="{{ '/embedded/boards/nanopi2-fire/' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/boards/nanopi2-fire/np2f_bench.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/boards/nanopi2-fire/np2f_bench.jpg' | relative_url }}')"></div>
     <span class="chip">S5P4418</span><b class="num">1.5 % CPU</b>
     <h3>NanoPi 2 Fire</h3><p>A 2016 quad Cortex-A9 with no NPU: webcam to HDMI on FreeRTOS, then face detection.</p>
   </a>
   <a class="ab-card" href="{{ '/embedded/boards/db8074/' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/boards/db8074/d8k_board.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/boards/db8074/d8k_board.jpg' | relative_url }}')"></div>
     <span class="chip">Snapdragon 800</span><b class="num">Android 15</b>
     <h3>DragonBoard 8074</h3><p>A 2013 dev kit that shipped with Android 4.3, now on kernel 6.6 with HDMI and local AI.</p>
   </a>
   <a class="ab-card" href="{{ '/embedded/boards/pi1/' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/boards/pi1/pi1_bench.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/boards/pi1/pi1_bench.jpg' | relative_url }}')"></div>
     <span class="chip">BCM2835</span><b class="num">43.5 ms</b>
     <h3>Raspberry Pi 1 (2012)</h3><p>No Linux: a face detector on the 12 QPUs, 2.37 s down to 43.5 ms per picture.</p>
   </a>
@@ -87,22 +88,22 @@ counted too: 63 vs 43); row "Boards on the bench" -> "Board pages" (3 hubs were 
 <div class="sec"><h2>Beyond the boards</h2><span>§3 · robots, AI on the board, control, MCUs</span></div>
 <div class="ab-feat">
   <a class="ab-card" href="{{ '/#robotics' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/robotics/dino-robot/dino_walk_cover.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/robotics/dino-robot/dino_walk_cover.jpg' | relative_url }}')"></div>
     <span class="chip">Robotics</span><b class="num">{{ robots.size }} robots</b>
     <h3>Robots, in MuJoCo first</h3><p>A dinosaur on my own frame, my thesis humanoid, a Microduck, DYNAMIXEL servos and a Hokuyo lidar. The dino walks 30 of 30 runs on perturbed robots, in simulation.</p>
   </a>
   <a class="ab-card" href="{{ '/edge-ai/' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/boards/rock3a/rtos_face_cover.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/boards/rock3a/rtos_face_cover.jpg' | relative_url }}')"></div>
     <span class="chip">Edge AI</span><b class="num">{{ ai_all.size }} stories</b>
     <h3>AI on the board itself</h3><p>Face detection on an NPU with no Linux, on a 2016 Cortex-A9 and on a 2012 Pi's QPUs; an offline Vietnamese voice assistant; an LLM on a 2013 phone chip.</p>
   </a>
   <a class="ab-card" href="{{ '/embedded/control/control-library/' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/control/control-library/control_library_cover.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/control/control-library/control_library_cover.jpg' | relative_url }}')"></div>
     <span class="chip">C++17</span><b class="num">0.77 s</b>
     <h3>A control library, in simulation</h3><p>PID, LQR, MPC, ADRC, sliding mode and estimators, each checked against a plant. Back from windup in 0.77 s instead of 108.</p>
   </a>
   <a class="ab-card" href="{{ '/embedded/mcu/esp32-s3/' | relative_url }}">
-    <div class="ph" style="background-image:url('{{ '/assets/images/mcu/esp32-s3/esp32_s3_cover.jpg' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ '/assets/images/card/mcu/esp32-s3/esp32_s3_cover.jpg' | relative_url }}')"></div>
     <span class="chip">ESP32-S3</span><b class="num">30.3 fps</b>
     <h3>MCU demo apps</h3><p>USB device demos and a USB webcam on the ESP32-S3: 640×480 scaled to 320×240 at 30.3 frames a second.</p>
   </a>
