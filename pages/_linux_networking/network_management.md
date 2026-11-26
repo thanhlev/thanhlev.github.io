@@ -8,6 +8,7 @@ index: 2
 latest_release: "2026-11-22: rewritten as a STAR story"
 publish: true
 tags: [networking, linux]
+permalink: /linux_networking/network-management   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 # Linux Network Management

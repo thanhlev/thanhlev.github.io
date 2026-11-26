@@ -9,6 +9,7 @@ index: 4
 publish: true
 tags: [linux, testing]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
+permalink: /linux_general/udev   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 # Udev Quick Reference

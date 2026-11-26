@@ -8,6 +8,7 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 8
 publish: true
 tags: [samsung, arm, boot, memory]
+permalink: /embedded/tiny210-information   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

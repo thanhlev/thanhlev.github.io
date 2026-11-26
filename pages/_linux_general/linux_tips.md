@@ -8,6 +8,7 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 2
 publish: true
 tags: [linux, tools]
+permalink: /linux_general/linux-tips   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 # Linux Tips & Tricks

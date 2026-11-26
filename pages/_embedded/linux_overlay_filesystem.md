@@ -9,6 +9,7 @@ index: 3
 publish: true
 tags: [memory, linux]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
+permalink: /embedded/linux-overlay-filesystem   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

@@ -9,6 +9,7 @@ index: 7
 publish: true
 tags: [linux, tools]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
+permalink: /linux_general/programming-snippets   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 # Programming Language snippets

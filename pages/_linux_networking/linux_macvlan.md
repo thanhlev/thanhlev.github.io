@@ -8,6 +8,7 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
 tags: [networking, linux]
+permalink: /linux_networking/linux-macvlan   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 # Linux MacVLAN interface

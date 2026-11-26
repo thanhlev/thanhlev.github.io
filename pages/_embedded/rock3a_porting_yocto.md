@@ -10,6 +10,7 @@ publish: true
 board_parent: rock3a
 result: "Console and desktop images booting from my meta-radxa port, sent upstream as PR #29"
 tags: [rockchip, arm, boot, yocto]
+permalink: /embedded/rock3a-porting-yocto   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
 ---
 
 <!-- 2026-11-22: rewritten in STAR form like the other ROCK 3A stories (user «trang này không theo STAR
