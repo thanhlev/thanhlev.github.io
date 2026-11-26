@@ -1,0 +1,61 @@
+{% comment %}
+related.html - three stories from OTHER hubs that share the most tags with this one, under story_nav.html.
+2026-11-27 · new (site review: each story was a dead end towards the rest of the site; a NPU story on the
+ROCK 3A should lead to the NPU stories of the other boards). wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+How the score is made (plain Liquid, GitHub Pages safe mode, Jekyll 3.10):
+  - my tags minus the broad ones (arm, linux, simulation: 48/34/32 pages carry them, measured 2026-11-27,
+    so sharing one says nothing);
+  - candidates = published stories (board_parent set) of the four collections, not of this hub;
+  - score = number of shared tags; key "<1000 - score>|<index padded>|<url>" sorts best first as a string;
+  - at most one story per hub, so the three cards point at three different boards/robots.
+Shows nothing when no other story shares a tag.
+{% endcomment %}
+{% if page.board_parent and page.tags.size > 0 %}
+{% assign rl_broad = "arm,linux,simulation" | split: "," %}
+{% assign rl_mine = "" | split: "" %}
+{% for t in page.tags %}{% unless rl_broad contains t %}{% assign rl_mine = rl_mine | push: t %}{% endunless %}{% endfor %}
+{% if rl_mine.size > 0 %}
+{% comment %} Jekyll 3.10 where_exp has no "or": collections are joined with concat. {% endcomment %}
+{% assign rl_all = site.embedded | concat: site.robotics | concat: site.linux_networking | concat: site.linux_general %}
+{% assign rl_all = rl_all | where_exp: "i", "i.publish != false" | where_exp: "i", "i.board_parent" %}
+{% assign rl_keys = "" | split: "" %}
+{% for c in rl_all %}
+  {% if c.board_parent == page.board_parent and c.collection == page.collection %}{% continue %}{% endif %}
+  {% assign rl_n = 0 %}
+  {% for t in c.tags %}{% if rl_mine contains t %}{% assign rl_n = rl_n | plus: 1 %}{% endif %}{% endfor %}
+  {% if rl_n > 0 %}
+    {% comment %} index + 10000 = always 5 digits, so "12" sorts after "3" inside the same score. {% endcomment %}
+    {% assign rl_ix = c.index | default: 0 | plus: 10000 | append: "" %}
+    {% assign rl_k = 1000 | minus: rl_n | append: "|" | append: rl_ix | append: "|" | append: c.url %}
+    {% assign rl_keys = rl_keys | push: rl_k %}
+  {% endif %}
+{% endfor %}
+{% assign rl_keys = rl_keys | sort %}
+{% assign rl_hubs = "" | split: "" %}
+{% assign rl_pick = "" | split: "" %}
+{% for k in rl_keys %}
+  {% if rl_pick.size >= 3 %}{% break %}{% endif %}
+  {% assign rl_url = k | split: "|" | last %}
+  {% assign rl_doc = rl_all | where: "url", rl_url | first %}
+  {% assign rl_hk = rl_doc.collection | append: "/" | append: rl_doc.board_parent %}
+  {% if rl_hubs contains rl_hk %}{% continue %}{% endif %}
+  {% assign rl_hubs = rl_hubs | push: rl_hk %}
+  {% assign rl_pick = rl_pick | push: rl_doc %}
+{% endfor %}
+{% if rl_pick.size > 0 %}
+<section class="related" aria-label="Related stories">
+  <div class="sn-h">Related stories, other hubs</div>
+  <div class="rl-grid">
+    {% for d in rl_pick %}
+    {% assign rl_hub = site[d.collection] | where: "slug", d.board_parent | first %}
+    <a class="rl-card" href="{{ d.url | relative_url }}">
+      <span class="sn-l">{{ rl_hub.title | split: ":" | first | default: d.board_parent }}</span>
+      <b>{{ d.title | remove: "[🔥] - " }}</b>
+      {% if d.result %}<span class="sn-r">{{ d.result | truncate: 110 }}</span>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endif %}
+{% endif %}
