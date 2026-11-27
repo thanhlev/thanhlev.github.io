@@ -583,3 +583,8 @@ article.doc [data-scrollmark]:focus-visible { outline: 2px solid var(--acc); out
 /* kramdown wraps a picture in its own <p>: those paragraphs keep the full column (2026-11-27, the 85ch cap first
    shrank .img-wide figures to 1020 px at 1850). */
 .is-doc article.doc > p:has(> img, > video, > iframe, > a > img) { max-width: none; }
+/* 2026-11-27: long inline code words (file paths, kernel args like initcall_blacklist=...) pushed 5 pages to
+   443-490 px on a 390 px phone; they may now break anywhere. Code blocks (pre) keep scrolling sideways. */
+article.doc :not(pre) > code { overflow-wrap: anywhere; }
+/* same fix for bare URLs written as link text (overlay-filesystem note: 477 px on a 390 px phone) */
+article.doc a { overflow-wrap: anywhere; }
