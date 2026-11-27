@@ -114,3 +114,10 @@ defaults:
       path: "404.html"
     values:
       image: /assets/images/boards/rock3a/rtos_face_cover.jpg
+
+# 2026-11-27: Google Search Console ownership check (URL-prefix property https://thanhlev.github.io/, method
+# "HTML tag", the content value the owner pasted). jekyll-seo-tag writes it as
+# <meta name="google-site-verification" content="..."> in every page head. Keep it: removing it un-verifies the site.
+# wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+webmaster_verifications:
+  google: YrY3bz8f-AC5Grs-R9--pAgwNZmhzKDZzhM-0T0RF-c

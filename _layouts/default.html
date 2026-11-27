@@ -223,5 +223,15 @@ No custom plugins or filters here: GitHub Pages builds in safe mode and ignores 
         }, { passive: true });
       })();
     </script>
+    {% comment %}
+    Page-view counter (2026-11-27, user «liệu có cách nào để thống kê có bao nhiêu lượt xem trang của tôi không, và họ
+    từ đâu»): GoatCounter, the snippet the owner pasted (site thanhlev.goatcounter.com). No cookies, no personal data
+    kept, ~3 KB, async. Only in the production build (GitHub Pages sets JEKYLL_ENV=production), so local previews at
+    127.0.0.1:4000 are not counted. Stats: https://thanhlev.goatcounter.com
+    wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+    {% endcomment %}
+    {% if jekyll.environment == "production" %}
+    <script data-goatcounter="https://thanhlev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    {% endif %}
   </body>
 </html>
