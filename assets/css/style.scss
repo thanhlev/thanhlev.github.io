@@ -580,3 +580,6 @@ article.doc [data-scrollmark]:focus-visible { outline: 2px solid var(--acc); out
    Pictures, code, tables and videos keep the full column width.
    wiki: http://localhost:3000/wiki/claude/blog_agent#l11 */
 .is-doc article.doc > p, .is-doc article.doc > ul, .is-doc article.doc > ol, .is-doc article.doc > blockquote { max-width: 85ch; }
+/* kramdown wraps a picture in its own <p>: those paragraphs keep the full column (2026-11-27, the 85ch cap first
+   shrank .img-wide figures to 1020 px at 1850). */
+.is-doc article.doc > p:has(> img, > video, > iframe, > a > img) { max-width: none; }
