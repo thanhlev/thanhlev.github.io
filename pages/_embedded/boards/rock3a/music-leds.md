@@ -9,7 +9,7 @@ index: 19
 publish: true
 permalink: /embedded/boards/rock3a/music-leds
 board_parent: rock3a
-result: "Predicted beats latch the LEDs +0.12 ms after the click on average (max 3.55 ms, 76 beats), against ~16 ms for the reactive version; rock clip 27 of 28 windows rock; 3 of 3 drops"
+result: "Predicted beats latch the LEDs +0.12 ms (computed) after the click on average (max 3.55 ms, 76 beats), against ~16 ms for the reactive version; rock clip 27 of 28 windows rock; 3 of 3 drops"
 edge_ai: true   # listed on /edge-ai/
 edge_ai_index: 12
 tags: [rockchip, npu, edge-ai, linux, led]
@@ -23,7 +23,7 @@ last_modified_at: 2026-11-27
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
 ![ROCK 3A cover, "32 LEDs, on the beat": +0.12 ms late, genre on the NPU, beats on the CPU]({{ '/assets/images/boards/rock3a/r3a_leds_cover.jpg' | relative_url }})
-*The demo window on the board's desktop next to the number I'm proudest of: a predicted beat lights the LEDs 0.12 ms after the click on average.*
+*The demo window on the board's desktop next to the number I'm proudest of: a predicted beat lights the LEDs 0.12 ms after the click on average (computed from the clocks, no photodiode yet).*
 
 ## Situation
 
@@ -176,7 +176,7 @@ cat "$NPU/max_freq" > "$NPU/min_freq" 2>/dev/null || true
 [ -f "$NPUSAVE" ] && cat "$NPUSAVE" > "$NPU/min_freq" 2>/dev/null && rm -f "$NPUSAVE"
 ```
 
-Pinned, a window takes 2.2 to 2.5 ms instead of 4.6 to 5.2, and the SoC stays at 54.4 to 60.0 °C with the UI and
+Pinned, a window takes 2.2 to 2.5 ms instead of 4.6 to 5.9, and the SoC stays at 54.4 to 60.0 °C with the UI and
 a video running. After `stop`, `min_freq` was back at 200000000. A small root sampler writes the clock source,
 load and temperature to `/run/r3a_npu` twice a second, because the UI runs as a normal user and can't read
 debugfs. I don't know why the bridge needs 2.2 ms when the standalone tool from the first post did 1.44 ms at
@@ -648,7 +648,7 @@ late. Through live PipeWire, with the computed sound clock, it's +0.28 ms mean a
 | Drum hits, drums + pad | kick 1.00 / 1.00, hat 1.00 / 1.00, snare 0.57 / 0.24 |
 | Silence | ring off 2.07 to 2.14 s after the music stops, on again 518 ms after it starts |
 | Beat flash on ring B | 30 to 60 ms at ~28 % → about 150 ms per beat |
-| NPU per window | 4.6 to 5.2 ms (governor) → 2.2 to 2.5 ms pinned at 900 MHz, SoC 54 to 60 °C |
+| NPU per window | 4.6 to 5.9 ms (governor) → 2.2 to 2.5 ms pinned at 900 MHz, SoC 54 to 60 °C |
 | WS2812 from spidev | old ring LED 0: 43 / 64 stray highs per 10 s → new module 0; 12000 / 12000 bytes right |
 | UI mirror | 48 of 48 bytes = the SPI stream just sent (3 of 3) |
 | CPU | bridge 13.7 to 14.3 %, ring daemon ~5 %, UI 25 to 27 % at 20 fps |

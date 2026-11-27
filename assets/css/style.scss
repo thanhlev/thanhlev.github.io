@@ -574,3 +574,9 @@ article.doc [data-scrollmark]:focus-visible { outline: 2px solid var(--acc); out
   .srch-f input { font-size: 16px; }   /* 16 px: iOS does not zoom into the field */
   .sn-pn b { font-size: 18px; }
 }
+
+/* 2026-11-27 (user «1: ok 85»): paragraphs, lists and quotes stop at 85 characters a line (was the whole column,
+   ~117 characters at 1850 px; review: comfortable reading is 45-75, WCAG 1.4.8 says <= 80; the owner chose 85).
+   Pictures, code, tables and videos keep the full column width.
+   wiki: http://localhost:3000/wiki/claude/blog_agent#l11 */
+.is-doc article.doc > p, .is-doc article.doc > ul, .is-doc article.doc > ol, .is-doc article.doc > blockquote { max-width: 85ch; }
