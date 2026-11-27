@@ -11,6 +11,9 @@ permalink: /robotics/humanoid/walking-mujoco
 board_parent: humanoid
 result: "In MuJoCo, IMU feedback lifts the push margin from 1075 to 1338 mN·s (+24 %); steps up to 40 mm walk, 50 mm falls"
 tags: [robotics, kinematics, simulation]
+description: "An online LIPM walker at 50 Hz, a simulation bug that faked every torque number, and capture steps that made things worse"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Walking in MuJoCo: two feet in one place, and the one feedback that paid
@@ -21,6 +24,7 @@ tags: [robotics, kinematics, simulation]
 *In MuJoCo, IMU feedback lifts the push margin from 1075 to 1338 mN·s (+24 %).*
 
 ![Same 175 mN·s sideways push: open loop falls at 3.14 s, IMU feedback stays up]({{ '/assets/images/robotics/humanoid/walk_push.gif' | relative_url }})
+*The same 175 mN·s sideways push in MuJoCo: open loop falls at 3.14 s, IMU feedback stays up.*
 
 ## Situation
 
@@ -29,6 +33,7 @@ put the robot in MuJoCo with gravity and position servos. The thesis gait, with 
 hip sway, went over sideways.
 
 ![The old gait with 15 mm hip sway, falling]({{ '/assets/images/robotics/humanoid/sim_physics_dhong15.gif' | relative_url }})
+*The thesis gait with 15 mm of hip sway, falling over sideways in MuJoCo.*
 
 I own DYNAMIXEL MX-28 and AX-12A servos, so I modelled those per joint: MX-28 at 77 g and
 2.5 N·m stall, AX-12A at 54.6 g and 1.5 N·m, a plastic body around 1.3 kg. The masses are guesses.

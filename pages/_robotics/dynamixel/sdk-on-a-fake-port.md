@@ -11,6 +11,9 @@ permalink: /robotics/dynamixel/sdk-on-a-fake-port
 board_parent: dynamixel
 result: "All 6 e-manual packet examples match byte for byte; a write of FF FF FD goes out unstuffed (LEN 9, not 10); GroupBulkRead on Protocol 1.0 raises TypeError"
 tags: [robotics, servo, python]
+description: "A fake serial port under the real SDK: every e-manual example matches, byte stuffing silently doesn't happen, and Bulk Read on Protocol 1.0 crashes"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Two bugs in the DynamixelSDK Python package, found with no servo plugged in

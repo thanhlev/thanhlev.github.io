@@ -11,6 +11,9 @@ permalink: /embedded/boards/bpi-m3/first-contact
 board_parent: bpi-m3
 result: "8 cores online, 11 OPPs 480 to 2016 MHz, FEL at 12 Mbit/s"
 tags: [allwinner, arm, bare-metal, linux]
+description: "Plugged in a serial adapter, read the old vendor kernel instead of waiting for mainline, then checked FEL"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # First contact: what the vendor image says about eight cores and 2 GHz
@@ -18,8 +21,8 @@ tags: [allwinner, arm, bare-metal, linux]
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
 
-![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_first_cover.jpg' | relative_url }})
-*The result first: all 8 cores online and 11 OPPs up to 2016 MHz, so the 1.8 GHz on the spec sheet isn't the top.*
+![Banana Pi M3 cover, "Eight cores, 2 GHz?": 2016 MHz, 11 OPPs, the spec sheet says 1.8]({{ '/assets/images/boards/bpi-m3/bpim3_first_cover.jpg' | relative_url }})
+*All 8 cores online and 11 OPPs up to 2016 MHz, so the 1.8 GHz on the spec sheet isn't the top.*
 
 1. TOC
 {:toc}

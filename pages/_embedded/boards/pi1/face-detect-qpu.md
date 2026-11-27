@@ -13,16 +13,20 @@ result: "One picture 2374 -> 43.5 ms; live 0.3 -> 12.3 detections/s (17.5 after 
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 5
 tags: [raspberry-pi, arm, edge-ai, gpu, camera]
+description: "YuNet from my NanoPi project on the ARM1176, then every convolution moved onto the VideoCore's shader cores"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A face detector on a 2012 Pi: 2.37 s to 43.5 ms on the 12 QPUs
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26
 
-![The result first]({{ '/assets/images/boards/pi1/pi1_face_cover.jpg' | relative_url }})
-*The result first: one picture from 2374 ms to 43.5 ms once the 12 QPUs do the work.*
+![Raspberry Pi 1 B cover, "Faces on a 2012 Pi": 43.5 ms (was 2374), the 12 QPUs do the work]({{ '/assets/images/boards/pi1/pi1_face_cover.jpg' | relative_url }})
+*One picture from 2374 ms to 43.5 ms once the 12 QPUs do the work.*
 
 ![One picture through YuNet, step by step]({{ '/assets/images/boards/pi1/pi1_face_ms.png' | relative_url }})
+*One picture through YuNet, step by step: 2374 ms before, 43.5 ms once the 12 QPUs do the work.*
 
 ## Situation
 

@@ -8,6 +8,10 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 7
 publish: true
 tags: [esp8266, boot, memory, mcu]
+permalink: /embedded/esp8266-flash-map   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Where the ESP8266 keeps what on its external SPI flash: bootloader, partition table, NVS, OTA slots"
+date: 2023-01-11
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
@@ -16,7 +20,7 @@ tags: [esp8266, boot, memory, mcu]
 # ESP8266 Flash Map & Partition Table
 {: .no_toc }
 
-![ESP8266 flash map in one picture]({{ '/assets/images/esp8266_flash_cover.jpg' | relative_url }})
+![ESP8266 cover, "ESP8266 flash map": 960 KB per OTA slot, the 1 MB rule that bites]({{ '/assets/images/esp8266_flash_cover.jpg' | relative_url }})
 *The default two-OTA layout: a 3072-byte table at 0x8000, and two 960 KB app slots because of the 1 MB rule.*
 
 ## Table of contents

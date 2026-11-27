@@ -11,6 +11,9 @@ permalink: /robotics/dino-robot/walking-in-mujoco
 board_parent: dino-robot
 result: "in MuJoCo: full sequence on perturbed robots 0/5, then 2/10, now 30/30; walk 40.7 mm/s"
 tags: [robotics, servo, simulation, cad]
+description: "A model built from the CAD walked 1.2 m and roared on the first try; with real friction and torque limits it fell 8 times in 10"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # It walked in MuJoCo, then I made the sim honest

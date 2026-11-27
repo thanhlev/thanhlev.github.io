@@ -11,16 +11,20 @@ permalink: /embedded/control/control-library/mpc-tanks
 board_parent: control-library
 result: "Integrated error 14.4 m·s with MPC vs 54.8 and 58.9 for the two PIs; tank one peaks at 0.458 m of 0.50, 19 ADMM iterations worst case"
 tags: [control, simulation, cpp]
+description: "A 7 kB constrained MPC against two tuned PIs on a two-tank rig where the pump can't run backwards and the tank overflows for real"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # MPC on two tanks: closer to the overflow than a PI dares
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/mpc_tanks_cover.jpg' | relative_url }})
-*The result first: 14.4 m·s of integrated error with MPC against 54.8 and 58.9 for the two PIs, with tank one taken to 0.458 m of 0.50.*
+![Control library cover, "MPC on two tanks": 14.4 m·s error (PI 54.8), closer to the overflow]({{ '/assets/images/control/control-library/mpc_tanks_cover.jpg' | relative_url }})
+*14.4 m·s of integrated error with MPC against 54.8 and 58.9 for the two PIs, with tank one taken to 0.458 m of 0.50.*
 
 ![Tank one: MPC fills it further than either PI and still stops short of the overflow line]({{ '/assets/images/control/control-library/mpc_level_one.png' | relative_url }})
+*Tank one: MPC fills it to 0.458 m, further than either PI, and still stops short of the 0.50 m overflow line.*
 
 ## Situation
 

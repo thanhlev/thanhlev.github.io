@@ -13,6 +13,9 @@ result: "in MuJoCo: 4 runs, 0 falls, 10 s simulated in 8.54 s on CPU; speed only
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 8
 tags: [robotics, simulation, edge-ai]
+description: "Their play script wants a viewer and a keyboard; three swapped names and a fake clock made it run headless on a CPU"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Running the official policies with no window

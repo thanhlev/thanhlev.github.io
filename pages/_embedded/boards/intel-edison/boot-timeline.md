@@ -11,6 +11,9 @@ permalink: /embedded/boards/intel-edison/boot-timeline
 board_parent: intel-edison
 result: "Reset to login 59.52 s; the ROM waits 8.92 s on USB for a flasher at every boot"
 tags: [intel, x86, bare-metal, boot, usb]
+description: "The ROM prints nothing for 13 s. Polling lsusb during one reboot showed what it does in that time"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Timing the Edison boot ROM from the outside, 0.1 s at a time
@@ -18,8 +21,8 @@ tags: [intel, x86, bare-metal, boot, usb]
 
 [Back to the Intel Edison hub](/embedded/boards/intel-edison/)
 
-![The result first]({{ '/assets/images/boards/intel-edison/ied_boot_cover.jpg' | relative_url }})
-*The result first: 59.52 s from reset to login, 8.92 s of it the ROM waiting on USB for a flasher.*
+![Intel Edison cover, "Timing the boot ROM": 8.92 s ROM waits on USB, lsusb every 0.1 s, one reboot]({{ '/assets/images/boards/intel-edison/ied_boot_cover.jpg' | relative_url }})
+*59.52 s from reset to login, 8.92 s of it the ROM waiting on USB for a flasher.*
 
 1. TOC
 {:toc}
@@ -54,6 +57,7 @@ compared them with what xFSTK, the only public flasher for this chip, expects.
 ## Result
 
 ![Each boot stage, who runs it, what the PC sees on USB, and the time from reset](/assets/images/boards/intel-edison/ied_q6_chain.png)
+*Each boot stage, who runs it and what the PC sees on USB: 59.52 s from reset to login, 8.92 s of it the ROM waiting.*
 
 | Time from reset | What the PC saw |
 |---|---|

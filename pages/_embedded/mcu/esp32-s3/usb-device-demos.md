@@ -11,16 +11,20 @@ permalink: /embedded/mcu/esp32-s3/usb-device-demos
 board_parent: esp32-s3
 tags: [esp32, usb, testing]
 result: "8 of 14 USB demos confirmed by enumeration: CDC, storage, NCM, MIDI, composite, HID"
+description: "Seven ESP-IDF device examples plus the serial/JTAG echo, judged by what Linux enumerated, and the board that locked itself out of its own flashing port"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Every TinyUSB device demo on the S3, checked from the PC side
 
 [Back to the ESP32-S3 hub]({{ '/embedded/mcu/esp32-s3/' | relative_url }})
 
-![The result first]({{ '/assets/images/mcu/esp32-s3/usb_device_demos_cover.jpg' | relative_url }})
-*The result first: 8 of the 14 USB demos confirmed by what Linux bound to them: CDC, storage, NCM, MIDI, composite, HID.*
+![ESP32-S3 cover, "Every device demo": 8 / 14 confirmed, checked from the PC side]({{ '/assets/images/mcu/esp32-s3/usb_device_demos_cover.jpg' | relative_url }})
+*8 of the 14 USB demos confirmed by what Linux bound to them: CDC, storage, NCM, MIDI, composite, HID.*
 
 ![The two USB blocks of the ESP32-S3]({{ '/assets/images/mcu/esp32-s3/usb_two_blocks.png' | relative_url }})
+*The two USB blocks of the ESP32-S3; 8 of the 14 device demos were confirmed from the PC side.*
 
 ## Situation
 

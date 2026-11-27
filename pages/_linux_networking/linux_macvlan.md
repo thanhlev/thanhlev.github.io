@@ -8,12 +8,16 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 5
 publish: true
 tags: [networking, linux]
+permalink: /linux_networking/linux-macvlan   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Sub-interfaces with their own MAC: the four modes, and why the host can't reach them"
+date: 2023-02-06
+last_modified_at: 2026-11-27
 ---
 
 # Linux MacVLAN interface
 {: .no_toc }
 
-![MACVLAN in one picture]({{ '/assets/images/linux_macvlan_cover.jpg' | relative_url }})
+![Linux networking cover, "Linux MACVLAN": 4 modes, own MAC, one blind spot]({{ '/assets/images/linux_macvlan_cover.jpg' | relative_url }})
 *Four modes, and the one lookup that explains why the host can't reach its own macvlans.*
 
 ## Table of contents

@@ -10,6 +10,9 @@ publish: true
 permalink: /robotics/dynamixel/
 board_hub: true
 tags: [robotics, servo, python]
+description: "Smart servos on one half-duplex bus, and what their Python SDK really puts on the wire"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # DYNAMIXEL servos (MX-28, AX-12A)

@@ -8,12 +8,16 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
 tags: [linux, memory, testing]
+permalink: /linux_general/partition-table   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "MBR byte by byte on a test image, then GPT, the tools, and the layouts I use on boards"
+date: 2023-01-10
+last_modified_at: 2026-11-27
 ---
 
 # Disk Partition Tables: MBR & GPT
 {: .no_toc }
 
-![MBR and GPT in one picture]({{ '/assets/images/partition_table_cover.jpg' | relative_url }})
+![Linux cover, "MBR byte by byte": 64 bytes at offset 446, then GPT and board layouts]({{ '/assets/images/partition_table_cover.jpg' | relative_url }})
 *The 64 bytes at offset 446 of my test image, decoded by hand, say exactly what parted and gdisk say.*
 
 ## Table of contents
@@ -196,7 +200,7 @@ parted -s test.img -- unit s mkpart primary ext2 1081344 -1s
 Checking it with `parted` (the output I saved in 2023):
 
 ```
-Disk /home/thanh/build/thanhle/ws/learns/mkfs_mmd_mcopy/test.img: 1049MB
+Disk ~/test.img: 1049MB
 Sector size (logical/physical): 512B/512B
 Partition Table: msdos
 Disk Flags:

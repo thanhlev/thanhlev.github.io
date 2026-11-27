@@ -13,14 +13,17 @@ result: "NPU INT8 32x one CPU thread on YAMNet (1.44 vs 45.68 ms), 6.5x four thr
 edge_ai: true   # listed on /edge-ai/
 edge_ai_index: 10
 tags: [rockchip, arm, npu, edge-ai, linux, android]
+description: "Radxa's RKNN guide for the ROCK 3A read side by side with my own runs: converting with rknn-toolkit2, calling librknnrt from C, NPU against CPU and GPU, and the traps the docs don't mention"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # The RK3568 NPU: what Radxa's docs say, and what it did on my boards
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The result first]({{ '/assets/images/boards/rock3a/npu_rknn_cover.jpg' | relative_url }})
-*The result first: YAMNet runs 32 times faster on the NPU than on one A55 thread (1.44 against 45.68 ms), about 0.49 TOPS of real work.*
+![ROCK 3A cover, "The RK3568 NPU": 32 × one CPU thread, Radxa's docs vs my runs]({{ '/assets/images/boards/rock3a/npu_rknn_cover.jpg' | relative_url }})
+*YAMNet runs 32 times faster on the NPU than on one A55 thread (1.44 against 45.68 ms), about 0.49 TOPS of real work.*
 
 ## Situation
 
@@ -36,9 +39,9 @@ the pages it pulls in, and then put my own runs next to it.
 
 ![Convert on the PC, run on the board]({{ '/assets/images/boards/rock3a/npu_flow.png' | relative_url }})
 
-The flow both of us follow. Left: rknn-toolkit2 turns a model into a `.rknn` file on an x86 PC. Right:
+*The flow both of us follow. Left: rknn-toolkit2 turns a model into a `.rknn` file on an x86 PC. Right:
 the board loads it through the runtime and the `rknpu` driver. The blocks with a yellow marker are the
-path I took: the C API, not the Python one the docs use, and an NPU clock I pin before I measure anything.
+path I took: the C API, not the Python one the docs use, and an NPU clock I pin before I measure anything.*
 
 ## Task
 
@@ -230,8 +233,8 @@ GPU was the slowest option I tried, slower even than one CPU thread.
 
 ![ms per inference on NPU, CPU and GPU]({{ '/assets/images/boards/rock3a/npu_ms_models.png' | relative_url }})
 
-Log scale, so every bar fits: YAMNet from 1.44 ms on the NPU to 45.68 ms on one thread; Real-ESRGAN from
-219.2 ms as INT8 to 3.5 s on the GPU; YOLOv5s only gains 1.3 ms from the 1 GHz overclock.
+*Log scale, so every bar fits: YAMNet from 1.44 ms on the NPU to 45.68 ms on one thread; Real-ESRGAN from
+219.2 ms as INT8 to 3.5 s on the GPU; YOLOv5s only gains 1.3 ms from the 1 GHz overclock.*
 
 | Model, one run | NPU | CPU | GPU (Mali-G52) | Where |
 |---|---|---|---|---|
@@ -241,7 +244,7 @@ Log scale, so every bar fits: YAMNet from 1.44 ms on the NPU to 45.68 ms on one 
 | YOLOv5s 640 | 34.58 ms INT8 at 1 GHz | not measured | not measured | my Android 14 |
 | RetinaFace 320 | 2.76 ms INT8 at 1 GHz | not measured | not measured | my Android 14 |
 
-How close is that to the spec? Rockchip quotes 0.8 or 1 TOPS depending on the document. The upscaler is
+Against the spec: Rockchip quotes 0.8 or 1 TOPS depending on the document. The upscaler is
 easy to count by hand: 47.55 GMAC per frame, done in the 192.6 ms of `rknn_run`. That's 247 GMAC/s, or
 0.49 TOPS, about half the advertised number, on a model that is nothing but 3 x 3 convolutions. The
 bigger variant with twice the layers reached 300 GMAC/s, so longer graphs keep the NPU busier.

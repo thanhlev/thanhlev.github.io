@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/control/control-library/
 notes_hub: true
 tags: [control, simulation, cpp, testing]
+description: "A header-only C++ control library I wrote for small MCUs, and the demos that check every law against a plant instead of a promise"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # My control library (ctl): PID to MPC, in simulation
@@ -39,7 +42,7 @@ one number in my gallery demo: ADRC, sliding mode and super-twisting against a w
 torque, MRAC and the Smith predictor with a right, wrong or missing model; a motion profile with
 feedforward, and pure pursuit against Stanley; the complementary filter, EKF and UKF. For those I wrote a
 small measurement demo that pushes each law past its comfortable case, and ran it in both precisions on
-2026-11-23. The unit tests ran alongside: 805,780 checks in double, 805,783 in float, no failures.
+2026-11-23. The unit tests ran alongside: 805 780 checks in double, 805 783 in float, no failures.
 
 ## The stories
 

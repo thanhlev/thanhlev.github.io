@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Computed torque, MRAC, Smith predictor: 0.14 % overshoot with the right model, and what a wrong one costs"
+title: "Computed torque, MRAC, Smith predictor: right, wrong or missing model"
 short_description: "Three laws that lean on a model, each run with the true model, a wrong one and none: a one-link arm, a first-order plant that isn't what I seeded, and a 0.5 s dead time"
 status: "Done"
 picture: "assets/images/control/control-library/model_based_cover.jpg"   # 2026-11-23 cover, story_cover.py
@@ -11,14 +11,17 @@ permalink: /embedded/control/control-library/model-based
 board_parent: control-library
 result: "Computed torque 0.14 % overshoot from both poses (9.5 % and 1.5 % without gravity); MRAC model error 0.245 -> 0.0011; Smith predictor turns a 6.81 swing into a settled loop while its delay is 0.45-0.60 s of the true 0.50"
 tags: [control, simulation, cpp]
+description: "Three laws that lean on a model, each run with the true model, a wrong one and none: a one-link arm, a first-order plant that isn't what I seeded, and a 0.5 s dead time"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
-# Computed torque, MRAC, Smith predictor: 0.14 % overshoot with the right model, and what a wrong one costs
+# Computed torque, MRAC, Smith predictor: right, wrong or missing model
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/model_based_cover.jpg' | relative_url }})
-*The result first: with the exact model, computed torque gives 0.14 % overshoot from 0.2 rad and from 1.4 rad alike. In simulation.*
+![Control library cover, "What a model buys": 0.14 % overshoot, and what a wrong one costs]({{ '/assets/images/control/control-library/model_based_cover.jpg' | relative_url }})
+*With the exact model, computed torque gives 0.14 % overshoot from 0.2 rad and from 1.4 rad alike. In simulation.*
 
 ![Normalised arm angle for three models and two starting angles]({{ '/assets/images/control/control-library/adv_computed_torque.png' | relative_url }})
 *Blue, exact model: both starts on one curve. Red, no gravity in the model: two different shapes, and 0.019 rad of sag at the end.*

@@ -10,13 +10,16 @@ publish: true
 permalink: /embedded/boards/nanopi2-fire/
 board_hub: true
 tags: [samsung, arm, freertos, bare-metal, boot, camera]
+description: "An old quad Cortex-A9 board from FriendlyELEC, taken from the boot ROM up to a FreeRTOS webcam that finds faces"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # NanoPi 2 Fire
 {: .no_toc }
 
 ![The NanoPi 2 Fire in numbers]({{ '/assets/images/boards/nanopi2-fire/np2f_hub_cover.jpg' | relative_url }})
-*What came out of it: YuNet faces in 27 ms on the four A9s, the webcam on HDMI for 1.5 % of a core, 3.4 s from reset to picture, and 3.93 times the speed on four cores.*
+*YuNet faces in 27 ms on the four A9s, the webcam on HDMI for 1.5 % of a core, 3.4 s from reset to picture, and 3.93 times the speed on four cores.*
 
 ![My bench: the NanoPi 2 Fire, a 16-LED ring, the webcam and the HDMI screen](/assets/images/boards/nanopi2-fire/np2f_bench.jpg)
 
@@ -25,7 +28,7 @@ It has a Samsung S5P4418: four Cortex-A9 cores rated at 1.4 GHz, 1 GB of DDR3 on
 Gigabit Ethernet, HDMI, a microSD slot, one micro-USB and a Raspberry-Pi-style 40-pin header. No eMMC,
 no Wi-Fi. The PMIC is an AXP228.
 
-Why bother with a board this old? Two reasons. Its vendor software is only lightly maintained, so if I
+I picked a board this old for two reasons. Its vendor software is only lightly maintained, so if I
 want something modern on it I have to build it myself. And the S5P4418 boot ROM falls back to USB when
 there's no card, which means I can push code into SRAM from my PC and start from zero: no U-Boot, no
 Linux, just my own code and the Cortex-A9 manual.
@@ -43,8 +46,8 @@ The USB boot ROM let me load my own code into SRAM, and from there I brought up 
 hand. On top of that went FreeRTOS with a shell, first one kernel per core and then one kernel on all
 four. Then the USB webcam on HDMI, with the copy on DMA and the decode on the JPEG unit, and a microSD
 card that boots straight into it. On a different card I ran FriendlyELEC's Android 7.1.2 and drove a
-WS2812 ring from it. The last big piece was person and face detection on the webcam stream, which went
-from 642 ms a run down to 27 ms.
+WS2812 ring from it. The last big piece was detection on the webcam stream: person detection went from 642 ms a
+run to 87 ms, and faces from 85 ms to 27 ms.
 
 ## The write-ups
 

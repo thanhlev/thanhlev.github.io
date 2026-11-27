@@ -11,14 +11,17 @@ permalink: /embedded/mcu/esp32-s3/usb-webcam
 board_parent: esp32-s3
 tags: [esp32, usb, camera, freertos]
 result: "30.3 fps at 640x480 to 320x240, 1819 frames in 60 s, worst gap 34 ms"
+description: "UVC + MJPEG from a video file in flash: four sizes, the frame budget full speed allows, and the stutter I had to chase out"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # An ESP32-S3 that pretends to be a USB webcam
 
 [Back to the ESP32-S3 hub]({{ '/embedded/mcu/esp32-s3/' | relative_url }})
 
-![The result first]({{ '/assets/images/mcu/esp32-s3/usb_webcam_cover.jpg' | relative_url }})
-*The result first: 30.3 fps, 1819 frames in 60 s, the worst gap 34 ms.*
+![ESP32-S3 cover, "A fake USB webcam": 30.3 fps, plays a video from flash]({{ '/assets/images/mcu/esp32-s3/usb_webcam_cover.jpg' | relative_url }})
+*30.3 fps, 1819 frames in 60 s, the worst gap 34 ms.*
 
 ## Situation
 

@@ -4,3 +4,21 @@
 #   (used in _layouts/default.html page chips and tags.md buttons + cards).
 # 2026-11-23 · new (user «tôi muốn hiện NPU chữ hoa»)
 npu: NPU
+# 2026-11-27 · more acronyms and brand spellings (site review). Keys are the lowercase tags as used in front
+# matter; a tag not listed here is shown as it is. wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+freertos: FreeRTOS
+risc-v: RISC-V
+edge-ai: Edge AI
+cpp: "C++"
+gpu: GPU
+usb: USB
+led: LED
+mcu: MCU
+cad: CAD
+esp32: ESP32
+esp8266: ESP8266
+x86: x86
+wifi: Wi-Fi
+lidar: Lidar
+yocto: Yocto
+android: Android

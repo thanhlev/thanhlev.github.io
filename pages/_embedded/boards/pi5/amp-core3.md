@@ -11,22 +11,26 @@ permalink: /embedded/boards/pi5/amp-core3
 board_parent: pi5
 result: "QEMU: 13/13 selftest checks pass, start 54.8 ms, stop 28.3 ms; not run on the board yet"
 tags: [raspberry-pi, arm, freertos, linux, simulation]
+description: "A kernel module that unplugs one A76, starts FreeRTOS on it with PSCI, and gives it back, with no reboot"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Lending core 3 of a running Linux to FreeRTOS (QEMU so far)
 
 [Back to the Pi 5 hub]({{ '/embedded/boards/pi5/' | relative_url }}) · QEMU runs 2026-10-30, board run not done
 
-![The AMP story in one picture]({{ '/assets/images/boards/pi5/pi5_amp_cover.jpg' | relative_url }})
-*The whole story in one picture: 13 of 13 checks pass on QEMU, core 3 starts in 54.8 ms and comes back in 28.3 ms. Not run on the board yet.*
+![Raspberry Pi 5 cover, "Core 3 lent to FreeRTOS": 13 / 13 checks, and given back, no reboot]({{ '/assets/images/boards/pi5/pi5_amp_cover.jpg' | relative_url }})
+*13 of 13 checks pass on QEMU, core 3 starts in 54.8 ms and comes back in 28.3 ms. Not run on the board yet.*
 
 ![Who runs where: cores 0-2 Linux, core 3 FreeRTOS]({{ '/assets/images/boards/pi5/pi5_amp_arch.png' | relative_url }})
+*Cores 0 to 2 run Linux, core 3 runs FreeRTOS; in QEMU core 3 starts in 54.8 ms and comes back in 28.3 ms.*
 
 ## Situation
 
 Linux is good at almost everything except promising a deadline. The usual trick is AMP: give one core
 to a small RTOS that only does the timed work, keep Linux on the rest. I'd done that on my ROCK 3A
-(RK3568) and measured 2.3 to 7.8 us wake-up latency for a 1 kHz task there. The Pi 5 has four A76
+(RK3568) and measured 2.3 to 7.8 µs wake-up latency for a 1 kHz task there. The Pi 5 has four A76
 cores, so it's the obvious next board.
 
 But the usual way of doing AMP means changing the boot setup: reserved memory in the device tree,
@@ -95,4 +99,4 @@ Run it on the Pi 5 the day I'm allowed to write to it: copy only our sources ove
 build the module against the Pi's own headers (it runs 6.18.50, I built against 6.18.59), then
 `insmod`, `ampctl selftest`, `rmmod`. Things QEMU can't prove: whether the firmware puts the timer PPI
 in a group core 3 can use, and the cache maintenance (QEMU models no caches, so a missing clean would
-still pass). Then the real wake-up latency, next to the ROCK 3A's 2.3 to 7.8 us.
+still pass). Then the real wake-up latency, next to the ROCK 3A's 2.3 to 7.8 µs.

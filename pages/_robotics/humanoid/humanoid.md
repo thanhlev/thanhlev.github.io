@@ -10,6 +10,9 @@ publish: true
 permalink: /robotics/humanoid/
 board_hub: true
 tags: [robotics, kinematics, simulation, servo]
+description: "My thesis robot, brought back as a model: my own C++ kinematics library, MuJoCo physics, an online walker with IMU feedback"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Humanoid (17-servo biped)
@@ -22,8 +25,8 @@ microcontroller that played the frames back. It never read anything back from a 
 original build, with the video of the real thing, is still on its own page:
 [where it started]({{ '/robotics/humanoid/thesis' | relative_url }}).
 
-In September 2026 I ported the code to Python and C++ and asked a simple question: does the
-inverse kinematics actually hit its targets? It didn't. Every frame of the walk was off by
+In September 2026 I ported the code to Python and C++ and checked one simple thing: whether the
+inverse kinematics actually hits its targets. It didn't. Every frame of the walk was off by
 166 mm (median), and the 42 unit tests passed anyway because they only checked array shapes.
 That started a month of evenings on the model.
 

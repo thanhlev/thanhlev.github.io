@@ -13,6 +13,9 @@ result: "Hang fixed (417 s clean past the 186 s mark); L2 on: YuNet 42 → 27 ms
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 4
 tags: [samsung, arm, edge-ai, memory, camera]
+description: "A watchdog black box that pointed at one bad MJPEG frame, then the PL310 L2 that hung the board until I read the vendor's sources"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A hang at 186 s, and a 512 KB L2 cache nobody had switched on
@@ -20,8 +23,8 @@ tags: [samsung, arm, edge-ai, memory, camera]
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
-![The hang and L2 story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_l2_cover.jpg' | relative_url }})
-*The whole story in one picture: 417 s clean past the old 186 s hang, and YuNet down from 42 to 27 ms once the L2 was on. The board is my 3D model of it.*
+![NanoPi 2 Fire cover, "A hang, then the L2": 27 ms YuNet (was 42), 512 KB nobody switched on]({{ '/assets/images/boards/nanopi2-fire/np2f_l2_cover.jpg' | relative_url }})
+*417 s clean past the old 186 s hang, and YuNet down from 42 to 27 ms once the L2 was on. The board is my 3D model of it.*
 
 1. TOC
 {:toc}
@@ -36,8 +39,8 @@ one still frame, nothing on the UART. And the watchdog, which I'd armed weeks be
 
 *My screen on a normal card boot: the webcam looking at two toy dinosaurs, the ring lit on the right. On the bad days it looked exactly like this, except the picture never moved again.*
 
-The day after, with the hang gone, I asked myself a different question: is there anything on this SoC
-that should be on and isn't?
+The day after, with the hang gone, I went looking for something different: anything on this SoC
+that should be on and isn't.
 
 ## Task
 

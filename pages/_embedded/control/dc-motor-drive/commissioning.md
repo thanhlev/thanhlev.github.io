@@ -11,16 +11,20 @@ permalink: /embedded/control/dc-motor-drive/commissioning
 board_parent: dc-motor-drive
 result: "Six motor parameters identified within 0.7 % (datasheet off by 17-50 %) in 4.9 s; origin exact to the count, final error 0.7 counts"
 tags: [motor, control, simulation, cpp]
+description: "Enable, identify R, L, Kt, J, b and friction on the drive itself, re-tune from that, home on a hard stop, then move 30 rad"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Commissioning from a datasheet that's 50 % wrong
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/dc-motor-drive/commissioning_cover.jpg' | relative_url }})
-*The result first: all six motor parameters within 0.7 % in 4.9 s, from a datasheet that was off by up to 50 %.*
+![DC motor drive cover, "Datasheet 50 % wrong": 0.7 % on six parameters, the drive measures the motor]({{ '/assets/images/control/dc-motor-drive/commissioning_cover.jpg' | relative_url }})
+*All six motor parameters within 0.7 % in 4.9 s, from a datasheet that was off by up to 50 %.*
 
 ![The 30 rad move after homing: profile and true shaft]({{ '/assets/images/control/dc-motor-drive/dcm_bringup_move.png' | relative_url }})
+*The 30 rad move after homing: the profile and the true shaft, 0.7 counts apart at the end.*
 
 ## Situation
 

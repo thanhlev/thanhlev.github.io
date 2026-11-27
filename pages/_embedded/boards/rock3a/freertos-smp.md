@@ -11,16 +11,20 @@ permalink: /embedded/boards/rock3a/freertos-smp
 board_parent: rock3a
 result: "CoreMark 7634.83 at 1992 MHz on one core, 15.33/MHz on four, tick jitter ±0.5 µs"
 tags: [rockchip, arm, freertos, bare-metal]
+description: "rtos_cli from Maskrom: GICv3 at Secure EL1, cpufreq up to 1992 MHz, CoreMark, then an AArch64 SMP port"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # FreeRTOS on all four Cortex-A55 cores, with my own shell
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The SMP story in one picture]({{ '/assets/images/boards/rock3a/r3a_smp_cover.jpg' | relative_url }})
-*The whole story in one picture: CoreMark 7634.83 on one A55 at 1992 MHz, 15.33 per MHz on all four, and a tick that stays within ±0.5 µs.*
+![ROCK 3A cover, "FreeRTOS on four A55s": 7634.83 iter/s, CoreMark at 1992 MHz]({{ '/assets/images/boards/rock3a/r3a_smp_cover.jpg' | relative_url }})
+*CoreMark 7634.83 on one A55 at 1992 MHz, 15.33 per MHz on all four, and a tick that stays within ±0.5 µs.*
 
 ![rtos_cli boot banner on the UART]({{ '/assets/images/boards/rock3a/rtos_cli_banner.png' | relative_url }})
+*The `rtos_cli` boot banner on the UART, the shell that later runs CoreMark at 7634.83 on one A55.*
 
 ## Situation
 
@@ -39,7 +43,7 @@ AArch64 port doesn't support.
 
 ![The smp command on my shell]({{ '/assets/images/boards/rock3a/smp_cores.png' | relative_url }})
 
-What I was after, as my shell shows it: `smp on` puts all four A55s at 100 % (359 M steps/s each at 1799 MHz), `smp off` sends cores 1 to 3 back to WFE. The prompt is my own ("cậu bé ham vọc" means roughly "the kid who pokes at things").
+*What I was after, as my shell shows it: `smp on` puts all four A55s at 100 % (359 M steps/s each at 1799 MHz), `smp off` sends cores 1 to 3 back to WFE. The prompt is my own ("cậu bé ham vọc" means roughly "the kid who pokes at things").*
 
 ## Action
 
@@ -64,7 +68,7 @@ CoreMark went in as a shell command, with the TSADC temperature printed next to 
 
 ![cpufreq and ps on the UART]({{ '/assets/images/boards/rock3a/smp_cpufreq_ps.png' | relative_url }})
 
-`cpufreq` prints the OPP table (copied from Linux's `rk3568.dtsi`) next to `vdd_cpu` on the TCS4525: 1799 MHz measured at 1.150 V, and 1992 only with `force` because Linux's divider table doesn't have it. Under it, `ps`: the shell, idle at 95.2 % and the timer task.
+*`cpufreq` prints the OPP table (copied from Linux's `rk3568.dtsi`) next to `vdd_cpu` on the TCS4525: 1799 MHz measured at 1.150 V, and 1992 only with `force` because Linux's divider table doesn't have it. Under it, `ps`: the shell, idle at 95.2 % and the timer task.*
 
 It ran at six clocks from 407 to 1991 MHz; the CRCs matched every time (`crcfinal 0x33ff`).
 

@@ -8,12 +8,16 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
 tags: [networking, linux]
+permalink: /linux_networking/virtual-interface   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Bridge, VLAN, macvlan, ipvlan, veth, TUN/TAP, tunnels, VXLAN, WireGuard, dummy, bond: what each is and the ip commands"
+date: 2023-02-05
+last_modified_at: 2026-11-27
 ---
 
 # Virtual Interfaces in Linux
 {: .no_toc }
 
-![Virtual interfaces in one picture]({{ '/assets/images/virtual_interface_cover.jpg' | relative_url }})
+![Linux networking cover, "Virtual interfaces": 12 interface types, bridge to WireGuard]({{ '/assets/images/virtual_interface_cover.jpg' | relative_url }})
 *Twelve interface types, each with its ip recipe; two veth pairs and a bridge are what Docker's bridge driver builds.*
 
 ## Table of contents

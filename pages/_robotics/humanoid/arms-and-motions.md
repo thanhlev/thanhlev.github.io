@@ -11,6 +11,9 @@ permalink: /robotics/humanoid/arms-and-motions
 board_parent: humanoid
 result: "In MuJoCo wave, squat, dance and kick stay up (tilt ≤ 2°); the jump is 0.08 s in the air with the CoM 2.1 mm up"
 tags: [robotics, kinematics, simulation, servo]
+description: "Two 3-joint AX-12A arms, five whole-body motions on the same balance, and servo speed limits that keep the jump honest"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Arms, a dance and a 2 mm jump
@@ -21,6 +24,7 @@ tags: [robotics, kinematics, simulation, servo]
 *All five motions stay up in MuJoCo; the jump is 0.08 s in the air with the CoM 2.1 mm up.*
 
 ![The jump: crouch −45 mm, extend, a short flight]({{ '/assets/images/robotics/humanoid/motion_jump.gif' | relative_url }})
+*The jump in MuJoCo: a −45 mm crouch, the extension and 0.08 s in the air.*
 
 ## Situation
 
@@ -46,6 +50,7 @@ AX-12A 59 rpm no-load). The motion player is the walker with keyframes: the moti
 becomes the ZMP reference, and the pelvis is placed so the CoM of legs, arms and torso follows it.
 
 ![Dance: 12 beats, ±10 mm sway, arms alternating]({{ '/assets/images/robotics/humanoid/motion_dance.gif' | relative_url }})
+*The dance in MuJoCo: 12 beats, ±10 mm of sway, arms alternating.*
 
 Then I redrew the torso as a frame (hip bar, spine, shoulder bar, two braces, board, head servo)
 with the same mass and inertia as the box. The first run had no collision body for it and logged

@@ -10,12 +10,15 @@ publish: true
 permalink: /embedded/boards/rock3a/
 board_hub: true
 tags: [rockchip, arm, npu, freertos, bare-metal, linux]
+description: "Bare metal, FreeRTOS on four A55s, a 154 ms boot, NPU without Linux, Android 14, a hidden RISC-V MCU"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Radxa ROCK 3A (RK3568)
 
 ![The ROCK 3A in numbers]({{ '/assets/images/boards/rock3a/r3a_hub_cover.jpg' | relative_url }})
-*What came out of it: FreeRTOS on core 3 at 154 ms, 25.09 fps of NPU face detection with no Linux, CoreMark 7634.83 on one A55, and a LED ring driven from the RISC-V MCU.*
+*FreeRTOS on core 3 at 154 ms, 25.09 fps of NPU face detection with no Linux, CoreMark 7634.83 on one A55, and a LED ring driven from the RISC-V MCU.*
 
 
 The ROCK 3A is Radxa's Pi-sized board with a Rockchip RK3568: four Cortex-A55 cores, a Mali-G52,
@@ -24,7 +27,7 @@ RK3568 I could afford, with an NPU I could poke at and a datasheet-level manual 
 actually public.
 
 The first thing I did with it, a few years ago, was a Yocto port. In October 2026 I came back to it
-with a different question: how far down can I go on this chip? Not "install
+with a different goal: to go as far down this chip as I could. Not "install
 Debian and run a demo", but start from the BootROM and own every stage I can.
 
 It went further than I planned. Most of what follows was done in about five weeks of evenings and a

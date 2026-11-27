@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/pi5/
 board_hub: true
 tags: [raspberry-pi, arm, freertos, linux, simulation]
+description: "A read-only survey of my Pi 5, and FreeRTOS borrowing one of its cores from a running Linux (QEMU so far)"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Raspberry Pi 5 (BCM2712 + RP1)

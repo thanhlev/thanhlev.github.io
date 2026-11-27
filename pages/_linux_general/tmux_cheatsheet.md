@@ -8,12 +8,16 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 3
 publish: true
 tags: [linux, tools]
+permalink: /linux_general/tmux-cheatsheet   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "The tmux commands I actually use: sessions, panes, send-keys scripting, my tmux.conf"
+date: 2023-02-14
+last_modified_at: 2026-11-27
 ---
 
 # Tmux Quick Reference
 {: .no_toc }
 
-![Tmux in one picture]({{ '/assets/images/tmux_cheatsheet_cover.jpg' | relative_url }})
+![Linux cover, "Tmux quick reference": 4 levels, server to pane, sessions that survive]({{ '/assets/images/tmux_cheatsheet_cover.jpg' | relative_url }})
 *Four levels, server to pane, and send-keys to script all of it.*
 
 ## Table of contents

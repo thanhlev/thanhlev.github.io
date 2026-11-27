@@ -11,16 +11,20 @@ permalink: /embedded/boards/pi1/webcam-and-ring
 board_parent: pi1
 result: "Stream restarts ~9/min -> 0 (2117 runs in 121 s, 0 errors); ring lit again with 0xF8"
 tags: [raspberry-pi, arm, camera, led]
+description: "A DWC2 isochronous bug I first blamed on the faces, and a WS2812 bit that was 160 ns too short"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # The webcam that kept dropping, and the LED ring that went dark
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-26 and 2026-10-27
 
-![The webcam and ring story in one picture]({{ '/assets/images/boards/pi1/pi1_ring_cover.jpg' | relative_url }})
-*The whole story in one picture: from about 9 stream restarts a minute to 0 in 121 s (2117 detector runs), and the ring lit again with 0xF8.*
+![Raspberry Pi 1 B cover, "Webcam drops, dark ring": 0 restarts in 121 s, two bugs, one wrong theory]({{ '/assets/images/boards/pi1/pi1_ring_cover.jpg' | relative_url }})
+*From about 9 stream restarts a minute to 0 in 121 s (2117 detector runs), and the ring lit again with 0xF8.*
 
 ![The FreeRTOS tasks: USB IRQ, watchdog, face, led]({{ '/assets/images/boards/pi1/pi1_tasks.png' | relative_url }})
+*The FreeRTOS tasks: USB IRQ, watchdog, face and led. After the fix the stream ran 121 s with 0 restarts.*
 
 ## Situation
 
@@ -85,7 +89,7 @@ Linux's dwc2 driver arms for the *next* frame's parity. I switched to one channe
 (I also tried a lighter recovery, resetting only the core. The hub port was lost after `CSftRst`, so
 the full bring-up stays as the fallback.)
 
-**The dark ring.** First question: does SPI0 even move the pin?
+**The dark ring.** First check: whether SPI0 even moves the pin.
 
 ```
 ring probe

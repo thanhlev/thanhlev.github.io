@@ -11,6 +11,9 @@ permalink: /embedded/boards/db8074/speed-up
 board_parent: db8074
 result: "Boot to home 264 s to 64 s; CPU 0.80 to 2.15 GHz; a DSI IRQ from 59 000/s to 1/s"
 tags: [qualcomm, arm, gpu, boot]
+description: "The board ran very slowly. A GPU driver, ported CPU tables and one interrupt firing 59 000 times a second"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # From 264 s to 64 s: touch, a real GPU, and the Krait cores at 2.15 GHz
@@ -18,8 +21,8 @@ tags: [qualcomm, arm, gpu, boot]
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
-![The result first]({{ '/assets/images/boards/db8074/d8k_speed_cover.jpg' | relative_url }})
-*The result first: boot to the home screen from 264 s to 64 s, with the Krait cores at 2.15 GHz instead of 0.80.*
+![DragonBoard 8074 cover, "From 264 s to 64 s": 2.15 GHz (was 0.80), boot to the home screen]({{ '/assets/images/boards/db8074/d8k_speed_cover.jpg' | relative_url }})
+*Boot to the home screen from 264 s to 64 s, with the Krait cores at 2.15 GHz instead of 0.80.*
 
 1. TOC
 {:toc}
@@ -58,6 +61,7 @@ that by re-measuring with the screen on.
 One thing that didn't help, for the record: changing the console log level alone (291 s).
 
 ![Boot time to boot_completed=1 for each build and boot cycle](/assets/images/boards/db8074/d8k_l8_boots.png)
+*Time to `boot_completed=1` for each build and boot cycle, from 264 s down to 64 s.*
 
 ## Result
 

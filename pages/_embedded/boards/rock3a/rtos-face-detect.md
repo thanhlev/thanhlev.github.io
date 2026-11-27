@@ -9,23 +9,26 @@ index: 13
 publish: true
 permalink: /embedded/boards/rock3a/rtos-face-detect
 board_parent: rock3a
-result: "718 webcam frames in 30 s (25.09 fps), faces in 703, JPEG to screen 28.0 ms avg, 0 dropped"
+result: "718 webcam frames in 30 s (25.09 fps at 320x240), faces in 703, JPEG to screen 28.0 ms avg, 0 dropped"
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 0
 tags: [rockchip, arm, edge-ai, npu, freertos, bare-metal]
+description: "Driving the RK3568 NPU, my own xHCI/UVC host and a JPEG decoder from FreeRTOS, RetinaFace boxes on HDMI"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Webcam to NPU to HDMI, with no Linux on the chip
 
 [Back to the ROCK 3A hub]({{ '/embedded/boards/rock3a/' | relative_url }})
 
-![The whole story in one picture]({{ '/assets/images/boards/rock3a/rtos_face_cover.jpg' | relative_url }})
-*The whole story in one picture: 25.09 fps from webcam to HDMI, the NPU doing the faces, no Linux on the chip.*
+![ROCK 3A cover, "Webcam → NPU → HDMI": 25.09 fps, no Linux on the chip]({{ '/assets/images/boards/rock3a/rtos_face_cover.jpg' | relative_url }})
+*25.09 fps from webcam to HDMI, the NPU doing the faces, no Linux on the chip.*
 
 ![What each core does for one frame]({{ '/assets/images/boards/rock3a/rtos_face_cores.png' | relative_url }})
 
-Per-core time for one frame, averaged over the 718 frames of the final run (labels in Vietnamese, from
-my wiki): JPEG decode on core 0, the NPU on core 1, decode of the boxes and drawing on core 2.
+*Per-core time for one frame, averaged over the 718 frames of the final run (labels in Vietnamese, from
+my wiki): JPEG decode on core 0, the NPU on core 1, decode of the boxes and drawing on core 2.*
 
 ## Situation
 
@@ -36,7 +39,7 @@ ships the runtime as a closed `.so` for Linux and Android.
 
 ![NPU stack on Linux vs what the RTOS does itself]({{ '/assets/images/boards/rock3a/face_npu_linux_vs_rtos.png' | relative_url }})
 
-The NPU stack on Debian (left) and what my FreeRTOS has to do itself for each layer (right). The top half happens on every job; the bottom five (regulator, clock, power domain, DDR firewall, IOMMU) are what Linux and TF-A quietly did at boot.
+*The NPU stack on Debian (left) and what my FreeRTOS has to do itself for each layer (right). The top half happens on every job; the bottom five (regulator, clock, power domain, DDR firewall, IOMMU) are what Linux and TF-A quietly did at boot.*
 
 ## Task
 
@@ -67,11 +70,11 @@ RTOS read are byte-identical to what Linux shows in sysfs (43, 699 and 699 bytes
 
 ![Which USB port goes to which controller]({{ '/assets/images/boards/rock3a/face_usb_map.png' | relative_url }})
 
-Measured on Debian first, on 2026-11-01: the webcam's port is on the USB 2.0 side of the xHCI at `0xfd000000`, behind a 4-port hub with the two cameras of the stereo pair (`05a3:9601`, `05a3:9602`). So no SuperSpeed needed.
+*Measured on Debian first, on 2026-11-01: the webcam's port is on the USB 2.0 side of the xHCI at `0xfd000000`, behind a 4-port hub with the two cameras of the stereo pair (`05a3:9601`, `05a3:9602`). So no SuperSpeed needed.*
 
 ![usb on the RTOS: nine steps from Maskrom to descriptors]({{ '/assets/images/boards/rock3a/face_usb_bringup.png' | relative_url }})
 
-The nine steps my `usb` command goes through, measured on the board: SoC + DWC3 up in 409/429 ms (400 ms of it deliberate waits), xHCI reset 3 ms, hub and both cameras enumerated in 743 ms, descriptors identical to Linux's 43 + 699 + 699 bytes.
+*The nine steps my `usb` command goes through, measured on the board: SoC + DWC3 up in 409/429 ms (400 ms of it deliberate waits), xHCI reset 3 ms, hub and both cameras enumerated in 743 ms, descriptors identical to Linux's 43 + 699 + 699 bytes.*
 
 MJPEG frames come over isochronous transfers: one TD per 125 µs microframe, a ring of 128 kept full,
 UVC probe/commit to agree on 640x480 MJPEG, then the payloads glued into frames using the FID/EOF bits.
@@ -103,7 +106,7 @@ rock3a> face cam 9601 320 30
 | Boxes on HDMI from still pictures | 602 frames in 10.04 s = **59.97 fps**, 0 missed flips |
 | USB bring-up | port up in 409 to 429 ms (400 ms are deliberate waits), hub + 2 cameras enumerated in 743 ms |
 | MJPEG stream | **30.04 fps**, 259 good frames in 10 s, 80 000 isochronous TDs = exactly 8000/s, 0 errors |
-| Live webcam to HDMI | 718 frames in 30 s, **25.09 fps** (30.05 fps in an earlier run with nobody in view), faces in 703 of 718, 0 dropped |
+| Live webcam to HDMI | 718 frames in 30 s, **25.09 fps** at 320x240 (30.05 fps in an earlier run with nobody in view), faces in 703 of 718, 0 dropped |
 | JPEG to page flip | **28.0 ms** average (19.6 to 36.4) |
 
 The framebuffer read back over the UART matches the PC's render of the same JPEG in every pixel that

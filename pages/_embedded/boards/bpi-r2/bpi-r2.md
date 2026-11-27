@@ -4,12 +4,15 @@ title: "Banana Pi R2 (MT7623N): a router board I've only read so far"
 short_description: "Five Ethernet jacks on two MACs, a quad Cortex-A7, and nothing measured on the board yet"
 status: "Pending"
 picture: "assets/images/boards/bpi-r2/r2_hub_cover.jpg"   # 2026-11-23 cover, story_cover.py
-latest_release: "2026-11-22: honest hub, reading notes only"
+latest_release: "2026-11-22: hub, reading notes only"
 index: 27
 publish: true
 permalink: /embedded/boards/bpi-r2/
 board_hub: true
 tags: [arm, networking]
+description: "Five Ethernet jacks on two MACs, a quad Cortex-A7, and nothing measured on the board yet"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Banana Pi R2
@@ -26,7 +29,7 @@ wrote an empty placeholder post for that back in 2023, and got no further.
 
 In October 2026 I came back to it with the docs, the mainline U-Boot and the Linux device tree, to know
 what I'm dealing with before I plug anything in. The board wasn't on the bench then and still isn't,
-so there's no STAR write-up with a result yet. This page is honest about that.
+so there's no STAR write-up with a result yet.
 
 ![BPI-R2 overview: MT7623N, MT7530 switch with five ports, four boot stages](/assets/images/boards/bpi-r2/r2_overview.png)
 *Everything on this page in one drawing: the MT7623N, the MT7530 that turns five jacks into two MACs, and the four boot stages. All from paper, none of it checked on the board.*

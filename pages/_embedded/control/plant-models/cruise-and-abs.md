@@ -11,16 +11,20 @@ permalink: /embedded/control/plant-models/cruise-and-abs
 board_parent: plant-models
 result: "Speed loss on a 4 % grade 11.99 -> 0.18 km/h; stopping from 90 km/h 41.3 m locked vs 27.5 m with slip control, +35 % wet, +18 % snow"
 tags: [control, simulation, cpp]
+description: "Where the speed loss on a 4 % grade actually goes, and a brake plant whose gain flips sign at the friction peak"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Cruise control on a hill, and an ABS that can't be a PID
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/cruise_and_abs_cover.jpg' | relative_url }})
-*The result first: slip control stops from 90 km/h in 27.5 m instead of 41.3 m locked, and cruise control loses only 0.18 km/h on a 4 % grade.*
+![Plant models cover, "Cruise control and ABS": 27.5 m (locked 41.3), an ABS can't be a PID]({{ '/assets/images/control/plant-models/cruise_and_abs_cover.jpg' | relative_url }})
+*Slip control stops from 90 km/h in 27.5 m instead of 41.3 m locked, and cruise control loses only 0.18 km/h on a 4 % grade.*
 
 ![Speed against the 100 km/h target over the hills: P, PI, PI + grade feedforward, electric drivetrain]({{ '/assets/images/control/plant-models/ev_speed.png' | relative_url }})
+*Speed against the 100 km/h target over the hills for P, PI, PI with grade feedforward and the electric drivetrain; on a 4 % grade the loss drops from 11.99 to 0.18 km/h.*
 
 ## Situation
 
@@ -60,6 +64,7 @@ grip:
 ```
 
 ![Stopping from 90 km/h: locked wheel vs slip control]({{ '/assets/images/control/plant-models/abs_speed.png' | relative_url }})
+*Stopping from 90 km/h: 41.3 m with the wheel locked, 27.5 m with slip control.*
 
 The PID run is the control case, and I gave it an unfair advantage: the exact peak slip for this surface,
 which no real ABS knows. It stops in 27.6 m, but it sits right on the boundary where its own feedback sign

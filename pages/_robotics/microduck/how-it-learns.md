@@ -13,6 +13,9 @@ result: "gait from 16 reward terms only (largest air_time +3.0), 4096 robots on 
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 7
 tags: [robotics, simulation, edge-ai, gpu]
+description: "I read the training code to see where the gait comes from, and found two of my own notes were wrong"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # How the duck learns to walk: no reference motion, 16 rewards
@@ -20,8 +23,8 @@ tags: [robotics, simulation, edge-ai, gpu]
 
 [Back to the Microduck hub](/robotics/microduck/)
 
-![The result first]({{ '/assets/images/robotics/microduck/duck_learn_cover.jpg' | relative_url }})
-*The result first: the walk comes from 16 reward terms and no reference motion. Read from the code, not trained yet; the duck is my MuJoCo render of the open model (Microduck · Pollen Robotics · CC BY-NC-SA 4.0).*
+![Microduck cover, "How the duck learns": 16 reward terms, no reference motion]({{ '/assets/images/robotics/microduck/duck_learn_cover.jpg' | relative_url }})
+*The walk comes from 16 reward terms and no reference motion. Read from the code, not trained yet; the duck is my MuJoCo render of the open model (Microduck · Pollen Robotics · CC BY-NC-SA 4.0).*
 
 1. TOC
 {:toc}

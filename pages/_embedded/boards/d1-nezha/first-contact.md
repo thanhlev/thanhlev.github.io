@@ -11,16 +11,20 @@ permalink: /embedded/boards/d1-nezha/first-contact
 board_parent: d1-nezha
 result: "vl=4 at e32 -> VLEN 128, vsetivli SIGILL (RVV 0.7.1); FEL via reboot efex, no button"
 tags: [allwinner, risc-v, bare-metal]
+description: "Checking the vendor docs against the board over UART and OTG: RVV 0.7.1 not 1.0, ADB as root, FEL with no button"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # First contact: what the stock Nezha really runs, and which vector it really has
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-27
 
-![The result first]({{ '/assets/images/boards/d1-nezha/d1_first_cover.jpg' | relative_url }})
-*The result first: VLEN 128 and a SIGILL on vsetivli, so the vector unit is RVV 0.7.1, not 1.0. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
+![D1 Nezha cover, "RVV 0.7.1, not 1.0": 128 bit VLEN, vl = 4, what the stock board runs]({{ '/assets/images/boards/d1-nezha/d1_first_cover.jpg' | relative_url }})
+*VLEN 128 and a SIGILL on vsetivli, so the vector unit is RVV 0.7.1, not 1.0. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![The first 1 MiB of the SPI-NAND: boot0 copies per 128 KiB block]({{ '/assets/images/boards/d1-nezha/d1_nand_layout.png' | relative_url }})
+*The stock board's first 1 MiB of SPI-NAND: one boot0 copy per 128 KiB block.*
 
 ## Situation
 

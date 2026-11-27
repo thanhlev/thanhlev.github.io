@@ -11,14 +11,17 @@ permalink: /embedded/control/control-library/trajectories
 board_parent: control-library
 result: "Same gains, exact feedforward: peak tracking error 0.301 m with D on the measurement, 0.0015 m with D on the error; at 24 m/s pure pursuit is inside 10 cm after 1.30 s, Stanley after 2.32 s"
 tags: [control, simulation, cpp]
+description: "An S-curve move with exact feedforward that still missed by 0.30 m, the one PID setting that fixed it, and pure pursuit against Stanley at 6, 12 and 24 m/s"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # Motion profile and feedforward: 0.30 m to 1.5 mm by moving the derivative
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/trajectories_cover.jpg' | relative_url }})
-*The result first: the same PID and the same feedforward follow a 1 m S-curve to 1.5 mm instead of 301 mm, once the derivative looks at the error. In simulation.*
+![Control library cover, "0.30 m to 1.5 mm": 1.5 mm (was 301), by moving the derivative]({{ '/assets/images/control/control-library/trajectories_cover.jpg' | relative_url }})
+*The same PID and the same feedforward follow a 1 m S-curve to 1.5 mm instead of 301 mm, once the derivative looks at the error. In simulation.*
 
 ![Tracking error of the 1 m move for four configurations, log scale]({{ '/assets/images/control/control-library/adv_profile_feedforward.png' | relative_url }})
 *Red: derivative on the measurement, with and without feedforward, both near 0.3 m. Solid blue: derivative on the error plus feedforward, 0.0015 m at worst.*

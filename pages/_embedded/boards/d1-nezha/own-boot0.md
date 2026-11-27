@@ -11,16 +11,20 @@ permalink: /embedded/boards/d1-nezha/own-boot0
 board_parent: d1-nezha
 result: "Boot ROM -> my code from NAND, no Tina; my SPL trains 1 GiB of DDR3 in 51 ms"
 tags: [allwinner, risc-v, bare-metal, boot, memory, led]
+description: "Replacing Tina's first stage with an eGON image I build with zig, then a 24 KiB SPL that trains the DDR3 itself"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # My own boot0 in NAND block 0: an LED from SRAM, then an app in DRAM
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-28
 
-![The result first]({{ '/assets/images/boards/d1-nezha/d1_boot0_cover.jpg' | relative_url }})
-*The result first: my code straight from the boot ROM out of NAND, and my SPL training 1 GiB of DDR3 in 51 ms. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
+![D1 Nezha cover, "My own boot0": 51 ms to train 1 GiB DDR3, no Tina, no U-Boot]({{ '/assets/images/boards/d1-nezha/d1_boot0_cover.jpg' | relative_url }})
+*My code straight from the boot ROM out of NAND, and my SPL training 1 GiB of DDR3 in 51 ms. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![Where my image sits in the first 1 MiB of SPI-NAND]({{ '/assets/images/boards/d1-nezha/d1_nand_layout.png' | relative_url }})
+*Where my image sits in the first 1 MiB of SPI-NAND, the part the boot ROM reads.*
 
 ## Situation
 
@@ -71,13 +75,13 @@ SPI0 at 50 MHz, reads an app header at NAND `0x10000`, copies the app straight i
 and blinks.
 
 ![What my SPL does]({{ '/assets/images/boards/d1-nezha/d1_spl_flow.png' | relative_url }})
-*The SPL in five steps, numbers from its UART output: PLL to 1008 MHz, DDR3 trained in 51 124 us, SPI0 at 50 MHz, the app header at NAND `0x10000`, jump to `0x40000000`.*
+*The SPL in five steps, numbers from its UART output: PLL to 1008 MHz, DDR3 trained in 51 124 µs, SPI0 at 50 MHz, the app header at NAND `0x10000`, jump to `0x40000000`.*
 
 ## Result
 
 My code runs **straight from the boot ROM out of NAND**: no Tina, no OpenSBI, no U-Boot. The blink
 image is 1160 bytes of code and data, padded to 16 KiB. The SPL trains **1024 MiB of DDR3 in
-51 124 us**, reads SPI-NAND ID `c226`, and the app runs at `pc=0x4000005a` with the 8 MiB `.bss`
+51 124 µs**, reads SPI-NAND ID `c226`, and the app runs at `pc=0x4000005a` with the 8 MiB `.bss`
 check at **0 bad words**.
 
 The ROM's fallback is real and measured: with block 0 empty it boots **copy 1** (`boot_media 0x14`).

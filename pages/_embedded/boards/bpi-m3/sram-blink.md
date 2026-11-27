@@ -11,6 +11,9 @@ permalink: /embedded/boards/bpi-m3/sram-blink
 board_parent: bpi-m3
 result: "1148-byte program, 4.000 s blink finished in 4.018 s, 0 failed PMIC writes"
 tags: [allwinner, arm, bare-metal, led]
+description: "Bare metal over FEL: the user LEDs hang off the AXP813, so a blink means bringing up the RSB bus by hand"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Blinking an LED that lives on the PMIC, from 1148 bytes in SRAM
@@ -18,8 +21,8 @@ tags: [allwinner, arm, bare-metal, led]
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
 
-![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_blink_cover.jpg' | relative_url }})
-*The result first: 1148 bytes in SRAM, 12 PMIC writes and none failed, a 4.000 s blink done in 4.018 s.*
+![Banana Pi M3 cover, "Blink via the PMIC": 1148 bytes in SRAM, the LEDs hang off the AXP813]({{ '/assets/images/boards/bpi-m3/bpim3_blink_cover.jpg' | relative_url }})
+*1148 bytes in SRAM, 12 PMIC writes and none failed, a 4.000 s blink done in 4.018 s.*
 
 1. TOC
 {:toc}
@@ -87,7 +90,7 @@ registers read back what the previous run had left (0, not the power-on value 7)
 *Where the 1148 bytes sit in SRAM A2, and the only clock I had: the ROM answered USB again 4.018 s after a 4.000 s blink.*
 
 
-Honest gap: the program proves the PMIC took the writes. I didn't note down whether I watched the LEDs
+One gap: the program proves the PMIC took the writes. I didn't note down whether I watched the LEDs
 blink.
 
 ## What I'd do next

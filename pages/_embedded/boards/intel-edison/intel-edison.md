@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/intel-edison/
 board_hub: true
 tags: [intel, x86, boot, usb]
+description: "Two Atom cores at 500 MHz on a Mini Breakout: its boot measured from the USB side, then Zephyr run from RAM"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Intel Edison
@@ -25,7 +28,7 @@ The Edison is Intel's 2014 IoT module: a Merrifield/Tangier SoC with two Atom (S
 Mine sits on the Mini Breakout, which gives it an FTDI console (J3) and a USB OTG port (J16). It still
 runs ubilinux (Debian 7.8), kernel 3.10.17 and U-Boot 2014.04.
 
-Why look at it in 2026? It's x86, and every other board on my shelf is ARM. Its kernel has no device
+I looked at it in 2026 because it's x86, and every other board on my shelf is ARM. Its kernel has no device
 tree; it describes the hardware with SFI tables and PCI instead, which I'd never dealt with. And Intel
 dropped it years ago, so whatever I want on it now, I do myself.
 

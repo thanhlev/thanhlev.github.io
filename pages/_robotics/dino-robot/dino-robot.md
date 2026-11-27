@@ -10,6 +10,9 @@ publish: true
 permalink: /robotics/dino-robot/
 board_hub: true
 tags: [robotics, servo, simulation, cad]
+description: "My own biped dinosaur on the servos I already own: drawn in CadQuery, loads checked on the model, walking in MuJoCo"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Dino robot
@@ -40,7 +43,7 @@ sail-backed one with a big head and a deep body is the one I kept.
 Everything here lives in CAD or in simulation. The CAD scripts give me masses, centres of mass and
 static joint loads on the B-rep, which is how the MX-28s got placed. The head can turn and nod at the
 same time without hitting the neck. A MuJoCo model built straight from the CAD walks, turns, looks around
-and roars, and after a lot of honest bad news it survives the full sequence on 30 of 30 perturbed
+and roars, and after a lot of bad news it survives the full sequence on 30 of 30 perturbed
 robots.
 
 ## The write-ups

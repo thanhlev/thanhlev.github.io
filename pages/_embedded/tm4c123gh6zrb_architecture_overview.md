@@ -8,6 +8,10 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 9
 publish: true
 tags: [arm, mcu, bare-metal, boot]
+permalink: /embedded/tm4c123gh6zrb-architecture-overview   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "My reading notes from TI's datasheet: memory map, SRAM, flash, ROM, the ROM bootloader, EEPROM"
+date: 2023-01-11
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
@@ -16,7 +20,7 @@ tags: [arm, mcu, bare-metal, boot]
 # Tiva ™ TM4C123GH6ZRB Microcontroller [part 1]
 {: .no_toc }
 
-![TM4C123 part 1 in one picture]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_overview_cover.jpg' | relative_url }})
+![TI Tiva C TM4C123 cover, "TM4C123 at reset": 256 KB flash, 32 KB SRAM, a blank chip lands in ROM]({{ '/assets/images/ti/TM4C123GH6ZRB/tm4c_overview_cover.jpg' | relative_url }})
 *256 KB of flash, 32 KB of SRAM, and the reset path: a blank chip always lands in the ROM boot loader.*
 
 ## Table of contents

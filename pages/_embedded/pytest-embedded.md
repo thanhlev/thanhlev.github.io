@@ -10,6 +10,10 @@ index: 4
 publish: true
 tags: [esp32, testing, python, mcu]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
+permalink: /embedded/pytest-embedded   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Mình thử plugin pytest-embedded của Espressif: cài đặt, các service, chạy test hello world trên ESP32-C3"
+date: 2023-02-08
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

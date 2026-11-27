@@ -11,16 +11,20 @@ permalink: /embedded/control/plant-models/printer-hotend
 board_parent: plant-models
 result: "PI from one step test: 5.1 % overshoot, 0.10 K steady error, 2.1 K dip when the fan starts; runaway caught in 20.0 s at 231 °C"
 tags: [control, simulation, sensor, cpp]
+description: "Fit gain, time constant and dead time from one step, compute a PI from them, and catch thermal runaway by watching response, not temperature"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # 3D printer hotend: one step test, SIMC gains, and the thermistor that falls out
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/printer_hotend_cover.jpg' | relative_url }})
-*The result first: 5.1 % overshoot from one step test, and the fallen-out thermistor is caught in 20.0 s at 231 °C.*
+![Plant models cover, "Hotend from one step": 20.0 s to the trip, SIMC gains, runaway check]({{ '/assets/images/control/plant-models/printer_hotend_cover.jpg' | relative_url }})
+*5.1 % overshoot from one step test, and the fallen-out thermistor is caught in 20.0 s at 231 °C.*
 
 ![The thermistor falls out: it reads 25 °C forever while the block keeps heating, and the monitor trips at 20 s]({{ '/assets/images/control/plant-models/hotend_runaway.png' | relative_url }})
+*The thermistor falls out and reads 25 °C forever while the block keeps heating; the monitor trips at 20 s, at 231 °C.*
 
 ## Situation
 
@@ -48,6 +52,7 @@ radiation, so the fit is an approximation on purpose:
 ```
 
 ![Step test and the first-order-plus-dead-time fit]({{ '/assets/images/control/plant-models/hotend_step_fit.png' | relative_url }})
+*The step test and the first-order-plus-dead-time fit, θ/τ = 0.03.*
 
 θ/τ = 0.03 means lag-dominant, so a PI is enough. SIMC gives Kp = 0.057 duty/K and an integral time of 30.7 s, plus
 a feedforward duty of 0.51 for the setpoint:

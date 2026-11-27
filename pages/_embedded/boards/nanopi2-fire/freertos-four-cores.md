@@ -11,6 +11,9 @@ permalink: /embedded/boards/nanopi2-fire/freertos-four-cores
 board_parent: nanopi2-fire
 result: "SMP on 4 cores: 3.93× speed-up; AMP round trip 10 µs"
 tags: [samsung, arm, freertos, linux]
+description: "A FreeRTOS shell, then one kernel per core, then one kernel on all four, and the lock leak in between"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # FreeRTOS on four Cortex-A9 cores: AMP, SMP and one CPSIE too many
@@ -18,8 +21,8 @@ tags: [samsung, arm, freertos, linux]
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
-![The four-core story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_smp_cover.jpg' | relative_url }})
-*The whole story in one picture: 3.93 times the speed on four cores under one SMP kernel, and a 10 µs AMP round trip. The board is my 3D model of it.*
+![NanoPi 2 Fire cover, "FreeRTOS on four A9s": 3.93 × on four cores, AMP, SMP and one CPSIE]({{ '/assets/images/boards/nanopi2-fire/np2f_smp_cover.jpg' | relative_url }})
+*3.93 times the speed on four cores under one SMP kernel, and a 10 µs AMP round trip. The board is my 3D model of it.*
 
 1. TOC
 {:toc}
@@ -60,7 +63,7 @@ checks:
 
 ![rtos_cli test: 11 passed, 0 failed](/assets/images/boards/nanopi2-fire/np2f_rtos_test.png)
 
-(The prompt in that screenshot is from a later, coloured version of the shell.)
+*My shell's self-test: 11 passed, 0 failed. The prompt is from a later, coloured version of the shell.*
 
 ### AMP: waking core 1
 

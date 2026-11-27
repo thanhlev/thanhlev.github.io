@@ -11,16 +11,20 @@ permalink: /embedded/control/control-library/pendulum-lqr-lqi
 board_parent: control-library
 result: "LQR holds the pole with 8.7 N but sits 0.36 rad off under a 3 N torque; LQI brings it to 0.0008 rad with 6.1 N"
 tags: [control, simulation, cpp]
+description: "Old adaptive law, PID, bounded adaptive PID, LQR and LQI against a constant torque the model doesn't know about"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Five controllers on one pendulum, and the LQR that parks 0.36 rad off
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/pendulum_lqr_lqi_cover.jpg' | relative_url }})
-*The result first: under the same 3 N torque LQR parks 0.36 rad off, LQI ends at 0.0008 rad with 6.1 N.*
+![Control library cover, "Five laws, one pendulum": 0.0008 rad, LQI, LQR parks 0.36 rad off]({{ '/assets/images/control/control-library/pendulum_lqr_lqi_cover.jpg' | relative_url }})
+*Under the same 3 N torque LQR parks 0.36 rad off, LQI ends at 0.0008 rad with 6.1 N.*
 
 ![Angle after a constant 3 N torque at t = 1 s: PID, LQR, LQI]({{ '/assets/images/control/control-library/pendulum_lqr_lqi.png' | relative_url }})
+*The angle after a constant 3 N torque at t = 1 s: LQR parks 0.36 rad off, LQI comes back to 0.0008 rad.*
 
 ## Situation
 

@@ -12,6 +12,10 @@ index: 2
 publish: true
 tags: [testing, python]
 lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible has no Vietnamese glyphs)
+permalink: /embedded/pytest   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Ghi chép học pytest của mình: test file, fixtures, marks, config, plugin"
+date: 2023-02-08
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).
@@ -24,7 +28,7 @@ lang: vi   # 2026-11-23: Vietnamese post -> IBM Plex Sans (Atkinson Hyperlegible
 ![Pytest tóm tắt]({{ '/assets/images/pytest_cover.jpg' | relative_url }})
 *Ví dụ đầu cho đúng kết quả mình chờ: 1 failed, 1 passed in 0.02s, và fixture là chỗ giữ kết nối tới board.*
 
-![](../../../assets/images/pytest_diagram.png)
+![Sơ đồ pytest: các fixture (ssh, Wi-Fi, JTAG, browser, serial) đi vào pytest, pytest chạy các file test_app1 tới test_appN](../../../assets/images/pytest_diagram.png)
 ## Table of contents
 {: .no_toc }
 
@@ -74,7 +78,7 @@ pytest
 
 ============================= test session starts ==============================
 platform linux -- Python 3.10.6, pytest-7.2.1, pluggy-1.0.0
-rootdir: /home/thanhle/build/test
+rootdir: ~/build/test
 collected 2 items
 
 test_sample.py F.                                                        [100%]

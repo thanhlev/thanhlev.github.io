@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/boards/pi1/
 board_hub: true
 tags: [raspberry-pi, arm, gpu, freertos, bare-metal, camera]
+description: "A 2012 Pi with no Linux: FreeRTOS, MJPEG decoded by the VideoCore, a face detector on the 12 QPUs, a WS2812 ring"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Raspberry Pi 1 Model B (BCM2835)
@@ -30,7 +33,7 @@ revision `0x000E`, which is the B rev 2.
 
 Why this board at all: in October 2026 I'd just got FreeRTOS running on my
 [Pi Zero W]({{ '/embedded/boards/pi-zero/' | relative_url }}), same chip. The Pi 1 was sitting there
-plugged into the PC, so I asked the obvious question: does the Zero's image run on it? It did. And then
+plugged into the PC, so I tried the obvious thing first: the Zero's image on it. It ran. And then
 it turned into a bigger thing: the face detector I had on my NanoPi 2 Fire, but on a 2012 board, with
 no Linux under it.
 

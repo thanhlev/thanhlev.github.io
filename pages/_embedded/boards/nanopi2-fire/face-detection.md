@@ -13,6 +13,9 @@ result: "Person detection 642 ms → 184 ms (4 cores); faces 85 → 42 ms, same 
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 3
 tags: [samsung, arm, edge-ai, freertos, bare-metal, camera]
+description: "FastestDet and YuNet hand-lowered to C + NEON inside the FreeRTOS webcam firmware, then made fast enough to follow a face"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Face detection on four 2016 Cortex-A9 cores, no NPU, no Linux
@@ -20,8 +23,8 @@ tags: [samsung, arm, edge-ai, freertos, bare-metal, camera]
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
-![The result first]({{ '/assets/images/boards/nanopi2-fire/np2f_face_cover.jpg' | relative_url }})
-*The result first: faces in 42 ms per pass on four 2016 Cortex-A9 cores, no NPU and no Linux.*
+![NanoPi 2 Fire cover, "Faces on 4 × Cortex-A9": 42 ms per face pass, no NPU, no Linux]({{ '/assets/images/boards/nanopi2-fire/np2f_face_cover.jpg' | relative_url }})
+*Faces in 42 ms per pass on four 2016 Cortex-A9 cores, no NPU and no Linux.*
 
 1. TOC
 {:toc}
@@ -58,6 +61,7 @@ The checker also found my bug: a crowd photo gave 73 candidate cells and my list
 0.657 box fell out before NMS. 256 slots now.
 
 ![The detect pipeline: webcam, JPU, display task, detector task, boxes back onto the video layer](/assets/images/boards/nanopi2-fire/np2f_detect_pipeline.png)
+*The detect pipeline: webcam, JPU, display task, detector task, and the boxes back on the video layer. Faces end at 42 ms a pass.*
 
 ### First run on the board
 
@@ -100,7 +104,7 @@ the same bits. `tools/fdet_same.py` runs the old and new ARM builds under qemu a
 byte for byte: 0 of 12 runs differ.
 
 I also tried the JPU decoding a half-size copy just for the network. It saved 0.9 ms of core 0 per run
-(7.42 → 6.50 ms). Honest result: small.
+(7.42 → 6.50 ms). The gain is small.
 
 ## Result
 

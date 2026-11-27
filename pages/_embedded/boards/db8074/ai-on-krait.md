@@ -13,6 +13,9 @@ result: "Qwen2.5-0.5B at 4.15 tok/s; L2 driver lifts 4-thread memory read from 4
 edge_ai: true   # 2026-11-22: listed on /edge-ai/ (user «Thêm 1 page là Edge AI … gom các project có liên quan đến AI»)
 edge_ai_index: 6
 tags: [qualcomm, arm, edge-ai, memory]
+description: "No NPU, no GPU compute: LLM, speech and vision on four Krait cores, then a new driver so the L2 follows the CPU"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Local AI on a 2013 phone chip, and an L2 cache stuck at 576 MHz
@@ -20,18 +23,18 @@ tags: [qualcomm, arm, edge-ai, memory]
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
-![The result first]({{ '/assets/images/boards/db8074/d8k_ai_cover.jpg' | relative_url }})
-*The result first: Qwen2.5-0.5B at 4.15 tok/s on four Krait cores, and my L2 driver taking memory reads from 4433 to 7084 MB/s.*
+![DragonBoard 8074 cover, "AI on a 2013 phone chip": 4.15 tok/s, Qwen2.5-0.5B, no NPU, no GPU compute]({{ '/assets/images/boards/db8074/d8k_ai_cover.jpg' | relative_url }})
+*Qwen2.5-0.5B at 4.15 tok/s on four Krait cores, and my L2 driver taking memory reads from 4433 to 7084 MB/s.*
 
 1. TOC
 {:toc}
 
 ## Situation
 
-November 2026. The board had a working Android 15 and a GPU. My question was simple: this
-hardware has a GPU, so which AI models can it run? Then I looked closer. The Adreno 330 has no compute,
+November 2026. The board had a working Android 15 and a GPU. My first idea was simple: this
+hardware has a GPU, so I'd see which AI models it can run. Then I looked closer. The Adreno 330 has no compute,
 OpenCL or Vulkan path in Mesa, and the Hexagon DSP has no FastRPC node in the device tree. There's no
-NPU. So the honest version of the question is: what can four 32-bit Krait cores with NEON do?
+NPU. So the real question became what four 32-bit Krait cores with NEON can do.
 
 ## Task
 
@@ -63,6 +66,7 @@ echo 576000 > /sys/module/qcom_krait_l2/parameters/l2_max_khz
 
 
 ![Run 1 vs run 2 for every model, and LLM tokens/s by thread count](/assets/images/boards/db8074/d8k_l27_ai.png)
+*Run 1 against run 2 for every model, and the LLM's tokens/s by thread count (Qwen2.5-0.5B: 4.15 tok/s).*
 
 ## Result
 

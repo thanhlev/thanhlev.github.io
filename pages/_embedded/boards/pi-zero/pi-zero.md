@@ -10,12 +10,15 @@ publish: true
 permalink: /embedded/boards/pi-zero/
 board_hub: true
 tags: [raspberry-pi, arm, gpu, freertos, bare-metal, boot]
+description: "Bare metal with no SD card, a FreeRTOS shell on the boot cable, and the 12 QPUs driven from my own code"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Raspberry Pi Zero W (BCM2835)
 
 ![The Pi Zero W in numbers]({{ '/assets/images/boards/pi-zero/pz_hub_cover.jpg' | relative_url }})
-*What came out of it: 4799 MFLOPS on the 12 QPUs (66 times the ARM with VFP), and my code running about 10 s after power-on, all over one USB cable. The board on the left is my 3D model of it.*
+*4799 MFLOPS on the 12 QPUs (66 times the ARM with VFP), and my code running about 10 s after power-on, all over one USB cable. The board on the left is my 3D model of it.*
 
 ![Pi Zero W block diagram, drawn from the reduced schematic and the device tree]({{ '/assets/images/boards/pi-zero/pz_board_blocks.png' | relative_url }})
 
@@ -27,8 +30,8 @@ no UART cable either. Just the USB data cable to my PC.
 <a href="{{ '/assets/images/boards/pi-zero/pz_board_model.png' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_board_model.png' | relative_url }}" alt="3D model of my Pi Zero W" style="width:100%;max-width:540px"></a>
 *My Zero W as a 3D model I made for the video series (no photo of mine yet): 65 x 30 mm, the BCM2835 with the 512 MB stacked on it, two micro-USB, no header.*
 
-The question I started with in October 2026 was simple: what does "bare metal" even mean on this
-chip? On a microcontroller the reset vector is yours. Here it isn't. The VideoCore GPU boots first
+I started in October 2026 with something simple: working out what "bare metal" even means on this
+chip. On a microcontroller the reset vector is yours. Here it isn't. The VideoCore GPU boots first
 from its own ROM, runs closed firmware, and only then lets the ARM out of reset at `0x8000`. I wanted
 to see how much of that I could poke at from my side of the cable.
 

@@ -11,6 +11,9 @@ permalink: /embedded/boards/nanopi2-fire/ws2812-android
 board_parent: nanopi2-fire
 result: "16 LEDs, every effect smooth, readback 480/480 bytes clean; app APK 33 KB"
 tags: [samsung, arm, android, led]
+description: "FriendlyELEC's Android on a card, a 16-LED ring on the 40-pin header, a root daemon and a 33 KB app built without Android Studio"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A WS2812 ring from Android 7 over spidev, and why it flickered
@@ -18,8 +21,8 @@ tags: [samsung, arm, android, led]
 
 [Back to the NanoPi 2 Fire hub](/embedded/boards/nanopi2-fire/)
 
-![The WS2812 story in one picture]({{ '/assets/images/boards/nanopi2-fire/np2f_ws_cover.jpg' | relative_url }})
-*The whole story in one picture: 16 LEDs running every effect smoothly from Android, 480 of 480 bytes read back clean, from a 33 KB app.*
+![NanoPi 2 Fire cover, "A WS2812 ring, Android": 16 LEDs, every effect smooth, and why LED 0 flickered]({{ '/assets/images/boards/nanopi2-fire/np2f_ws_cover.jpg' | relative_url }})
+*16 LEDs running every effect smoothly from Android, 480 of 480 bytes read back clean, from a 33 KB app.*
 
 1. TOC
 {:toc}
@@ -57,6 +60,7 @@ with the card in a PC.
 ### Wiring
 
 ![Wiring: DI to pin 19 (SPI0 MOSI), VDD pin 1, GND pin 6, DO back to pin 21 (MISO)](/assets/images/boards/nanopi2-fire/np2f_ws2812_wiring.png)
+*DI to pin 19 (SPI0 MOSI), VDD to pin 1, GND to pin 6, DO back to pin 21 (MISO), counted from the right end of the header.*
 
 First attempt: nothing lit. The board side was right (GPIOC31 muxed to SPI0). I'm fairly sure I'd
 counted pins from the wrong end of the header: from the HDMI end, "pin 1" is pin 39, a ground. I drew
@@ -103,6 +107,7 @@ commands. The on-screen ring is the real frame: the app asks for `px` about 21 t
 (measured) and draws each LED.
 
 ![The WS2812 app on the board's HDMI: galaxy effect, 16 LEDs](/assets/images/boards/nanopi2-fire/np2f_ws2812_app.png)
+*The app on the board's HDMI: the galaxy effect on the 16 LEDs, the on-screen ring redrawn about 21 times a second.*
 
 No Android Studio, no Gradle: build-tools 30.0.3 and platform 25 downloaded into a folder in my home,
 then `aapt2` → Eclipse's Java compiler (the `javac` on that PC was a broken wrapper) → `d8` (which also

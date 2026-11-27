@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Power loops: a charger with no state machine, MPPT, and a sine an integrator can't follow"
+title: "Power loops: a charger with no state machine, MPPT, and an inverter's sine"
 short_description: "CC-CV as the minimum of two loops, perturb-and-observe on a panel that heats up, and resonant vs repetitive control on a grid-tie inverter"
 status: "Done"
 picture: "assets/images/control/plant-models/power_loops_cover.jpg"   # 2026-11-23 cover, story_cover.py
@@ -11,16 +11,20 @@ permalink: /embedded/control/plant-models/power-loops
 board_parent: plant-models
 result: "Charger 99.5 % full vs 90.0 % with a state machine; MPPT 92.7 % -> 99.97 % of available energy; inverter RMS error 0.225 -> 0.067 A, THD 0.085 %"
 tags: [control, simulation, cpp]
+description: "CC-CV as the minimum of two loops, perturb-and-observe on a panel that heats up, and resonant vs repetitive control on a grid-tie inverter"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
-# Power loops: a charger with no state machine, MPPT, and a sine an integrator can't follow
+# Power loops: a charger with no state machine, MPPT, and an inverter's sine
 
 [Back to the plant models hub]({{ '/embedded/control/plant-models/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/plant-models/power_loops_cover.jpg' | relative_url }})
-*The result first: the two-loop charger ends 99.5 % full against 90.0 % for the state machine; MPPT harvests 99.97 %.*
+![Plant models cover, "Three power loops": 99.5 % full, vs 90.0, a charger with no states]({{ '/assets/images/control/plant-models/power_loops_cover.jpg' | relative_url }})
+*The two-loop charger ends 99.5 % full against 90.0 % for the state machine; MPPT harvests 99.97 %.*
 
 ![Charge current: the CC-CV state machine vs the minimum of two loops]({{ '/assets/images/control/plant-models/charger_current.png' | relative_url }})
+*Charge current from the CC-CV state machine against the minimum of two loops; the loops end 99.5 % full, the state machine 90.0 %.*
 
 ## Situation
 
@@ -88,6 +92,7 @@ available energy against 92.7 % for a fixed voltage. On the grid-tie inverter, R
 0.067 A and distortion sits at 0.085 % against a 5 % limit. All the same in the float build.
 
 ![Power harvested against power available as the panel heats up]({{ '/assets/images/control/plant-models/mppt_power.png' | relative_url }})
+*Power harvested against power available as the panel heats up: MPPT gets 99.97 % of the energy.*
 
 ## What I'd do next
 

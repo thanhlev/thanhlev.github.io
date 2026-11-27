@@ -11,16 +11,20 @@ permalink: /embedded/boards/pi1/uart-reload
 board_parent: pi1
 result: "Unchanged image boots; next build over UART: 921 KB in 6.7 s instead of a card swap"
 tags: [raspberry-pi, arm, freertos, linux, boot]
+description: "The Zero W's FreeRTOS image on a Pi 1 B, pins per revision, then a loader inside the firmware at 1.5 Mbaud"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Same kernel, older board, and no more SD card swaps
 
 [Back to the Pi 1 hub]({{ '/embedded/boards/pi1/' | relative_url }}) · measured 2026-10-20 and 2026-10-26
 
-![The UART reload story in one picture]({{ '/assets/images/boards/pi1/pi1_uload_cover.jpg' | relative_url }})
-*The whole story in one picture: a new 921 224-byte build on the Pi 1 B in 6.7 s over the UART, instead of a card swap.*
+![Raspberry Pi 1 B cover, "No more SD card swaps": 6.7 s for a new build, same kernel, older board]({{ '/assets/images/boards/pi1/pi1_uload_cover.jpg' | relative_url }})
+*A new 921 224-byte build on the Pi 1 B in 6.7 s over the UART, instead of a card swap.*
 
 ![The 26-pin header of my Pi 1 B rev 2, with the PL2303 on pins 8/10]({{ '/assets/images/boards/pi1/pi1_header.png' | relative_url }})
+*The 26-pin header of my Pi 1 B rev 2 with the PL2303 on pins 8 and 10, the way a 921 KB build now gets in, in 6.7 s.*
 
 ## Situation
 

@@ -8,12 +8,16 @@ index: 2
 latest_release: "2026-11-22: rewritten as a STAR story"
 publish: true
 tags: [networking, linux]
+permalink: /linux_networking/network-management   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "ifupdown, NetworkManager, systemd-networkd, Netplan and OpenWrt's netifd: who configures the interface after the driver"
+date: 2023-02-16
+last_modified_at: 2026-11-27
 ---
 
 # Linux Network Management
 {: .no_toc }
 
-![Network managers in one picture]({{ '/assets/images/network_management_cover.jpg' | relative_url }})
+![Linux networking cover, "Network management": 5 managers, 5 formats, who brings the interface up]({{ '/assets/images/network_management_cover.jpg' | relative_url }})
 *Five managers, five config formats, one rule: one owner per interface.*
 
 ## Table of contents

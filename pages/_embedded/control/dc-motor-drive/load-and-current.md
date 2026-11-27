@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "A load step, a disturbance observer, and a current sensor that can't tell direction"
+title: "A load step, a disturbance observer, and a current sensor with no sign"
 short_description: "What a disturbance observer buys (and costs) under a 0.02 N·m step, and running the inner loop on a magnitude-only current signal"
 status: "Done"
 picture: "assets/images/control/dc-motor-drive/load_and_current_cover.jpg"   # 2026-11-23 cover, story_cover.py
@@ -11,23 +11,27 @@ permalink: /embedded/control/dc-motor-drive/load-and-current
 board_parent: dc-motor-drive
 result: "Observer: dip 2.49 -> 1.51 rad/s, recovery 18.0 -> 3.1 ms, at 2.8x the current noise; magnitude-only sensing holds the 3 A limit with 2.2x the speed noise"
 tags: [motor, control, sensor, simulation, cpp]
+description: "What a disturbance observer buys (and costs) under a 0.02 N·m step, and running the inner loop on a magnitude-only current signal"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
-# A load step, a disturbance observer, and a current sensor that can't tell direction
+# A load step, a disturbance observer, and a current sensor with no sign
 
 [Back to the DC motor drive hub]({{ '/embedded/control/dc-motor-drive/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/dc-motor-drive/load_and_current_cover.jpg' | relative_url }})
-*The result first: with the observer the load step costs 1.51 rad/s instead of 2.49 and recovers in 3.1 ms instead of 18.0.*
+![DC motor drive cover, "A load step, observed": 3.1 ms recovery (was 18.0), and a sensor that reads |i|]({{ '/assets/images/control/dc-motor-drive/load_and_current_cover.jpg' | relative_url }})
+*With the observer the load step costs 1.51 rad/s instead of 2.49 and recovers in 3.1 ms instead of 18.0.*
 
 ![Speed at 200 rad/s when 0.02 N·m lands at 0.5 s: PI alone vs with the observer]({{ '/assets/images/control/dc-motor-drive/dcm_loadstep_speed.png' | relative_url }})
+*Speed at 200 rad/s when 0.02 N·m lands at 0.5 s: the dip goes from 2.49 to 1.51 rad/s with the observer.*
 
 ## Situation
 
 Two things I couldn't answer from the block diagram. A disturbance observer is supposed to reject load
-torque faster than the integrator, but it differentiates the encoder speed (J·dω/dt), so it must be noisier;
-by how much? And the cheap integrated H-bridges report current through a mirror pin that gives |i| only,
-and only while the bridge is driving. Without a sign you can't close a current PI. Is the drive still usable?
+torque faster than the integrator, but it differentiates the encoder speed (J·dω/dt), so it must be noisier,
+and I didn't know by how much. And the cheap integrated H-bridges report current through a mirror pin that gives |i| only,
+and only while the bridge is driving. Without a sign you can't close a current PI, so I wanted to know if the drive is still usable.
 
 ## Task
 
@@ -65,9 +69,9 @@ $ ./build/dc_motor/dc-motor currentsense
 
 ![The reversal: true current in both drives and what the magnitude-only sensor reports]({{ '/assets/images/control/dc-motor-drive/dcm_currentsense_reversal.png' | relative_url }})
 
-The magnitude sensor (orange in the plot) reads a positive 3 A while the true current is −3 A, and it
+*The magnitude sensor (orange in the plot) reads a positive 3 A while the true current is −3 A, and it
 still holds the limit, because the limit only needs |i|. What you lose is the current loop's stiffness:
-voltage mode is about twice as noisy at speed.
+voltage mode is about twice as noisy at speed.*
 
 ## Result
 

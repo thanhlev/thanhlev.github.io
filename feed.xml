@@ -1,0 +1,42 @@
+---
+layout: null
+---
+{% comment %}
+feed.xml - Atom feed of the newest 20 published docs, hand-written in Liquid.
+2026-11-27 · new (site review: no feed at all; jekyll-feed is a whitelisted gem but would only list _posts,
+and this site keeps everything in collections). wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+Source: docs of embedded, robotics, linux_networking, linux_general with publish != false whose
+`latest_release` starts with an ISO date ("2026-11-06: ..."); sorted on that string, newest first, so the
+date at its start is the sort key. A latest_release without a date in front ("Placeholder since ...") is
+left out: as a string it would sort above every date (letters > digits).
+updated = the first 10 characters of latest_release; summary = short_description + result.
+Linked from _includes/head-custom.html (rel=alternate) and the footer of _layouts/default.html.
+{% endcomment %}
+{%- assign fd_all = site.embedded | concat: site.robotics | concat: site.linux_networking | concat: site.linux_general -%}
+{%- comment -%} two where_exp, no "or"/"and" in Jekyll 3.10: starts with a digit = ">= '0'" and "< ':'" (':' follows '9' in ASCII) {%- endcomment -%}
+{%- assign fd_all = fd_all | where_exp: "d", "d.publish != false" | where_exp: "d", "d.latest_release >= '0'" | where_exp: "d", "d.latest_release < ':'" -%}
+{%- assign fd_docs = fd_all | sort: "latest_release" | reverse -%}
+{%- assign fd_top = fd_docs.first.latest_release | slice: 0, 10 -%}
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ site.title | xml_escape }}</title>
+  <subtitle>{{ site.description | xml_escape }}</subtitle>
+  <link href="{{ '/feed.xml' | absolute_url }}" rel="self" type="application/atom+xml"/>
+  <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html"/>
+  <id>{{ '/' | absolute_url }}</id>
+  <updated>{{ fd_top }}T00:00:00Z</updated>
+  <author><name>{{ site.author | xml_escape }}</name></author>
+{%- for d in fd_docs limit: 20 %}
+  <entry>
+    <title>{{ d.title | remove: "[🔥] - " | xml_escape }}</title>
+    <link href="{{ d.url | absolute_url }}" rel="alternate" type="text/html"/>
+    <id>{{ d.url | absolute_url }}</id>
+    <updated>{{ d.latest_release | slice: 0, 10 }}T00:00:00Z</updated>
+    {%- assign fd_sum = d.short_description | default: "" -%}{%- if d.result -%}{%- assign fd_sum = fd_sum | append: ". Result: " | append: d.result -%}{%- endif %}
+    <summary>{{ fd_sum | strip_html | xml_escape }}</summary>
+    {%- for t in d.tags %}
+    <category term="{{ t | xml_escape }}"/>
+    {%- endfor %}
+  </entry>
+{%- endfor %}
+</feed>

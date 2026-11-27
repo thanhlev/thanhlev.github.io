@@ -11,6 +11,9 @@ permalink: /robotics/dino-robot/ankle-roll
 board_parent: dino-robot
 result: "in MuJoCo: with ankle roll 0/30 and 1/30 survive, without it 16/30, pair turn without new servos 28/30"
 tags: [robotics, servo, simulation]
+description: "I had three spare AX-12A and a robot that rocks 10° per step; in MuJoCo the extra joint lost to a smarter turn"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # An ankle roll servo made it worse

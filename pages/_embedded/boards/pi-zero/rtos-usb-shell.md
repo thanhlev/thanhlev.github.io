@@ -9,18 +9,22 @@ index: 20
 publish: true
 permalink: /embedded/boards/pi-zero/rtos-usb-shell
 board_parent: pi-zero
-result: "Shell on /dev/ttyACM0 ~0.8 s after hand-over; 11.3 us per task switch; tick jitter 999-1001 us"
+result: "Shell on /dev/ttyACM0 ~0.8 s after hand-over; 11.3 µs per task switch; tick jitter 999-1001 µs"
 tags: [raspberry-pi, arm, freertos, boot, usb]
+description: "FreeRTOS + TinyUSB CDC on the Zero W with no UART cable; three bugs found one bit at a time"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A FreeRTOS shell on the boot cable, and the USB device that left after 170 ms
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-12
 
-![The USB shell story in one picture]({{ '/assets/images/boards/pi-zero/pz_shell_cover.jpg' | relative_url }})
-*The whole story in one picture: a FreeRTOS shell on /dev/ttyACM0 about 0.8 s after hand-over, and 11.3 µs per task switch.*
+![Pi Zero W cover, "A shell on the boot cable": 11.3 µs per task switch, no UART cable]({{ '/assets/images/boards/pi-zero/pz_shell_cover.jpg' | relative_url }})
+*A FreeRTOS shell on /dev/ttyACM0 about 0.8 s after hand-over, and 11.3 µs per task switch.*
 
 ![What happens between start.elf releasing the ARM and kmain]({{ '/assets/images/boards/pi-zero/pz_reset_seq.png' | relative_url }})
+*What happens between start.elf releasing the ARM and my kmain; the shell is on /dev/ttyACM0 about 0.8 s after the hand-over.*
 
 ## Situation
 
@@ -158,7 +162,7 @@ pz> rt switch
 
 The shell is on `/dev/ttyACM0` about **0.8 s** after the firmware hands over, stable, and all
 **13 commands** check out on the board. `vTaskDelay(1)` x 1000 on the board gives **min 999, avg
-1000, max 1001 us**. A task switch went from **13.9 to 11.3 us** with the I-cache on, and IDLE sits
+1000, max 1001 µs**. A task switch went from **13.9 to 11.3 µs** with the I-cache on, and IDLE sits
 at 98.8 %.
 
 The lesson I keep: the USB power-on through the mailbox takes **527 ms**, so initialise the DWC2 only
@@ -171,6 +175,6 @@ and a task switch of 11247 ns against 11261.
 
 ## What I'd do next
 
-The D-cache and the MMU. 11 us per switch is slow for this core, and I'd bet most of it is uncached
+The D-cache and the MMU. 11 µs per switch is slow for this core, and I'd bet most of it is uncached
 stack traffic (on the D1 the same kind of fix was worth 27x). And a place to keep a crash record that
 survives the watchdog reset, because DRAM doesn't.

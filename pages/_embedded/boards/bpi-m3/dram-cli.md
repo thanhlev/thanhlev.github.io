@@ -11,6 +11,9 @@ permalink: /embedded/boards/bpi-m3/dram-cli
 board_parent: bpi-m3
 result: "eMMC, Wi-Fi, BT, PHY and IR all answer; 64 MiB memtest, 0 errors"
 tags: [allwinner, arm, bare-metal, memory, wifi]
+description: "29 KiB of my own code in DRAM, loaded over FEL: one command per block, from the PMIC to the IR receiver"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A bare-metal command line for every peripheral on the board
@@ -18,8 +21,8 @@ tags: [allwinner, arm, bare-metal, memory, wifi]
 
 [Back to the Banana Pi M3 hub](/embedded/boards/bpi-m3/)
 
-![The result first]({{ '/assets/images/boards/bpi-m3/bpim3_cli_cover.jpg' | relative_url }})
-*The result first: eMMC, Wi-Fi, BT, the PHY and the IR receiver all answer, and 64 MiB of memtest gives 0 errors.*
+![Banana Pi M3 cover, "A CLI for every block": 64 MiB tested, 0 errors, 29 KiB of my code, over FEL]({{ '/assets/images/boards/bpi-m3/bpim3_cli_cover.jpg' | relative_url }})
+*EMMC, Wi-Fi, BT, the PHY and the IR receiver all answer, and 64 MiB of memtest gives 0 errors.*
 
 1. TOC
 {:toc}

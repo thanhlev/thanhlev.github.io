@@ -8,6 +8,10 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
 tags: [raspberry-pi, linux, python, bluetooth]
+permalink: /embedded/keyboard-mouse-emulate-rpi   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "My Raspberry Pi pretends to be a Bluetooth keyboard, mouse and media remote; started 2017, still patched in 2026"
+date: 2026-06-24
+last_modified_at: 2026-11-27
 ---
 
 <!-- 2026-11-22: rewritten in STAR form (user «hãy viết lại tất cả các trang theo chuẩn STAR»).

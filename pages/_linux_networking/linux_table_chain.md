@@ -8,12 +8,16 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 1
 publish: true
 tags: [networking, linux]
+permalink: /linux_networking/linux-table-chain   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "Where a packet goes inside the kernel: the five chains, the tables in each, conntrack, iptables and nftables"
+date: 2023-02-21
+last_modified_at: 2026-11-27
 ---
 
 # Linux Packet Filtering
 {: .no_toc }
 
-![Netfilter in one picture]({{ '/assets/images/linux_table_chain_cover.jpg' | relative_url }})
+![Linux networking cover, "Linux packet filtering": 5 chains, 5 tables, where a packet goes]({{ '/assets/images/linux_table_chain_cover.jpg' | relative_url }})
 *Five chains, five tables in a fixed order: the map of where a packet goes inside the kernel.*
 
 ## Table of contents
@@ -75,7 +79,7 @@ The kernel part is called **Netfilter**. It puts hooks at fixed points in the ne
 
 And the diagram from the first edition of this page, redrawn (same chains and tables):
 
-<img src="./../../assets/images/traversing_table_chain.png" alt="traversing_table_chain.png">
+<img src="./../../assets/images/traversing_table_chain.png" alt="Where a packet goes through netfilter: PREROUTING, then INPUT to a local process or FORWARD, OUTPUT from local processes, POSTROUTING to the network card, with the tables inside each chain">
 
 ### The five chains
 
@@ -110,7 +114,7 @@ The fix is to rewrite the destination in PREROUTING, before the routing decision
 (<code>eth1</code> = the LAN side, so the WAN isn't redirected.) REDIRECT rewrites the destination to the incoming interface's own IP. That's why it's nicer than DNAT to <code>127.0.0.1</code>, which only works from a non-loopback interface if you also turn on <code>route_localnet</code>.
   </div>
   <div class="column">
-        <img src="./../../assets/images/prerouting-input-forward.png" width="400">
+        <img src="./../../assets/images/prerouting-input-forward.png" width="400" alt="PREROUTING (raw, conntrack, mangle, DNAT), then INPUT (mangle, filter) for this host or FORWARD (mangle, filter) when routed through">
     </div>
 </div>
 
@@ -155,7 +159,7 @@ Redirect the host's own outgoing HTTP to a proxy on port 3128:<br>
 <code>iptables -t nat -A OUTPUT -p tcp --dport 80 -j REDIRECT --to-port 3128</code>
   </div>
   <div class="column">
-        <img src="./../../assets/images/output-chain.png" width="400">
+        <img src="./../../assets/images/output-chain.png" width="400" alt="OUTPUT chain from a local process: raw, connection tracking, mangle, destination NAT, filter">
     </div>
 </div>
 
@@ -173,7 +177,7 @@ Internet sharing in one line:<br>
 <code>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</code>
   </div>
   <div class="column">
-        <img src="./../../assets/images/postrouting-chain.png" width="400">
+        <img src="./../../assets/images/postrouting-chain.png" width="400" alt="POSTROUTING on the way out: mangle, source NAT, QoS egress, then a tunnel check before the network card">
     </div>
 </div>
 

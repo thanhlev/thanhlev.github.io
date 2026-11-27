@@ -11,22 +11,25 @@ permalink: /embedded/boards/pi-zero/qpu
 board_parent: pi-zero
 result: "4799 MFLOPS on 12 QPUs vs 73 on the ARM with VFP (66x); 192 lanes bit-exact"
 tags: [raspberry-pi, arm, gpu, freertos, bare-metal]
+description: "Queueing my own programs on the VideoCore IV shader cores from FreeRTOS, and checking every lane against the ARM"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Twelve QPUs from bare metal, no Linux
 
 [Back to the Pi Zero W hub]({{ '/embedded/boards/pi-zero/' | relative_url }}) · measured 2026-10-20
 
-![The QPU story in one picture]({{ '/assets/images/boards/pi-zero/pz_qpu_cover.jpg' | relative_url }})
-*The whole story in one picture: 4799 MFLOPS on the 12 QPUs, 66 times the ARM with its VFP, every one of the 192 lanes bit-exact.*
+![Pi Zero W cover, "Twelve QPUs, no Linux": 4799 MFLOPS, my programs on the GPU]({{ '/assets/images/boards/pi-zero/pz_qpu_cover.jpg' | relative_url }})
+*4799 MFLOPS on the 12 QPUs, 66 times the ARM with its VFP, every one of the 192 lanes bit-exact.*
 
 ## Situation
 
 The Zero W has one ARM core. That's it for the CPU. But the GPU next to it has 12 QPUs (3 slices of 4),
 each a 16-lane SIMD shader core. Linux uses them for 3D through the vc4 driver. My
 [FreeRTOS shell]({{ '/embedded/boards/pi-zero/rtos-usb-shell' | relative_url }}) already ran on the
-ARM, so I asked myself: could my own code run on the QPUs, from bare metal, and how much faster would
-it be than the ARM1176?
+ARM, so I wanted to know if my own code could run on the QPUs, from bare metal, and how much faster it
+would be than the ARM1176.
 
 <a href="{{ '/assets/images/boards/pi-zero/pz_qpu_ep3.jpg' | relative_url }}"><img src="{{ '/assets/images/boards/pi-zero/pz_qpu_ep3.jpg' | relative_url }}" alt="Frame from my Pi Zero video, episode 3" style="width:100%;max-width:432px"></a>
 *A frame from episode 3 of my Pi Zero videos: one ARM core, then three slices of 4 QPUs next to it, and 192 results (12 x 16 lanes) landing in RAM. (Vietnamese labels.)*
@@ -78,7 +81,7 @@ pz> qpu
 
 That's **4799 MFLOPS** on 12 QPUs, against **73** on the ARM1176 with its VFP and **12** in the soft
 float `rtos_cli` is built with: **66x** and **400x**. The arithmetic checks out too. 5 instructions x
-4 cycles x 1 000 000 passes at 250 MHz is 80 ms, and one QPU took 80 003 us. Twelve took the same
+4 cycles x 1 000 000 passes at 250 MHz is 80 ms, and one QPU took 80 003 µs. Twelve took the same
 time, so they really ran in parallel.
 
 At first the results looked wrong (107231 ppb off). It's rounding: the QPU rounds toward zero. With

@@ -8,12 +8,16 @@ latest_release: "2026-11-22: rewritten as a STAR story"
 index: 2
 publish: true
 tags: [linux, tools]
+permalink: /linux_general/linux-tips   # 2026-11-27: = the URL the collection default gave it; explicit so it never moves
+description: "My scratchpad of shell one-liners: fstab, cleanup, time, git, sed, awk, find"
+date: 2023-02-11
+last_modified_at: 2026-11-27
 ---
 
 # Linux Tips & Tricks
 {: .no_toc }
 
-![Linux tips in one picture]({{ '/assets/images/linux_tips_cover.jpg' | relative_url }})
+![Linux cover, "Linux tips & tricks": 13 groups of one-liners, the lines I never remember]({{ '/assets/images/linux_tips_cover.jpg' | relative_url }})
 *Thirteen groups of shell lines I never remember; the fstab block is the one I open most.*
 
 ## Table of contents

@@ -11,14 +11,17 @@ permalink: /embedded/control/control-library/robust-control
 board_parent: control-library
 result: "Plant gain 3× off: ADRC IAE 0.171 vs PID 0.275; ADRC holds to 6× and limit-cycles at 7×; sliding mode lands within 0.33 % over a 5× range; super-twisting's biggest output step 0.35 vs 12 for the sign law"
 tags: [control, simulation, cpp]
+description: "ADRC against a PID while the plant gain drifts from 0.5× to 8× of what both were told, sliding mode over a 5× range, and super-twisting against two sliding-mode baselines"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # ADRC and sliding mode on a plant 3× off, and the 7× where ADRC breaks
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/robust_control_cover.jpg' | relative_url }})
-*The result first: with the plant gain 3× what it was told, ADRC's integrated error is 0.171 against the PID's 0.275. At 7× it falls apart. In simulation.*
+![Control library cover, "Plant gain 3× off": 0.171 IAE (PID 0.275), ADRC is fine to 6×, gone at 7×]({{ '/assets/images/control/control-library/robust_control_cover.jpg' | relative_url }})
+*With the plant gain 3× what it was told, ADRC's integrated error is 0.171 against the PID's 0.275. At 7× it falls apart. In simulation.*
 
 ![PID and ADRC on the same plant, gain 3× off, load step at 5 s]({{ '/assets/images/control/control-library/adv_adrc_vs_pid.png' | relative_url }})
 *Same plant, same actuator limit: the PID overshoots 16 %, ADRC 0.3 %, and the load step at 5 s barely shows on either.*

@@ -11,16 +11,20 @@ permalink: /embedded/boards/d1-nezha/hdmi-webcam
 board_parent: d1-nezha
 result: "1920x1080 MJPEG webcam -> HDMI at 29.4 fps, CPU ~1.2 % (YUY2 640x480 first: 29.9 fps, 23 %)"
 tags: [allwinner, risc-v, freertos, bare-metal, usb, camera]
+description: "HDMI bring-up from FreeRTOS, my own EHCI isochronous driver, and the D1's Video Engine decoding the JPEGs"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A USB webcam on HDMI with no Linux: 1080p MJPEG at 29.4 fps on one RISC-V core
 
 [Back to the D1 Nezha hub]({{ '/embedded/boards/d1-nezha/' | relative_url }}) · measured 2026-09-30 and 2026-10-01
 
-![The result first]({{ '/assets/images/boards/d1-nezha/d1_webcam_cover.jpg' | relative_url }})
-*The result first: 1080p MJPEG from the webcam to HDMI at 29.4 fps, with the CPU about 1.2 % busy. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
+![D1 Nezha cover, "Webcam → HDMI, 1080p": 29.4 fps at 1.2 % CPU, the Video Engine decodes]({{ '/assets/images/boards/d1-nezha/d1_webcam_cover.jpg' | relative_url }})
+*1080p MJPEG from the webcam to HDMI at 29.4 fps, with the CPU about 1.2 % busy. Chip photo: [Popolon](https://commons.wikimedia.org/wiki/File:AllWinner_D1.jpg), CC BY-SA 4.0.*
 
 ![The OSD panel my FreeRTOS draws over the video, at 640x480]({{ '/assets/images/boards/d1-nezha/d1_uvc_osd.png' | relative_url }})
+*The OSD panel my FreeRTOS draws over the video, here at 640x480.*
 
 ## Situation
 

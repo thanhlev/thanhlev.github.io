@@ -1,0 +1,39 @@
+{% comment %}
+story_nav.html - "previous / next" at the end of a story, then the full list of its hub's stories.
+2026-11-27 · new (site review: a reader who finishes a story on a phone or a laptop had no way on to the
+next one; the right post rail only shows at >= 1500 px). wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+Included by _layouts/default.html after the article content, on pages with `board_parent` only.
+Siblings = same collection, same board_parent, publish != false, sorted by `index` (the same set and order as
+_includes/board_children.html on the hub and _includes/post_rail.html). Each neighbour shows its title + `result`.
+Plain Liquid only (GitHub Pages safe mode, Jekyll 3.10).
+{% endcomment %}
+{% if page.board_parent and page.collection and site[page.collection] %}
+{% assign sn_coll = site[page.collection] %}
+{% assign sn_sib = sn_coll | where: "board_parent", page.board_parent | where_exp: "i", "i.publish != false" | sort: "index" %}
+{% assign sn_hub = sn_coll | where: "slug", page.board_parent | first %}
+{% comment %} Position of this page in the list. -1 = not found (a draft previewed locally): no prev/next then. {% endcomment %}
+{% assign sn_pos = -1 %}
+{% for s in sn_sib %}{% if s.url == page.url %}{% assign sn_pos = forloop.index0 %}{% endif %}{% endfor %}
+{% assign sn_prev = nil %}{% assign sn_next = nil %}
+{% comment %} Guard index 0: sn_sib[-1] would wrap round to the LAST story, so "previous" is only looked up when pos > 0. {% endcomment %}
+{% if sn_pos > 0 %}{% assign sn_pi = sn_pos | minus: 1 %}{% assign sn_prev = sn_sib[sn_pi] %}{% endif %}
+{% if sn_pos >= 0 %}{% assign sn_ni = sn_pos | plus: 1 %}{% if sn_ni < sn_sib.size %}{% assign sn_next = sn_sib[sn_ni] %}{% endif %}{% endif %}
+{% if page.collection == "robotics" %}{% assign sn_kind = "robot" %}{% elsif sn_hub.notes_hub %}{% assign sn_kind = "series" %}{% else %}{% assign sn_kind = "board" %}{% endif %}
+<nav class="storynav" aria-label="More stories from this {{ sn_kind }}">
+  {% if sn_prev or sn_next %}
+  <div class="sn-pn">
+    {% if sn_prev %}<a class="sn-prev" href="{{ sn_prev.url | relative_url }}" rel="prev"><span class="sn-l">← Previous</span><b>{{ sn_prev.title | remove: "[🔥] - " }}</b>{% if sn_prev.result %}<span class="sn-r">{{ sn_prev.result | truncate: 120 }}</span>{% endif %}</a>{% else %}<span class="sn-prev sn-none"></span>{% endif %}
+    {% if sn_next %}<a class="sn-next" href="{{ sn_next.url | relative_url }}" rel="next"><span class="sn-l">Next →</span><b>{{ sn_next.title | remove: "[🔥] - " }}</b>{% if sn_next.result %}<span class="sn-r">{{ sn_next.result | truncate: 120 }}</span>{% endif %}</a>{% else %}<span class="sn-next sn-none"></span>{% endif %}
+  </div>
+  {% endif %}
+  <div class="sn-all">
+    <div class="sn-h">All {{ sn_sib.size }} stories{% if sn_hub %} in <a href="{{ sn_hub.url | relative_url }}">{{ sn_hub.title | split: ":" | first }}</a>{% endif %}</div>
+    <ol>
+      {% for s in sn_sib %}
+      <li{% if s.url == page.url %} class="on"{% endif %}>{% if s.url == page.url %}<span aria-current="page">{{ s.title | remove: "[🔥] - " }}</span> <em>you are here</em>{% else %}<a href="{{ s.url | relative_url }}">{{ s.title | remove: "[🔥] - " }}</a>{% endif %}</li>
+      {% endfor %}
+    </ol>
+    {% if sn_hub %}<a class="sn-hub" href="{{ sn_hub.url | relative_url }}">{{ sn_kind | capitalize }} hub: {{ sn_hub.title | split: ":" | first }} →</a>{% endif %}
+  </div>
+</nav>
+{% endif %}

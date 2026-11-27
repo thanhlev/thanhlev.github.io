@@ -11,14 +11,17 @@ permalink: /embedded/control/control-library/estimators
 board_parent: control-library
 result: "Complementary filter 0.0151 -> 0.0044 rad RMS with tau 0.1 s instead of 0.5 s (gyro alone 1.039, accelerometer alone 0.046); EKF and UKF find an unmeasured pendulum rate in 0.08 s and hold it to 0.0051 rad/s RMS, identically"
 tags: [control, simulation, cpp]
+description: "A complementary filter on a biased gyro and a noisy accelerometer, swept over its one parameter, and an EKF and a UKF finding a pendulum rate they never measure"
+date: 2026-11-23
+last_modified_at: 2026-11-27
 ---
 
 # Complementary filter at 0.0044 rad, once I stopped trusting the gyro for 0.5 s
 
 [Back to the control library hub]({{ '/embedded/control/control-library/' | relative_url }})
 
-![The result first]({{ '/assets/images/control/control-library/estimators_cover.jpg' | relative_url }})
-*The result first: the same complementary filter, hand-over time 0.1 s instead of 0.5 s, tracks the angle to 0.0044 rad RMS instead of 0.0151. In simulation.*
+![Control library cover, "Estimators, measured": 0.0044 rad RMS, my hand-over time was too long]({{ '/assets/images/control/control-library/estimators_cover.jpg' | relative_url }})
+*The same complementary filter, hand-over time 0.1 s instead of 0.5 s, tracks the angle to 0.0044 rad RMS instead of 0.0151. In simulation.*
 
 ![Angle estimates over 20 s, and the RMS error over the hand-over time]({{ '/assets/images/control/control-library/adv_complementary.png' | relative_url }})
 *Top: the gyro alone walks away, the accelerometer alone is noise, the filter sits on the truth. Bottom: the error against tau, best at 0.1 s.*

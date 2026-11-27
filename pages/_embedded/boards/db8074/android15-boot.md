@@ -4,13 +4,16 @@ title: "Android 15 on a board that shipped with Android 4.3"
 short_description: "Building AOSP 15 + kernel 6.6 for the APQ8074, booting it from RAM first, and the long list of things between it and a home screen"
 status: "Done"
 picture: "assets/images/boards/db8074/d8k_a15_cover.jpg"   # 2026-11-23 cover, story_cover.py
-latest_release: "2026-11-16: boots from eMMC by itself, home screen after 66 s"
+latest_release: "2026-11-16: boots from eMMC by itself, home screen after 66 s (after the speed-up)"
 index: 1
 publish: true
 permalink: /embedded/boards/db8074/android15-boot
 board_parent: db8074
 result: "Launcher3 home screen on the panel; boot from eMMC in 66 s"
 tags: [qualcomm, arm, linux, android, boot, memory]
+description: "Building AOSP 15 + kernel 6.6 for the APQ8074, booting it from RAM first, and the long list of things between it and a home screen"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # Android 15 on a board that shipped with Android 4.3
@@ -18,8 +21,8 @@ tags: [qualcomm, arm, linux, android, boot, memory]
 
 [Back to the DragonBoard 8074 hub](/embedded/boards/db8074/)
 
-![The result first]({{ '/assets/images/boards/db8074/d8k_a15_cover.jpg' | relative_url }})
-*The result first: Android 15 boots from the eMMC by itself and reaches the home screen in 66 s.*
+![DragonBoard 8074 cover, "Android 15 boots": 66 s, eMMC to home screen, on a board from Android 4.3]({{ '/assets/images/boards/db8074/d8k_a15_cover.jpg' | relative_url }})
+*Android 15 boots from the eMMC by itself and reaches the home screen in 66 s.*
 
 1. TOC
 {:toc}
@@ -31,6 +34,7 @@ device tree for it (`qcom-apq8074-dragonboard.dts`), and a community bootloader,
 MSM8974.
 
 ![Launcher3 on the board's own panel, 540 × 960, grabbed with adb screencap](/assets/images/boards/db8074/d8k_l7_launcher.png)
+*Launcher3 on the board's own 540 × 960 panel, grabbed with `adb screencap`.*
 
 ## Task
 
@@ -95,9 +99,10 @@ again. New kernels go in from Android itself:
 ## Result
 
 Android 15 (BP1A.250505.005.D1) on kernel 6.6.162, with Launcher3 on the panel. The first
-`boot_completed=1` came after 264 s, still with software rendering. Once lk2nd and my boot image sat
-on the eMMC, it booted by itself at power-on and reached the home screen after 66 s. The stock boot
-chain was never written, and the backup still matches its SHA-256 sums.
+`boot_completed=1` came after 264 s, still with software rendering. Later, after the speed-up of the
+[next story](/embedded/boards/db8074/speed-up) (64 s, booted from RAM), I put lk2nd and my boot image on
+the eMMC: it boots by itself at power-on and reaches the home screen after 66 s. The stock boot chain was
+never written, and the backup still matches its SHA-256 sums.
 
 ![Android Settings, About tablet: Model DragonBoard 8074 (APQ8074), Android version 15](/assets/images/boards/db8074/d8k_about_android15.jpg)
 *"About tablet": DragonBoard 8074 (APQ8074), Android version 15. A photo of the screen, a bit blurry.*

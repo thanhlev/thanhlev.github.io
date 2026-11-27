@@ -10,6 +10,9 @@ publish: true
 permalink: /embedded/control/dc-motor-drive/
 notes_hub: true
 tags: [motor, control, simulation, cpp, testing]
+description: "A brushed-motor drive stack (identify, tune, home, protect, fall back) run against a simulated H-bridge and encoder, six scenarios that assert their own numbers"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # DC motor drive on a simulated bench

@@ -11,16 +11,20 @@ permalink: /embedded/boards/pi5/gpio-over-pcie
 board_parent: pi5
 result: "RP1 on PCIe x4 at 5 GT/s; idle 1.5 GHz, 47.7 C, fan off, ~1.93 W on the PMIC rails"
 tags: [raspberry-pi, arm, boot]
+description: "Surveying my Pi 5 read-only over ssh: where the header lives now, how it boots, what it draws at idle"
+date: 2026-11-22
+last_modified_at: 2026-11-27
 ---
 
 # A GPIO write on the Pi 5 is a PCIe transaction
 
 [Back to the Pi 5 hub]({{ '/embedded/boards/pi5/' | relative_url }}) · measured 2026-10-30
 
-![The Pi 5 survey in one picture]({{ '/assets/images/boards/pi5/pi5_pcie_cover.jpg' | relative_url }})
-*The whole story in one picture: the RP1 sits behind PCIe x4 at 5 GT/s, so a GPIO write is a PCIe memory write; idle at 1.5 GHz and about 1.93 W.*
+![Raspberry Pi 5 cover, "A GPIO write is PCIe": 5 GT/s, PCIe x4, surveyed read-only over ssh]({{ '/assets/images/boards/pi5/pi5_pcie_cover.jpg' | relative_url }})
+*The RP1 sits behind PCIe x4 at 5 GT/s, so a GPIO write is a PCIe memory write; idle at 1.5 GHz and about 1.93 W.*
 
 ![PMIC rails at idle, V x I per rail]({{ '/assets/images/boards/pi5/pi5_power.png' | relative_url }})
+*The PMIC rails at idle, V × I per rail, about 1.93 W.*
 
 ## Situation
 

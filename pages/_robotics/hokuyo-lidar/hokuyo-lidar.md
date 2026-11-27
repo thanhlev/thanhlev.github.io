@@ -10,6 +10,9 @@ publish: true
 permalink: /robotics/hokuyo-lidar/
 board_hub: true
 tags: [robotics, lidar, usb]
+description: "An old USB laser scanner: talking SCIP 2.0 by hand, then fixing the demos that ran on it"
+date: 2026-11-22
+last_modified_at: 2026-11-23
 ---
 
 # Hokuyo URG-04LX lidar (2D, 240°)

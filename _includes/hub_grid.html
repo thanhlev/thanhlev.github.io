@@ -5,6 +5,8 @@ A hub = front matter `board_hub: true`; its stories = docs of the same collectio
 `board_parent: <hub slug>`. Card = picture, chip (text in brackets of the title), name, short
 description, story count + first result. Plain Liquid (GitHub Pages safe mode).
 2026-11-22: moved out of index.md so Boards and Robotics share it (user «tạo thêm robotics, cùng cấp với boards»).
+2026-11-27: cards show the 640 px thumbnail assets/images/card/<path>.jpg made by ~/new_ws/social/blog/tools/card_thumbs.py
+(full-size covers made the home page load 9.5 MB of pictures) · wiki: http://localhost:3000/wiki/claude/blog_agent#l11
 {% endcomment %}
 {% assign live = site[include.coll] | where_exp: "i", "i.publish != false" %}
 {% assign hubs = live | where: "board_hub", true | sort: "index" %}
@@ -14,7 +16,7 @@ description, story count + first result. Plain Liquid (GitHub Pages safe mode).
   {% assign name = h.title | split: ":" | first %}
   {% assign soc = "" %}{% if name contains "(" %}{% assign soc = name | split: "(" | last | remove: ")" %}{% assign name = name | split: " (" | first %}{% endif %}
   <a class="bcard" href="{{ h.url | relative_url }}">
-    <div class="ph" style="background-image:url('{{ h.picture | prepend: '/' | relative_url }}')"></div>
+    <div class="ph" style="background-image:url('{{ h.picture | replace_first: 'assets/images/', 'assets/images/card/' | replace: '.png', '.jpg' | replace: '.jpeg', '.jpg' | replace: '.webp', '.jpg' | prepend: '/' | relative_url }}')"></div>
     {% if soc != "" %}<span class="chip">{{ soc }}</span>{% endif %}
     <h3>{{ name }}</h3>
     <p>{{ h.short_description }}</p>

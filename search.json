@@ -1,0 +1,20 @@
+---
+layout: null
+---
+{% comment %}
+search.json - the index read by assets/js/search.js on /search/ (fetched once per visit).
+2026-11-27 · new (site review: ~100 posts and no way to find one by word). wiki: http://localhost:3000/wiki/claude/blog_agent#l11
+Every published doc of every collection (publish != false). text = the rendered body without HTML, cut to
+250 words: that keeps the file small (~one screen of text per post) and still finds words from the body.
+Every value goes through jsonify, so quotes, newlines and Vietnamese letters are escaped correctly.
+Collections are rendered before pages in Jekyll 3, so d.content here is already HTML.
+{% endcomment %}
+{%- assign sj_all = site.documents | where_exp: "d", "d.publish != false" -%}
+[
+{%- for d in sj_all %}
+  {"title": {{ d.title | remove: "[🔥] - " | jsonify }}, "url": {{ d.url | relative_url | jsonify }},
+   "short_description": {{ d.short_description | default: "" | jsonify }}, "result": {{ d.result | default: "" | jsonify }},
+   "tags": {{ d.tags | jsonify }}, "board_parent": {{ d.board_parent | default: "" | jsonify }},
+   "text": {{ d.content | strip_html | normalize_whitespace | truncatewords: 250 | jsonify }}}{% unless forloop.last %},{% endunless %}
+{%- endfor %}
+]
